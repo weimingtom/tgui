@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tgui", "tgui.vcproj", "{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "appDemo", "appDemo.vcproj", "{0769ABCB-A47F-4813-A8E0-18E3901E8DF5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433} = {BDB1C3B5-A02A-435C-947C-CA0E90DA8433}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Debug|Win32.Build.0 = Debug|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Release|Win32.ActiveCfg = Release|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Release|Win32.Build.0 = Release|Win32
+		{0769ABCB-A47F-4813-A8E0-18E3901E8DF5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0769ABCB-A47F-4813-A8E0-18E3901E8DF5}.Debug|Win32.Build.0 = Debug|Win32
+		{0769ABCB-A47F-4813-A8E0-18E3901E8DF5}.Release|Win32.ActiveCfg = Release|Win32
+		{0769ABCB-A47F-4813-A8E0-18E3901E8DF5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
