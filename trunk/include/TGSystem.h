@@ -40,6 +40,7 @@ namespace TGUI
         TGFont*             m_currentFont;
         TGControl*	        m_keyboardFocusControl;
         TGCursor*           m_mouseCursor;
+        TGLogger*           m_logger;
 
 
         bool                m_gui_redraw;
@@ -60,6 +61,10 @@ namespace TGUI
 
         void setMouseCursor(TGCursor* image);
         TGCursor* getMouseCursor() {return m_mouseCursor;};
+
+        void setLogger(TGLogger* logger);
+        TGLogger* getLogger();
+        void logMessage(string message);
 
         TGFont* loadFont(string fontName,string resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};

@@ -259,6 +259,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGLogger.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGLogger.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGMenu.cpp"
 				>
 			</File>

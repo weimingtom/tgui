@@ -36,7 +36,7 @@ namespace TGUI
         bool			resizing;
         bool			resizeable;
         int			    mX, mY;
-        struct TGPopupMenu	*menu;
+        TGPopupMenu*    menu;
         TGImage			*icon;
 
         TGWindow(string caption="");

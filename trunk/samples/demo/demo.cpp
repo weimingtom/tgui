@@ -646,7 +646,7 @@ class DemoApp : public ExampleApplication
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
 
-        TGPopupMenu       *mainMenu = new TGPopupMenu;
+        TGPopupMenu       *mainMenu = new TGPopupMenu();
         TGMenuItem* mi = mainMenu->addItem("Select file...", NULL);
         mi->addEventHandler(TGEvent::Selected,new TGEventHandler(&DemoApp::selectFileAction,this));
         //new TGBitmap(INTERNALBMP_OPEN));
@@ -726,6 +726,7 @@ class DemoApp : public ExampleApplication
         win5->resizeable = true;
         win5->addEventHandler(TGEvent::Resized,new TGEventHandler(&DemoApp::imageWinResizedAction,this));
         //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
+
         win5->menu = new TGPopupMenu;
         win5->menu->addItem("No filtering");
         win5->menu->addItem("Bilinear filtering");
