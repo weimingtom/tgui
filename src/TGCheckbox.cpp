@@ -104,7 +104,7 @@ namespace TGUI
         if (checked != m_checked.get())
         {
             m_checked.set(checked);
-            BSGUI_RUNACTION(modified);
+            fireEvent(TGEvent::Modified,TGEventArgs(this));
         }
     }
 
@@ -134,8 +134,7 @@ namespace TGUI
             if (m_hover)
             {
                 m_checked.set(!m_checked.get());
-                if (modified)
-                    modified->run(this);
+                fireEvent(TGEvent::Modified,TGEventArgs(this));
             }
         }
         m_pushed = false;

@@ -38,7 +38,6 @@ namespace TGUI
         hScroll = 0.0f;
         vScroll = 0.0f;
         scrolling = 0;
-        scrolled = NULL;
         setScrollingBounds(1, 1);
     }
 
@@ -47,7 +46,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGScrollbox::~TGScrollbox()
     {
-        BSGUI_FREEACTION(scrolled);
     }
 
     //-----------------------------------------------------------------------
@@ -77,7 +75,7 @@ namespace TGUI
         if (oldHScroll != hScroll || oldVScroll != vScroll)
         {
             onScroll(hScroll - oldHScroll, vScroll - oldVScroll);
-            BSGUI_RUNACTION(scrolled);
+            fireEvent(TGEvent::Scrolled,TGEventArgs(this));
         }
     }
 
@@ -227,7 +225,7 @@ namespace TGUI
         if (oldHScroll != hScroll || oldVScroll != vScroll)
         {
             onScroll(hScroll - oldHScroll, vScroll - oldVScroll);
-            BSGUI_RUNACTION(scrolled);
+            fireEvent(TGEvent::Scrolled,TGEventArgs(this));
         }
     }
 

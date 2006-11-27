@@ -141,7 +141,7 @@ namespace TGUI
         {
             setMouseTrackingControl(NULL);
             if (mouseOverControl)
-                BSGUI_RUNACTION(clicked);
+                fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
         }
         m_pushed = false;
     }

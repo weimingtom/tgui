@@ -32,16 +32,13 @@ namespace TGUI
     {
         string    		        caption;
         TGImage*                image;
-        TGAction*               popup;
         struct TGMenuControl*   menuControl;
         struct TGPopupMenu*     subMenu;
 
-        TGMenuItem(TGControl *owner, string caption, TGAction *clickedAction,
-            TGImage *image=NULL);
+        TGMenuItem(TGControl *owner, string caption, TGImage *image=NULL);
         virtual ~TGMenuItem();
 
-        virtual TGMenuItem *addItem(string caption, TGAction *clicked,
-            TGImage *image=NULL);
+        virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
         virtual void clear();
 
         virtual void render();
@@ -74,8 +71,7 @@ namespace TGUI
         TGPopupMenu();
         virtual ~TGPopupMenu();
 
-        virtual TGMenuItem *addItem(string caption, TGAction *clicked,
-            TGImage *image=NULL);
+        virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
         virtual void clear();
         virtual void run(int x=-10000, int y=-10000);
         virtual void cancel();

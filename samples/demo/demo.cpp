@@ -40,12 +40,6 @@ TGScreen	*screen1, *screen2;
 TGLabel	*fps;
 
 
-void stepsModifiedAction(TGControl *sender)
-{
-    TGProgressBar	*pbar2 = (TGProgressBar*)TGSystem::getSingleton().getActiveScreen()->findChild("pbar2");
-    steps = (int)stepCount->value.get() + 3;
-    pbar2->setValue(steps - 3);
-}
 /*
 void terminateAppAction(TGControl *sender)
 {
@@ -383,25 +377,6 @@ render();
 }
 */
 
-void imageWinResizedAction(TGControl *sender)
-{
-    TGImage	*img = (TGImage*)sender->getFirstChild();
-    int	w, h;
-    sender->getClientSize(w, h);
-    img->place(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
-}
-
-void addWideItemAction(TGControl *sender)
-{
-    TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
-    lbox->addItem("A very wide item to test horizontal scrolling");
-}
-
-void removeItemAction(TGControl *sender)
-{
-    TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
-    lbox->removeItem(lbox->active);
-}
 
 void enableFiltering(TGControl *sender)
 {
@@ -415,59 +390,7 @@ TGImage	*img = (TGImage*)TGSystem::getSingleton().getActiveScreen()->findChild("
 //	img->bitmap->setFiltering(false);
 }
 
-void cendaClicked(TGControl *sender)
-{
-    (new TGMessagebox("Hello, I am Cenda :)"))->show();
-}
 
-void addTheAboveTextAction(TGControl *sender)
-{
-    TGScreen* screen = TGSystem::getSingleton().getActiveScreen();
-
-    TGListbox *lbox = (TGListbox*)screen->findChild("listbox");
-    lbox->addItem(((TGInputbox*)screen->findChild("inputbox"))->getText());
-    ((TGInputbox*)screen->findChild("inputbox"))->setText("");
-    screen->findChild("inputbox")->focus();
-}
-
-void fileSelectedAction(TGControl *sender)
-{
-    string fname = ((TGFileBrowser*)sender)->getFilename();
-    printf("File selected: %s\n", fname.c_str());
-}
-
-void selectFileAction(TGControl *sender)
-{
-    TGFileBrowser	*browser = new TGFileBrowser("Select File");
-    browser->selected = new TGCallbackAction(fileSelectedAction);
-}
-
-void aboutBoxAction(TGControl *sender)
-{
-    (new TGMessagebox("BSGUI (Bad Sector's OpenGL GUI) version 0.2 Demo", "About"))->show();
-}
-
-void createDynamicSubmenuAction(TGControl *sender)
-{
-    TGMenuItem        *sub = (TGMenuItem*)sender;
-    TGListbox         *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
-    sub->clear();
-
-
-    TGListboxItem* lbi;
-
-    for (TGControlListItr itr = lbox->getChildren().begin(); itr != lbox->getChildren().end(); ++itr)
-    {
-        lbi = (TGListboxItem*)(*itr);
-        sub->addItem(lbi->getText(),NULL);
-    }
-}
-
-void terminateAppAction(TGControl *sender)
-{
-    running = false;
-    mShutdownRequested = true;
-}
 
 class DemoListener : public ExampleFrameListener, public OIS::KeyListener, public OIS::MouseListener
 {
@@ -559,8 +482,92 @@ class DemoApp : public ExampleApplication
         ms = ((DemoListener*)mFrameListener)->getMouseState();
     }
 
+    bool imageWinResizedAction(const TGEventArgs& args)
+    {
+        TGImage	*img = (TGImage*)args.m_control->getFirstChild();
+        int	w, h;
+        args.m_control->getClientSize(w, h);
+        img->place(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
+        return true;
+    }
+
+    bool cendaClicked(const TGEventArgs& args)
+    {
+        (new TGMessagebox("Hello, I am Cenda :)"))->show();
+        return true;
+    }
+
+    bool stepsModifiedAction(const TGEventArgs& args)
+    {
+        TGProgressBar	*pbar2 = (TGProgressBar*)TGSystem::getSingleton().getActiveScreen()->findChild("pbar2");
+        steps = (int)stepCount->value.get() + 3;
+        pbar2->setValue(steps - 3);
+        return true;
+    }
+
+    bool aboutBoxAction(const TGEventArgs& args)
+    {
+        (new TGMessagebox("BSGUI (Bad Sector's OpenGL GUI) version 0.2 Demo", "About"))->show();
+        return true;
+    }
+
+    bool terminateAppAction(const TGEventArgs& args)
+    {
+        running = false;
+        mShutdownRequested = true;
+        return true;
+    }
+
+    bool createDynamicSubmenuAction(const TGEventArgs& args)
+    {
+        TGMenuItem        *sub = (TGMenuItem*)args.m_control;
+        TGListbox         *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        sub->clear();
+
+
+        TGListboxItem* lbi;
+
+        for (TGControlListItr itr = lbox->getChildren().begin(); itr != lbox->getChildren().end(); ++itr)
+        {
+            lbi = (TGListboxItem*)(*itr);
+            sub->addItem(lbi->getText(),NULL);
+        }
+        return true;
+    }
+
     bool windowResized(const TGEventArgs& args)
     {
+        return true;
+    }
+
+    bool addWideItemAction(const TGEventArgs& args)
+    {
+        TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        lbox->addItem("A very wide item to test horizontal scrolling");
+        return true;
+    }
+
+    bool removeItemAction(const TGEventArgs& args)
+    {
+        TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        lbox->removeItem(lbox->active);
+        return true;
+    }
+
+    bool addTheAboveTextAction(const TGEventArgs& args)
+    {
+        TGScreen* screen = TGSystem::getSingleton().getActiveScreen();
+
+        TGListbox *lbox = (TGListbox*)screen->findChild("listbox");
+        lbox->addItem(((TGInputbox*)screen->findChild("inputbox"))->getText());
+        ((TGInputbox*)screen->findChild("inputbox"))->setText("");
+        screen->findChild("inputbox")->focus();
+        return true;
+    }
+
+    bool selectFileAction(const TGEventArgs& args)
+    {
+        TGFileBrowser	*browser = new TGFileBrowser("Select File");
         return true;
     }
 
@@ -628,17 +635,20 @@ class DemoApp : public ExampleApplication
             lbox->addItem(buff);
         }
         lbox->setName("listbox");
-        (new TGButton(win2, 10, 210, 175, 235, "Add wide item"))->clicked =
-            new TGCallbackAction(addWideItemAction);
-        (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->clicked =
-            new TGCallbackAction(removeItemAction);
+        (new TGButton(win2, 10, 210, 175, 235, "Add wide item"))->addEventHandler(
+            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addWideItemAction,this));
+
+        (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->addEventHandler(
+            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::removeItemAction,this));
+
         (new TGInputbox(win2, 10, 270, 175, 295))->setName("inputbox");
-        (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->clicked =
-            new TGCallbackAction(addTheAboveTextAction);
+
+        (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
+            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
 
         TGPopupMenu       *mainMenu = new TGPopupMenu;
-        mainMenu->addItem("Select file...",
-            new TGCallbackAction(selectFileAction), NULL);
+        TGMenuItem* mi = mainMenu->addItem("Select file...", NULL);
+        mi->addEventHandler(TGEvent::Selected,new TGEventHandler(&DemoApp::selectFileAction,this));
         //new TGBitmap(INTERNALBMP_OPEN));
         TGMenuItem	*sub = mainMenu->addItem("Submenu test", NULL);
         sub->addItem("Sub menu item 1", NULL);
@@ -646,12 +656,17 @@ class DemoApp : public ExampleApplication
         sub->addItem("Sub menu item 3", NULL);
         sub->addItem("-", NULL);
         sub->addItem("Sub sub menu", NULL)->addItem("Hello!", NULL);
-        sub->addItem("Dynamic submenu", NULL)->popup =
-            new TGCallbackAction(createDynamicSubmenuAction);
-        mainMenu->addItem("About...", new TGCallbackAction(aboutBoxAction));
-        mainMenu->addItem("-", NULL);
-        mainMenu->addItem("Quit", new TGCallbackAction(terminateAppAction),NULL);
+
+        mi = sub->addItem("Dynamic submenu", NULL);
+        mi->addEventHandler(TGEvent::MenuPopup,new TGEventHandler(&DemoApp::createDynamicSubmenuAction,this));
+        
+        mi = mainMenu->addItem("About...");
+        mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::aboutBoxAction,this));
+
+        mi = mainMenu->addItem("-", NULL);
         //	new TGBitmap(INTERNALBMP_QUIT));
+        mi = mainMenu->addItem("Quit");
+        mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::terminateAppAction,this));
 
 
         TGWindow	*win3 = new TGWindow("A window");
@@ -663,7 +678,7 @@ class DemoApp : public ExampleApplication
         stepCount = new TGSlider(win3, 10, 50, 180, 65);
         stepCount->setMax(61);
         stepCount->setValue(3);
-        stepCount->modified = new TGCallbackAction(stepsModifiedAction);
+        stepCount->addEventHandler(TGEvent::Modified, new TGEventHandler(&DemoApp::stepsModifiedAction,this));
 
         new TGLabel(win3, 5, 80, "Object size:");
         sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
@@ -702,25 +717,23 @@ class DemoApp : public ExampleApplication
         TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
         cenda->center();
         cenda->setName("cenda");
-        cenda->clicked = new TGCallbackAction(cendaClicked);
+        cenda->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::cendaClicked,this));
+
         TGPopupMenu	*cendaMenu = new TGPopupMenu;
-        cendaMenu->addItem("No filtering", new TGCallbackAction(disableFiltering));
-        cendaMenu->addItem("Bilinear filtering",
-            new TGCallbackAction(enableFiltering));
+        cendaMenu->addItem("No filtering");
+        cendaMenu->addItem("Bilinear filtering");
         cenda->popupMenu = cendaMenu;
         win5->resizeable = true;
-        win5->resized = new TGCallbackAction(imageWinResizedAction);
+        win5->addEventHandler(TGEvent::Resized,new TGEventHandler(&DemoApp::imageWinResizedAction,this));
         //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
         win5->menu = new TGPopupMenu;
-        win5->menu->addItem("No filtering",
-            new TGCallbackAction(disableFiltering));
-        win5->menu->addItem("Bilinear filtering",
-            new TGCallbackAction(enableFiltering));
+        win5->menu->addItem("No filtering");
+        win5->menu->addItem("Bilinear filtering");
 
         win5->addEventHandler("controlResized",new TGEventHandler(&DemoApp::windowResized,this));
 
-        (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->clicked =
-            new TGCallbackAction(terminateAppAction);
+        (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->addEventHandler(TGEvent::MouseClicked,
+            new TGEventHandler(&DemoApp::terminateAppAction,this));
 
     }
 
