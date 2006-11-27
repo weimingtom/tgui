@@ -41,7 +41,7 @@ namespace TGUI
         TGControl*	        m_keyboardFocusControl;
         TGCursor*           m_mouseCursor;
         TGLogger*           m_logger;
-
+        TGColourTheme       m_theme;
 
         bool                m_gui_redraw;
 
@@ -65,6 +65,9 @@ namespace TGUI
         void setLogger(TGLogger* logger);
         TGLogger* getLogger();
         void logMessage(string message);
+
+        TGColourTheme getColourTheme() {return m_theme;};
+        void setColourTheme(TGColourTheme theme) {m_theme = theme;};
 
         TGFont* loadFont(string fontName,string resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};

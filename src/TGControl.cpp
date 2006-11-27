@@ -40,7 +40,14 @@ namespace TGUI
         m_focusedChild = 0;
         m_parent = parent;
         if (m_parent)
+        {
             m_parent->addChild(this);
+            setColourTheme(m_parent->getColourTheme());
+        }
+        else
+        {
+            setColourTheme(TGSystem::getSingleton().getColourTheme());
+        }
         performLayout = true;
         mouseOverControl = false;
         popupMenu = NULL;
@@ -401,8 +408,8 @@ namespace TGUI
         float sw = getRenderer()->getWidth();
         float sh = getRenderer()->getHeight();
 
-        int nx1 = sw * x1;
-        int ny1 = sh * y1;
+        int nx1 = sw * x;
+        int ny1 = sh * y;
         move(nx1,ny1);
     }
 
@@ -717,12 +724,6 @@ namespace TGUI
         drawLine(x2,y1,x2,y2,thickness);
         drawLine(x1,y2,x2,y2,thickness);
         drawLine(x1,y1,x1,y2,thickness);
-        /*
-        fillRect(x1,y1,x2,y1+thickness);
-        fillRect(x1,y1,x1+thickness,y2);
-        fillRect(x2-thickness,y1,x2,y2);
-        fillRect(x1,y2-thickness,x2,y2);
-        */
     }
 
     //-----------------------------------------------------------------------
@@ -1031,8 +1032,4 @@ namespace TGUI
 
         return rc;
     }
-
-
-
-
 }

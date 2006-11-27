@@ -50,6 +50,7 @@ namespace TGUI
         bool                m_isVisible;
         TGControlList       m_children;
         TGEventMap          m_handlers;
+        TGColourTheme       m_theme;
 
         TGColour            gColor;
 
@@ -160,6 +161,9 @@ namespace TGUI
         virtual void setPadding(int left, int top=-1, int right=-1,
             int bottom=-1);
         virtual void getClientSize(int &w, int &h);
+
+        TGColourTheme getColourTheme() {return m_theme;};
+        void setColourTheme(TGColourTheme theme) {m_theme = theme;};
 
         void setMouseTrackingControl(TGControl *control);
 
