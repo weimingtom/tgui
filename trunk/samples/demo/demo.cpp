@@ -742,6 +742,7 @@ class DemoApp : public ExampleApplication
 
         win5 = new TGWindow("Float Window");
         win5->setBounds(0.25f, 0.25f, 1.f, 0.75f);
+        win5->setPos(0.1f,0.1f);
 
     }
 

@@ -30,13 +30,18 @@ namespace TGUI
     class TGColourTheme
     {
         TGColour        m_base;
+        TGColour        m_baseText;
+        TGColour        m_focusedText;
+        TGColour        m_hilitedText;
 
     public:
-        TGColourTheme(TGColour baseColour);
+        TGColourTheme();
+        TGColourTheme(TGColour baseColour, TGColour baseTextColour);
         virtual ~TGColourTheme();
 
         TGColour getBase() {return m_base;};
-        void setBase(TGColour value);
+        TGColour getBaseText() {return m_baseText;};
+        void setBase(TGColour baseColour, TGColour baseTextColour);
 
     };
 }

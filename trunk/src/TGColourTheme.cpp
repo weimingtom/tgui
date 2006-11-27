@@ -26,12 +26,18 @@
 
 namespace TGUI
 {
+    TGColourTheme::TGColourTheme()
+    {
+        setBase(TGColour(100.f/255.f, 114.f/255.f, 115.f/255.f, 204.f/255.f),
+                TGColour(0.9f,0.9f,0.9f,1.0f));
+    }
+
     //-----------------------------------------------------------------------
     //                        T G C o l o u r T h e m e
     //-----------------------------------------------------------------------
-    TGColourTheme::TGColourTheme(TGColour baseColour)
+    TGColourTheme::TGColourTheme(TGColour baseColour, TGColour baseTextColour)
     {
-        setBase(baseColour);
+        setBase(baseColour,baseTextColour);
 
     }
 
@@ -45,8 +51,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t B a s e
     //-----------------------------------------------------------------------
-    void TGColourTheme::setBase(TGColour value)
+    void TGColourTheme::setBase(TGColour baseColour, TGColour baseTextColour)
     {
-        m_base = value;
+        m_base = baseColour;
+        m_baseText = baseTextColour;
     }
 } 
