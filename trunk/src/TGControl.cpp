@@ -784,5 +784,53 @@ namespace TGUI
         }
     }
 
+    //-----------------------------------------------------------------------
+    //                     a d d E v e n t H a n d l e r
+    //-----------------------------------------------------------------------
+    void TGControl::addEventHandler(string eventID, TGEventHandler* handler)
+    {
+
+        TGEventMap::iterator itr;
+        itr = m_handlers.find(eventID);
+
+        //
+        // if not found, then create a new handler map entry
+        //
+        if(itr == m_handlers.end())
+        {
+            m_handlers[eventID] = TGEventHandlers();
+            itr = m_handlers.find(eventID);
+        }
+
+        itr->second.push_back(handler);
+
+    }
+
+    //-----------------------------------------------------------------------
+    //                  r e m o v e E v e n t H a n d l e r
+    //-----------------------------------------------------------------------
+    void TGControl::removeEventHandler(string eventID, TGEventHandler* handler)
+    {
+    }
+
+    //-----------------------------------------------------------------------
+    //                    r e m o v e A l l H a n d l e r s
+    //-----------------------------------------------------------------------
+    void TGControl::removeAllHandlers(void* obj)
+    {
+    }
+
+    //-----------------------------------------------------------------------
+    //                         f i r e E v e n t
+    //-----------------------------------------------------------------------
+    bool TGControl::fireEvent(string eventID)
+    {
+        bool rc=false;
+
+        return rc;
+    }
+
+
+
 
 }

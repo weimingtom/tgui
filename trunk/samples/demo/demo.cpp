@@ -554,9 +554,14 @@ class DemoApp : public ExampleApplication
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(true);
+        mFrameListener->showDebugOverlay(false);
         mRoot->addFrameListener(mFrameListener);
         ms = ((DemoListener*)mFrameListener)->getMouseState();
+    }
+
+    bool windowResized(const TGEventArgs& args)
+    {
+        return true;
     }
 
     bool configure(void)
@@ -712,11 +717,10 @@ class DemoApp : public ExampleApplication
         win5->menu->addItem("Bilinear filtering",
             new TGCallbackAction(enableFiltering));
 
+        win5->addEventHandler("controlResized",new TGEventHandler(&DemoApp::windowResized,this));
+
         (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->clicked =
             new TGCallbackAction(terminateAppAction);
-
-
-
 
     }
 
