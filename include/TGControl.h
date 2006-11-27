@@ -40,12 +40,15 @@ namespace TGUI
     typedef std::list<TGControl *> TGControlList;
     typedef std::list<TGControl *>::iterator TGControlListItr;
     typedef std::list<TGControl *>::reverse_iterator TGControlListRevItr;
+    typedef std::list<TGEventHandler *> TGEventHandlers;
+    typedef std::map<string, TGEventHandlers> TGEventMap;
 
     class TGControl
     {
     protected:
         bool                m_isVisible;
         TGControlList       m_children;
+        TGEventMap          m_handlers;
 
         TGColour            gColor;
 
@@ -104,6 +107,11 @@ namespace TGUI
         virtual void removeChild(TGControl *child);
         virtual void removeAllChildren();
         virtual void layout(){};
+
+        bool fireEvent(string eventID);
+        void addEventHandler(string eventID, TGEventHandler* handler);
+        void removeEventHandler(string eventID, TGEventHandler* handler);
+        void removeAllHandlers(void* obj);
 
         virtual TGControl *childAt(float x, float y);
 

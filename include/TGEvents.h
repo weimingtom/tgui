@@ -29,8 +29,61 @@ namespace TGUI
 {
     class TGControl;
 
+    class TGEventArgs
+    {
+    public:
+        TGEventArgs(void) : m_handled(false) {}
+        virtual ~TGEventArgs(void) {}
+        bool	m_handled;		
+    };
+
+    class SlotFunctorBase
+    {
+    public:
+        virtual ~SlotFunctorBase() {};
+        virtual bool operator()(const TGEventArgs& args) = 0;
+    };
+
+    template<typename T>
+    class MemberFunctionSlot : public SlotFunctorBase
+    {
+    public:
+        //! Member function slot type.
+        typedef bool(T::*MemberFunctionType)(const TGEventArgs&);
+
+        MemberFunctionSlot(MemberFunctionType func, T* obj) :
+        d_function(func),
+            d_object(obj)
+        {}
+
+        virtual bool operator()(const TGEventArgs& args)
+        {
+            return (d_object->*d_function)(args);
+        }
+
+    private:
+        MemberFunctionType d_function;
+        T* d_object;
+    };
+
+
+
     class TGEventHandler
     {
+    public:
+
+        template<typename T>
+        TGEventHandler(bool (T::*function)(const TGEventArgs&), T* obj) :
+            d_functor_impl(new MemberFunctionSlot<T>(function, obj))
+        {}
+
+        virtual bool operator()(const TGEventArgs& args)
+        {
+            return (*d_functor_impl)(args);
+        }
+
+    private:
+        SlotFunctorBase* d_functor_impl;
     };
 
     class TGAction
@@ -46,8 +99,6 @@ namespace TGUI
     };
 
     typedef void    (*TGCallbackActionFunc)(TGControl *sender);
-
-    typedef void    (TGEventHandler::*TGCallbackActionFunc2)(TGControl *sender);
 
     class TGCallbackAction : public TGAction
     {

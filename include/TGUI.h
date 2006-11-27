@@ -60,7 +60,6 @@ namespace TGUI
 using std::string;
 
 
-#include <tgevent.h>
 #include <tgcolour.h>
 #include <tgcolourtheme.h>
 #include <tgvector.h>
@@ -68,7 +67,7 @@ using std::string;
 #include <tgrenderer.h>
 #include <tgtexture.h>
 #include <tgfont.h>
-#include <tgactions.h>
+#include <tgevents.h>
 #include <tgdataman.h>
 #include <tgcontrol.h>
 #include <tgscreen.h>
