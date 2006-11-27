@@ -64,17 +64,12 @@ namespace TGUI
         bool                performLayout;
         bool                mouseOverControl;
 
-        TGAction*           moved;
         TGControl*          m_focusedChild;
 
     public:
-        TGAction*           resized;
         struct TGPopupMenu* popupMenu;
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
-        TGAction*           selected;
-        TGAction*           clicked;
-        TGAction*           modified;
         float               xShift;
         float               yShift;
         float               x1;
@@ -108,7 +103,7 @@ namespace TGUI
         virtual void removeAllChildren();
         virtual void layout(){};
 
-        bool fireEvent(string eventID);
+        bool fireEvent(string eventID,TGEventArgs& args);
         void addEventHandler(string eventID, TGEventHandler* handler);
         void removeEventHandler(string eventID, TGEventHandler* handler);
         void removeAllHandlers(void* obj);

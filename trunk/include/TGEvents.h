@@ -29,41 +29,68 @@ namespace TGUI
 {
     class TGControl;
 
+    class TGEvent
+    {
+    public:
+        static const string Resized;
+        static const string Moved;
+        static const string Scrolled;
+        static const string Modified;
+        static const string Selected;
+
+        static const string MouseEnter;
+        static const string MouseLeave;
+        static const string MouseDown;
+        static const string MouseUp;
+        static const string MouseMove;
+        static const string MouseClicked;
+
+        static const string MenuPopup;
+    };
+
     class TGEventArgs
     {
     public:
-        TGEventArgs(void) : m_handled(false) {}
+        TGEventArgs(TGControl* control) : m_control(control) {}
         virtual ~TGEventArgs(void) {}
-        bool	m_handled;		
+        TGControl*      m_control;
+        string          m_eventID;
     };
 
-    class SlotFunctorBase
+    class TGMouseEventArgs : public TGEventArgs
     {
     public:
-        virtual ~SlotFunctorBase() {};
+        TGMouseEventArgs(TGControl* control) : TGEventArgs(control) {}
+
+    };
+
+    class TGFunctor
+    {
+    public:
+        virtual ~TGFunctor() {};
         virtual bool operator()(const TGEventArgs& args) = 0;
     };
 
     template<typename T>
-    class MemberFunctionSlot : public SlotFunctorBase
+    class TGMemberFunction : public TGFunctor
     {
     public:
         //! Member function slot type.
-        typedef bool(T::*MemberFunctionType)(const TGEventArgs&);
+        typedef bool(T::*TGMemberFunctionType)(const TGEventArgs&);
 
-        MemberFunctionSlot(MemberFunctionType func, T* obj) :
-        d_function(func),
-            d_object(obj)
+        TGMemberFunction(TGMemberFunctionType func, T* obj) :
+        m_function(func),
+            m_object(obj)
         {}
 
         virtual bool operator()(const TGEventArgs& args)
         {
-            return (d_object->*d_function)(args);
+            return (m_object->*m_function)(args);
         }
 
     private:
-        MemberFunctionType d_function;
-        T* d_object;
+        TGMemberFunctionType m_function;
+        T*                   m_object;
     };
 
 
@@ -74,49 +101,17 @@ namespace TGUI
 
         template<typename T>
         TGEventHandler(bool (T::*function)(const TGEventArgs&), T* obj) :
-            d_functor_impl(new MemberFunctionSlot<T>(function, obj))
+            m_functor(new TGMemberFunction<T>(function, obj))
         {}
 
         virtual bool operator()(const TGEventArgs& args)
         {
-            return (*d_functor_impl)(args);
+            return (*m_functor)(args);
         }
 
     private:
-        SlotFunctorBase* d_functor_impl;
+        TGFunctor* m_functor;
     };
 
-    class TGAction
-    {
-        bool	        m_autoDelete;
-
-    public:
-        TGAction();
-        virtual ~TGAction();
-        bool getAutoDelete() {return m_autoDelete;};            
-
-        virtual void run(TGControl *sender){}
-    };
-
-    typedef void    (*TGCallbackActionFunc)(TGControl *sender);
-
-    class TGCallbackAction : public TGAction
-    {
-        TGCallbackActionFunc      m_func;
-
-    public:
-
-        TGCallbackAction(TGCallbackActionFunc cbFunc);
-        virtual void run(TGControl *sender);
-        TGCallbackActionFunc getFunc() {return m_func;};
-    };
-
-#define BSGUI_FREEACTION(a) { \
-    if ((a) && (a)->getAutoDelete()) \
-    delete a; }
-#define BSGUI_RUNACTION(a) { \
-    if (a) (a)->run(this); }
-#define BSGUI_RUNACTION_OF(o,a) { \
-    if (a) (a)->run(o); }
 }
 #endif

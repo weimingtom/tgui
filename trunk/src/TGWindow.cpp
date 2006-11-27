@@ -34,7 +34,6 @@ namespace TGUI
         moving = resizing = resizeable = false;
         minWidth = 50;
         minHeight = 50;
-        resized = NULL;
         place(10, 10, 200, 160);
         this->caption = caption;
         padLeft = padRight = padBottom = 2;

@@ -27,35 +27,17 @@
 namespace TGUI
 {
 
-    //-----------------------------------------------------------------------
-    //                           T G A c t i o n
-    //-----------------------------------------------------------------------
-    TGAction::TGAction()
-    {
-        m_autoDelete = true;
-    }
+    const string TGEvent::Resized("resized");
+    const string TGEvent::Moved("moved");
+    const string TGEvent::Scrolled("scrolled");
+    const string TGEvent::Modified("modified");
+    const string TGEvent::Selected("selected");
+    const string TGEvent::MouseEnter("mouseEnter");
+    const string TGEvent::MouseLeave("mouseLeave");
+    const string TGEvent::MouseDown("mouseDown");
+    const string TGEvent::MouseUp("mouseUp");
+    const string TGEvent::MouseMove("mouseMove");
+    const string TGEvent::MouseClicked("clicked");
+    const string TGEvent::MenuPopup("menuPopup");
 
-    //-----------------------------------------------------------------------
-    //                          ~ T G A c t i o n
-    //-----------------------------------------------------------------------
-    TGAction::~TGAction()
-    {
-    }
-
-    //-----------------------------------------------------------------------
-    //                       C a l l b a c k A c t i o n
-    //-----------------------------------------------------------------------
-    TGCallbackAction::TGCallbackAction(TGCallbackActionFunc cbFunc)
-    {
-        m_func = cbFunc;
-    }
-
-    //-----------------------------------------------------------------------
-    //                               r u n
-    //-----------------------------------------------------------------------
-   void TGCallbackAction::run(TGControl *sender)
-    {
-        if (m_func)
-            m_func(sender);
-    }
 }

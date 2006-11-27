@@ -29,15 +29,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M e n u I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem::TGMenuItem(TGControl *owner, string caption, TGAction *clickedAction,
-        TGImage *image)
-        : TGControl(owner)
+    TGMenuItem::TGMenuItem(TGControl *owner, string caption, TGImage *image) : TGControl(owner)
     {
         this->caption = caption;
         this->image = image;
-        clicked = clickedAction;
         subMenu = NULL;
-        popup = NULL;
     }
 
     //-----------------------------------------------------------------------
@@ -54,14 +50,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGMenuItem::addItem(string caption, TGAction *clicked, TGImage *image)
+    TGMenuItem *TGMenuItem::addItem(string caption, TGImage *image)
     {
         if (!subMenu)
         {
             subMenu = new TGPopupMenu();
             subMenu->rootMenuControl = menuControl;
         }
-        return subMenu->addItem(caption, clicked, image);
+        return subMenu->addItem(caption, image);
     }
 
     //-----------------------------------------------------------------------
@@ -125,11 +121,11 @@ namespace TGUI
             }
         }
 
-        if (subMenu || popup)
+        if (subMenu)
         {
             int     x1, y1, x2, y2;
             getBounds(x1, y1, x2, y2);
-            BSGUI_RUNACTION(popup);
+            fireEvent(TGEvent::MenuPopup,TGEventArgs(subMenu->menu));
             subMenu->run(x2 - 10, y1 + 5);
         }
     }
@@ -140,7 +136,7 @@ namespace TGUI
     void TGMenuItem::onMouseUp(int x, int y, int b)
     {
         if (b == LeftButton)
-            BSGUI_RUNACTION(clicked);
+            fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
         if (b < 4)
             menuControl->popupMenu->cancel();
     }
@@ -268,9 +264,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGPopupMenu::addItem(string caption, TGAction *clicked, TGImage *image)
+    TGMenuItem *TGPopupMenu::addItem(string caption,TGImage *image)
     {
-        TGMenuItem        *item = new TGMenuItem(menu, caption, clicked, image);
+        TGMenuItem        *item = new TGMenuItem(menu, caption, image);
         item->menuControl = rootMenuControl?rootMenuControl:menu;
         menu->calcSize();
         menu->layout();

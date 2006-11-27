@@ -33,6 +33,9 @@ namespace TGUI
         string          m_caption;
         string          m_message; 
         TGWindow*       m_window;
+    private:
+        bool closeMessageBox(const TGEventArgs& args);
+
     public:
         TGMessagebox(string msg, string caption="Message");
         virtual ~TGMessagebox();

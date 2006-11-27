@@ -39,6 +39,13 @@ namespace TGUI
 
         virtual string getFilename();
         virtual void reloadFiles();
+
+        bool cancelFileBrowserAction(const TGEventArgs& args);
+        bool closeFileBrowserAction(const TGEventArgs& args);
+        bool selectFileBrowserAction(const TGEventArgs& args);
+
+
+
     };
 }
 

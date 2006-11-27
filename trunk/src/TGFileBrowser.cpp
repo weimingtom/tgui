@@ -30,42 +30,45 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //               c a n c e l F i l e B r o w s e r A c t i o n
     //-----------------------------------------------------------------------
-    static void cancelFileBrowserAction(TGControl *sender)
+    bool TGFileBrowser::cancelFileBrowserAction(const TGEventArgs& args)
     {
-        delete sender->m_parent;
+        delete args.m_control->m_parent;
+        return true;
     }
 
     //-----------------------------------------------------------------------
     //                c l o s e F i l e B r o w s e r A c t i o n
     //-----------------------------------------------------------------------
-    static void closeFileBrowserAction(TGControl *sender)
+    bool TGFileBrowser::closeFileBrowserAction(const TGEventArgs& args)
     {
-        TGFileBrowser	*browser = (TGFileBrowser*)sender->m_parent;
+        TGFileBrowser	*browser = (TGFileBrowser*)args.m_control->m_parent;
         if (browser->filename->getText()[0] == '/')
         {
             string newPath;
             if (!browser->filename->getText().compare("/."))
             {
                 browser->reloadFiles();
-                return;
+                return true;
             }
             newPath = browser->path + "/";
             newPath += browser->filename->getText();
             browser->path = newPath;
             browser->reloadFiles();
-            return;
+            return true;
         }
-        BSGUI_RUNACTION_OF(browser, browser->selected);
+        fireEvent(TGEvent::Selected, TGEventArgs(this));
         delete browser;
+        return true;
     }
 
     //-----------------------------------------------------------------------
     //               s e l e c t F i l e B r o w s e r A c t i o n
     //-----------------------------------------------------------------------
-    static void selectFileBrowserAction(TGControl *sender)
+    bool TGFileBrowser::selectFileBrowserAction(const TGEventArgs& args)
     {
-        TGFileBrowser	*browser = (TGFileBrowser*)sender->m_parent;
+        TGFileBrowser	*browser = (TGFileBrowser*)args.m_control->m_parent;
         browser->filename->setText(browser->files->active->getText());
+        return true;
     }
 
     //-----------------------------------------------------------------------
@@ -87,14 +90,14 @@ namespace TGUI
 
         l = new TGLabel(this, 5, 5, "Files and directories:");
         files = new TGListbox(this, 5, l->y2 + 5, w-10, h-40);
-        files->modified = new TGCallbackAction(selectFileBrowserAction);
+        files->addEventHandler(TGEvent::Modified,new TGEventHandler(&TGFileBrowser::selectFileBrowserAction,this));
         l = new TGLabel(this, 5, files->y2+9, "Filename:");
         filename = new TGInputbox(this, l->x2 + 5, files->y2 + 5, w-130,
             files->y2 + 30);
         b = new TGButton(this, w-125, files->y2 + 5, w-70, files->y2 + 30, "Ok");
-        b->clicked = new TGCallbackAction(closeFileBrowserAction);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGFileBrowser::closeFileBrowserAction,this));
         b = new TGButton(this, w-65, files->y2 + 5, w-10, files->y2+30, "Cancel");
-        b->clicked = new TGCallbackAction(cancelFileBrowserAction);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGFileBrowser::cancelFileBrowserAction,this));
 
         reloadFiles();
 

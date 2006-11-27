@@ -26,9 +26,10 @@
 namespace TGUI
 {
 
-    static void closeMessageBox(TGControl *sender)
+    bool TGMessagebox::closeMessageBox(const TGEventArgs& args)
     {
-        delete sender->m_parent;
+        delete args.m_control->m_parent;
+        return true;
     }
 
 
@@ -44,7 +45,7 @@ namespace TGUI
         b->move(0, l->y2 + 15);
         b->center(true, false);
         m_window->resize(m_window->x2 - m_window->x1 + 1, m_window->y2 - m_window->y1 + 16 + b->y2 - b->y1);
-        b->clicked = new TGCallbackAction(closeMessageBox);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGMessagebox::closeMessageBox,this));
         m_window->center();
         m_window->hide();
     }

@@ -32,28 +32,23 @@ namespace TGUI
     {
         TGData	data;
         TGData	*dataSource;
-        TGControl	*control;
+        TGControl	*m_control;
 
     public:
 
-        TGAction	*modified;
-        TGAction	*requested;
-
         TGDataManager()
         {
-            control = NULL;
+            m_control = NULL;
             dataSource = &data;
-            modified = requested = NULL;
         }
         ~TGDataManager()
         {
-            BSGUI_FREEACTION(modified);
-            BSGUI_FREEACTION(requested);
         }
 
         void setControl(TGControl *control)
         {
-            this->control = control;
+            m_control = control;
+            
         }
 
         void setDataSource(TGData *place)
@@ -67,12 +62,13 @@ namespace TGUI
         void set(TGData newData)
         {
             *dataSource = newData;
-            BSGUI_RUNACTION_OF(control, modified);
+
+            if(m_control)
+                m_control->fireEvent(TGEvent::Modified,TGEventArgs(m_control));
         }
 
         TGData get()
         {
-            BSGUI_RUNACTION_OF(control, requested);
             return *dataSource;
         }
     };

@@ -37,7 +37,6 @@ namespace TGUI
         minimumWidth = 16;
         itemHeight = stringHeight() + 5;
         data = NULL;
-        selected = NULL;
     }
 
     //-----------------------------------------------------------------------
@@ -45,7 +44,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGListboxItem::~TGListboxItem()
     {
-        BSGUI_FREEACTION(selected);
     }
 
     //-----------------------------------------------------------------------
@@ -93,8 +91,8 @@ namespace TGUI
         if (box->active != this)
         {
             box->active = this;
-            BSGUI_RUNACTION(selected);
-            BSGUI_RUNACTION_OF(box, box->modified);
+            fireEvent(TGEvent::Selected,TGEventArgs(this));
+            box->fireEvent(TGEvent::Modified,TGEventArgs(box));
         }
         box->focus();
     }
@@ -192,8 +190,8 @@ namespace TGUI
         if (!item || item == active)
             return;
         active = item;
-        BSGUI_RUNACTION_OF(active, active->selected);
-        BSGUI_RUNACTION(modified);
+        active->fireEvent(TGEvent::Selected,TGEventArgs(active));
+        fireEvent(TGEvent::Modified,TGEventArgs(this));
     }
 
     //-----------------------------------------------------------------------

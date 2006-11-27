@@ -77,7 +77,7 @@ namespace TGUI
     void TGSlider::setValue(float newValue)
     {
         value.set(newValue);
-        BSGUI_RUNACTION(modified);
+        fireEvent(TGEvent::Modified,TGEventArgs(this));
     }
 
     //-----------------------------------------------------------------------
@@ -132,7 +132,7 @@ namespace TGUI
                 value.set(max);
 
         if (value.get() != oldValue)
-            BSGUI_RUNACTION(modified);
+            fireEvent(TGEvent::Modified,TGEventArgs(this));
     }
 
     //-----------------------------------------------------------------------

@@ -46,7 +46,6 @@ namespace TGUI
         popupMenu = NULL;
         exclusiveChild = NULL;
         m_isVisible = true;
-        clicked = modified = selected = moved = resized = NULL;
     }
 
     //-----------------------------------------------------------------------
@@ -64,11 +63,6 @@ namespace TGUI
             m_parent->removeChild(this);
         }
 
-        BSGUI_FREEACTION(clicked);
-        BSGUI_FREEACTION(modified);
-        BSGUI_FREEACTION(selected);
-        BSGUI_FREEACTION(moved);
-        BSGUI_FREEACTION(resized);
     }
 
     //-----------------------------------------------------------------------
@@ -311,10 +305,10 @@ namespace TGUI
         if (x2 - x1 != oldW || y2 - y1 != oldH)
         {
             performLayout = true;
-            BSGUI_RUNACTION(resized);
+            fireEvent(TGEvent::Resized,TGEventArgs(this));
         }
         if (x1 != oldX1 || y1 != oldY1)
-            BSGUI_RUNACTION(moved);
+            fireEvent(TGEvent::Moved,TGEventArgs(this));
     }
 
     //-----------------------------------------------------------------------
@@ -454,7 +448,7 @@ namespace TGUI
         {
             setKeyboardFocusControl(this);
             focus();
-            BSGUI_RUNACTION(clicked);
+            fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
         }
         if (b == RightButton)
         {
@@ -823,9 +817,33 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         f i r e E v e n t
     //-----------------------------------------------------------------------
-    bool TGControl::fireEvent(string eventID)
+    bool TGControl::fireEvent(string eventID,TGEventArgs& args)
     {
         bool rc=false;
+
+        args.m_eventID = eventID;
+
+        TGEventMap::iterator itr;
+        itr = m_handlers.find(eventID);
+
+        //
+        // map entry?
+        //
+        if(itr == m_handlers.end())
+            return false;
+
+        TGEventHandlers::iterator eitr = itr->second.begin();
+
+        while(eitr != itr->second.end())
+        {
+            TGEventHandler* eh = *eitr;
+
+            rc = (*eh)(args);
+            if(rc)
+                return true;
+
+            ++eitr;
+        }
 
         return rc;
     }
