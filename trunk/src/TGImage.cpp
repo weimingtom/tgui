@@ -63,7 +63,7 @@ namespace TGUI
             x2 = x1 + 9;
             y2 = y1 + 9;
         }
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
     }
 
     //-----------------------------------------------------------------------
@@ -78,7 +78,7 @@ namespace TGUI
         x2 = x1 + m_width - 1;
         y2 = y1 + m_height - 1;
 
-        place(x1,y1,x2,y2);
+        setBounds(x1,y1,x2,y2);
     }
 
 

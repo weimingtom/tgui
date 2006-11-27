@@ -215,7 +215,7 @@ namespace TGUI
         {
             TGListboxItem* lbi = (TGListboxItem*)(*itr);
             lbi->index = i++;
-            lbi->place(0, y, w, y + lbi->itemHeight - 1);
+            lbi->setBounds(0, y, w, y + lbi->itemHeight - 1);
             y += lbi->itemHeight;
         }
 

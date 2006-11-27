@@ -282,9 +282,49 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                               p l a c e
+    //                          s e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGControl::place(float x1, float y1, float x2, float y2)
+    void TGControl::setBounds(float fx1, float fy1, float fx2, float fy2)
+    {
+        int x1,x2,y1,y2;
+
+        float sw = getRenderer()->getWidth();
+        float sh = getRenderer()->getHeight();
+
+        x1 = sw * fx1;
+        x2 = sw * fx2;
+        y1 = sh * fy1;
+        y2 = sh * fy2;
+
+        int	oldX1 = this->x1;
+        int	oldY1 = this->y1;
+        int	oldW = this->x2 - this->x1;
+        int	oldH = this->y2 - this->y1;
+        if (x2 - x1 + 1 < minWidth)
+            x2 = x1 + minWidth - 1;
+        if (y2 - y1 + 1 < minHeight)
+            y2 = y1 + minHeight - 1;
+        if (x2 - x1 + 1 > maxWidth)
+            x2 = x1 + maxWidth - 1;
+        if (y2 - y1 + 1 > maxHeight)
+            y2 = y1 + maxHeight - 1;
+        this->x1 = x1;
+        this->y1 = y1;
+        this->x2 = x2;
+        this->y2 = y2;
+        if (x2 - x1 != oldW || y2 - y1 != oldH)
+        {
+            performLayout = true;
+            fireEvent(TGEvent::Resized,TGEventArgs(this));
+        }
+        if (x1 != oldX1 || y1 != oldY1)
+            fireEvent(TGEvent::Moved,TGEventArgs(this));
+    }
+
+    //-----------------------------------------------------------------------
+    //                          s e t B o u n d s
+    //-----------------------------------------------------------------------
+    void TGControl::setBounds(int x1, int y1, int x2, int y2)
     {
         int	oldX1 = this->x1;
         int	oldY1 = this->y1;
@@ -312,12 +352,58 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                              s e t P o s
+    //-----------------------------------------------------------------------
+    void TGControl::setPos(int x1, int y1)
+    {
+        move(x1,y1);
+    }
+
+    //-----------------------------------------------------------------------
+    //                              s e t P o s
+    //-----------------------------------------------------------------------
+    void TGControl::setPos(float x1, float y1)
+    {
+        move(x1,y1);
+
+    }
+
+    //-----------------------------------------------------------------------
+    //                              g e t P o s
+    //-----------------------------------------------------------------------
+    void TGControl::getPos(int &x1, int &y1)
+    {
+        x1 = this->x1;
+        y1 = this->y1;
+    }
+
+    //-----------------------------------------------------------------------
+    //                              g e t P o s
+    //-----------------------------------------------------------------------
+    void TGControl::getPos(float &x1, float &y1)
+    {
+    }
+
+    //-----------------------------------------------------------------------
     //                              m o v e
     //-----------------------------------------------------------------------
     void TGControl::move(int x, int y)
     {
         int	dx = x2 - x1, dy = y2 - y1;
-        place(x, y, x + dx, y + dy);
+        setBounds(x, y, x + dx, y + dy);
+    }
+
+    //-----------------------------------------------------------------------
+    //                              m o v e
+    //-----------------------------------------------------------------------
+    void TGControl::move(float x, float y)
+    {
+        float sw = getRenderer()->getWidth();
+        float sh = getRenderer()->getHeight();
+
+        int nx1 = sw * x1;
+        int ny1 = sh * y1;
+        move(nx1,ny1);
     }
 
     //-----------------------------------------------------------------------
@@ -325,7 +411,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::resize(int width, int height)
     {
-        place(x1, y1, x1 + width - 1, y1 + height - 1);
+        setBounds(x1, y1, x1 + width - 1, y1 + height - 1);
     }
 
     //-----------------------------------------------------------------------
@@ -370,6 +456,96 @@ namespace TGUI
         translate(x1, y1);
         translate(x2, y2);
     }
+
+    //-----------------------------------------------------------------------
+    //                           g e t B o u n d s
+    //-----------------------------------------------------------------------
+    void TGControl::getBounds(float &x1, float &y1, float &x2, float &y2)
+    {
+        int ix1,iy1,ix2,iy2;
+        getBounds(ix1,iy1,ix2,iy2);
+        float sw = getRenderer()->getWidth();
+        float sh = getRenderer()->getHeight();
+
+        x1 = (float)ix1 * sw;
+        x2 = (float)ix2 * sw;
+        y1 = (float)iy1 * sh;
+        y2 = (float)iy2 * sh;
+    }
+
+    //-----------------------------------------------------------------------
+    //                             s e t W i d t h
+    //-----------------------------------------------------------------------
+    void TGControl::setWidth(int width)
+    {
+        setBounds(x1,y1,x1+width,y2);
+    }
+
+    //-----------------------------------------------------------------------
+    //                             s e t W i d t h
+    //-----------------------------------------------------------------------
+    void TGControl::setWidth(float width)
+    {
+        float fx1,fx2,fy1,fy2;
+        getBounds(fx1,fy1,fx2,fy2);
+        setBounds(fx1,fy1,fx1+width,fy2);
+    }
+
+    //-----------------------------------------------------------------------
+    //                             g e t W i d t h
+    //-----------------------------------------------------------------------
+    void TGControl::getWidth(int &width)
+    {
+        width = x2-x1;
+    }
+
+    //-----------------------------------------------------------------------
+    //                             g e t W i d t h
+    //-----------------------------------------------------------------------
+    void TGControl::getWidth(float &width)
+    {
+        float fx1,fx2,fy1,fy2;
+        getBounds(fx1,fy1,fx2,fy2);
+        width = fx2-fx1;
+    }
+
+    //-----------------------------------------------------------------------
+    //                            s e t H e i g h t
+    //-----------------------------------------------------------------------
+    void TGControl::setHeight(int height)
+    {
+        setBounds(x1,y1,x2,y1+height);
+    }
+
+    //-----------------------------------------------------------------------
+    //                            s e t H e i g h t
+    //-----------------------------------------------------------------------
+    void TGControl::setHeight(float height)
+    {
+        float fx1,fx2,fy1,fy2;
+        getBounds(fx1,fy1,fx2,fy2);
+        setBounds(fx1,fy1,fx2,fy1+height);
+    }
+
+    //-----------------------------------------------------------------------
+    //                            g e t H e i g h t
+    //-----------------------------------------------------------------------
+    void TGControl::getHeight(int &height)
+    {
+        height = y2-y1;
+    }
+
+    //-----------------------------------------------------------------------
+    //                            g e t H e i g h t
+    //-----------------------------------------------------------------------
+    void TGControl::getHeight(float &height)
+    {
+        float fx1,fx2,fy1,fy2;
+        getBounds(fx1,fy1,fx2,fy2);
+        height = fy2-fy1;
+    }
+
+
 
     //-----------------------------------------------------------------------
     //                           s e t P a d d i n g
@@ -812,6 +988,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::removeAllHandlers(void* obj)
     {
+    }
+
+    //-----------------------------------------------------------------------
+    //                          l o g M e s s a g e
+    //-----------------------------------------------------------------------
+    void TGControl::logMessage(string message)
+    {
+        TGSystem::getSingleton().logMessage(message);
     }
 
     //-----------------------------------------------------------------------

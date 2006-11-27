@@ -29,7 +29,7 @@ namespace TGUI
 
     void TGLogger::logMessage(string message)
     {
-
+        Ogre::LogManager::getSingleton().logMessage(message);
     }
 
 }

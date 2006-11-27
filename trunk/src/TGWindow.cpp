@@ -34,7 +34,7 @@ namespace TGUI
         moving = resizing = resizeable = false;
         minWidth = 50;
         minHeight = 50;
-        place(10, 10, 200, 160);
+        setBounds(10, 10, 200, 160);
         this->caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
@@ -50,7 +50,7 @@ namespace TGUI
         moving = resizing = resizeable = false;
         minWidth = 1;
         minHeight = 1;
-        place(10, 10, 200, 160);
+        setBounds(10, 10, 200, 160);
         this->caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
