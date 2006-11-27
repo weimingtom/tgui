@@ -1,6 +1,27 @@
-/*
-** Bad Sector's OpenGL GUI **DEMO**
-*/
+//-----------------------------------------------------------------------------
+// This source file is part of TGUI (Tiny GUI)
+//
+// Copyright (c) 2006 Tubras Software, Ltd
+// Also see acknowledgements in Readme.html
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy 
+// of this software and associated documentation files (the "Software"), to deal 
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+// of the Software, and to permit persons to whom the Software is furnished to 
+// do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all 
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+// THE SOFTWARE.
+//-----------------------------------------------------------------------------
 #include <tgui.h>
 #include <ExampleApplication.h>
 #include <ExampleFrameListener.h>
@@ -43,7 +64,7 @@ w->place(10, 10, 300, 100);
 w->move(rand()%600+30, rand()%500+30);
 
 TGButton	*button = new TGButton(w, 10, 20, 280, 55, "Close me");
-button->clicked = new CallbackAction(closeWindowAction);
+button->clicked = new TGCallbackAction(closeWindowAction);
 }
 
 
@@ -124,7 +145,7 @@ printf("File selected: %s\n", fname.c_str());
 void selectFileAction(TGControl *sender)
 {
 TGFileBrowser	*browser = new TGFileBrowser("Select File");
-browser->selected = new CallbackAction(fileSelectedAction);
+browser->selected = new TGCallbackAction(fileSelectedAction);
 }
 
 void aboutBoxAction(TGControl *sender)
@@ -233,7 +254,7 @@ new TGLabel(win3, 5, 25, "Object resolution:");
 stepCount = new TGSlider(win3, 10, 50, 180, 65);
 stepCount->setMax(61);
 stepCount->setValue(3);
-stepCount->modified = new CallbackAction(stepsModifiedAction);
+stepCount->modified = new TGCallbackAction(stepsModifiedAction);
 
 new TGLabel(win3, 5, 80, "Object size:");
 sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
@@ -258,7 +279,7 @@ win4->center();
 win4->move(win4->x1, win4->y1 + 160);
 
 TGModelView	*mview = new TGModelView(win4, 10, 10, 175, 110);
-mview->renderView = new CallbackAction(renderObjectAction);
+mview->renderView = new TGCallbackAction(renderObjectAction);
 
 
 TGWindow	*win5 = new TGWindow("TGImage control");
@@ -267,28 +288,28 @@ win5->move(win5->x1, win5->y1 - 160);
 TGImage	*cenda = new TGImage(win5, 0, 0, "demo/cenda.bmp");
 cenda->center();
 cenda->setName("cenda");
-cenda->clicked = new CallbackAction(cendaClicked);
+cenda->clicked = new TGCallbackAction(cendaClicked);
 TGPopupMenu	*cendaMenu = new TGPopupMenu;
-cendaMenu->addItem("No filtering", new CallbackAction(disableFiltering));
+cendaMenu->addItem("No filtering", new TGCallbackAction(disableFiltering));
 cendaMenu->addItem("Bilinear filtering",
-new CallbackAction(enableFiltering));
+new TGCallbackAction(enableFiltering));
 cenda->popupMenu = cendaMenu;
 win5->resizeable = true;
-win5->resized = new CallbackAction(imageWinResizedAction);
+win5->resized = new TGCallbackAction(imageWinResizedAction);
 //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
 win5->menu = new TGPopupMenu;
 win5->menu->addItem("No filtering",
-new CallbackAction(disableFiltering));
+new TGCallbackAction(disableFiltering));
 win5->menu->addItem("Bilinear filtering",
-new CallbackAction(enableFiltering));
+new TGCallbackAction(enableFiltering));
 
 (new TGButton(screen, 750, 5, 795, 30, "Quit"))->clicked =
-new CallbackAction(terminateAppAction);
+new TGCallbackAction(terminateAppAction);
 
 
 TGPopupMenu       *mainMenu = new TGPopupMenu;
 mainMenu->addItem("Select file...",
-new CallbackAction(selectFileAction), NULL);
+new TGCallbackAction(selectFileAction), NULL);
 //new TGBitmap(INTERNALBMP_OPEN));
 TGMenuItem	*sub = mainMenu->addItem("Submenu test", NULL);
 sub->addItem("Sub menu item 1", NULL);
@@ -297,10 +318,10 @@ sub->addItem("Sub menu item 3", NULL);
 sub->addItem("-", NULL);
 sub->addItem("Sub sub menu", NULL)->addItem("Hello!", NULL);
 sub->addItem("Dynamic submenu", NULL)->popup =
-new CallbackAction(createDynamicSubmenuAction);
-mainMenu->addItem("About...", new CallbackAction(aboutBoxAction));
+new TGCallbackAction(createDynamicSubmenuAction);
+mainMenu->addItem("About...", new TGCallbackAction(aboutBoxAction));
 mainMenu->addItem("-", NULL);
-mainMenu->addItem("Quit", new CallbackAction(terminateAppAction),NULL);
+mainMenu->addItem("Quit", new TGCallbackAction(terminateAppAction),NULL);
 //	new TGBitmap(INTERNALBMP_QUIT));
 
 screen1 = screen;
@@ -312,13 +333,13 @@ screen1->popupMenu = screen2->popupMenu = mainMenu;
 
 
 (new TGButton(screen, 5, 5, 105, 30, "TGScreen 1"))->clicked =
-new CallbackAction(activateScreen1);
+new TGCallbackAction(activateScreen1);
 (new TGButton(screen, 110, 5, 210, 30, "TGScreen 2"))->clicked =
-new CallbackAction(activateScreen2);
+new TGCallbackAction(activateScreen2);
 (new TGButton(screen2, 5, 5, 105, 30, "TGScreen 1"))->clicked =
-new CallbackAction(activateScreen1);
+new TGCallbackAction(activateScreen1);
 (new TGButton(screen2, 110, 5, 210, 30, "TGScreen 2"))->clicked =
-new CallbackAction(activateScreen2);
+new TGCallbackAction(activateScreen2);
 
 fps = new TGLabel(screen1, 5, 40, "?? fps");
 }
@@ -418,7 +439,7 @@ void fileSelectedAction(TGControl *sender)
 void selectFileAction(TGControl *sender)
 {
     TGFileBrowser	*browser = new TGFileBrowser("Select File");
-    browser->selected = new CallbackAction(fileSelectedAction);
+    browser->selected = new TGCallbackAction(fileSelectedAction);
 }
 
 void aboutBoxAction(TGControl *sender)
@@ -603,16 +624,16 @@ class DemoApp : public ExampleApplication
         }
         lbox->setName("listbox");
         (new TGButton(win2, 10, 210, 175, 235, "Add wide item"))->clicked =
-            new CallbackAction(addWideItemAction);
+            new TGCallbackAction(addWideItemAction);
         (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->clicked =
-            new CallbackAction(removeItemAction);
+            new TGCallbackAction(removeItemAction);
         (new TGInputbox(win2, 10, 270, 175, 295))->setName("inputbox");
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->clicked =
-            new CallbackAction(addTheAboveTextAction);
+            new TGCallbackAction(addTheAboveTextAction);
 
         TGPopupMenu       *mainMenu = new TGPopupMenu;
         mainMenu->addItem("Select file...",
-            new CallbackAction(selectFileAction), NULL);
+            new TGCallbackAction(selectFileAction), NULL);
         //new TGBitmap(INTERNALBMP_OPEN));
         TGMenuItem	*sub = mainMenu->addItem("Submenu test", NULL);
         sub->addItem("Sub menu item 1", NULL);
@@ -621,10 +642,10 @@ class DemoApp : public ExampleApplication
         sub->addItem("-", NULL);
         sub->addItem("Sub sub menu", NULL)->addItem("Hello!", NULL);
         sub->addItem("Dynamic submenu", NULL)->popup =
-            new CallbackAction(createDynamicSubmenuAction);
-        mainMenu->addItem("About...", new CallbackAction(aboutBoxAction));
+            new TGCallbackAction(createDynamicSubmenuAction);
+        mainMenu->addItem("About...", new TGCallbackAction(aboutBoxAction));
         mainMenu->addItem("-", NULL);
-        mainMenu->addItem("Quit", new CallbackAction(terminateAppAction),NULL);
+        mainMenu->addItem("Quit", new TGCallbackAction(terminateAppAction),NULL);
         //	new TGBitmap(INTERNALBMP_QUIT));
 
 
@@ -637,7 +658,7 @@ class DemoApp : public ExampleApplication
         stepCount = new TGSlider(win3, 10, 50, 180, 65);
         stepCount->setMax(61);
         stepCount->setValue(3);
-        stepCount->modified = new CallbackAction(stepsModifiedAction);
+        stepCount->modified = new TGCallbackAction(stepsModifiedAction);
 
         new TGLabel(win3, 5, 80, "Object size:");
         sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
@@ -676,23 +697,23 @@ class DemoApp : public ExampleApplication
         TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
         cenda->center();
         cenda->setName("cenda");
-        cenda->clicked = new CallbackAction(cendaClicked);
+        cenda->clicked = new TGCallbackAction(cendaClicked);
         TGPopupMenu	*cendaMenu = new TGPopupMenu;
-        cendaMenu->addItem("No filtering", new CallbackAction(disableFiltering));
+        cendaMenu->addItem("No filtering", new TGCallbackAction(disableFiltering));
         cendaMenu->addItem("Bilinear filtering",
-            new CallbackAction(enableFiltering));
+            new TGCallbackAction(enableFiltering));
         cenda->popupMenu = cendaMenu;
         win5->resizeable = true;
-        win5->resized = new CallbackAction(imageWinResizedAction);
+        win5->resized = new TGCallbackAction(imageWinResizedAction);
         //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
         win5->menu = new TGPopupMenu;
         win5->menu->addItem("No filtering",
-            new CallbackAction(disableFiltering));
+            new TGCallbackAction(disableFiltering));
         win5->menu->addItem("Bilinear filtering",
-            new CallbackAction(enableFiltering));
+            new TGCallbackAction(enableFiltering));
 
         (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->clicked =
-            new CallbackAction(terminateAppAction);
+            new TGCallbackAction(terminateAppAction);
 
 
 

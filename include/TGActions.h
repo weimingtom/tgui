@@ -29,6 +29,10 @@ namespace TGUI
 {
     class TGControl;
 
+    class TGEventHandler
+    {
+    };
+
     class TGAction
     {
         bool	        m_autoDelete;
@@ -41,17 +45,19 @@ namespace TGUI
         virtual void run(TGControl *sender){}
     };
 
-    typedef void    (*CallbackActionFunc)(TGControl *sender);
+    typedef void    (*TGCallbackActionFunc)(TGControl *sender);
 
-    class CallbackAction : public TGAction
+    typedef void    (TGEventHandler::*TGCallbackActionFunc2)(TGControl *sender);
+
+    class TGCallbackAction : public TGAction
     {
-        CallbackActionFunc      m_func;
+        TGCallbackActionFunc      m_func;
 
     public:
 
-        CallbackAction(CallbackActionFunc cbFunc);
+        TGCallbackAction(TGCallbackActionFunc cbFunc);
         virtual void run(TGControl *sender);
-        CallbackActionFunc getFunc() {return m_func;};
+        TGCallbackActionFunc getFunc() {return m_func;};
     };
 
 #define BSGUI_FREEACTION(a) { \

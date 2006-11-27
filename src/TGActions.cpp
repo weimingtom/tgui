@@ -45,7 +45,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       C a l l b a c k A c t i o n
     //-----------------------------------------------------------------------
-    CallbackAction::CallbackAction(CallbackActionFunc cbFunc)
+    TGCallbackAction::TGCallbackAction(TGCallbackActionFunc cbFunc)
     {
         m_func = cbFunc;
     }
@@ -53,7 +53,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                               r u n
     //-----------------------------------------------------------------------
-   void CallbackAction::run(TGControl *sender)
+   void TGCallbackAction::run(TGControl *sender)
     {
         if (m_func)
             m_func(sender);
