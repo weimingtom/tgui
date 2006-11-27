@@ -123,6 +123,8 @@ namespace TGUI
 
         if (subMenu)
         {
+            fireEvent(TGEvent::MenuPopup,TGEventArgs(this));
+
             int     x1, y1, x2, y2;
             getBounds(x1, y1, x2, y2);
             subMenu->run(x2 - 10, y1 + 5);
@@ -207,7 +209,7 @@ namespace TGUI
                 height = 4;
             else
                 height = stringHeight() + 3;
-            child->place(0, y, w, y + height - 1);
+            child->setBounds(0, y, w, y + height - 1);
             y += height;
         }
 
@@ -285,8 +287,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGPopupMenu::run(int x, int y)
     {
-        fireEvent(TGEvent::MenuPopup,TGEventArgs(this));
-
         if (menu->m_parent)
             cancel();
         if (x == -10000)

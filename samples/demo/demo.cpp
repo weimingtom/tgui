@@ -487,7 +487,7 @@ class DemoApp : public ExampleApplication
         TGImage	*img = (TGImage*)args.m_control->getFirstChild();
         int	w, h;
         args.m_control->getClientSize(w, h);
-        img->place(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
+        img->setBounds(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
         return true;
     }
 
@@ -647,6 +647,8 @@ class DemoApp : public ExampleApplication
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
 
         TGPopupMenu       *mainMenu = new TGPopupMenu();
+        mainMenu->setName("mainMenu");
+
         TGMenuItem* mi = mainMenu->addItem("Select file...", NULL);
         mi->addEventHandler(TGEvent::Selected,new TGEventHandler(&DemoApp::selectFileAction,this));
         //new TGBitmap(INTERNALBMP_OPEN));
@@ -655,9 +657,11 @@ class DemoApp : public ExampleApplication
         sub->addItem("Sub menu item 2", NULL);
         sub->addItem("Sub menu item 3", NULL);
         sub->addItem("-", NULL);
-        sub->addItem("Sub sub menu", NULL)->addItem("Hello!", NULL);
+        mi = sub->addItem("Sub sub menu", NULL);
+        mi->addItem("Hello!", NULL)->setName("Hello!");
 
         mi = sub->addItem("Dynamic submenu", NULL);
+        mi->addItem(" ");
         mi->addEventHandler(TGEvent::MenuPopup,new TGEventHandler(&DemoApp::createDynamicSubmenuAction,this));
         
         mi = mainMenu->addItem("About...");
@@ -735,6 +739,9 @@ class DemoApp : public ExampleApplication
 
         (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->addEventHandler(TGEvent::MouseClicked,
             new TGEventHandler(&DemoApp::terminateAppAction,this));
+
+        win5 = new TGWindow("Float Window");
+        win5->setBounds(0.25f, 0.25f, 1.f, 0.75f);
 
     }
 

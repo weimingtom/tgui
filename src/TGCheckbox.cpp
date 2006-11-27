@@ -34,7 +34,7 @@ namespace TGUI
         string caption)
         : TGControl(parent)
     {
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
         m_caption = caption;
         m_hover = m_pushed = false;
         m_checked.setControl(this);

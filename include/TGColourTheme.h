@@ -29,10 +29,15 @@ namespace TGUI
 {
     class TGColourTheme
     {
+        TGColour        m_base;
 
     public:
         TGColourTheme(TGColour baseColour);
         virtual ~TGColourTheme();
+
+        TGColour getBase() {return m_base;};
+        void setBase(TGColour value);
+
     };
 }
 

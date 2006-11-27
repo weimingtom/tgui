@@ -73,10 +73,10 @@ namespace TGUI
         TGControl*          exclusiveChild;
         float               xShift;
         float               yShift;
-        float               x1;
-        float               y1;
-        float               x2;
-        float               y2;
+        int                 x1;
+        int                 y1;
+        int                 x2;
+        int                 y2;
 
     public:
         TGControl(TGControl *parent);
@@ -98,6 +98,7 @@ namespace TGUI
         TGControl* getFocusedChild(void) {return m_focusedChild;};
         void setFocusedChild(TGControl* child);
 
+        void logMessage(string message);
 
         virtual void addChild(TGControl *child);
         virtual void removeChild(TGControl *child);
@@ -125,12 +126,37 @@ namespace TGUI
         virtual void render();
         virtual void focus();
         virtual bool focused();
-        virtual void place(float x1, float y1, float x2, float y2);
+
+        //
+        // integer values = pixels
+        // float values = percentage of screen area
+        //
+        virtual void setBounds(int x1, int y1, int x2, int y2);
+        virtual void setBounds(float fx1, float fy1, float fx2, float fy2);
+        virtual void getBounds(int &x1, int &y1, int &x2, int &y2);
+        virtual void getBounds(float &x1, float &y1, float &x2, float &y2);
+
+        virtual void setPos(int x1, int y1);
+        virtual void setPos(float x1, float y1);
+        virtual void getPos(int &x1, int &y1);
+        virtual void getPos(float &x1, float &y1);
+
+        virtual void setWidth(int width);
+        virtual void setWidth(float width);
+        virtual void getWidth(int &width);
+        virtual void getWidth(float &width);
+
+        virtual void setHeight(int height);
+        virtual void setHeight(float height);
+        virtual void getHeight(int &height);
+        virtual void getHeight(float &height);
+
         virtual void move(int x, int y);
+        virtual void move(float x, float y);
+
         virtual void resize(int width, int height);
         virtual void center(bool horizontal=true, bool vertical=true);
         virtual void translate(int &x, int &y);
-        virtual void getBounds(int &x1, int &y1, int &x2, int &y2);
         virtual void setPadding(int left, int top=-1, int right=-1,
             int bottom=-1);
         virtual void getClientSize(int &w, int &h);

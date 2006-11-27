@@ -34,7 +34,7 @@ namespace TGUI
         : TGControl(parent)
     {
         sliding = false;
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
         max = 5;
         value.setControl(this);
         value.set(0);

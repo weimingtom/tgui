@@ -445,7 +445,7 @@ namespace TGUI
         m_mouseCursor = image;
         int x = (m_renderer->getWidth()/2) - (image->getWidth()/2);
         int y = (m_renderer->getHeight()/2) - (image->getHeight()/2);
-        m_mouseCursor->place(x,y,x+image->getWidth(),y+image->getHeight());
+        m_mouseCursor->setBounds(x,y,x+image->getWidth(),y+image->getHeight());
         if(m_activeScreen)
         {
             m_activeScreen->setMouseX(x);

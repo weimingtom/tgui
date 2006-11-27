@@ -34,7 +34,7 @@ namespace TGUI
     {
         text.setControl(this);
         text.set(_strdup(""));
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
         tScroll = 0;
         cursor = cursorX = 0;
     }

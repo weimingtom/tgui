@@ -37,7 +37,7 @@ namespace TGUI
         value.setControl(this);
         max.set(100);
         value.set(0);
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
     }
 
     //-----------------------------------------------------------------------

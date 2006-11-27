@@ -121,7 +121,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGScrollbox::place(int x1, int y1, int x2, int y2)
     {
-        TGControl::place(x1, y1, x2, y2);
+        TGControl::setBounds(x1, y1, x2, y2);
         clientWidth = hScrollMax - (x2 - x1 - 16);
         clientHeight = vScrollMax - (y2 - y1 - 16);
     }

@@ -32,7 +32,7 @@ namespace TGUI
     TGButton::TGButton(TGControl *parent, int x1, int y1, int x2, int y2, 
         string caption, TGImage* image) : TGControl(parent)
     {
-        place(x1, y1, x2, y2);
+        setBounds(x1, y1, x2, y2);
         m_caption = caption;
         m_pushed = m_highlighted = false;
         m_image = image;
