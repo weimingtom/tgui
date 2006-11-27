@@ -87,14 +87,14 @@ namespace TGUI
 
         l = new TGLabel(this, 5, 5, "Files and directories:");
         files = new TGListbox(this, 5, l->y2 + 5, w-10, h-40);
-        files->modified = new CallbackAction(selectFileBrowserAction);
+        files->modified = new TGCallbackAction(selectFileBrowserAction);
         l = new TGLabel(this, 5, files->y2+9, "Filename:");
         filename = new TGInputbox(this, l->x2 + 5, files->y2 + 5, w-130,
             files->y2 + 30);
         b = new TGButton(this, w-125, files->y2 + 5, w-70, files->y2 + 30, "Ok");
-        b->clicked = new CallbackAction(closeFileBrowserAction);
+        b->clicked = new TGCallbackAction(closeFileBrowserAction);
         b = new TGButton(this, w-65, files->y2 + 5, w-10, files->y2+30, "Cancel");
-        b->clicked = new CallbackAction(cancelFileBrowserAction);
+        b->clicked = new TGCallbackAction(cancelFileBrowserAction);
 
         reloadFiles();
 
