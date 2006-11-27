@@ -28,12 +28,16 @@
 namespace TGUI
 {
 
-    struct TGMenuItem : public TGControl
+    class TGMenuControl;
+    class TGPopupMenu;
+
+    class TGMenuItem : public TGControl
     {
+    public:
         string    		        caption;
         TGImage*                image;
-        struct TGMenuControl*   menuControl;
-        struct TGPopupMenu*     subMenu;
+        TGMenuControl*          menuControl;
+        TGPopupMenu*            subMenu;
 
         TGMenuItem(TGControl *owner, string caption, TGImage *image=NULL);
         virtual ~TGMenuItem();
@@ -47,9 +51,10 @@ namespace TGUI
         virtual void onMouseUp(int x, int y, int b);
     };
 
-    struct TGMenuControl : public TGControl
+    class TGMenuControl : public TGControl
     {
-        struct TGPopupMenu*     popupMenu;
+    public:
+        TGPopupMenu*            popupMenu;
         int			            iconPad;
 
         TGMenuControl(TGControl *owner);
@@ -63,8 +68,9 @@ namespace TGUI
         virtual void onFocusExit();
     };
 
-    struct TGPopupMenu
+    class TGPopupMenu : public TGControl
     {
+    public:
         TGMenuControl*          rootMenuControl;
         TGMenuControl*          menu;
 

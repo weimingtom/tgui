@@ -36,6 +36,7 @@ namespace TGUI
     };
 
     class TGScreen;
+    class TGPopupMenu;
 
     typedef std::list<TGControl *> TGControlList;
     typedef std::list<TGControl *>::iterator TGControlListItr;
@@ -67,7 +68,7 @@ namespace TGUI
         TGControl*          m_focusedChild;
 
     public:
-        struct TGPopupMenu* popupMenu;
+        TGPopupMenu*        popupMenu;
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
         float               xShift;

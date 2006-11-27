@@ -125,7 +125,6 @@ namespace TGUI
         {
             int     x1, y1, x2, y2;
             getBounds(x1, y1, x2, y2);
-            fireEvent(TGEvent::MenuPopup,TGEventArgs(subMenu->menu));
             subMenu->run(x2 - 10, y1 + 5);
         }
     }
@@ -245,7 +244,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G P o p u p M e n u
     //-----------------------------------------------------------------------
-    TGPopupMenu::TGPopupMenu()
+    TGPopupMenu::TGPopupMenu() : TGControl(NULL)
     {
         rootMenuControl = NULL;
         menu = new TGMenuControl(NULL);
@@ -286,6 +285,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGPopupMenu::run(int x, int y)
     {
+        fireEvent(TGEvent::MenuPopup,TGEventArgs(this));
+
         if (menu->m_parent)
             cancel();
         if (x == -10000)

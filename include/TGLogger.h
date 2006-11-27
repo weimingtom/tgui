@@ -22,69 +22,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGUI_H__
-#define __TGUI_H__
-
-#define _CRT_SECURE_NO_DEPRECATE 1
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#ifdef WIN32
-#include <windows.h>
-#ifdef DELETE
-#undef DELETE
-#endif
-#endif
-
-#include <ogre.h>
-#include <ogrefont.h>
-#include <ogrefontmanager.h>
+#ifndef __TGLOGGER_H__
+#define __TGLOGGER_H__
 
 namespace TGUI
 {
-#define TGSingleton Ogre::Singleton
-    typedef Ogre::uint	 uint;
-    typedef Ogre::uint32 uint32;
-    typedef Ogre::ushort ushort;
-    enum TGQuadSplitMode
+    class TGLogger
     {
-        TopLeftToBottomRight,	//!< Diagonal goes from top-left to bottom-right
-        BottomLeftToTopRight	//!< Diagonal goes from bottom-left to top-right
+
+    public:
+        TGLogger() {};
+        virtual ~TGLogger() {};
+        virtual void logMessage(string message);
     };
-#define LeftButton 0
-#define RightButton 1
-#define MiddleButton 2
+
 }
-
-using std::string;
-
-#include <tglogger.h>
-#include <tgcolour.h>
-#include <tgcolourtheme.h>
-#include <tgvector.h>
-#include <tgrect.h>
-#include <tgrenderer.h>
-#include <tgtexture.h>
-#include <tgfont.h>
-#include <tgevents.h>
-#include <tgdataman.h>
-#include <tgcontrol.h>
-#include <tgscreen.h>
-#include <tgimage.h>
-#include <tgcursor.h>
-#include <tgwindow.h>
-#include <tglabel.h>
-#include <tgbutton.h>
-#include <tgcheckbox.h>
-#include <tgslider.h>
-#include <tgscrollbox.h>
-#include <tglistbox.h>
-#include <tginputbox.h>
-#include <tgfilebrowser.h>
-#include <tgmessagebox.h>
-#include <tgmenu.h>
-#include <tgprogressbar.h>
-#include <tgsystem.h>
-
 #endif

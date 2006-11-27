@@ -185,6 +185,7 @@ namespace TGUI
         m_currentFont = 0;
         m_trackControl = 0;
         m_keyboardFocusControl = 0;
+        m_logger = 0;
         m_gui_redraw = true;
 
         m_renderer = new TGUI::TGRenderer(window, 
@@ -230,6 +231,7 @@ namespace TGUI
         // Unlock the pixel buffer
         pixelBuffer->unlock();
         m_texture->setOgreTexture(texture);
+        m_logger = new TGLogger();
     }
 
     //-----------------------------------------------------------------------
@@ -237,6 +239,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGSystem::~TGSystem()
     {
+        if(m_logger)
+            delete m_logger;
     }
 
     //-----------------------------------------------------------------------
@@ -501,6 +505,34 @@ namespace TGUI
 
         setMouseCursor(new TGCursor(ctexture));
 
+    }
+
+    //-----------------------------------------------------------------------
+    //                           s e t L o g g e r
+    //-----------------------------------------------------------------------
+    void TGSystem::setLogger(TGLogger* logger)
+    {
+        if(m_logger)
+            delete m_logger;
+
+        m_logger = logger;
+    }
+
+    //-----------------------------------------------------------------------
+    //                           g e t L o g g e r
+    //-----------------------------------------------------------------------
+    TGLogger* TGSystem::getLogger()
+    {
+        return m_logger;
+    }
+
+    //-----------------------------------------------------------------------
+    //                           l o g M e s s a g e
+    //-----------------------------------------------------------------------
+    void TGSystem::logMessage(string message)
+    {
+        if(m_logger)
+            m_logger->logMessage(message);
     }
 
     //-----------------------------------------------------------------------
