@@ -67,9 +67,9 @@ namespace TGUI
         bool                mouseOverControl;
 
         TGControl*          m_focusedChild;
+        TGPopupMenu*        m_popupMenu;
 
     public:
-        TGPopupMenu*        popupMenu;
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
         float               xShift;
@@ -92,6 +92,9 @@ namespace TGUI
 
 
         virtual TGControl *findChild(string name);
+
+        TGPopupMenu* getPopupMenu() {return m_popupMenu;};
+        void setPopupMenu(TGPopupMenu* value) {m_popupMenu = value;};
 
         TGControl* getFirstChild();
         TGControl* getLastChild();
@@ -163,7 +166,7 @@ namespace TGUI
         virtual void getClientSize(int &w, int &h);
 
         TGColourTheme getColourTheme() {return m_theme;};
-        void setColourTheme(TGColourTheme theme) {m_theme = theme;};
+        void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         void setMouseTrackingControl(TGControl *control);
 

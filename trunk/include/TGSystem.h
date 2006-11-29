@@ -67,7 +67,7 @@ namespace TGUI
         void logMessage(string message);
 
         TGColourTheme getColourTheme() {return m_theme;};
-        void setColourTheme(TGColourTheme theme) {m_theme = theme;};
+        void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         TGFont* loadFont(string fontName,string resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};
