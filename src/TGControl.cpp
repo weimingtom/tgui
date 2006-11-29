@@ -50,7 +50,7 @@ namespace TGUI
         }
         performLayout = true;
         mouseOverControl = false;
-        popupMenu = NULL;
+        m_popupMenu = NULL;
         exclusiveChild = NULL;
         m_isVisible = true;
     }
@@ -635,8 +635,8 @@ namespace TGUI
         }
         if (b == RightButton)
         {
-            if (popupMenu)
-                popupMenu->run();
+            if (m_popupMenu)
+                m_popupMenu->run();
         }
     }
 
@@ -974,7 +974,6 @@ namespace TGUI
         }
 
         itr->second.push_back(handler);
-
     }
 
     //-----------------------------------------------------------------------
@@ -997,6 +996,14 @@ namespace TGUI
     void TGControl::logMessage(string message)
     {
         TGSystem::getSingleton().logMessage(message);
+    }
+
+    //-----------------------------------------------------------------------
+    //                       s e t C o l o u r T h e m e
+    //-----------------------------------------------------------------------
+    void TGControl::setColourTheme(TGColourTheme theme,bool updateChildren) 
+    {
+        m_theme = theme;
     }
 
     //-----------------------------------------------------------------------

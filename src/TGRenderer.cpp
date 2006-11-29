@@ -121,8 +121,8 @@ namespace TGUI
     {
         TGRect destRect=dest_rect;
         TGRect texRect=texture_rect;
-        const float  daWidth = d_display_area.getWidth();
-        const float  daHeight = d_display_area.getHeight();
+        const float  daWidth = m_displayArea.getWidth();
+        const float  daHeight = m_displayArea.getHeight();
 
         //
         // clip quad.  returns false if completely outside the clip area
@@ -130,10 +130,10 @@ namespace TGUI
 
         if(m_clipList.size())
         {
-            ClipArea*   clip;
+            TGClipArea*   clip;
             TGClipList::reverse_iterator first(m_clipList.end());
             TGClipList::reverse_iterator last(m_clipList.begin());
-            
+
 
             while(first != last)
             {
@@ -144,9 +144,9 @@ namespace TGUI
             }
         }
 
-        
+
         // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
-        if (!d_queueing)
+        if (!m_queueing)
         {
             renderQuadDirect(destRect, z, tex, texRect, colours, quad_split_mode);
         }
@@ -183,7 +183,7 @@ namespace TGUI
             // set quad split mode
             quad.splitMode = quad_split_mode;
 
-            d_quadlist.insert(quad);
+            m_quadList.insert(quad);
         }
     }
 
@@ -202,10 +202,10 @@ namespace TGUI
 
         if(m_clipList.size())
         {
-            ClipArea*   clip;
+            TGClipArea*   clip;
             TGClipList::reverse_iterator first(m_clipList.end());
             TGClipList::reverse_iterator last(m_clipList.begin());
-            
+
 
             while(first != last)
             {
@@ -217,7 +217,7 @@ namespace TGUI
         }
 
         // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
-        if (!d_queueing)
+        if (!m_queueing)
         {
             renderQuadDirect(destRect, z, tex, texRect, colours, quad_split_mode);
         }
@@ -233,7 +233,7 @@ namespace TGUI
             float len = newEnd.length();
 
             Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
-		    float float_thick = (( float )thickness );
+            float float_thick = (( float )thickness );
 
             //
             // quad on the origin and rotate
@@ -241,7 +241,7 @@ namespace TGUI
             TGRect oRect(0.f,-float_thick/2.f,len,float_thick/2.f);
 
             const float preCos = cos( angle.valueRadians() );
-		    const float preSin = sin( angle.valueRadians() );
+            const float preSin = sin( angle.valueRadians() );
 
             float x,y;
 
@@ -278,42 +278,37 @@ namespace TGUI
                 //
                 // flip
                 //
-                quad.lpos[i].y = d_display_area.getHeight() - quad.lpos[i].y;
-                
+                quad.lpos[i].y = m_displayArea.getHeight() - quad.lpos[i].y;
+
                 quad.lpos[i].x += d_texelOffset.x;
                 quad.lpos[i].y += d_texelOffset.y;
 
                 //
                 // convert coordinates
                 //
-                quad.lpos[i].x /= (d_display_area.getWidth() * 0.5f);
-                quad.lpos[i].y /= (d_display_area.getHeight() * 0.5f);
+                quad.lpos[i].x /= (m_displayArea.getWidth() * 0.5f);
+                quad.lpos[i].y /= (m_displayArea.getHeight() * 0.5f);
 
                 quad.lpos[i].x -= 1.f;
                 quad.lpos[i].y -= 1.f;
 
             }
-           
+
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
             quad.isLineQuad = true;
             quad.position.d_left	= destRect.d_left;
             quad.position.d_right	= destRect.d_right;
-            quad.position.d_top		= d_display_area.getHeight() - destRect.d_top;
-            quad.position.d_bottom	= d_display_area.getHeight() - destRect.d_bottom;
+            quad.position.d_top		= m_displayArea.getHeight() - destRect.d_top;
+            quad.position.d_bottom	= m_displayArea.getHeight() - destRect.d_bottom;
             quad.position.offset(d_texelOffset);
 
             // convert quad co-ordinates for a -1 to 1 co-ordinate system.
-            quad.position.d_left	/= (d_display_area.getWidth() * 0.5f);
-            quad.position.d_right	/= (d_display_area.getWidth() * 0.5f);
-            quad.position.d_top		/= (d_display_area.getHeight() * 0.5f);
-            quad.position.d_bottom	/= (d_display_area.getHeight() * 0.5f);
+            quad.position.d_left	/= (m_displayArea.getWidth() * 0.5f);
+            quad.position.d_right	/= (m_displayArea.getWidth() * 0.5f);
+            quad.position.d_top		/= (m_displayArea.getHeight() * 0.5f);
+            quad.position.d_bottom	/= (m_displayArea.getHeight() * 0.5f);
             quad.position.offset(TGPoint(-1.0f, -1.0f));
-
-
-
-
-
 
             quad.z				= -1 + z;
             quad.texture		= ((TGTexture*)tex)->getOgreTexture();
@@ -328,7 +323,7 @@ namespace TGUI
             // set quad split mode
             quad.splitMode = quad_split_mode;
 
-            d_quadlist.insert(quad);
+            m_quadList.insert(quad);
         }
     }
 
@@ -339,7 +334,7 @@ namespace TGUI
     void TGRenderer::doRender(void)
     {
         // Render if overlays enabled and the quad list is not empty
-        if (d_render_sys->_getViewport()->getOverlaysEnabled() && !d_quadlist.empty())
+        if (m_renderSys->_getViewport()->getOverlaysEnabled() && !m_quadList.empty())
         {
             /// Quad list needs to be sorted and thus the vertex buffer rebuilt. If not, we can
             /// reuse the vertex buffer resulting in a nice speed gain.
@@ -348,7 +343,7 @@ namespace TGUI
                 sortQuads();
                 /// Resize vertex buffer if it is too small
                 size_t size = d_buffer->getNumVertices();
-                size_t requestedSize = d_quadlist.size()*VERTEX_PER_QUAD;
+                size_t requestedSize = m_quadList.size()*VERTEX_PER_QUAD;
                 if(size < requestedSize)
                 {
                     /// Double buffer size until smaller than requested size
@@ -371,7 +366,7 @@ namespace TGUI
                 QuadVertex*	buffmem;
                 buffmem = (QuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
                 // iterate over each quad in the list
-                for (QuadList::iterator i = d_quadlist.begin(); i != d_quadlist.end(); ++i)
+                for (QuadList::iterator i = m_quadList.begin(); i != m_quadList.end(); ++i)
                 {
                     const QuadInfo& quad = (*i);
                     if(!quad.isLineQuad)
@@ -485,14 +480,14 @@ namespace TGUI
             d_bufferPos = 0;
 
             // Iterate over each quad in the list and render it
-            QuadList::iterator i = d_quadlist.begin();
-            while(i != d_quadlist.end())
+            QuadList::iterator i = m_quadList.begin();
+            while(i != m_quadList.end())
             {
 
                 d_currTexture = i->texture;
                 d_render_op.vertexData->vertexStart = d_bufferPos;
 
-                for (; i != d_quadlist.end(); ++i)
+                for (; i != m_quadList.end(); ++i)
                 {
                     const QuadInfo& quad = (*i);
                     if (d_currTexture != quad.texture)
@@ -503,8 +498,8 @@ namespace TGUI
 
                 d_render_op.vertexData->vertexCount = d_bufferPos - d_render_op.vertexData->vertexStart;
                 /// Set texture, and do the render
-                d_render_sys->_setTexture(0, true, d_currTexture->getName());
-                d_render_sys->_render(d_render_op);
+                m_renderSys->_setTexture(0, true, d_currTexture->getName());
+                m_renderSys->_render(d_render_op);
             }
 
         }
@@ -521,7 +516,7 @@ namespace TGUI
     void TGRenderer::clearRenderList(void)
     {
         d_sorted = true;
-        d_quadlist.clear();
+        m_quadList.clear();
     }
 
     //-----------------------------------------------------------------------
@@ -589,35 +584,35 @@ namespace TGUI
         using namespace Ogre;
 
         // set-up matrices
-        d_render_sys->_setWorldMatrix(Matrix4::IDENTITY);
-        d_render_sys->_setViewMatrix(Matrix4::IDENTITY);
-        d_render_sys->_setProjectionMatrix(Matrix4::IDENTITY);
+        m_renderSys->_setWorldMatrix(Matrix4::IDENTITY);
+        m_renderSys->_setViewMatrix(Matrix4::IDENTITY);
+        m_renderSys->_setProjectionMatrix(Matrix4::IDENTITY);
 
         // initialise render settings
-        d_render_sys->setLightingEnabled(false);
-        d_render_sys->_setDepthBufferParams(false, false);
-        d_render_sys->_setDepthBias(0);
-        d_render_sys->_setCullingMode(CULL_NONE);
-        d_render_sys->_setFog(FOG_NONE);
-        d_render_sys->_setColourBufferWriteEnabled(true, true, true, true);
-        d_render_sys->unbindGpuProgram(GPT_FRAGMENT_PROGRAM);
-        d_render_sys->unbindGpuProgram(GPT_VERTEX_PROGRAM);
-        d_render_sys->setShadingType(SO_GOURAUD);
-        d_render_sys->_setPolygonMode(PM_SOLID);
+        m_renderSys->setLightingEnabled(false);
+        m_renderSys->_setDepthBufferParams(false, false);
+        m_renderSys->_setDepthBias(0);
+        m_renderSys->_setCullingMode(CULL_NONE);
+        m_renderSys->_setFog(FOG_NONE);
+        m_renderSys->_setColourBufferWriteEnabled(true, true, true, true);
+        m_renderSys->unbindGpuProgram(GPT_FRAGMENT_PROGRAM);
+        m_renderSys->unbindGpuProgram(GPT_VERTEX_PROGRAM);
+        m_renderSys->setShadingType(SO_GOURAUD);
+        m_renderSys->_setPolygonMode(PM_SOLID);
 
         // initialise texture settings
-        d_render_sys->_setTextureCoordCalculation(0, TEXCALC_NONE);
-        d_render_sys->_setTextureCoordSet(0, 0);
-        d_render_sys->_setTextureUnitFiltering(0, FO_LINEAR, FO_LINEAR, FO_POINT);
-        d_render_sys->_setTextureAddressingMode(0, d_uvwAddressMode);
-        d_render_sys->_setTextureMatrix(0, Matrix4::IDENTITY);
-        d_render_sys->_setAlphaRejectSettings(CMPF_ALWAYS_PASS, 0);
-        d_render_sys->_setTextureBlendMode(0, d_colourBlendMode);
-        d_render_sys->_setTextureBlendMode(0, d_alphaBlendMode);
-        d_render_sys->_disableTextureUnitsFrom(1);
+        m_renderSys->_setTextureCoordCalculation(0, TEXCALC_NONE);
+        m_renderSys->_setTextureCoordSet(0, 0);
+        m_renderSys->_setTextureUnitFiltering(0, FO_LINEAR, FO_LINEAR, FO_POINT);
+        m_renderSys->_setTextureAddressingMode(0, d_uvwAddressMode);
+        m_renderSys->_setTextureMatrix(0, Matrix4::IDENTITY);
+        m_renderSys->_setAlphaRejectSettings(CMPF_ALWAYS_PASS, 0);
+        m_renderSys->_setTextureBlendMode(0, d_colourBlendMode);
+        m_renderSys->_setTextureBlendMode(0, d_alphaBlendMode);
+        m_renderSys->_disableTextureUnitsFrom(1);
 
         // enable alpha blending
-        d_render_sys->_setSceneBlending(SBF_SOURCE_ALPHA, SBF_ONE_MINUS_SOURCE_ALPHA);
+        m_renderSys->_setSceneBlending(SBF_SOURCE_ALPHA, SBF_ONE_MINUS_SOURCE_ALPHA);
     }
 
     //-----------------------------------------------------------------------
@@ -637,7 +632,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode)
     {
-        if (d_render_sys->_getViewport()->getOverlaysEnabled())
+        if (m_renderSys->_getViewport()->getOverlaysEnabled())
         {
             z = -1 + z;
 
@@ -646,15 +641,15 @@ namespace TGUI
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
             final_rect.d_left	= dest_rect.d_left;
             final_rect.d_right	= dest_rect.d_right;
-            final_rect.d_top	= d_display_area.getHeight() - dest_rect.d_top;
-            final_rect.d_bottom	= d_display_area.getHeight() - dest_rect.d_bottom;
+            final_rect.d_top	= m_displayArea.getHeight() - dest_rect.d_top;
+            final_rect.d_bottom	= m_displayArea.getHeight() - dest_rect.d_bottom;
             final_rect.offset(d_texelOffset);
 
             // convert quad co-ordinates for a -1 to 1 co-ordinate system.
-            final_rect.d_left	/= (d_display_area.getWidth() * 0.5f);
-            final_rect.d_right	/= (d_display_area.getWidth() * 0.5f);
-            final_rect.d_top	/= (d_display_area.getHeight() * 0.5f);
-            final_rect.d_bottom	/= (d_display_area.getHeight() * 0.5f);
+            final_rect.d_left	/= (m_displayArea.getWidth() * 0.5f);
+            final_rect.d_right	/= (m_displayArea.getWidth() * 0.5f);
+            final_rect.d_top	/= (m_displayArea.getHeight() * 0.5f);
+            final_rect.d_bottom	/= (m_displayArea.getHeight() * 0.5f);
             final_rect.offset(TGPoint(-1.0f, -1.0f));
 
             // convert colours for ogre, note that top / bottom are switched.
@@ -755,9 +750,9 @@ namespace TGUI
             // perform rendering...
             //
             initRenderStates();
-            d_render_sys->_setTexture(0, true, ((TGTexture*)tex)->getOgreTexture()->getName());
+            m_renderSys->_setTexture(0, true, ((TGTexture*)tex)->getOgreTexture()->getName());
             d_direct_render_op.vertexData->vertexCount = VERTEX_PER_QUAD;
-            d_render_sys->_render(d_direct_render_op);
+            m_renderSys->_render(d_direct_render_op);
         }
 
     }
@@ -770,7 +765,7 @@ namespace TGUI
         Ogre::ColourValue cv(col.r, col.g, col.b, col.a);
 
         uint32 final;
-        d_render_sys->convertColourValue(cv, &final);
+        m_renderSys->convertColourValue(cv, &final);
 
         return final;
     }
@@ -820,15 +815,15 @@ namespace TGUI
         using namespace Ogre;
 
         // initialise the renderer fields
-        d_queueing		= true;
+        m_queueing		= true;
         d_queue_id		= queue_id;
         d_currTexture.isNull();
-        d_post_queue	= post_queue;
-        d_sceneMngr		= NULL;
-        d_bufferPos		= 0;
-        d_sorted		= true;
-        d_ogre_root		= Root::getSingletonPtr();
-        d_render_sys	= d_ogre_root->getRenderSystem();
+        d_post_queue    = post_queue;
+        d_sceneMngr     = NULL;
+        d_bufferPos     = 0;
+        d_sorted        = true;
+        m_ogreRoot      = Root::getSingletonPtr();
+        m_renderSys	    = m_ogreRoot->getRenderSystem();
         // set ID string
         //d_identifierString = "CEGUI::OgreRenderer - Official Ogre based renderer module for CEGUI";
 
@@ -840,14 +835,14 @@ namespace TGUI
         // Mouse cursor
         createQuadRenderOp(d_direct_render_op, d_direct_buffer, VERTEX_PER_QUAD);
 
-        // Discover display settings and setup d_display_area
-        d_display_area.d_left	= 0;
-        d_display_area.d_top	= 0;
-        d_display_area.d_right	= window->getWidth();
-        d_display_area.d_bottom	= window->getHeight();
+        // Discover display settings and setup m_displayArea
+        m_displayArea.d_left	= 0;
+        m_displayArea.d_top	= 0;
+        m_displayArea.d_right	= window->getWidth();
+        m_displayArea.d_bottom	= window->getHeight();
 
         // initialise required texel offset
-        d_texelOffset = TGPoint((float)d_render_sys->getHorizontalTexelOffset(), -(float)d_render_sys->getVerticalTexelOffset());
+        d_texelOffset = TGPoint((float)m_renderSys->getHorizontalTexelOffset(), -(float)m_renderSys->getVerticalTexelOffset());
 
         // create listener which will handler the rendering side of things for us.
         d_ourlistener = new TGRQListener(this, queue_id, post_queue);
@@ -889,9 +884,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::setDisplaySize(const TGSize& sz)
     {
-        if (d_display_area.getSize() != sz)
+        if (m_displayArea.getSize() != sz)
         {
-            d_display_area.setSize(sz);
+            m_displayArea.setSize(sz);
 
             //EventArgs args;
             //fireEvent(EventDisplaySizeChanged, args, EventNamespace);
@@ -904,7 +899,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::openClipArea(int x1, int y1, int x2, int y2)
     {
-        ClipArea* ca = new ClipArea();
+        TGClipArea* ca = new TGClipArea();
         ca->x1 = x1;
         ca->y1 = y1;
         ca->x2 = x2;
@@ -917,7 +912,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::closeClipArea()
     {
-        ClipArea* ca = m_clipList.front();
+        TGClipArea* ca = m_clipList.front();
         delete ca;
         m_clipList.pop_front();
     }
@@ -935,7 +930,7 @@ namespace TGUI
     void TGRQListener::renderQueueStarted(Ogre::uint8 id, const Ogre::String& invocation, 
         bool& skipThisQueue)
     {
-        if ((!d_post_queue) && (d_queue_id == id))
+        if ((!m_postQueue) && (m_queueID == id))
         {
             TGUI::TGSystem::getSingleton().renderGUI();
         }
@@ -947,7 +942,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRQListener::renderQueueEnded(Ogre::uint8 id, const Ogre::String& invocation, bool& repeatThisQueue)
     {
-        if ((d_post_queue) && (d_queue_id == id))
+        if ((m_postQueue) && (m_queueID == id))
         {
             TGUI::TGSystem::getSingleton().renderGUI();
         }
@@ -956,15 +951,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           c l i p Q u a d
     //-----------------------------------------------------------------------
-    bool TGRenderer::clipQuad(ClipArea* clip, TGRect& drect, TGRect& trect, TGColourRect colours)
+    bool TGRenderer::clipQuad(TGClipArea* clip, TGRect& drect, TGRect& trect, TGColourRect colours)
     {
         // check for total exclusion
         if((drect.d_right  < clip->x1) ||
-           (drect.d_left   > clip->x2) ||
-           (drect.d_bottom < clip->y1) ||
-           (drect.d_top    > clip->y2))
+            (drect.d_left   > clip->x2) ||
+            (drect.d_bottom < clip->y1) ||
+            (drect.d_top    > clip->y2))
             return false;
-  
+
         bool clipLeft=false,clipTop=false,clipRight=false,clipBot=false;
 
         if(drect.d_left < clip->x1)

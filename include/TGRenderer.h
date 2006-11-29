@@ -33,11 +33,11 @@ namespace TGUI
     class TGRQListener : public Ogre::RenderQueueListener
     {
     public:
-        TGRQListener(TGRenderer* renderer, Ogre::uint8 queue_id, bool post_queue)
+        TGRQListener(TGRenderer* renderer, Ogre::uint8 queueID, bool postQueue)
         {
-            d_renderer		= renderer;
-            d_queue_id		= queue_id;
-            d_post_queue	= post_queue;
+            m_renderer		= renderer;
+            m_queueID		= queueID;
+            m_postQueue	    = postQueue;
         }
 
         virtual ~TGRQListener() {}
@@ -45,16 +45,16 @@ namespace TGUI
         virtual void	renderQueueStarted(Ogre::uint8 id, const Ogre::String& invocation, bool& skipThisQueue);
         virtual void	renderQueueEnded(Ogre::uint8 id, const Ogre::String& invocation, bool& repeatThisQueue);
 
-        void	setTargetRenderQueue(Ogre::uint8 queue_id)		{d_queue_id = queue_id;}
-        void	setPostRenderQueue(bool post_queue)		{d_post_queue = post_queue;}
+        void	setTargetRenderQueue(Ogre::uint8 queueID)		{m_queueID = queueID;}
+        void	setPostRenderQueue(bool postQueue)		{m_postQueue = postQueue;}
 
     private:
-        TGRenderer*             d_renderer;     // TGUI renderer object for Ogre.
-        Ogre::uint8	            d_queue_id;     // ID of the queue that we are hooked into
-        bool                    d_post_queue;   // true if we render after everything else in our queue.
+        TGRenderer*             m_renderer;     // TGUI renderer object for Ogre.
+        Ogre::uint8	            m_queueID;     // ID of the queue that we are hooked into
+        bool                    m_postQueue;   // true if we render after everything else in our queue.
     };
 
-    struct ClipArea
+    struct TGClipArea
     {
         int		x1;
         int		y1;
@@ -62,7 +62,7 @@ namespace TGUI
         int		y2;
     };
 
-    typedef std::list<ClipArea*> TGClipList;
+    typedef std::list<TGClipArea*> TGClipList;
 
     class TGRenderer 
     {
@@ -91,7 +91,7 @@ namespace TGUI
         virtual	void	clearRenderList(void);
 
 
-        virtual void	setQueueingEnabled(bool setting)		{d_queueing = setting;}
+        virtual void	setQueueingEnabled(bool value)		{m_queueing = value;}
         virtual	TGTexture*	createTexture(void);
         virtual	TGTexture*	createTexture(const string& filename, const string& resourceGroup = "General");
         virtual	TGTexture*	createTexture(float size);
@@ -99,11 +99,11 @@ namespace TGUI
         virtual void		destroyAllTextures(void);
 
 
-        virtual bool	isQueueingEnabled(void) const	{return d_queueing;}
-        virtual float	getWidth(void) const		{return d_display_area.getWidth();}
-        virtual float	getHeight(void) const		{return d_display_area.getHeight();}
-        virtual TGSize	getSize(void) const			{return d_display_area.getSize();}
-        virtual TGRect	getRect(void) const			{return d_display_area;}
+        virtual bool	isQueueingEnabled(void) const	{return m_queueing;}
+        virtual float	getWidth(void) const		{return m_displayArea.getWidth();}
+        virtual float	getHeight(void) const		{return m_displayArea.getHeight();}
+        virtual TGSize	getSize(void) const			{return m_displayArea.getSize();}
+        virtual TGRect	getRect(void) const			{return m_displayArea;}
         virtual	uint	getMaxTextureSize(void) const		{return 2048;}		// TODO: Change to proper value
         virtual	uint	getHorzScreenDPI(void) const	{return 96;}
         virtual	uint	getVertScreenDPI(void) const	{return 96;}
@@ -161,7 +161,7 @@ namespace TGUI
 
         void	sortQuads(void);
 
-        bool clipQuad(ClipArea* clip, TGRect& drect, TGRect& tRect, TGColourRect colours);
+        bool clipQuad(TGClipArea* clip, TGRect& drect, TGRect& tRect, TGColourRect colours);
 
         void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode);
 
@@ -170,15 +170,15 @@ namespace TGUI
         void constructor_impl(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue);
 
 
-        TGRect				d_display_area;
+        TGRect				        m_displayArea;
 
         typedef std::multiset<QuadInfo>		QuadList;
-        QuadList d_quadlist;
-        bool	 d_queueing;		                    // setting for queueing control.
+        QuadList                    m_quadList;
+        bool	                    m_queueing;	        // setting for queueing control.
 
         // Ogre specific bits.
-        Ogre::Root*                 d_ogre_root;		// pointer to the Ogre root object that we attach to
-        Ogre::RenderSystem*         d_render_sys;		// Pointer to the render system for Ogre.
+        Ogre::Root*                 m_ogreRoot;		    // pointer to the Ogre root object that we attach to
+        Ogre::RenderSystem*         m_renderSys;		// Pointer to the render system for Ogre.
         Ogre::uint8	                d_queue_id;			// ID of the queue that we are hooked into
         Ogre::TexturePtr            d_currTexture;		// currently set texture;
         Ogre::RenderOperation       d_render_op;		// Ogre render operation we use to do our stuff.

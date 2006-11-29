@@ -709,10 +709,10 @@ class DemoApp : public ExampleApplication
 
 
 
-        screen1->popupMenu = mainMenu;
+        screen1->setPopupMenu(mainMenu);
 
         TGControl* l = new TGLabel(screen1, 5, 10, "A Label on the Screen");
-        l->popupMenu = mainMenu;
+        l->setPopupMenu(mainMenu);
 
 
         TGWindow	*win5 = new TGWindow("TGImage control");
@@ -726,7 +726,7 @@ class DemoApp : public ExampleApplication
         TGPopupMenu	*cendaMenu = new TGPopupMenu;
         cendaMenu->addItem("No filtering");
         cendaMenu->addItem("Bilinear filtering");
-        cenda->popupMenu = cendaMenu;
+        cenda->setPopupMenu(cendaMenu);
         win5->resizeable = true;
         win5->addEventHandler(TGEvent::Resized,new TGEventHandler(&DemoApp::imageWinResizedAction,this));
         //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
