@@ -182,6 +182,7 @@ namespace TGUI
 
 
         void color(int r, int g, int b, int a=255);
+        void color(TGColour c);
         void drawRect(int x1, int y1, int x2, int y2,int thickness=1);
         void fillRect(int x1, int y1, int x2, int y2);
         void drawLine(int x1, int y1, int x2, int y2,int thickness=1);

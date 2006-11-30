@@ -54,6 +54,40 @@ namespace TGUI
     void TGColourTheme::setBase(TGColour baseColour, TGColour baseTextColour)
     {
         m_base = baseColour;
-        m_baseText = baseTextColour;
+        m_caption = clamp(m_base * 1.12f);
+        m_caption.a = 245.f/255.f;
+        m_frame = clamp(m_base * 1.18f);
+        m_frame.a = 1.f;
+        m_frameFocused = clamp(m_base * 1.9f);
+        m_frameFocused.a = 1.f;
+        m_text = baseTextColour;
     }
+
+    //-----------------------------------------------------------------------
+    //                            s e t B a s e
+    //-----------------------------------------------------------------------
+    TGColour TGColourTheme::clamp(TGColour c)
+    {
+        TGColour clamped=c;
+
+        if(clamped.r < 0.0f)
+            clamped.r = 0.0f;
+        if(clamped.r > 1.0f)
+            clamped.r = 1.0f;
+        if(clamped.g < 0.0f)
+            clamped.g = 0.0f;
+        if(clamped.g > 1.0f)
+            clamped.g = 1.0f;
+        if(clamped.b < 0.0f)
+            clamped.b = 0.0f;
+        if(clamped.b > 1.0f)
+            clamped.b = 1.0f;
+        if(clamped.a < 0.0f)
+            clamped.a = 0.0f;
+        if(clamped.a > 1.0f)
+            clamped.a = 1.0f;
+
+        return clamped;
+    }
+
 } 

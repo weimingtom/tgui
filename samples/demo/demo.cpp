@@ -740,9 +740,11 @@ class DemoApp : public ExampleApplication
         (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->addEventHandler(TGEvent::MouseClicked,
             new TGEventHandler(&DemoApp::terminateAppAction,this));
 
+        /*
         win5 = new TGWindow("Float Window");
         win5->setBounds(0.25f, 0.25f, 1.f, 0.75f);
         win5->setPos(0.1f,0.1f);
+        */
 
     }
 
@@ -761,6 +763,9 @@ class DemoApp : public ExampleApplication
         // setup GUI system
 
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr);
+        TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
+        mGUISystem->setColourTheme(ct);
+
         TGFont* font = new TGFont("Garamond");
         font->setHeight(18);
         mGUISystem->setCurrentFont(font);

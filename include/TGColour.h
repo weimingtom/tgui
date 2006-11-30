@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    typedef Ogre::ColourValue TGColour;
+    #define TGColour Ogre::ColourValue
 
     class TGColourRect
     {

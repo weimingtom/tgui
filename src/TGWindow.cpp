@@ -91,28 +91,31 @@ namespace TGUI
         if(!caption.empty())
         {
 
-            color(120, 134, 135, 204);
+            //color(120, 134, 135, 204);
+            color(m_theme.getCaptionColour());
             fillRect(x1, y1, x2, titleY2);
 
-            color(100, 114, 115, 204);
+            color(m_theme.getBase());
             fillRect(x1, titleY2, x2, y2);
         }
         else
         {
-            color(100, 114, 115, 204);
+            color(m_theme.getBase());
             fillRect(this->x1, this->y1, this->x2, this->y2);
         }
 
         clen = (int)stringWidth(caption);
         if (focused())
         {
-            color(220, 234, 235);
+            //color(220, 234, 235);
+            color(m_theme.getFrameFocusedColour());
             drawRect(x1, y1, x2, y2);
             color(219, 225, 236);
         }
         else
         {
-            color(129, 135, 146);
+            //color(129, 135, 146);
+            color(m_theme.getFrameColour());
             drawRect(x1, y1, x2, y2);
             color(169, 175, 186);
         }
