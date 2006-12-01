@@ -38,6 +38,7 @@ namespace TGUI
         this->caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
+        m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
         icon = NULL;
     }
@@ -86,7 +87,7 @@ namespace TGUI
         int	clen, titleY2;
         getBounds(x1, y1, x2, y2);
 
-        titleY2 = stringHeight() + y1 + 2;
+        titleY2 = y1 + m_titleBarHeight;
 
         if(!caption.empty())
         {
@@ -109,6 +110,7 @@ namespace TGUI
         {
             frameColour = m_theme.getFrameFocusedColour();
             color(frameColour);
+            drawRect(x1, y1, x2, titleY2);
             drawRect(x1, y1, x2, y2);
             color(m_theme.getTextFocusedColour());
         }
@@ -116,6 +118,7 @@ namespace TGUI
         {
             frameColour = m_theme.getFrameColour();
             color(frameColour);
+            drawRect(x1, y1, x2, titleY2);
             drawRect(x1, y1, x2, y2);
             color(m_theme.getTextColour());
         }

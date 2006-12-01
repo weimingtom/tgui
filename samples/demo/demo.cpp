@@ -404,6 +404,12 @@ public:
     };
 
 
+	bool frameStarted(const FrameEvent& evt)
+    {
+        TGUI::TGSystem::getSingleton().injectTimePulse(evt.timeSinceLastFrame);
+        return ExampleFrameListener::frameStarted(evt);
+    }
+
     bool frameEnded(const FrameEvent& evt)
     {
         if (mShutdownRequested)

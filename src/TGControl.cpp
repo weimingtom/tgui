@@ -212,9 +212,9 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                                t i c k
+    //                                p u l s e
     //-----------------------------------------------------------------------
-    void TGControl::tick()
+    void TGControl::pulse(float timeElapsed)
     {
         if (performLayout)
         {
@@ -223,7 +223,7 @@ namespace TGUI
         }
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
-            (*itr)->tick();
+            (*itr)->pulse(timeElapsed);
         }
     }
 
@@ -266,10 +266,10 @@ namespace TGUI
 
         m_parent->focus();
 
-        if (m_parent->getLastChild() == this)
-            return;
+        //if (m_parent->getLastChild() == this)
+        //    return;
 
-        TGControl *oldFocus = m_parent->getFocusedChild();
+        TGControl *oldFocus = m_parent->getLastChild()->getFocusedChild();
 
         m_parent->setFocusedChild(this);
 

@@ -36,6 +36,7 @@ namespace TGUI
         bool			resizing;
         bool			resizeable;
         int			    mX, mY;
+        int             m_titleBarHeight;
         TGPopupMenu*    menu;
         TGImage			*icon;
 

@@ -126,7 +126,7 @@ namespace TGUI
 
         virtual TGScreen* getActiveScreen();
 
-        virtual void tick();
+        virtual void pulse(float timeElapsed);
         virtual void render();
         virtual void focus();
         virtual bool focused();
