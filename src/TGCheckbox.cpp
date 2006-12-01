@@ -81,15 +81,15 @@ namespace TGUI
 
         if (focused())
         {
-            color(50, 64, 65);
+            color(m_theme.getFrameColour());
             drawRect(x1 + 14, y1, x2, y2);
-            color(200, 214, 215);
+            color(m_theme.getTextColour());
         }
         else
             if (m_hover)
-                color(200, 214, 215);
+                color(m_theme.getTextFocusedColour());
             else
-                color(180, 194, 195);
+                color(m_theme.getTextColour());
 
         drawString(x1 + 16,
             (y2-y1 + 1)/2 + y1 - (int)stringHeight()/2,

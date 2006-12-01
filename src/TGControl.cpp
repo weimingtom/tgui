@@ -595,7 +595,7 @@ namespace TGUI
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        color(80, 94, 95);
+        color(m_theme.getFrameSelectedColour());
         drawRect(x1 + 3, y1 + 3, x2 - 3, y2 - 3);
     }
 
@@ -772,7 +772,7 @@ namespace TGUI
     {
         if(!m_isVisible)
             return;
-        color(100, 114, 115);
+        color(m_theme.getBaseOpaque());
         if (!s)
         {
             fillRect(x1, y1, x2, y2);
@@ -782,15 +782,15 @@ namespace TGUI
         switch (s)
         {
         case FS_FLAT:
-            color(170, 184, 185);
+            color(m_theme.getFrameColour());
             drawRect(x1, y1, x2, y2);
             break;
         case FS_RAISED:
-            color(210, 224, 225);
+            color(m_theme.getFrameFocusedColour());
             drawRect(x1, y1, x2, y2);
             break;
         case FS_LOWERED:
-            color(70, 84, 85);
+            color(m_theme.getFrameSelectedColour());
             drawRect(x1, y1, x2, y2);
             break;
         default:

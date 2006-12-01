@@ -79,7 +79,7 @@ namespace TGUI
 
         if (caption[0] == '-' && !caption[1])
         {
-            color(220, 234, 235);
+            color(m_theme.getFrameFocusedColour());
             drawLine(x1, y1 + (y2 - y1 + 1)/2, x2 + 1,
                 y1 + (y2 - y1 + 1)/2);
             return;
@@ -87,12 +87,12 @@ namespace TGUI
 
         if (mouseOverControl || (subMenu && subMenu->menu->m_parent))
         {
-            color(220, 234, 235);
+            color(m_theme.getCaptionColour());
             fillRect(x1, y1, x2, y2);
-            color(20, 34, 35);
+            color(m_theme.getTextInvertedColour());
         }
         else
-            color(220, 234, 235);
+            color(m_theme.getTextFocusedColour());
 
         drawString(x1 + ((TGMenuControl*)m_parent)->iconPad + 5, y1 + 1,
             caption);
@@ -222,9 +222,9 @@ namespace TGUI
     void TGMenuControl::render()
     {
 
-        color(120, 134, 135, 192);
+        color(m_theme.getBase());
         fillRect(x1, y1, x2, y2);
-        color(220, 234, 235);
+        color(m_theme.getFrameFocusedColour());
         drawRect(x1, y1, x2, y2);
 
         TGControl::render();

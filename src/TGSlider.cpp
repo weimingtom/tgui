@@ -60,13 +60,18 @@ namespace TGUI
 
         sx = (int)(x1 + (width-9)*value.get()/max + 4);
 
-        color(40, 54, 55);
-        drawLine(x1 + 4, y1 + height/2, x2 - 4, y1 + height/2);
-
         if (mouseOverControl)
+        {
             fs = FS_RAISED;
+            color(m_theme.getFrameFocusedColour());
+        }
         else
+        {
             fs = FS_FLAT;
+            color(m_theme.getFrameColour());
+        }
+
+        drawLine(x1 + 4, y1 + height/2, x2 - 4, y1 + height/2);
 
         drawFrame(sx - 4, y1, sx + 4, y2, fs);
     }

@@ -91,7 +91,6 @@ namespace TGUI
         if(!caption.empty())
         {
 
-            //color(120, 134, 135, 204);
             color(m_theme.getCaptionColour());
             fillRect(x1, y1, x2, titleY2);
 
@@ -105,27 +104,34 @@ namespace TGUI
         }
 
         clen = (int)stringWidth(caption);
+        TGColour frameColour;
         if (focused())
         {
-            //color(220, 234, 235);
-            color(m_theme.getFrameFocusedColour());
+            frameColour = m_theme.getFrameFocusedColour();
+            color(frameColour);
             drawRect(x1, y1, x2, y2);
-            color(219, 225, 236);
+            color(m_theme.getTextFocusedColour());
         }
         else
         {
-            //color(129, 135, 146);
-            color(m_theme.getFrameColour());
+            frameColour = m_theme.getFrameColour();
+            color(frameColour);
             drawRect(x1, y1, x2, y2);
-            color(169, 175, 186);
+            color(m_theme.getTextColour());
         }
-        drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
+
+        if(!caption.empty())
+        {
+            openClip();
+            drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
+            closeClip();
+        }
 
         TGControl::render();
 
         if (resizeable)
         {
-            color(150, 164, 165);
+            color(frameColour);
             drawLine(x2 - 15, y2-1, x2-1, y2 - 15);
             drawLine(x2 - 10, y2-1, x2-1, y2 - 10);
             drawLine(x2 - 5, y2-1, x2-1, y2 - 5);

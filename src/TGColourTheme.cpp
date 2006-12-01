@@ -26,10 +26,15 @@
 
 namespace TGUI
 {
+    const TGColour TGColourTheme::DefaultText = TGColour(169.f/255.f,175.f/255.f,186.f/255.f,1.0f);
+
+    //-----------------------------------------------------------------------
+    //                        T G C o l o u r T h e m e
+    //-----------------------------------------------------------------------
     TGColourTheme::TGColourTheme()
     {
         setBase(TGColour(100.f/255.f, 114.f/255.f, 115.f/255.f, 204.f/255.f),
-                TGColour(0.9f,0.9f,0.9f,1.0f));
+                DefaultText);
     }
 
     //-----------------------------------------------------------------------
@@ -54,13 +59,21 @@ namespace TGUI
     void TGColourTheme::setBase(TGColour baseColour, TGColour baseTextColour)
     {
         m_base = baseColour;
+        m_baseOpaque = m_base;
+        m_baseOpaque.a = 1.f;
         m_caption = clamp(m_base * 1.12f);
         m_caption.a = 245.f/255.f;
         m_frame = clamp(m_base * 1.18f);
         m_frame.a = 1.f;
         m_frameFocused = clamp(m_base * 1.9f);
         m_frameFocused.a = 1.f;
+        m_frameSelected = clamp(m_base * 0.8f);
+        m_frameSelected.a = 1.f;
         m_text = baseTextColour;
+        m_textFocused = clamp(m_text * 1.9f);
+        m_textFocused.a = m_text.a;
+        m_textInverted = clamp(m_text * 0.2f);
+        m_textInverted.a = m_text.a;
     }
 
     //-----------------------------------------------------------------------
