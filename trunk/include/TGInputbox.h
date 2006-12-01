@@ -36,6 +36,11 @@ namespace TGUI
         int     		        cursorX;
         float                   m_pulseTime;
         bool                    m_cursorVisible;
+        int                     m_lastKey;
+        char                    m_lastChar;
+        float                   m_repeatRate;
+        float                   m_repeatDelay;
+        float                   m_repeatElapsed;
 
     public:
 

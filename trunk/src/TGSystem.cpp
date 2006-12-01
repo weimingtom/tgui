@@ -434,6 +434,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectKeyUp(int key,unsigned char ascii)
     {
+        if (!(m_keyboardFocusControl &&
+            m_keyboardFocusControl->focused()))
+            return;
+
+        m_keyboardFocusControl->onKeyUp(key,ascii);
     }
 
     //-----------------------------------------------------------------------

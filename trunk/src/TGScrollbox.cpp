@@ -172,7 +172,7 @@ namespace TGUI
             if (child->y2 > vMax)
                 vMax = child->y2;
         }
-        setScrollingBounds(hMax, vMax);
+        setScrollingBounds(hMax, vMax+1.0f);
     }
 
     //-----------------------------------------------------------------------
