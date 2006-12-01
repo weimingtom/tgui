@@ -408,6 +408,16 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                    i n j e c t T i m e P u l s e
+    //-----------------------------------------------------------------------
+    void TGSystem::injectTimePulse(float timeElapsed)
+    {
+        if(m_activeScreen)
+            m_activeScreen->pulse(timeElapsed);
+    }
+
+
+    //-----------------------------------------------------------------------
     //                        i n j e c t K e y D o w n
     //-----------------------------------------------------------------------
     void TGSystem::injectKeyDown(int key,unsigned char ascii)

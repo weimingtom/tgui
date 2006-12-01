@@ -36,6 +36,8 @@ namespace TGUI
         text.set(_strdup(""));
         setBounds(x1, y1, x2, y2);
         tScroll = 0;
+        m_cursorVisible = false;
+        m_pulseTime = 0.f;
         cursor = cursorX = 0;
     }
 
@@ -89,7 +91,7 @@ namespace TGUI
 
         closeClip();
 
-        if (hasKeyboardFocus(this))
+        if (m_cursorVisible)
         {
             drawLine(x1 + 5 + cursorX - tScroll, y1 + 4,
                 x1 + 5 + cursorX - tScroll, y2 - 4);
@@ -115,7 +117,7 @@ namespace TGUI
         case 8:
             if (!text.empty())
             {
-                text = text.substr(1,text.length()-1);
+                text = text.substr(0,text.length()-1);
                 cursorX = stringWidth(text,--cursor);
                 if (cursorX - tScroll < 0)
                 {
@@ -143,4 +145,41 @@ namespace TGUI
     void TGInputbox::onKeyUp(int key, unsigned char ascii)
     {
     }
+
+    //-----------------------------------------------------------------------
+    //                            p u l s e
+    //-----------------------------------------------------------------------
+    void TGInputbox::pulse(float timeElapsed)
+    {
+        if(!focused())
+            return;
+
+        m_pulseTime += timeElapsed;
+
+        if(m_pulseTime >= 0.25f)
+        {
+            m_cursorVisible = m_cursorVisible ? false : true;
+            m_pulseTime = 0.f;
+        }
+
+    }
+
+    //-----------------------------------------------------------------------
+    //                       o n F o c u s E n t e r
+    //-----------------------------------------------------------------------
+    void TGInputbox::onFocusEnter()
+    {
+        m_cursorVisible = true;
+        m_pulseTime = 0.f;
+    }
+
+    //-----------------------------------------------------------------------
+    //                        o n F o c u s E x i t
+    //-----------------------------------------------------------------------
+    void TGInputbox::onFocusExit()
+    {
+        m_cursorVisible = false;
+    }
+
+
 }

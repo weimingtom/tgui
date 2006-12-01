@@ -86,6 +86,7 @@ namespace TGUI
         void injectMouseButtonUp(int relX, int relY, int buttonID);
         void injectKeyDown(int key,unsigned char ascii);
         void injectKeyUp(int key,unsigned char ascii);
+        void injectTimePulse(float timeElapsed);
 
         void renderGUI();
     };

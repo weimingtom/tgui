@@ -34,6 +34,8 @@ namespace TGUI
         int     		        tScroll;
         size_t     		        cursor;
         int     		        cursorX;
+        float                   m_pulseTime;
+        bool                    m_cursorVisible;
 
     public:
 
@@ -45,8 +47,13 @@ namespace TGUI
 
         virtual void render();
 
+        virtual void pulse(float timeElapsed);
+
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);
+        virtual void onFocusEnter();
+        virtual void onFocusExit();
+
     };
 }
 #endif
