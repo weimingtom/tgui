@@ -775,7 +775,7 @@ class DemoApp : public ExampleApplication
         //TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
         //TGColourTheme ct(TGColour(0.1,0.6,0.2,0.75),TGColour(0.9,0.9,0,1.0));
         TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
-        mGUISystem->setColourTheme(ct);
+        //mGUISystem->setColourTheme(ct);
 
         TGFont* font = new TGFont("Garamond");
         font->setHeight(18);

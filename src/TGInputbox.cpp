@@ -33,11 +33,15 @@ namespace TGUI
         : TGControl(parent)
     {
         text.setControl(this);
-        text.set(_strdup(""));
+        text.set("");
         setBounds(x1, y1, x2, y2);
         tScroll = 0;
         m_cursorVisible = false;
         m_pulseTime = 0.f;
+        m_lastKey = -1;
+        m_repeatDelay = 0.25;
+        m_repeatRate = 0.1f;
+        m_repeatElapsed = 0.f;
         cursor = cursorX = 0;
     }
 
@@ -110,6 +114,12 @@ namespace TGUI
     void TGInputbox::onKeyDown(int key, unsigned char ascii)
     {
         int     w, h;
+
+        if(m_lastKey < 0)
+            m_repeatElapsed = -m_repeatDelay;
+        else m_repeatElapsed = 0.f;
+        m_lastKey = key;
+        m_lastChar = ascii;
         string text = this->text.get();
         getClientSize(w, h);
         switch (ascii)
@@ -129,7 +139,11 @@ namespace TGUI
             break;
         default:
             if (ascii < 32 || ascii > 127)
+            { 
+                m_lastKey = -1;
                 break;
+            }
+
             text += ascii;
             cursorX = stringWidth(text, ++cursor);
             if (cursorX - tScroll > w - 10)
@@ -144,6 +158,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGInputbox::onKeyUp(int key, unsigned char ascii)
     {
+        m_lastKey = -1;
     }
 
     //-----------------------------------------------------------------------
@@ -160,6 +175,15 @@ namespace TGUI
         {
             m_cursorVisible = m_cursorVisible ? false : true;
             m_pulseTime = 0.f;
+        }
+
+        if(m_lastKey > 0)
+        {
+            m_repeatElapsed += timeElapsed;
+            if(m_repeatElapsed >= m_repeatRate)
+            {
+                onKeyDown(m_lastKey,m_lastChar);
+            }
         }
 
     }

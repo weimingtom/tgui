@@ -65,18 +65,18 @@ namespace TGUI
 
         if (box->active == this)
         {
-            color(190, 204, 205);
+            color(m_theme.getCaptionColour());
             fillRect(x1, y1, x2, y2);
-            color(80, 94, 95);
-            if (box->focused())
-                drawRect(x1 + 2, y1 + 2, x2 - 1, y2 - 2);
+            color(m_theme.getTextFocusedColour());
+            //if (box->focused())
+            //    drawRect(x1 + 2, y1 + 2, x2 - 1, y2 - 2);
         }
         else
         {
             if (mouseOverControl)
-                color(210, 224, 225);
+                color(m_theme.getTextFocusedColour());
             else
-                color(190, 204, 205);
+                color(m_theme.getTextColour());
         }
         drawString(x1 + 8,
             (y2-y1 + 1)/2 + y1 - stringHeight()/2,
@@ -204,12 +204,14 @@ namespace TGUI
         getClientSize(w, h);
         w--;
 
+        
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
             TGListboxItem* lbi = (TGListboxItem*)(*itr);
-            if( lbi->minimumWidth > 2)
+            if( lbi->minimumWidth > (unsigned int)w)
                 w = lbi->minimumWidth;
         }
+        
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {

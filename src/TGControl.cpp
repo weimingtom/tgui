@@ -929,7 +929,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGControl* TGControl::getFirstChild()
     {
-        return m_children.front();
+        if(m_children.size())
+            return m_children.front();
+        else return NULL;
     }
 
     //-----------------------------------------------------------------------
