@@ -76,12 +76,18 @@ namespace TGUI
     {
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        color(120, 134, 135);
+        color(m_theme.getBase());
         fillRect(x1, y1 + 1, x2 - 1, y2);
 
-        color(20, 34, 35);
+        openClip();
+
+        if(hasKeyboardFocus(this))
+            color(m_theme.getTextFocusedColour());
+        else color(m_theme.getTextColour());
         drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
             stringHeight()/2, text.get());
+
+        closeClip();
 
         if (hasKeyboardFocus(this))
         {
@@ -89,10 +95,10 @@ namespace TGUI
                 x1 + 5 + cursorX - tScroll, y2 - 4);
         }
 
-        if (mouseOverControl)
-            color(210, 224, 225);
+        if (mouseOverControl  || hasKeyboardFocus(this))
+            color(m_theme.getFrameFocusedColour());
         else
-            color(170, 184, 185);
+            color(m_theme.getFrameColour());
         drawRect(x1, y1, x2, y2);
     }
 

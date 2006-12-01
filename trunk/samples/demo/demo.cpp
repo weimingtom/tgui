@@ -716,6 +716,9 @@ class DemoApp : public ExampleApplication
 
 
         TGWindow	*win5 = new TGWindow("TGImage control");
+        //TGColourTheme ct(TGColour(0.2,0.5,0.6,0.75));
+        //win5->setColourTheme(ct);
+
         win5->center();
         win5->move(win5->x1, win5->y1 - 160);
         TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
@@ -763,7 +766,9 @@ class DemoApp : public ExampleApplication
         // setup GUI system
 
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr);
-        TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
+        //TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
+        //TGColourTheme ct(TGColour(0.1,0.6,0.2,0.75),TGColour(0.9,0.9,0,1.0));
+        TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
         mGUISystem->setColourTheme(ct);
 
         TGFont* font = new TGFont("Garamond");

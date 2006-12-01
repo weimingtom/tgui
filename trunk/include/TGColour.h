@@ -28,10 +28,11 @@
 namespace TGUI
 {
     #define TGColour Ogre::ColourValue
-
     class TGColourRect
     {
     public:
+
+
         TGColourRect(void);
         TGColourRect(const TGColour& col);
         TGColourRect(const TGColour& top_left, const TGColour& top_right, const TGColour& bottom_left, const TGColour& bottom_right);

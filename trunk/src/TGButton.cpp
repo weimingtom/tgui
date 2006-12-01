@@ -82,24 +82,21 @@ namespace TGUI
             fs = FS_FLAT;
 
         drawFrame(x1, y1, x2, y2, fs);
-        if (m_highlighted)
+
+        if (focused())
         {
-            color(150, 164, 165);
-            fillRect(x1, y1 + 1, x2 - 1, y2);
+            drawOwnFocus();
         }
 
-        if (m_highlighted)
-        {
-            color(0, 0, 0);
-        }
+        if (m_pushed)
+            color(m_theme.getTextInvertedColour());
         else
-            if (focused())
-            {
-                drawOwnFocus();
-                color(220, 234, 235);
-            }
-            else
-                color(190, 204, 205);
+        {
+            if(mouseOverControl)
+                color(m_theme.getTextFocusedColour());
+            else color(m_theme.getTextColour());
+        }
+
         x1 = (x2 - x1 + 1)/2 + x1;
         if (m_image)
         {
@@ -111,10 +108,12 @@ namespace TGUI
             x1 -= stringWidth(m_caption)/2;
             x2 = 0;
         }
+        openClip();
         drawString(x1 + x2, (y2-y1 + 1)/2 + y1 - 
             stringHeight()/2, m_caption);
         if (m_image)
             m_image->draw(x1, (y2 - y1 + 1)/2 + y1 - m_image->getHeight()/2);
+        closeClip();
     }
 
     //-----------------------------------------------------------------------

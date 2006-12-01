@@ -27,28 +27,39 @@
 
 namespace TGUI
 {
+
     class TGColourTheme
     {
         TGColour        m_base;
+        TGColour        m_baseOpaque;
         TGColour        m_caption;
         TGColour        m_captionFocused;
         TGColour        m_frame;
         TGColour        m_frameFocused;
+        TGColour        m_frameSelected;
         TGColour        m_text;
+        TGColour        m_textInverted;
         TGColour        m_textFocused;
         TGColour        m_textHilited;
 
     public:
+        static const TGColour DefaultText;
+
+
         TGColourTheme();
-        TGColourTheme(TGColour baseColour, TGColour baseTextColour);
+        TGColourTheme(TGColour baseColour, TGColour baseTextColour=DefaultText);
         virtual ~TGColourTheme();
         TGColour clamp(TGColour c);
 
         inline const TGColour getBase() {return m_base;};
+        inline const TGColour getBaseOpaque() {return m_baseOpaque;};
         inline const TGColour getTextColour() {return m_text;};
+        inline const TGColour getTextFocusedColour() {return m_textFocused;};
+        inline const TGColour getTextInvertedColour() {return m_textInverted;};
         inline const TGColour getCaptionColour() {return m_caption;};
         inline const TGColour getFrameColour() {return m_frame;};
         inline const TGColour getFrameFocusedColour() {return m_frameFocused;};
+        inline const TGColour getFrameSelectedColour() {return m_frameSelected;};
         void setBase(TGColour baseColour, TGColour baseTextColour);
 
     };
