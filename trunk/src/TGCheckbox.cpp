@@ -30,8 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C h e c k b o x
     //-----------------------------------------------------------------------
-    TGCheckbox::TGCheckbox(TGControl *parent, int x1, int y1, int x2, int y2,
-        string caption)
+    TGCheckbox::TGCheckbox(TGControl *parent, string caption, int x1, int y1, int x2, int y2)
         : TGControl(parent)
     {
         setBounds(x1, y1, x2, y2);
