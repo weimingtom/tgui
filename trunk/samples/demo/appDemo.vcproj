@@ -184,10 +184,32 @@
 			<File
 				RelativePath=".\demo.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="demo.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\demo.h"
+				>
 			</File>
 			<File
 				RelativePath=".\precomp.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="demo.h"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

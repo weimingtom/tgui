@@ -85,6 +85,7 @@ using std::string;
 #include <tgmessagebox.h>
 #include <tgmenu.h>
 #include <tgprogressbar.h>
+#include <tgthememanager.h>
 #include <tgsystem.h>
 
 #endif

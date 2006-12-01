@@ -22,31 +22,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGSLIDER_H__
-#define __TGSLIDER_H__
-
+#ifndef __TGTHEMEMANAGER_H__
+#define __TGTHEMEMANAGER_H__
 namespace TGUI
 {
 
-    class TGSlider : public TGControl
+
+    class TGThemeManager : public TGWindow
     {
-    public:
-        float			max;
-        TGDataManager<float>	value;
-        bool			sliding;
+    protected:
+        TGSlider*           m_red;
+        TGSlider*           m_green;
+        TGSlider*           m_blue;
+        TGSlider*           m_alpha;
+    protected:
+        bool colourModified(const TGEventArgs& args);
 
     public:
-        TGSlider(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
-        virtual ~TGSlider();
-
-        virtual void render();
-
-        virtual void setValue(float newValue);
-        virtual void setMax(float newMax);
-
-        virtual void onMouseDown(int x, int y, int b);
-        virtual void onMouseMoved(int x, int y);
-        virtual void onMouseUp(int x, int y, int b);
+        TGThemeManager();
+        virtual ~TGThemeManager();
     };
 }
 #endif

@@ -347,6 +347,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGThemeManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGThemeManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGUI.cpp"
 				>
 				<FileConfiguration
