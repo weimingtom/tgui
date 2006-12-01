@@ -641,9 +641,9 @@ class DemoApp : public ExampleApplication
         pbar2->setMax(61);
 
 
-        (new TGCheckbox(win2, 10, 0, 180, 20, "Checker"))->setState(true);
-        new TGCheckbox(win2, 10, 25, 180, 45, "Checker 2");
-        new TGCheckbox(win2, 10, 50, 180, 70, "Checker 3");
+        (new TGCheckbox(win2,"Checker", 10, 0, 180, 20))->setState(true);
+        new TGCheckbox(win2,"Checker 2", 10, 25, 180, 45);
+        new TGCheckbox(win2,"Checker 3", 10, 50, 180, 70);
 
         TGListbox *lbox = new TGListbox(win2, 10, 80, 175, 200);
         lbox->addItem("A string item");
@@ -716,7 +716,7 @@ class DemoApp : public ExampleApplication
         TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
-        new TGCheckbox(sbox, 10, 80, 200, 100, "Clipped checkbox");
+        new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
         new TGLabel(sbox, 10, 120, "Clipped label");
 
 
@@ -784,8 +784,8 @@ class DemoApp : public ExampleApplication
         win = new TGWindow("A Test Window");
         win->center();
         win->resizeable = true;
-        (new TGCheckbox(win, 10, 0, 180, 20, "Checker"))->setState(true);
-        new TGCheckbox(win, 10, 25, 180, 45, "Checker 2");
+        (new TGCheckbox(win,"Checker", 10, 0, 180, 20))->setState(true);
+        new TGCheckbox(win,"Checker 2", 10, 25, 180, 45);
     }
 
     void createScene(void)

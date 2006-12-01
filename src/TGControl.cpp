@@ -182,6 +182,8 @@ namespace TGUI
 
         for (ritr = m_children.rbegin();ritr != m_children.rend(); ++ritr)
         {
+            if(!(*ritr)->isVisible())
+                continue;
             (*ritr)->getBounds(x1,y1,x2,y2);
             if (!(x >= x1 && y >= y1 && x <= x2 && y <= y2))
                 continue;

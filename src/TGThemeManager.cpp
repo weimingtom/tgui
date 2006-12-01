@@ -35,32 +35,34 @@ namespace TGUI
         (new TGLabel(this,0,0,"Red"))->setPos(0.1f,0.1f);
         (new TGLabel(this,0,0,"Green"))->setPos(0.1f,0.2f);
         (new TGLabel(this,0,0,"Blue"))->setPos(0.1f,0.3f);
+        (new TGLabel(this,0,0,"Alpha"))->setPos(0.1f,0.4f);
 
         m_red = new TGSlider(this);
         m_red->setBounds(0.3f,0.1f,0.85f,0.18f);
         m_red->setMax(255);
-        m_red->setValue(0);
+        m_red->setValue(100);
         m_red->addEventHandler(TGEvent::Modified, new TGEventHandler(&TGThemeManager::colourModified,this));
 
         m_green = new TGSlider(this);
         m_green->setBounds(0.3f,0.2f,0.85f,0.28f);
         m_green->setMax(255);
-        m_green->setValue(0);
+        m_green->setValue(114);
         m_green->addEventHandler(TGEvent::Modified, new TGEventHandler(&TGThemeManager::colourModified,this));
 
         m_blue = new TGSlider(this);
         m_blue->setBounds(0.3f,0.3f,0.85f,0.38f);
         m_blue->setMax(255);
-        m_blue->setValue(0);
+        m_blue->setValue(115);
         m_blue->addEventHandler(TGEvent::Modified, new TGEventHandler(&TGThemeManager::colourModified,this));
 
         m_alpha = new TGSlider(this);
         m_alpha->setBounds(0.3f,0.4f,0.85f,0.48f);
         m_alpha->setMax(255);
-        m_alpha->setValue(200);
+        m_alpha->setValue(204);
         m_alpha->addEventHandler(TGEvent::Modified, new TGEventHandler(&TGThemeManager::colourModified,this));
 
-
+        m_activeOnly = new TGCheckbox(this,"Modify Active Only");
+        m_activeOnly->setBounds(0.3f,0.5f,0.85f,0.59f);
     }
 
     //-----------------------------------------------------------------------
@@ -82,7 +84,7 @@ namespace TGUI
         a = (float)m_alpha->value.get() / 255.f;
 
         TGColourTheme ct(TGColour(r,g,b,a));
-        setColourTheme(ct,true);
+        getActiveScreen()->setColourTheme(ct,true);
 
         return true;
     }

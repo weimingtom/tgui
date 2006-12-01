@@ -53,27 +53,18 @@ namespace TGUI
     void TGSlider::render()
     {
         int			x1, y1, x2, y2, width, height, sx;
-        FrameStyle	fs;
         getBounds(x1, y1, x2, y2);
         width = x2 - x1 + 1;
         height = y2 - y1 + 1;
 
         sx = (int)(x1 + (width-9)*value.get()/max + 4);
 
-        if (mouseOverControl)
-        {
-            fs = FS_RAISED;
-            color(m_theme.getFrameFocusedColour());
-        }
-        else
-        {
-            fs = FS_FLAT;
-            color(m_theme.getFrameColour());
-        }
-
+        color(m_theme.getFrameFocusedColour());
         drawLine(x1 + 4, y1 + height/2, x2 - 4, y1 + height/2);
 
-        drawFrame(sx - 4, y1, sx + 4, y2, fs);
+        if(mouseOverControl)
+            fillRect(sx - 4, y1, sx + 4, y2);
+        else drawFrame(sx - 4, y1, sx + 4, y2, FS_RAISED);
     }
 
     //-----------------------------------------------------------------------
