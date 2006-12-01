@@ -57,7 +57,7 @@ namespace TGUI
         TGPopupMenu*            popupMenu;
         int			            iconPad;
 
-        TGMenuControl(TGControl *owner);
+        TGMenuControl(TGControl *owner=NULL);
         virtual ~TGMenuControl();
 
         virtual void calcSize();

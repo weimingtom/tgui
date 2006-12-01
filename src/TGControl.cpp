@@ -233,6 +233,9 @@ namespace TGUI
     void TGControl::render()
     {
         int	x1, y1, x2, y2;
+        if(!isVisible())
+            return;
+
         getBounds(x1, y1, x2, y2);
 
         openClipArea(x1 + padLeft, y1 + padTop, x2 - padRight,
@@ -295,8 +298,23 @@ namespace TGUI
     {
         int x1,x2,y1,y2;
 
-        float sw = getRenderer()->getWidth();
-        float sh = getRenderer()->getHeight();
+        float sw,sh;
+
+        if(!m_parent)
+        {
+            sw = getRenderer()->getWidth();
+            sh = getRenderer()->getHeight();
+        }
+        else
+        {
+            int iw,ih;
+            m_parent->getWidth(iw);
+            m_parent->getHeight(ih);
+            sw = iw;
+            sh = ih;
+            
+        }
+
 
         x1 = sw * fx1;
         x2 = sw * fx2;
@@ -405,8 +423,22 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::move(float x, float y)
     {
-        float sw = getRenderer()->getWidth();
-        float sh = getRenderer()->getHeight();
+        float sw,sh;
+
+        if(!m_parent)
+        {
+            sw = getRenderer()->getWidth();
+            sh = getRenderer()->getHeight();
+        }
+        else
+        {
+            int iw,ih;
+            m_parent->getWidth(iw);
+            m_parent->getHeight(ih);
+            sw = iw;
+            sh = ih;
+            
+        }
 
         int nx1 = sw * x;
         int ny1 = sh * y;
@@ -1014,6 +1046,14 @@ namespace TGUI
     void TGControl::setColourTheme(TGColourTheme theme,bool updateChildren) 
     {
         m_theme = theme;
+        if(!updateChildren)
+            return;
+
+        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
+        {
+            (*itr)->setColourTheme(theme,true);
+        }
+
     }
 
     //-----------------------------------------------------------------------

@@ -22,7 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#include <tgui.h>
+#include "demo.h"
 #include <ExampleApplication.h>
 #include <ExampleFrameListener.h>
 #include <math.h>
@@ -479,6 +479,7 @@ class DemoApp : public ExampleApplication
 {
     TGUI::TGSystem* mGUISystem;
     OIS::MouseState ms;
+    TGThemeManager* mThemeManager;
 
     void createFrameListener(void)
     {
@@ -586,6 +587,18 @@ class DemoApp : public ExampleApplication
         if(mRoot->restoreConfig())
         {
             mWindow = mRoot->initialise(true);
+        }
+        return true;
+    }
+
+    bool themeAction(const TGEventArgs& args)
+    {
+        if(mThemeManager->isVisible())
+            mThemeManager->hide();
+        else 
+        {
+            mThemeManager->show();
+            mThemeManager->focus();
         }
         return true;
     }
@@ -717,8 +730,10 @@ class DemoApp : public ExampleApplication
 
         screen1->setPopupMenu(mainMenu);
 
+        /*
         TGControl* l = new TGLabel(screen1, 5, 10, "A Label on the Screen");
         l->setPopupMenu(mainMenu);
+        */
 
 
         TGWindow	*win5 = new TGWindow("TGImage control");
@@ -749,6 +764,12 @@ class DemoApp : public ExampleApplication
         (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->addEventHandler(TGEvent::MouseClicked,
             new TGEventHandler(&DemoApp::terminateAppAction,this));
 
+        (new TGButton(screen1, 5, 5, 150, 30, "Theme Manager"))->addEventHandler(TGEvent::MouseClicked,
+            new TGEventHandler(&DemoApp::themeAction,this));
+
+
+        mThemeManager = new TGThemeManager();
+        mThemeManager->hide();
         /*
         win5 = new TGWindow("Float Window");
         win5->setBounds(0.25f, 0.25f, 1.f, 0.75f);

@@ -55,6 +55,7 @@ namespace TGUI
         this->caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
+        m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
         icon = NULL;
     }
