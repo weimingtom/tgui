@@ -32,6 +32,7 @@ namespace TGUI
     {
     public:
         string			caption;
+        bool            isTabbedCaption;
         bool			moving;
         bool			resizing;
         bool			resizeable;
@@ -45,6 +46,8 @@ namespace TGUI
         virtual ~TGWindow();
 
         virtual void setCaption(string newCaption);
+        virtual bool pointInControl(float x, float y);
+        virtual bool pointInCaption(float x, float y);
 
         virtual void render();
 

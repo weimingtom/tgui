@@ -176,8 +176,7 @@ namespace TGUI
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        if (!(x >= x1 + padLeft && y >= y1 + padTop && x <= x2 - padRight &&
-            y <= y2 - padBottom))
+        if(!pointInControl(x,y))
             return this;
 
         TGControlListRevItr ritr = m_children.rbegin();
@@ -186,13 +185,24 @@ namespace TGUI
         {
             if(!(*ritr)->isVisible())
                 continue;
-            (*ritr)->getBounds(x1,y1,x2,y2);
-            if (!(x >= x1 && y >= y1 && x <= x2 && y <= y2))
+            if(!(*ritr)->pointInControl(x,y))
                 continue;
             return (*ritr)->childAt(x, y);
         }
 
         return this;
+    }
+
+    //-----------------------------------------------------------------------
+    //                      p o i n t I n C o n t r o l
+    //-----------------------------------------------------------------------
+    bool TGControl::pointInControl(float x, float y)
+    {
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+            return true;
+        return false;
     }
 
     //-----------------------------------------------------------------------

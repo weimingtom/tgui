@@ -43,7 +43,6 @@ namespace TGUI
     TGColourTheme::TGColourTheme(TGColour baseColour, TGColour baseTextColour)
     {
         setBase(baseColour,baseTextColour);
-
     }
 
     //-----------------------------------------------------------------------

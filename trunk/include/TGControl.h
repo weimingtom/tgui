@@ -116,6 +116,7 @@ namespace TGUI
         void removeAllHandlers(TGControl* control);
 
         virtual TGControl *childAt(float x, float y);
+        virtual bool pointInControl(float x, float y);
 
         TGScreen *getScreen();
 

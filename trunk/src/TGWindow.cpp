@@ -41,6 +41,7 @@ namespace TGUI
         m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
         icon = NULL;
+        isTabbedCaption = false;
     }
 
     //-----------------------------------------------------------------------
@@ -80,21 +81,60 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                      p o i n t I n C o n t r o l
+    //-----------------------------------------------------------------------
+    bool TGWindow::pointInControl(float x, float y)
+    {
+        if(!isTabbedCaption)
+            return TGControl::pointInControl(x,y);
+
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+        y1 = y1 + m_titleBarHeight;
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+            return true;
+
+        return pointInCaption(x,y);
+    }
+
+    //-----------------------------------------------------------------------
+    //                      p o i n t I n C a p t i o n
+    //-----------------------------------------------------------------------
+    bool TGWindow::pointInCaption(float x,float y)
+    {
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+        y2 = y1 + m_titleBarHeight;
+        if(isTabbedCaption)
+            x2 = x1+stringWidth(caption)+(stringWidth("M")*2);
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+            return true;
+
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
     //                              r e n d e r
     //-----------------------------------------------------------------------
     void TGWindow::render()
     {
         int	x1, y1, x2, y2;
         int	clen, titleY2;
+        TGRect cRect;
         getBounds(x1, y1, x2, y2);
 
         titleY2 = y1 + m_titleBarHeight;
+
+        clen = (int)stringWidth(caption);
+        if(isTabbedCaption)
+            cRect = TGRect(x1, y1, x1+clen+(stringWidth("M")*2),titleY2);
+        else cRect = TGRect(x1, y1, x2, titleY2);
 
         if(!caption.empty())
         {
 
             color(m_theme.getCaptionColour());
-            fillRect(x1, y1, x2, titleY2);
+            fillRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
 
             color(m_theme.getBase());
             fillRect(x1, titleY2, x2, y2);
@@ -105,29 +145,30 @@ namespace TGUI
             fillRect(this->x1, this->y1, this->x2, this->y2);
         }
 
-        clen = (int)stringWidth(caption);
         TGColour frameColour;
         if (focused())
         {
             frameColour = m_theme.getFrameFocusedColour();
             color(frameColour);
-            drawRect(x1, y1, x2, titleY2);
-            drawRect(x1, y1, x2, y2);
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
+            drawRect(x1, titleY2, x2, y2);
             color(m_theme.getTextFocusedColour());
         }
         else
         {
             frameColour = m_theme.getFrameColour();
             color(frameColour);
-            drawRect(x1, y1, x2, titleY2);
-            drawRect(x1, y1, x2, y2);
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
+            drawRect(x1, titleY2, x2, y2);
             color(m_theme.getTextColour());
         }
 
         if(!caption.empty())
         {
             openClip();
-            drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
+            if(!isTabbedCaption)
+                drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
+            else drawString(x1+stringWidth("M"),y1 + 2, caption);
             closeClip();
         }
 
@@ -154,6 +195,9 @@ namespace TGUI
     {
         int	x1, y1, x2, y2, titleY2;
         getBounds(x1, y1, x2, y2);
+
+        if(isTabbedCaption)
+            x2 = x1+stringWidth(caption)+(stringWidth("M")*2);
 
         titleY2 = stringHeight() + y1 + 2;
 
