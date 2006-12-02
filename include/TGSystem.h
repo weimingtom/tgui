@@ -43,13 +43,19 @@ namespace TGUI
         TGLogger*           m_logger;
         TGColourTheme       m_theme;
 
+        TGFont*             m_defaultFont;
+        TGCursor*           m_defaultCursor;
+        TGScreen*           m_defaultScreen;
+
+
         bool                m_gui_redraw;
 
     private:
         void createDefaultCursor();
 
     public:
-        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr);
+        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont,
+            TGColourTheme defaultTheme=TGColourTheme());
         ~TGSystem();
 
         static TGSystem& getSingleton(void);

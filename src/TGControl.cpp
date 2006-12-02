@@ -162,8 +162,7 @@ namespace TGUI
         {
             TGControl* child = *m_children.begin();
             child->removeAllChildren();
-            m_children.pop_front();
-
+            delete child;  // this will remove from the parent child list
         }
     }
 

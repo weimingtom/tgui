@@ -59,7 +59,7 @@ namespace TGUI
 
     protected:
         TGTexture(TGRenderer* owner) : d_owner(owner) {}
-        virtual ~TGTexture(void) {}
+        virtual ~TGTexture(void) {};
     private:
         TGRenderer* d_owner;		                // Renderer object that created and owns this texture
         void	freeOgreTexture(void);
