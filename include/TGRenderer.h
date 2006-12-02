@@ -30,6 +30,36 @@ namespace TGUI
 
     class TGTexture;
     class TGRenderer;
+
+    struct TGQuadVertex {
+        float x, y, z;                          // The position for the vertex.
+        Ogre::RGBA diffuse;                     // colour of the vertex
+        float tu1, tv1;                         // texture coordinates
+    };
+
+    struct TGQuadInfo
+    {
+        bool                isLineQuad;
+        Ogre::TexturePtr	texture;
+        TGRect				position;
+        TGRect              position2;
+        TGQuadVertex        lpos[6];
+        float				z;
+        TGRect				texPosition;
+        uint32		        topLeftCol;
+        uint32		        topRightCol;
+        uint32		        bottomLeftCol;
+        uint32		        bottomRightCol;
+
+        TGQuadSplitMode		splitMode;
+
+        bool operator<(const TGQuadInfo& other) const
+        {
+            // this is intentionally reversed.
+            return z > other.z;
+        }
+    };
+
     class TGRQListener : public Ogre::RenderQueueListener
     {
     public:
@@ -128,35 +158,6 @@ namespace TGUI
         static const size_t    VERTEXBUFFER_INITIAL_CAPACITY; // initial capacity of the allocated vertex buffer
         static const size_t    UNDERUSED_FRAME_THRESHOLD;     // number of frames to wait before shrinking buffer
 
-        struct QuadVertex {
-            float x, y, z;                          // The position for the vertex.
-            Ogre::RGBA diffuse;                     // colour of the vertex
-            float tu1, tv1;                         // texture coordinates
-        };
-
-        struct QuadInfo
-        {
-            bool                isLineQuad;
-            Ogre::TexturePtr		texture;
-            TGRect				position;
-            TGRect              position2;
-            QuadVertex          lpos[6];
-            float				z;
-            TGRect				texPosition;
-            uint32		        topLeftCol;
-            uint32		        topRightCol;
-            uint32		        bottomLeftCol;
-            uint32		        bottomRightCol;
-
-            TGQuadSplitMode		splitMode;
-
-            bool operator<(const QuadInfo& other) const
-            {
-                // this is intentionally reversed.
-                return z > other.z;
-            }
-        };
-
         void	initRenderStates(void);
 
         void	sortQuads(void);
@@ -172,8 +173,8 @@ namespace TGUI
 
         TGRect				        m_displayArea;
 
-        typedef std::multiset<QuadInfo>		QuadList;
-        QuadList                    m_quadList;
+        typedef std::multiset<TGQuadInfo> TGQuadList;
+        TGQuadList                  m_quadList;
         bool	                    m_queueing;	        // setting for queueing control.
 
         // Ogre specific bits.

@@ -153,7 +153,7 @@ namespace TGUI
         else
         {
             d_sorted = false;
-            QuadInfo quad;
+            TGQuadInfo quad;
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
             quad.isLineQuad = false;
@@ -224,7 +224,7 @@ namespace TGUI
         else
         {
             d_sorted = false;
-            QuadInfo quad;
+            TGQuadInfo quad;
 
 
             TGVector2 start_point(destRect.d_left,destRect.d_top);
@@ -363,12 +363,12 @@ namespace TGUI
                     d_underused_framecount = 0;
                 }
                 /// Fill the buffer
-                QuadVertex*	buffmem;
-                buffmem = (QuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
+                TGQuadVertex*	buffmem;
+                buffmem = (TGQuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
                 // iterate over each quad in the list
-                for (QuadList::iterator i = m_quadList.begin(); i != m_quadList.end(); ++i)
+                for (TGQuadList::iterator i = m_quadList.begin(); i != m_quadList.end(); ++i)
                 {
-                    const QuadInfo& quad = (*i);
+                    const TGQuadInfo& quad = (*i);
                     if(!quad.isLineQuad)
                     {
                         // setup Vertex 1...
@@ -480,7 +480,7 @@ namespace TGUI
             d_bufferPos = 0;
 
             // Iterate over each quad in the list and render it
-            QuadList::iterator i = m_quadList.begin();
+            TGQuadList::iterator i = m_quadList.begin();
             while(i != m_quadList.end())
             {
 
@@ -489,7 +489,7 @@ namespace TGUI
 
                 for (; i != m_quadList.end(); ++i)
                 {
-                    const QuadInfo& quad = (*i);
+                    const TGQuadInfo& quad = (*i);
                     if (d_currTexture != quad.texture)
                         /// If it has a different texture, render this quad in next operation
                         break;
@@ -658,7 +658,7 @@ namespace TGUI
             uint32 bottomLeftCol	= colourToOgre(colours.m_topLeft);
             uint32 bottomRightCol= colourToOgre(colours.m_topRight);
 
-            QuadVertex*	buffmem = (QuadVertex*)d_direct_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
+            TGQuadVertex*	buffmem = (TGQuadVertex*)d_direct_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
 
             // setup Vertex 1...
             buffmem->x	= final_rect.d_left;
