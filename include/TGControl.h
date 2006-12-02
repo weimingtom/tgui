@@ -113,6 +113,7 @@ namespace TGUI
         void addEventHandler(string eventID, TGEventHandler* handler);
         void removeEventHandler(string eventID, TGEventHandler* handler);
         void removeAllHandlers(void* obj);
+        void removeAllHandlers(TGControl* control);
 
         virtual TGControl *childAt(float x, float y);
 

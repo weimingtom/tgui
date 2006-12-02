@@ -102,7 +102,9 @@ namespace TGUI
         template<typename T>
         TGEventHandler(bool (T::*function)(const TGEventArgs&), T* obj) :
             m_functor(new TGMemberFunction<T>(function, obj))
-        {}
+        {};
+
+            virtual ~TGEventHandler() {delete m_functor;};
 
         virtual bool operator()(const TGEventArgs& args)
         {
