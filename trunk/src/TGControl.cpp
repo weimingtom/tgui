@@ -62,6 +62,9 @@ namespace TGUI
     {
         invalidateControl(this);
         removeAllChildren();
+        removeAllHandlers(this);
+        if(m_popupMenu)
+            delete m_popupMenu;
 
         if (m_parent)
         {
@@ -1031,6 +1034,32 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::removeAllHandlers(void* obj)
     {
+    }
+
+    //-----------------------------------------------------------------------
+    //                    r e m o v e A l l H a n d l e r s
+    //-----------------------------------------------------------------------
+    void TGControl::removeAllHandlers(TGControl* control)
+    {
+        TGEventMap::iterator itr;
+        itr = m_handlers.begin();
+
+        while(itr != m_handlers.end())
+        {
+
+            TGEventHandlers::iterator eitr = itr->second.begin();
+
+            while(eitr != itr->second.end())
+            {
+                TGEventHandler* eh = *eitr;
+                delete eh;
+
+                ++eitr;
+            }
+            itr->second.clear();
+            ++itr;
+        }
+
     }
 
     //-----------------------------------------------------------------------

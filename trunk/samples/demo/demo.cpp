@@ -727,9 +727,12 @@ public:
 
 
         screen1 = TGSystem::getSingleton().getActiveScreen();
+
+        /*
         screen2 = new TGScreen();
         TGWindow	*nwin = new TGWindow(screen2, "A window in screen 2");
         nwin->center();
+        */
 
 
 
@@ -799,11 +802,11 @@ public:
 
         //TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
         //TGColourTheme ct(TGColour(0.1,0.6,0.2,0.75),TGColour(0.9,0.9,0,1.0));
-        TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
-        //mGUISystem->setColourTheme(ct);
+        //TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
+        TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest3();
+        createTest2();
     }
 
 };
