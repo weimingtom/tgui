@@ -177,7 +177,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S y s t e m
     //-----------------------------------------------------------------------
-    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr)
+    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont,
+        TGColourTheme defaultTheme)
     {
         m_activeScreen = 0;
         m_childUnderMouse = 0;
@@ -187,6 +188,7 @@ namespace TGUI
         m_keyboardFocusControl = 0;
         m_logger = 0;
         m_gui_redraw = true;
+        m_theme = defaultTheme;
 
         m_renderer = new TGUI::TGRenderer(window, 
             Ogre::RENDER_QUEUE_OVERLAY, false, sceneMgr);
@@ -232,6 +234,14 @@ namespace TGUI
         pixelBuffer->unlock();
         m_texture->setOgreTexture(texture);
         m_logger = new TGLogger();
+
+        m_defaultFont = new TGFont(defaultFont);
+        m_defaultFont->setHeight(18);
+        setCurrentFont(m_defaultFont);
+
+        m_defaultScreen = new TGScreen();
+        m_defaultScreen->activate();
+
     }
 
     //-----------------------------------------------------------------------
@@ -239,6 +249,18 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGSystem::~TGSystem()
     {
+        if(m_defaultFont)
+            delete m_defaultFont;
+
+        if(m_defaultCursor)
+            delete m_defaultCursor;
+
+        if(m_defaultScreen)
+            delete m_defaultScreen;
+
+        if(m_renderer)
+            delete m_renderer;
+
         if(m_logger)
             delete m_logger;
     }
@@ -517,8 +539,8 @@ namespace TGUI
         // Unlock the pixel buffer
         pixelBuffer->unlock();
         ctexture->setOgreTexture(texture);
-
-        setMouseCursor(new TGCursor(ctexture));
+        m_defaultCursor = new TGCursor(ctexture);
+        setMouseCursor(m_defaultCursor);
 
     }
 

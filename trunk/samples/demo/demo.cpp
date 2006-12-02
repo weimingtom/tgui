@@ -480,6 +480,11 @@ class DemoApp : public ExampleApplication
     TGUI::TGSystem* mGUISystem;
     OIS::MouseState ms;
     TGThemeManager* mThemeManager;
+public:
+    ~DemoApp()
+    {
+        delete mGUISystem;
+    }
 
     void createFrameListener(void)
     {
@@ -792,20 +797,13 @@ class DemoApp : public ExampleApplication
     {
         // setup GUI system
 
-        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr);
         //TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
         //TGColourTheme ct(TGColour(0.1,0.6,0.2,0.75),TGColour(0.9,0.9,0,1.0));
         TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
         //mGUISystem->setColourTheme(ct);
+        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        TGFont* font = new TGFont("Garamond");
-        font->setHeight(18);
-        mGUISystem->setCurrentFont(font);
-
-        TGScreen* screen = new TGScreen();
-        screen->activate();
-
-        createTest2();
+        createTest3();
     }
 
 };
