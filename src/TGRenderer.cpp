@@ -160,7 +160,6 @@ namespace TGUI
             d_sorted = false;
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
-            quad.isLineQuad = false;
             quad.position.d_left	= destRect.d_left;
             quad.position.d_right	= destRect.d_right;
             quad.position.d_top		= daHeight - destRect.d_top;
@@ -183,6 +182,57 @@ namespace TGUI
             quad.topRightCol	= colourToOgre(colours.m_bottomRight);
             quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
             quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+
+            // setup Vertex 1...
+            quad.lpos[0].x = quad.position.d_left;
+            quad.lpos[0].y = quad.position.d_bottom;
+            quad.lpos[0].z = quad.z;
+            quad.lpos[0].diffuse = quad.topLeftCol;
+            quad.lpos[0].tu1 = quad.texPosition.d_left;
+            quad.lpos[0].tv1 = quad.texPosition.d_bottom;
+
+            // setup Vertex 2...
+
+            quad.lpos[1].x = quad.position.d_right;
+            quad.lpos[1].y = quad.position.d_bottom;
+            quad.lpos[1].z = quad.z;
+            quad.lpos[1].diffuse = quad.topRightCol;
+            quad.lpos[1].tu1 = quad.texPosition.d_right;
+            quad.lpos[1].tv1 = quad.texPosition.d_bottom;
+
+            // setup Vertex 3...
+            quad.lpos[2].x = quad.position.d_left;
+            quad.lpos[2].y = quad.position.d_top;
+            quad.lpos[2].z = quad.z;
+            quad.lpos[2].diffuse = quad.bottomLeftCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_left;
+            quad.lpos[2].tv1 = quad.texPosition.d_top;
+
+            // setup Vertex 4...
+            quad.lpos[3].x = quad.position.d_right;
+            quad.lpos[3].y = quad.position.d_bottom;
+            quad.lpos[3].z = quad.z;
+            quad.lpos[3].diffuse = quad.topRightCol;
+            quad.lpos[3].tu1 = quad.texPosition.d_right;
+            quad.lpos[3].tv1 = quad.texPosition.d_bottom;
+
+            // setup Vertex 5...
+            quad.lpos[4].x = quad.position.d_right;
+            quad.lpos[4].y = quad.position.d_top;
+            quad.lpos[4].z = quad.z;
+            quad.lpos[4].diffuse = quad.bottomRightCol;
+            quad.lpos[4].tu1 = quad.texPosition.d_right;
+            quad.lpos[4].tv1 = quad.texPosition.d_top;
+
+            // setup Vertex 6...
+
+            quad.lpos[5].x = quad.position.d_left;
+            quad.lpos[5].y = quad.position.d_top;
+            quad.lpos[5].z = quad.z;
+            quad.lpos[5].diffuse = quad.bottomLeftCol;
+            quad.lpos[5].tu1 = quad.texPosition.d_left;
+            quad.lpos[5].tv1 = quad.texPosition.d_top;
+
 
             // set quad split mode
 
@@ -241,6 +291,12 @@ namespace TGUI
             Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
             float float_thick = (( float )thickness );
 
+            // covert colours for ogre, note that top / bottom are switched.
+            quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
+            quad.topRightCol	= colourToOgre(colours.m_bottomRight);
+            quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
+            quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+
             //
             // quad on the origin and rotate
             //
@@ -255,23 +311,42 @@ namespace TGUI
             y = oRect.d_top;
             quad.lpos[0].x = preCos * x - preSin * y;
             quad.lpos[0].y = preSin * x + preCos * y;
+            quad.lpos[0].diffuse = quad.topLeftCol;
+            quad.lpos[0].tu1 = quad.texPosition.d_left;
+            quad.lpos[0].tv1 = quad.texPosition.d_bottom;
+
             x = oRect.d_right;
             y = oRect.d_top;
             quad.lpos[1].x = preCos * x - preSin * y;
             quad.lpos[1].y = preSin * x + preCos * y;
+            quad.lpos[1].diffuse = quad.topLeftCol;
+            quad.lpos[1].tu1 = quad.texPosition.d_left;
+            quad.lpos[1].tv1 = quad.texPosition.d_bottom;
             x = oRect.d_right;
             y = oRect.d_bottom;
             quad.lpos[2].x = preCos * x - preSin * y;
             quad.lpos[2].y = preSin * x + preCos * y;
+            quad.lpos[2].diffuse = quad.topLeftCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_left;
+            quad.lpos[2].tv1 = quad.texPosition.d_bottom;
 
             quad.lpos[3].x = quad.lpos[2].x;
             quad.lpos[3].y = quad.lpos[2].y;
+            quad.lpos[3].diffuse = quad.topLeftCol;
+            quad.lpos[3].tu1 = quad.texPosition.d_left;
+            quad.lpos[3].tv1 = quad.texPosition.d_bottom;
             x = oRect.d_left;
             y = oRect.d_bottom;
             quad.lpos[4].x = preCos * x - preSin * y;
             quad.lpos[4].y = preSin * x + preCos * y;
+            quad.lpos[4].diffuse = quad.topLeftCol;
+            quad.lpos[4].tu1 = quad.texPosition.d_left;
+            quad.lpos[4].tv1 = quad.texPosition.d_bottom;
             quad.lpos[5].x = quad.lpos[0].x;
             quad.lpos[5].y = quad.lpos[0].y;
+            quad.lpos[5].diffuse = quad.topLeftCol;
+            quad.lpos[5].tu1 = quad.texPosition.d_left;
+            quad.lpos[5].tv1 = quad.texPosition.d_bottom;
 
             //
             // offset, flip, and convert
@@ -302,29 +377,9 @@ namespace TGUI
 
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
-            quad.isLineQuad = true;
-            quad.position.d_left	= destRect.d_left;
-            quad.position.d_right	= destRect.d_right;
-            quad.position.d_top		= m_displayArea.getHeight() - destRect.d_top;
-            quad.position.d_bottom	= m_displayArea.getHeight() - destRect.d_bottom;
-            quad.position.offset(d_texelOffset);
-
-            // convert quad co-ordinates for a -1 to 1 co-ordinate system.
-            quad.position.d_left	/= (m_displayArea.getWidth() * 0.5f);
-            quad.position.d_right	/= (m_displayArea.getWidth() * 0.5f);
-            quad.position.d_top		/= (m_displayArea.getHeight() * 0.5f);
-            quad.position.d_bottom	/= (m_displayArea.getHeight() * 0.5f);
-            quad.position.offset(TGPoint(-1.0f, -1.0f));
-
             quad.z				= -1 + z;
             quad.texture		= ((TGTexture*)tex)->getOgreTexture();
             quad.texPosition	= texRect;
-
-            // covert colours for ogre, note that top / bottom are switched.
-            quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-            quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-            quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-            quad.bottomRightCol	= colourToOgre(colours.m_topRight);
 
             m_quadList.push_back(quad);
         }
@@ -375,78 +430,9 @@ namespace TGUI
                     const TGQuadInfo& quad = (*i);
                     //if(quad.isClipped)
                     //    continue;
-                    if(!quad.isLineQuad)
-                    {
-                        // setup Vertex 1...
-                        buffmem->x = quad.position.d_left;
-                        buffmem->y = quad.position.d_bottom;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.topLeftCol;
-                        buffmem->tu1 = quad.texPosition.d_left;
-                        buffmem->tv1 = quad.texPosition.d_bottom;
-                        ++buffmem;
 
-                        // setup Vertex 2...
-
-                        buffmem->x = quad.position.d_right;
-                        buffmem->y = quad.position.d_bottom;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.topRightCol;
-                        buffmem->tu1 = quad.texPosition.d_right;
-                        buffmem->tv1 = quad.texPosition.d_bottom;
-                        ++buffmem;
-
-                        // setup Vertex 3...
-                        buffmem->x = quad.position.d_left;
-                        buffmem->y = quad.position.d_top;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.bottomLeftCol;
-                        buffmem->tu1 = quad.texPosition.d_left;
-                        buffmem->tv1 = quad.texPosition.d_top;
-                        ++buffmem;
-
-                        // setup Vertex 4...
-                        buffmem->x = quad.position.d_right;
-                        buffmem->y = quad.position.d_bottom;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.topRightCol;
-                        buffmem->tu1 = quad.texPosition.d_right;
-                        buffmem->tv1 = quad.texPosition.d_bottom;
-                        ++buffmem;
-
-                        // setup Vertex 5...
-                        buffmem->x = quad.position.d_right;
-                        buffmem->y = quad.position.d_top;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.bottomRightCol;
-                        buffmem->tu1 = quad.texPosition.d_right;
-                        buffmem->tv1 = quad.texPosition.d_top;
-                        ++buffmem;
-
-                        // setup Vertex 6...
-
-                        buffmem->x = quad.position.d_left;
-                        buffmem->y = quad.position.d_top;
-                        buffmem->z = quad.z;
-                        buffmem->diffuse = quad.bottomLeftCol;
-                        buffmem->tu1 = quad.texPosition.d_left;
-                        buffmem->tv1 = quad.texPosition.d_top;
-                        ++buffmem;
-                    }
-                    else // line quad
-                    {
-                        for(int i = 0;i<6;i++)
-                        {
-                            buffmem->x = quad.lpos[i].x;
-                            buffmem->y = quad.lpos[i].y;
-                            buffmem->z = quad.z;
-                            buffmem->diffuse = quad.topLeftCol;
-                            buffmem->tu1 = quad.texPosition.d_left;
-                            buffmem->tv1 = quad.texPosition.d_bottom;
-                            ++buffmem;
-                        }
-                    }
-
+                    memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
+                    buffmem += 6;
                 }
 
                 // ensure we leave the buffer in the unlocked state

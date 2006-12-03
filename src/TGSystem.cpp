@@ -187,7 +187,6 @@ namespace TGUI
         m_trackControl = 0;
         m_keyboardFocusControl = 0;
         m_logger = 0;
-        m_gui_redraw = true;
         m_theme = defaultTheme;
 
         m_renderer = new TGUI::TGRenderer(window, 
@@ -579,22 +578,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::renderGUI()
     {
-        //
-        // for now, redraw always on...
-        //
-        if (m_gui_redraw)
+        m_cache.clear();
+
+        m_renderer->resetZValue();
+        m_renderer->setQueueingEnabled(true);
+
+        if (m_activeScreen)
         {
-            m_cache.clear();
-
-            m_renderer->resetZValue();
-            m_renderer->setQueueingEnabled(true);
-
-            if (m_activeScreen)
-            {
-                m_activeScreen->render();
-            }
-
-            //m_gui_redraw = false;
+            m_activeScreen->render();
         }
 
         m_renderer->doRender(m_cache);
@@ -606,8 +597,6 @@ namespace TGUI
             m_mouseCursor->render();
         }
 
-        // do final destruction on dead-pool windows
-        //WindowManager::getSingleton().cleanDeadPool();
     }
 
 }

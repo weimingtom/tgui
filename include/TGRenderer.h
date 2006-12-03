@@ -39,11 +39,9 @@ namespace TGUI
 
     struct TGQuadInfo
     {
-        bool                isLineQuad;
         bool                isClipped;
         Ogre::TexturePtr	texture;
         TGRect				position;
-        TGRect              position2;
         TGQuadVertex        lpos[6];
         float				z;
         TGRect				texPosition;
@@ -61,14 +59,13 @@ namespace TGUI
         {
             if ( &rhs != this )
             {
-                isLineQuad = rhs.isLineQuad;
                 isClipped = rhs.isClipped;
                 texture = rhs.texture;
                 position = rhs.position;
-                position2 = rhs.position2;
                 for(int i=0;i<6;i++)
                 {
-                    lpos[i] = rhs.lpos[i];
+                    lpos[i].x = rhs.lpos[i].x;
+                    lpos[i].y = rhs.lpos[i].y;
                 }
                 z = rhs.z;
                 texPosition = rhs.texPosition;

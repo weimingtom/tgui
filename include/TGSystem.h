@@ -48,9 +48,6 @@ namespace TGUI
         TGScreen*           m_defaultScreen;
         TGQuadList          m_cache;
 
-
-        bool                m_gui_redraw;
-
     private:
         void createDefaultCursor();
 
