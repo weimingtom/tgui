@@ -132,6 +132,7 @@ namespace TGUI
 
         if (value.get() != oldValue)
             fireEvent(TGEvent::Modified,TGEventArgs(this));
+        redraw();
     }
 
     //-----------------------------------------------------------------------

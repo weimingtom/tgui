@@ -230,6 +230,7 @@ namespace TGUI
             onScroll(hScroll - oldHScroll, vScroll - oldVScroll);
             fireEvent(TGEvent::Scrolled,TGEventArgs(this));
         }
+        redraw();
     }
 
     //-----------------------------------------------------------------------

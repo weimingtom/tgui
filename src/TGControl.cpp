@@ -253,6 +253,19 @@ namespace TGUI
             return false;
         }
 
+        if(!isVisible())
+            return true;
+
+        TGQuadList::iterator itr;
+
+        for(itr=m_quadCache.begin(); itr!=m_quadCache.end(); itr++)
+        {
+            TGQuadInfo q = *itr;
+            m_systemCache.push_back(q);
+        }
+
+        TGControl::render();
+
         return true;
     }
 
@@ -309,7 +322,11 @@ namespace TGUI
         m_parent->setFocusedChild(this);
 
         if(oldFocus)
+        {
+            if(oldFocus->m_parent)
+                oldFocus->m_parent->redraw();
             oldFocus->onFocusExit();
+        }
         onFocusEnter();
     }
 
@@ -376,6 +393,7 @@ namespace TGUI
         }
         if (x1 != oldX1 || y1 != oldY1)
             fireEvent(TGEvent::Moved,TGEventArgs(this));
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -406,6 +424,7 @@ namespace TGUI
         }
         if (x1 != oldX1 || y1 != oldY1)
             fireEvent(TGEvent::Moved,TGEventArgs(this));
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -669,6 +688,7 @@ namespace TGUI
     void TGControl::onMouseEnter()
     {
         mouseOverControl = true;
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -684,6 +704,7 @@ namespace TGUI
     void TGControl::onMouseExit()
     {
         mouseOverControl = false;
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -807,7 +828,8 @@ namespace TGUI
             return;
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),r,cr);
+        TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),r,cr);
+        m_quadCache.push_back(qi);
     }
 
 
@@ -824,8 +846,9 @@ namespace TGUI
         int xdir= (x2-x1) < 0 ? -1 : 1;
         int ydir= (y2-y1) < 0 ? -1 : 1;
 
-        TGSystem::getSingleton().getRenderer()->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
+        TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
             r,cr,thickness);
+        m_quadCache.push_back(qi);
     }
 
     //-----------------------------------------------------------------------
@@ -899,7 +922,8 @@ namespace TGUI
 
             font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
 
-            TGSystem::getSingleton().getRenderer()->addQuad(r,0,font->m_texture,ruv,cr);
+            TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addQuad(r,0,font->m_texture,ruv,cr);
+            m_quadCache.push_back(qi);
 
             cx += cWidth + 1.0f;
         }
@@ -1110,6 +1134,7 @@ namespace TGUI
         {
             (*itr)->setColourTheme(theme,true);
         }
+        redraw();
 
     }
 
@@ -1146,4 +1171,18 @@ namespace TGUI
 
         return rc;
     }
+
+    //-----------------------------------------------------------------------
+    //                           r e d r a w
+    //-----------------------------------------------------------------------
+    void TGControl::redraw(bool value) 
+    {
+        m_redraw = value;
+        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
+        {
+            (*itr)->redraw(value);
+        }
+
+    };
+
 }
