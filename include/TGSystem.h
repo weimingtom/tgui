@@ -42,6 +42,7 @@ namespace TGUI
         TGCursor*           m_mouseCursor;
         TGLogger*           m_logger;
         TGColourTheme       m_theme;
+        TGControlList       m_dead;
 
         TGFont*             m_defaultFont;
         TGCursor*           m_defaultCursor;
@@ -85,6 +86,7 @@ namespace TGUI
         void setKeyboardFocusControl(TGControl *control);
         bool hasKeyboardFocus(TGControl *control);
         void invalidateControl(TGControl *control);
+        void destroyControl(TGControl *control);
 
 
         void injectMouseMove(int relX, int relY);

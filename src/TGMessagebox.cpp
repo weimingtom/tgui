@@ -28,26 +28,25 @@ namespace TGUI
 
     bool TGMessagebox::closeMessageBox(const TGEventArgs& args)
     {
-        delete args.m_control->m_parent;
+        TGSystem::getSingleton().destroyControl(this);
         return true;
     }
 
 
-    TGMessagebox::TGMessagebox(string msg, string caption) : TGControl(0)
+    TGMessagebox::TGMessagebox(string msg, string caption) : TGWindow(TGSystem::getSingleton().getActiveScreen(),caption)
     {
         m_message = msg;
         m_caption = caption;
-        m_window = new TGWindow(caption);
-        TGLabel	*l = new TGLabel(m_window, 20, 20, msg);
-        TGButton	*b = new TGButton(m_window, 0, 0, 100, 25, "Ok");
-        m_window->resize((l->x2 - l->x1) + 40, 80);
+        TGLabel	*l = new TGLabel(this, 20, 20, msg);
+        TGButton	*b = new TGButton(this, 0, 0, 100, 25, "Ok");
+        resize((l->x2 - l->x1) + 40, 80);
         l->center();
         b->move(0, l->y2 + 15);
         b->center(true, false);
-        m_window->resize(m_window->x2 - m_window->x1 + 1, m_window->y2 - m_window->y1 + 16 + b->y2 - b->y1);
+        resize(x2 - x1 + 1, y2 - y1 + 16 + b->y2 - b->y1);
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGMessagebox::closeMessageBox,this));
-        m_window->center();
-        m_window->hide();
+        center();
+        hide();
     }
 
     TGMessagebox::~TGMessagebox()
@@ -57,7 +56,7 @@ namespace TGUI
 
     void TGMessagebox::show()
     {
-        m_window->makeExclusive();
-        m_window->show();
+        makeExclusive();
+        TGControl::show();
     }
 }

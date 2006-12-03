@@ -574,7 +574,15 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                         r e n d e r G U I
+    //                      d e s t r o y C o n t r o l
+    //-----------------------------------------------------------------------
+    void TGSystem::destroyControl(TGControl *control)
+    {
+        m_dead.push_back(control);
+    }
+
+    //-----------------------------------------------------------------------
+    //                          r e n d e r G U I
     //-----------------------------------------------------------------------
     void TGSystem::renderGUI()
     {
@@ -597,6 +605,14 @@ namespace TGUI
             m_mouseCursor->render();
         }
 
+        TGControlList::iterator it;
+        while(m_dead.size())
+        {
+            it = m_dead.begin();
+            TGControl* control = *it;
+            delete control;
+            m_dead.pop_front();
+        }
     }
 
 }

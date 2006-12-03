@@ -27,12 +27,11 @@
 
 namespace TGUI
 {
-    class TGMessagebox : public TGControl
+    class TGMessagebox : public TGWindow
     {
     protected:
         string          m_caption;
         string          m_message; 
-        TGWindow*       m_window;
     private:
         bool closeMessageBox(const TGEventArgs& args);
 
