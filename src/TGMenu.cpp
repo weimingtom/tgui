@@ -74,6 +74,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGMenuItem::render()
     {
+        if(isRenderCached())
+            return;
+
         int     x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
@@ -221,6 +224,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGMenuControl::render()
     {
+        if(isRenderCached())
+            return;
 
         color(m_theme.getBase());
         fillRect(x1, y1, x2, y2);

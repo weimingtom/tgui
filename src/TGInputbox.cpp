@@ -80,6 +80,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGInputbox::render()
     {
+        if(isRenderCached())
+            return;
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
         color(m_theme.getBase());

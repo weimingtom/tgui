@@ -84,6 +84,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGScrollbox::render()
     {
+        if(isRenderCached())
+            return;
+
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 

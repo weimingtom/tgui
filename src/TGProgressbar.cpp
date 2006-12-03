@@ -76,6 +76,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGProgressBar::render()
     {
+        if(isRenderCached())
+            return;
+
         int	x1, y1, x2, y2, w;
         float	value = this->value.get();
         getBounds(x1, y1, x2, y2);

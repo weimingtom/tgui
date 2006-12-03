@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C o n t r o l
     //-----------------------------------------------------------------------
-    TGControl::TGControl(TGControl *parent)
+    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
     {
         x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
             yShift = 0;
@@ -39,6 +39,7 @@ namespace TGUI
         name = "";
         m_focusedChild = 0;
         m_parent = parent;
+        m_redraw = false;
         if (m_parent)
         {
             m_parent->addChild(this);
@@ -242,7 +243,21 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                              r e n d e r
+    //                      i s R e n d e r C a c h e d
+    //-----------------------------------------------------------------------
+    bool TGControl::isRenderCached()
+    {
+        if(!m_quadCache.size() || m_redraw)
+        {
+            m_quadCache.clear();
+            return false;
+        }
+
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
+    //                             r e n d e r
     //-----------------------------------------------------------------------
     void TGControl::render()
     {
@@ -260,6 +275,7 @@ namespace TGUI
             if (*itr == exclusiveChild)
                 continue;
             (*itr)->render();
+            (*itr)->redraw(false);
         }
 
         if (exclusiveChild)
@@ -268,9 +284,11 @@ namespace TGUI
             TGControl::fillRect(x1, y1, x2, y2);
 
             exclusiveChild->render();
+            exclusiveChild->redraw(false);
         }
 
         closeClipArea();
+        m_redraw = false;
     }
 
     //-----------------------------------------------------------------------
@@ -789,8 +807,7 @@ namespace TGUI
             return;
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            r,cr);
+        TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),r,cr);
     }
 
 

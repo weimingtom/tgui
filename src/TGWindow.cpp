@@ -118,6 +118,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::render()
     {
+        if(isRenderCached())
+            return;
+
         int	x1, y1, x2, y2;
         int	clen, titleY2;
         TGRect cRect;

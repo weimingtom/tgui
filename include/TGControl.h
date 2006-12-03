@@ -48,10 +48,12 @@ namespace TGUI
     {
     protected:
         bool                m_isVisible;
+        bool                m_redraw;
         TGControlList       m_children;
         TGEventMap          m_handlers;
         TGColourTheme       m_theme;
-        TGQuadList          m_quads;
+        TGQuadList          m_quadCache;
+        TGQuadList&         m_systemCache;
 
         TGColour            gColor;
 
@@ -130,9 +132,12 @@ namespace TGUI
         virtual TGScreen* getActiveScreen();
 
         virtual void pulse(float timeElapsed);
-        virtual void render();
         virtual void focus();
         virtual bool focused();
+
+        virtual bool isRenderCached();
+        virtual void render();
+        virtual void redraw(bool value=true) {m_redraw = value;};
 
         //
         // integer values = pixels
