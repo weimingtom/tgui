@@ -112,6 +112,7 @@ namespace TGUI
         {
             setMouseTrackingControl(this);
             m_pushed = true;
+            redraw();
         }
     }
 
@@ -130,6 +131,7 @@ namespace TGUI
                 m_checked.set(!m_checked.get());
                 fireEvent(TGEvent::Modified,TGEventArgs(this));
             }
+            redraw();
         }
         m_pushed = false;
     }

@@ -69,6 +69,7 @@ namespace TGUI
         if (newValue > max.get())
             newValue = max.get();
         value.set(newValue);
+        redraw();
     }
 
     //-----------------------------------------------------------------------

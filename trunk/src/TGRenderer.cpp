@@ -117,10 +117,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
+    TGQuadInfo& TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
     {
-        TGQuadInfo quad;
-        quad.isEmpty = false;
+        quad.isClipped = false;
 
         TGRect destRect=dest_rect;
         TGRect texRect=texture_rect;
@@ -143,7 +142,7 @@ namespace TGUI
                 clip = *first;
                 if(!clipQuad(clip,destRect,texRect,colours))
                 {
-                    quad.isEmpty = true;
+                    quad.isClipped = true;
                     return quad;
                 }
                 ++first;
@@ -195,10 +194,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
+    TGQuadInfo& TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
     {
-        TGQuadInfo quad;
-        quad.isEmpty = false;
+        quad.isClipped = false;
 
         TGRect destRect=dest_rect;
         TGRect texRect=texture_rect;
@@ -219,7 +217,7 @@ namespace TGUI
                 clip = *first;
                 if(!clipQuad(clip,destRect,texRect,colours))
                 {
-                    quad.isEmpty = true;
+                    quad.isClipped = true;
                     return quad;
                 }
                 ++first;
@@ -375,6 +373,8 @@ namespace TGUI
                 for (TGQuadList::iterator i = quadList.begin(); i != quadList.end(); ++i)
                 {
                     const TGQuadInfo& quad = (*i);
+                    //if(quad.isClipped)
+                    //    continue;
                     if(!quad.isLineQuad)
                     {
                         // setup Vertex 1...

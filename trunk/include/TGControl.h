@@ -137,7 +137,7 @@ namespace TGUI
 
         virtual bool isRenderCached();
         virtual void render();
-        virtual void redraw(bool value=true) {m_redraw = value;};
+        virtual void redraw(bool value=true);
 
         //
         // integer values = pixels
@@ -216,8 +216,8 @@ namespace TGUI
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);
         // focus events
-        virtual void onFocusEnter(){};
-        virtual void onFocusExit(){};
+        virtual void onFocusEnter(){redraw();};
+        virtual void onFocusExit(){redraw();};
     };
 
     typedef TGControl TGWidget;
