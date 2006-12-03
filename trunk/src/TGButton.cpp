@@ -72,6 +72,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGButton::render()
     {
+        if(isRenderCached())
+            return;
+
         int			x1, y1, x2, y2;
         FrameStyle	fs = FS_FLAT;
         getBounds(x1, y1, x2, y2);

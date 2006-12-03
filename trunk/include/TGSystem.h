@@ -46,6 +46,7 @@ namespace TGUI
         TGFont*             m_defaultFont;
         TGCursor*           m_defaultCursor;
         TGScreen*           m_defaultScreen;
+        TGQuadList          m_cache;
 
 
         bool                m_gui_redraw;
@@ -67,6 +68,8 @@ namespace TGUI
 
         void setMouseCursor(TGCursor* image);
         TGCursor* getMouseCursor() {return m_mouseCursor;};
+
+        TGQuadList& getCache() {return m_cache;};
 
         void setLogger(TGLogger* logger);
         TGLogger* getLogger();

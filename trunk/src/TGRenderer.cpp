@@ -79,7 +79,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G R e n d e r e r 
     //-----------------------------------------------------------------------
-    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue)
+    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue) : m_quadList(TGSystem::getSingleton().getCache())
     {
         constructor_impl(window, queue_id, post_queue);
     }
@@ -87,7 +87,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G R e n d e r e r 
     //-----------------------------------------------------------------------
-    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue, Ogre::SceneManager* scene_manager)
+    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue, Ogre::SceneManager* scene_manager) : m_quadList(TGSystem::getSingleton().getCache())
     {
         constructor_impl(window, queue_id, post_queue);
 
@@ -337,10 +337,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           d o R e n d e r
     //-----------------------------------------------------------------------
-    void TGRenderer::doRender(void)
+    void TGRenderer::doRender(TGQuadList& quadList)
     {
         // Render if overlays enabled and the quad list is not empty
-        if (m_renderSys->_getViewport()->getOverlaysEnabled() && !m_quadList.empty())
+        if (m_renderSys->_getViewport()->getOverlaysEnabled() && !quadList.empty())
         {
             /// Quad list needs to be sorted and thus the vertex buffer rebuilt. If not, we can
             /// reuse the vertex buffer resulting in a nice speed gain.
@@ -349,7 +349,7 @@ namespace TGUI
                 sortQuads();
                 /// Resize vertex buffer if it is too small
                 size_t size = d_buffer->getNumVertices();
-                size_t requestedSize = m_quadList.size()*VERTEX_PER_QUAD;
+                size_t requestedSize = quadList.size()*VERTEX_PER_QUAD;
                 if(size < requestedSize)
                 {
                     /// Double buffer size until smaller than requested size
@@ -372,7 +372,7 @@ namespace TGUI
                 TGQuadVertex*	buffmem;
                 buffmem = (TGQuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
                 // iterate over each quad in the list
-                for (TGQuadList::iterator i = m_quadList.begin(); i != m_quadList.end(); ++i)
+                for (TGQuadList::iterator i = quadList.begin(); i != quadList.end(); ++i)
                 {
                     const TGQuadInfo& quad = (*i);
                     if(!quad.isLineQuad)
@@ -458,14 +458,14 @@ namespace TGUI
             d_bufferPos = 0;
 
             // Iterate over each quad in the list and render it
-            TGQuadList::iterator i = m_quadList.begin();
-            while(i != m_quadList.end())
+            TGQuadList::iterator i = quadList.begin();
+            while(i != quadList.end())
             {
 
                 d_currTexture = i->texture;
                 d_render_op.vertexData->vertexStart = d_bufferPos;
 
-                for (; i != m_quadList.end(); ++i)
+                for (; i != quadList.end(); ++i)
                 {
                     const TGQuadInfo& quad = (*i);
                     if (d_currTexture != quad.texture)
@@ -486,15 +486,6 @@ namespace TGUI
             d_underused_framecount++;
         else
             d_underused_framecount = 0;
-    }
-
-    //-----------------------------------------------------------------------
-    //                        c l e a r R e n d e r L i s t
-    //-----------------------------------------------------------------------
-    void TGRenderer::clearRenderList(void)
-    {
-        d_sorted = true;
-        m_quadList.clear();
     }
 
     //-----------------------------------------------------------------------

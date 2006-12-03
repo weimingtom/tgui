@@ -118,8 +118,7 @@ namespace TGUI
 
         virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
         virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
-        virtual	void	doRender(void);
-        virtual	void	clearRenderList(void);
+        virtual	void	doRender(TGQuadList& quadList);
 
 
         virtual void	setQueueingEnabled(bool value)		{m_queueing = value;}
@@ -174,7 +173,7 @@ namespace TGUI
 
         TGRect				        m_displayArea;
 
-        TGQuadList                  m_quadList;
+        TGQuadList&                 m_quadList;
         bool	                    m_queueing;	        // setting for queueing control.
 
         // Ogre specific bits.

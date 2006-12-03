@@ -584,9 +584,10 @@ namespace TGUI
         //
         if (m_gui_redraw)
         {
+            m_cache.clear();
+
             m_renderer->resetZValue();
             m_renderer->setQueueingEnabled(true);
-            m_renderer->clearRenderList();
 
             if (m_activeScreen)
             {
@@ -596,7 +597,7 @@ namespace TGUI
             //m_gui_redraw = false;
         }
 
-        m_renderer->doRender();
+        m_renderer->doRender(m_cache);
 
         // draw mouse
         if(m_mouseCursor)

@@ -52,6 +52,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSlider::render()
     {
+        if(isRenderCached())
+            return;
+
         int			x1, y1, x2, y2, width, height, sx;
         getBounds(x1, y1, x2, y2);
         width = x2 - x1 + 1;
