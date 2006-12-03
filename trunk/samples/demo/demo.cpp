@@ -489,7 +489,7 @@ public:
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(false);
+        mFrameListener->showDebugOverlay(true);
         mRoot->addFrameListener(mFrameListener);
         ms = ((DemoListener*)mFrameListener)->getMouseState();
     }

@@ -80,6 +80,7 @@ namespace TGUI
         float	value = this->value.get();
         getBounds(x1, y1, x2, y2);
 
+        color(m_theme.getFrameFocusedColour());
         drawRect(x1, y1, x2, y2);
 
         if (value < 0.0f)
