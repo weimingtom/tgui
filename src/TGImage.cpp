@@ -130,7 +130,7 @@ namespace TGUI
         TGRect r(x,y,x+(x2-x1),y+(y2-y1));
         TGRect ruv(0.f,0.f,1.f,1.f);
         TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr,TopLeftToBottomRight);
+        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr);
     }
 
     //-----------------------------------------------------------------------
@@ -145,7 +145,7 @@ namespace TGUI
         TGRect r(x1,y1,x2,y2);
         TGRect ruv(0.f,0.f,1.f,1.f);
         TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr,TopLeftToBottomRight);
+        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr);
 
         TGControl::render();
     }

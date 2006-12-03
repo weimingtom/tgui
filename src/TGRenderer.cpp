@@ -117,8 +117,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    void TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode)
+    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
     {
+        TGQuadInfo quad;
+        quad.isEmpty = false;
+
         TGRect destRect=dest_rect;
         TGRect texRect=texture_rect;
         const float  daWidth = m_displayArea.getWidth();
@@ -139,7 +142,10 @@ namespace TGUI
             {
                 clip = *first;
                 if(!clipQuad(clip,destRect,texRect,colours))
-                    return;
+                {
+                    quad.isEmpty = true;
+                    return quad;
+                }
                 ++first;
             }
         }
@@ -148,12 +154,11 @@ namespace TGUI
         // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
         if (!m_queueing)
         {
-            renderQuadDirect(destRect, z, tex, texRect, colours, quad_split_mode);
+            renderQuadDirect(destRect, z, tex, texRect, colours);
         }
         else
         {
             d_sorted = false;
-            TGQuadInfo quad;
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
             quad.isLineQuad = false;
@@ -181,17 +186,19 @@ namespace TGUI
             quad.bottomRightCol	= colourToOgre(colours.m_topRight);
 
             // set quad split mode
-            quad.splitMode = quad_split_mode;
 
-            m_quadList.insert(quad);
+            m_quadList.push_back(quad);
         }
+        return quad;
     }
 
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    void TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode,int thickness)
+    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
     {
+        TGQuadInfo quad;
+        quad.isEmpty = false;
 
         TGRect destRect=dest_rect;
         TGRect texRect=texture_rect;
@@ -211,7 +218,10 @@ namespace TGUI
             {
                 clip = *first;
                 if(!clipQuad(clip,destRect,texRect,colours))
-                    return;
+                {
+                    quad.isEmpty = true;
+                    return quad;
+                }
                 ++first;
             }
         }
@@ -219,13 +229,11 @@ namespace TGUI
         // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
         if (!m_queueing)
         {
-            renderQuadDirect(destRect, z, tex, texRect, colours, quad_split_mode);
+            renderQuadDirect(destRect, z, tex, texRect, colours);
         }
         else
         {
             d_sorted = false;
-            TGQuadInfo quad;
-
 
             TGVector2 start_point(destRect.d_left,destRect.d_top);
             TGVector2 end_point(destRect.d_right,destRect.d_bottom);
@@ -320,11 +328,9 @@ namespace TGUI
             quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
             quad.bottomRightCol	= colourToOgre(colours.m_topRight);
 
-            // set quad split mode
-            quad.splitMode = quad_split_mode;
-
-            m_quadList.insert(quad);
+            m_quadList.push_back(quad);
         }
+        return quad;
     }
 
 
@@ -382,26 +388,12 @@ namespace TGUI
 
                         // setup Vertex 2...
 
-                        // top-left to bottom-right diagonal
-                        if (quad.splitMode == TopLeftToBottomRight)
-                        {
-                            buffmem->x = quad.position.d_right;
-                            buffmem->y = quad.position.d_bottom;
-                            buffmem->z = quad.z;
-                            buffmem->diffuse = quad.topRightCol;
-                            buffmem->tu1 = quad.texPosition.d_right;
-                            buffmem->tv1 = quad.texPosition.d_bottom;
-                        }
-                        // bottom-left to top-right diagonal
-                        else
-                        {
-                            buffmem->x = quad.position.d_right;
-                            buffmem->y = quad.position.d_top;
-                            buffmem->z = quad.z;
-                            buffmem->diffuse = quad.bottomRightCol;
-                            buffmem->tu1 = quad.texPosition.d_right;
-                            buffmem->tv1 = quad.texPosition.d_top;
-                        }
+                        buffmem->x = quad.position.d_right;
+                        buffmem->y = quad.position.d_bottom;
+                        buffmem->z = quad.z;
+                        buffmem->diffuse = quad.topRightCol;
+                        buffmem->tu1 = quad.texPosition.d_right;
+                        buffmem->tv1 = quad.texPosition.d_bottom;
                         ++buffmem;
 
                         // setup Vertex 3...
@@ -433,26 +425,12 @@ namespace TGUI
 
                         // setup Vertex 6...
 
-                        // top-left to bottom-right diagonal
-                        if (quad.splitMode == TopLeftToBottomRight)
-                        {
-                            buffmem->x = quad.position.d_left;
-                            buffmem->y = quad.position.d_top;
-                            buffmem->z = quad.z;
-                            buffmem->diffuse = quad.bottomLeftCol;
-                            buffmem->tu1 = quad.texPosition.d_left;
-                            buffmem->tv1 = quad.texPosition.d_top;
-                        }
-                        // bottom-left to top-right diagonal
-                        else
-                        {
-                            buffmem->x = quad.position.d_left;
-                            buffmem->y = quad.position.d_bottom;
-                            buffmem->z = quad.z;
-                            buffmem->diffuse = quad.topLeftCol;
-                            buffmem->tu1 = quad.texPosition.d_left;
-                            buffmem->tv1 = quad.texPosition.d_bottom;
-                        }
+                        buffmem->x = quad.position.d_left;
+                        buffmem->y = quad.position.d_top;
+                        buffmem->z = quad.z;
+                        buffmem->diffuse = quad.bottomLeftCol;
+                        buffmem->tu1 = quad.texPosition.d_left;
+                        buffmem->tv1 = quad.texPosition.d_top;
                         ++buffmem;
                     }
                     else // line quad
@@ -630,7 +608,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       r e n d e r Q u a d D i r e c t
     //-----------------------------------------------------------------------
-    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode)
+    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
     {
         if (m_renderSys->_getViewport()->getOverlaysEnabled())
         {
@@ -670,29 +648,13 @@ namespace TGUI
             ++buffmem;
 
             // setup Vertex 2...
-
-            // top-left to bottom-right diagonal
-            if (quad_split_mode == TopLeftToBottomRight)
-            {
-                buffmem->x	= final_rect.d_right;
-                buffmem->y = final_rect.d_bottom;
-                buffmem->z	= z;
-                buffmem->diffuse = topRightCol;
-                buffmem->tu1	= texture_rect.d_right;
-                buffmem->tv1	= texture_rect.d_bottom;
-                ++buffmem;
-            }
-            // bottom-left to top-right diagonal
-            else
-            {
-                buffmem->x	= final_rect.d_right;
-                buffmem->y = final_rect.d_top;
-                buffmem->z	= z;
-                buffmem->diffuse = bottomRightCol;
-                buffmem->tu1	= texture_rect.d_right;
-                buffmem->tv1	= texture_rect.d_top;
-                ++buffmem;
-            }
+            buffmem->x	= final_rect.d_right;
+            buffmem->y = final_rect.d_bottom;
+            buffmem->z	= z;
+            buffmem->diffuse = topRightCol;
+            buffmem->tu1	= texture_rect.d_right;
+            buffmem->tv1	= texture_rect.d_bottom;
+            ++buffmem;
 
             // setup Vertex 3...
             buffmem->x	= final_rect.d_left;
@@ -723,26 +685,12 @@ namespace TGUI
 
             // setup Vertex 6...
 
-            // top-left to bottom-right diagonal
-            if (quad_split_mode == TopLeftToBottomRight)
-            {
-                buffmem->x	= final_rect.d_left;
-                buffmem->y = final_rect.d_top;
-                buffmem->z	= z;
-                buffmem->diffuse = bottomLeftCol;
-                buffmem->tu1	= texture_rect.d_left;
-                buffmem->tv1	= texture_rect.d_top;
-            }
-            // bottom-left to top-right diagonal
-            else
-            {
-                buffmem->x	= final_rect.d_left;
-                buffmem->y = final_rect.d_bottom;
-                buffmem->z	= z;
-                buffmem->diffuse = topLeftCol;
-                buffmem->tu1	= texture_rect.d_left;
-                buffmem->tv1	= texture_rect.d_bottom;
-            }
+            buffmem->x	= final_rect.d_left;
+            buffmem->y = final_rect.d_top;
+            buffmem->z	= z;
+            buffmem->diffuse = bottomLeftCol;
+            buffmem->tu1	= texture_rect.d_left;
+            buffmem->tv1	= texture_rect.d_top;
 
             d_direct_buffer->unlock();
 

@@ -40,6 +40,7 @@ namespace TGUI
     struct TGQuadInfo
     {
         bool                isLineQuad;
+        bool                isEmpty;
         Ogre::TexturePtr	texture;
         TGRect				position;
         TGRect              position2;
@@ -51,14 +52,14 @@ namespace TGUI
         uint32		        bottomLeftCol;
         uint32		        bottomRightCol;
 
-        TGQuadSplitMode		splitMode;
-
         bool operator<(const TGQuadInfo& other) const
         {
             // this is intentionally reversed.
             return z > other.z;
         }
     };
+
+    typedef std::list<TGQuadInfo> TGQuadList;
 
     class TGRQListener : public Ogre::RenderQueueListener
     {
@@ -115,8 +116,8 @@ namespace TGUI
         void resetClipping();
 
 
-        virtual	void	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode);
-        virtual	void	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode,int thickness);
+        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
+        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
         virtual	void	doRender(void);
         virtual	void	clearRenderList(void);
 
@@ -164,7 +165,7 @@ namespace TGUI
 
         bool clipQuad(TGClipArea* clip, TGRect& drect, TGRect& tRect, TGColourRect colours);
 
-        void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, TGQuadSplitMode quad_split_mode);
+        void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
 
         uint32 colourToOgre(const TGColour& col) const;
 
@@ -173,7 +174,6 @@ namespace TGUI
 
         TGRect				        m_displayArea;
 
-        typedef std::multiset<TGQuadInfo> TGQuadList;
         TGQuadList                  m_quadList;
         bool	                    m_queueing;	        // setting for queueing control.
 
