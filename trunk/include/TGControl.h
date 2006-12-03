@@ -51,6 +51,7 @@ namespace TGUI
         TGControlList       m_children;
         TGEventMap          m_handlers;
         TGColourTheme       m_theme;
+        TGQuadList          m_quads;
 
         TGColour            gColor;
 

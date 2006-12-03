@@ -790,7 +790,7 @@ namespace TGUI
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
         TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            r,cr,TopLeftToBottomRight);
+            r,cr);
     }
 
 
@@ -808,7 +808,7 @@ namespace TGUI
         int ydir= (y2-y1) < 0 ? -1 : 1;
 
         TGSystem::getSingleton().getRenderer()->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            r,cr,TopLeftToBottomRight,thickness);
+            r,cr,thickness);
     }
 
     //-----------------------------------------------------------------------
@@ -882,7 +882,7 @@ namespace TGUI
 
             font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
 
-            TGSystem::getSingleton().getRenderer()->addQuad(r,0,font->m_texture,ruv,cr,TopLeftToBottomRight);
+            TGSystem::getSingleton().getRenderer()->addQuad(r,0,font->m_texture,ruv,cr);
 
             cx += cWidth + 1.0f;
         }

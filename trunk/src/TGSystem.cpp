@@ -202,7 +202,7 @@ namespace TGUI
             "GUIDefaultTexture", // name
             Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
             Ogre::TEX_TYPE_2D,      // type
-            256, 256,         // width & height
+            2, 2,         // width & height
             0,                // number of mipmaps
             Ogre::PF_BYTE_BGRA,     // pixel format
             Ogre::TU_DEFAULT);      // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
@@ -217,21 +217,16 @@ namespace TGUI
 
         Ogre::uint8* pDest = static_cast<Ogre::uint8*>(pixelBox.data);
 
-        // Fill in some pixel data. This will give a semi-transparent blue,
-        // but this is of course dependent on the chosen pixel format.
-        for (size_t j = 0; j < 256; j++)
+        for(size_t i = 0; i < 4; i++)
         {
-            for(size_t i = 0; i < 256; i++)
-            {
-                *pDest++ = 255; // B
-                *pDest++ = 255; // G
-                *pDest++ = 255; // R
-                *pDest++ = 255; // A
-            }
+            *pDest++ = 255; // B
+            *pDest++ = 255; // G
+            *pDest++ = 255; // R
+            *pDest++ = 255; // A
         }
-
         // Unlock the pixel buffer
         pixelBuffer->unlock();
+
         m_texture->setOgreTexture(texture);
         m_logger = new TGLogger();
 
@@ -488,7 +483,6 @@ namespace TGUI
             m_activeScreen->setMouseX(x);
             m_activeScreen->setMouseY(y);
         }
-
     }
 
     //-----------------------------------------------------------------------
