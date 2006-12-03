@@ -153,6 +153,7 @@ namespace TGUI
             break;
         }
         this->text.set(text);
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -177,6 +178,7 @@ namespace TGUI
         {
             m_cursorVisible = m_cursorVisible ? false : true;
             m_pulseTime = 0.f;
+            redraw();
         }
 
         if(m_lastKey > 0)
