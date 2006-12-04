@@ -119,21 +119,6 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                              d r a w
-    //-----------------------------------------------------------------------
-    void TGImage::draw(int x, int y)
-    {
-        int	x1, y1, x2, y2;
-        getBounds(x1, y1, x2, y2);
-
-
-        TGRect r(x,y,x+(x2-x1),y+(y2-y1));
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr);
-    }
-
-    //-----------------------------------------------------------------------
     //                            r e n d e r
     //-----------------------------------------------------------------------
     void TGImage::render()
@@ -143,12 +128,12 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
-
         TGRect r(x1,y1,x2,y2);
         TGRect ruv(0.f,0.f,1.f,1.f);
         TGColourRect cr(gColor);
-        TGSystem::getSingleton().getRenderer()->addQuad(r,0,texture,ruv,cr);
-
+        TGQuadInfo qi = m_renderer->addQuad(r,0,texture,ruv,cr);
+        m_systemCache.push_back(qi);
+        m_quadCache.push_back(qi);
         TGControl::render();
     }
 }

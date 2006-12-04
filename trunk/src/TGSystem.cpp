@@ -210,8 +210,8 @@ namespace TGUI
             2, 2,         // width & height
             0,                // number of mipmaps
             Ogre::PF_BYTE_BGRA,     // pixel format
-            Ogre::TU_DEFAULT,
-            new TGResourceLoader());      // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
+            Ogre::TU_DEFAULT
+            );      // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
         // textures updated very often (e.g. each frame)
 
         // Get the pixel buffer
@@ -478,12 +478,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                     s e t M o u s e C u r s o r
     //-----------------------------------------------------------------------
-    void TGSystem::setMouseCursor(TGCursor* image)
+    void TGSystem::setMouseCursor(TGCursor* cursor)
     {
-        m_mouseCursor = image;
-        int x = (m_renderer->getWidth()/2) - (image->getWidth()/2);
-        int y = (m_renderer->getHeight()/2) - (image->getHeight()/2);
-        m_mouseCursor->setBounds(x,y,x+image->getWidth(),y+image->getHeight());
+        m_mouseCursor = cursor;
+        int x = (m_renderer->getWidth()/2) - (cursor->getWidth()/2);
+        int y = (m_renderer->getHeight()/2) - (cursor->getHeight()/2);
+        m_mouseCursor->move(x,y);
         if(m_activeScreen)
         {
             m_activeScreen->setMouseX(x);
@@ -609,7 +609,7 @@ namespace TGUI
         if(m_mouseCursor)
         {
             m_renderer->setQueueingEnabled(false);
-            m_mouseCursor->render();
+            m_mouseCursor->draw();
         }
 
         TGControlList::iterator it;

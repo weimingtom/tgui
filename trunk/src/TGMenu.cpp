@@ -29,10 +29,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M e n u I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem::TGMenuItem(TGControl *owner, string caption, TGImage *image) : TGControl(owner)
+    TGMenuItem::TGMenuItem(TGControl *owner, string caption) : TGControl(owner)
     {
         this->caption = caption;
-        this->image = image;
         subMenu = NULL;
     }
 
@@ -43,21 +42,19 @@ namespace TGUI
     {
         if (subMenu)
             delete subMenu;
-        if (image)
-            delete image;
     }
 
     //-----------------------------------------------------------------------
     //                             a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGMenuItem::addItem(string caption, TGImage *image)
+    TGMenuItem *TGMenuItem::addItem(string caption)
     {
         if (!subMenu)
         {
             subMenu = new TGPopupMenu();
             subMenu->rootMenuControl = menuControl;
         }
-        return subMenu->addItem(caption, image);
+        return subMenu->addItem(caption);
     }
 
     //-----------------------------------------------------------------------
@@ -108,8 +105,6 @@ namespace TGUI
 
         drawString(x1 + ((TGMenuControl*)m_parent)->iconPad + 5, y1 + 1,
             caption);
-        if (image)
-            image->draw(x1 + 5, (y2 - y1 + 1)/2 - image->getHeight()/2 + y1);
     }
 
     //-----------------------------------------------------------------------
@@ -213,9 +208,6 @@ namespace TGUI
         {
             child = *itr;
             int     height;
-            if (((TGMenuItem*)child)->image &&
-                iconPad < (int)((TGMenuItem*)child)->image->getWidth())
-                iconPad = ((TGMenuItem*)child)->image->getWidth() + 5;
             if (((TGMenuItem*)child)->caption[0] == '-' &&
                 !((TGMenuItem*)child)->caption[1])
                 height = 4;
@@ -279,9 +271,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGPopupMenu::addItem(string caption,TGImage *image)
+    TGMenuItem *TGPopupMenu::addItem(string caption)
     {
-        TGMenuItem        *item = new TGMenuItem(menu, caption, image);
+        TGMenuItem        *item = new TGMenuItem(menu, caption);
         item->menuControl = rootMenuControl?rootMenuControl:menu;
         menu->calcSize();
         menu->layout();
