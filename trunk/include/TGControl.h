@@ -54,6 +54,7 @@ namespace TGUI
         TGColourTheme       m_theme;
         TGQuadList          m_quadCache;
         TGQuadList&         m_systemCache;
+        TGRenderer*         m_renderer;
 
         TGColour            gColor;
 

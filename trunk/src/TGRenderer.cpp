@@ -31,7 +31,34 @@ namespace TGUI
     const size_t	TGRenderer::VERTEX_PER_QUAD			= 6;
     const size_t	TGRenderer::VERTEX_PER_TRIANGLE		= 3;
     const size_t	TGRenderer::VERTEXBUFFER_INITIAL_CAPACITY	= 256;
-    const size_t    TGRenderer::UNDERUSED_FRAME_THRESHOLD = 50000; // halfs buffer every 8 minutes on 100fps
+    const size_t    TGRenderer::UNDERUSED_FRAME_THRESHOLD = 50000; // half buffer every 8 minutes on 100fps
+
+    TGQuadInfo TGQuadInfo::operator= (TGQuadInfo rhs)
+    {
+        if ( &rhs != this )
+        {
+            isClipped = rhs.isClipped;
+            texture = rhs.texture;
+            position = rhs.position;
+            for(int i=0;i<6;i++)
+            {
+                lpos[i].x = rhs.lpos[i].x;
+                lpos[i].y = rhs.lpos[i].y;
+                lpos[i].z = rhs.lpos[i].z;
+                lpos[i].diffuse = rhs.lpos[i].diffuse;
+                lpos[i].tu1 = rhs.lpos[i].tu1;
+                lpos[i].tv1 = rhs.lpos[i].tv1;
+            }
+            z = rhs.z;
+            texPosition = rhs.texPosition;
+            topLeftCol = rhs.topLeftCol;
+            topRightCol = rhs.topRightCol;
+            bottomLeftCol = rhs.bottomLeftCol;
+            bottomRightCol = rhs.bottomRightCol;
+        }
+        return *this;
+    }
+
 
     //-----------------------------------------------------------------------
     //                   c r e a t e Q u a d R e n d e r O p
@@ -117,7 +144,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    TGQuadInfo& TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
+    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
     {
         quad.isClipped = false;
 
@@ -233,9 +260,6 @@ namespace TGUI
             quad.lpos[5].tu1 = quad.texPosition.d_left;
             quad.lpos[5].tv1 = quad.texPosition.d_top;
 
-
-            // set quad split mode
-
             m_quadList.push_back(quad);
         }
         return quad;
@@ -244,7 +268,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    TGQuadInfo& TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
+    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
     {
         quad.isClipped = false;
 
@@ -428,11 +452,20 @@ namespace TGUI
                 for (TGQuadList::iterator i = quadList.begin(); i != quadList.end(); ++i)
                 {
                     const TGQuadInfo& quad = (*i);
-                    //if(quad.isClipped)
-                    //    continue;
 
-                    memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
-                    buffmem += 6;
+                    for(int qi=0;qi<6;qi++)
+                    {
+                        buffmem->x = quad.lpos[qi].x;
+                        buffmem->y = quad.lpos[qi].y;
+                        buffmem->z = quad.lpos[qi].z;
+                        buffmem->diffuse = quad.lpos[qi].diffuse;
+                        buffmem->tu1 = quad.lpos[qi].tu1;
+                        buffmem->tv1 = quad.lpos[qi].tv1;
+                        ++buffmem;
+                    }
+
+                    //memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
+                    //buffmem += 6;
                 }
 
                 // ensure we leave the buffer in the unlocked state

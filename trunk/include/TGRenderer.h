@@ -55,27 +55,7 @@ namespace TGUI
             // this is intentionally reversed.
             return z > other.z;
         }
-        const TGQuadInfo& TGQuadInfo::operator= (const TGQuadInfo& rhs)
-        {
-            if ( &rhs != this )
-            {
-                isClipped = rhs.isClipped;
-                texture = rhs.texture;
-                position = rhs.position;
-                for(int i=0;i<6;i++)
-                {
-                    lpos[i].x = rhs.lpos[i].x;
-                    lpos[i].y = rhs.lpos[i].y;
-                }
-                z = rhs.z;
-                texPosition = rhs.texPosition;
-                topLeftCol = rhs.topLeftCol;
-                topRightCol = rhs.topRightCol;
-                bottomLeftCol = rhs.bottomLeftCol;
-                bottomRightCol = rhs.bottomRightCol;
-            }
-            return *this;
-        }
+        TGQuadInfo TGQuadInfo::operator= (TGQuadInfo rhs);
     };
 
     typedef std::list<TGQuadInfo> TGQuadList;
@@ -137,8 +117,8 @@ namespace TGUI
         void resetClipping();
 
 
-        virtual	TGQuadInfo&	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
-        virtual	TGQuadInfo&	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
+        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
+        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
         virtual	void	doRender(TGQuadList& quadList);
 
 

@@ -34,12 +34,15 @@ namespace TGUI
     {
         x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
             yShift = 0;
+        m_renderer = TGSystem::getSingleton().getRenderer();
         minWidth = minHeight = 0;
         maxWidth = maxHeight = 0x7FFFFFFF;
         name = "";
         m_focusedChild = 0;
         m_parent = parent;
         m_redraw = false;
+        m_popupMenu = NULL;
+        exclusiveChild = NULL;
         if (m_parent)
         {
             m_parent->addChild(this);
@@ -51,8 +54,6 @@ namespace TGUI
         }
         performLayout = true;
         mouseOverControl = false;
-        m_popupMenu = NULL;
-        exclusiveChild = NULL;
         m_isVisible = true;
     }
 
@@ -81,7 +82,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGRenderer* TGControl::getRenderer()
     {
-        return TGSystem::getSingleton().getRenderer();
+        return m_renderer;
     }
 
 
@@ -242,68 +243,6 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                      i s R e n d e r C a c h e d
-    //-----------------------------------------------------------------------
-    bool TGControl::isRenderCached()
-    {
-        if(!m_quadCache.size() || m_redraw)
-        {
-            m_quadCache.clear();
-            return false;
-        }
-
-        if(!isVisible())
-            return true;
-
-        TGQuadList::iterator itr;
-
-        for(itr=m_quadCache.begin(); itr!=m_quadCache.end(); itr++)
-        {
-            TGQuadInfo q = *itr;
-            m_systemCache.push_back(q);
-        }
-
-        TGControl::render();
-
-        return true;
-    }
-
-    //-----------------------------------------------------------------------
-    //                             r e n d e r
-    //-----------------------------------------------------------------------
-    void TGControl::render()
-    {
-        int	x1, y1, x2, y2;
-        if(!isVisible())
-            return;
-
-        getBounds(x1, y1, x2, y2);
-
-        openClipArea(x1 + padLeft, y1 + padTop, x2 - padRight,
-            y2 - padBottom);
-
-        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
-        {
-            if (*itr == exclusiveChild)
-                continue;
-            (*itr)->render();
-            (*itr)->redraw(false);
-        }
-
-        if (exclusiveChild)
-        {
-            color(0, 0, 0, 96);
-            TGControl::fillRect(x1, y1, x2, y2);
-
-            exclusiveChild->render();
-            exclusiveChild->redraw(false);
-        }
-
-        closeClipArea();
-        m_redraw = false;
-    }
-
-    //-----------------------------------------------------------------------
     //                               f o c u s
     //-----------------------------------------------------------------------
     void TGControl::focus()
@@ -350,8 +289,8 @@ namespace TGUI
 
         if(!m_parent)
         {
-            sw = getRenderer()->getWidth();
-            sh = getRenderer()->getHeight();
+            sw = m_renderer->getWidth();
+            sh = m_renderer->getHeight();
         }
         else
         {
@@ -477,8 +416,8 @@ namespace TGUI
 
         if(!m_parent)
         {
-            sw = getRenderer()->getWidth();
-            sh = getRenderer()->getHeight();
+            sw = m_renderer->getWidth();
+            sh = m_renderer->getHeight();
         }
         else
         {
@@ -553,8 +492,8 @@ namespace TGUI
     {
         int ix1,iy1,ix2,iy2;
         getBounds(ix1,iy1,ix2,iy2);
-        float sw = getRenderer()->getWidth();
-        float sh = getRenderer()->getHeight();
+        float sw = m_renderer->getWidth();
+        float sh = m_renderer->getHeight();
 
         x1 = (float)ix1 * sw;
         x2 = (float)ix2 * sw;
@@ -827,7 +766,8 @@ namespace TGUI
             return;
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
-        TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),r,cr);
+        TGRect ruv(0.f,0.f,1.f,1.f);
+        TGQuadInfo qi = m_renderer->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),ruv,cr);
         m_quadCache.push_back(qi);
     }
 
@@ -840,13 +780,14 @@ namespace TGUI
         if(!m_isVisible)
             return;
         TGRect r(x1,y1,x2,y2);
+        TGRect ruv(0.f,0.f,1.f,1.f);
         TGColourRect cr(gColor);
 
         int xdir= (x2-x1) < 0 ? -1 : 1;
         int ydir= (y2-y1) < 0 ? -1 : 1;
 
-        TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            r,cr,thickness);
+        TGQuadInfo qi = m_renderer->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
+            ruv,cr,thickness);
         m_quadCache.push_back(qi);
     }
 
@@ -921,7 +862,7 @@ namespace TGUI
 
             font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
 
-            TGQuadInfo qi = TGSystem::getSingleton().getRenderer()->addQuad(r,0,font->m_texture,ruv,cr);
+            TGQuadInfo qi = m_renderer->addQuad(r,0,font->m_texture,ruv,cr);
             m_quadCache.push_back(qi);
 
             cx += cWidth + 1.0f;
@@ -989,7 +930,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::resetClipping()
     {
-        getRenderer()->resetClipping();
+        m_renderer->resetClipping();
 
     }
 
@@ -998,7 +939,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::openClipArea(int x1, int y1, int x2, int y2)
     {
-        getRenderer()->openClipArea(x1,y1,x2,y2);
+        m_renderer->openClipArea(x1,y1,x2,y2);
 
     }
 
@@ -1007,7 +948,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::closeClipArea()
     {
-        getRenderer()->closeClipArea();
+        m_renderer->closeClipArea();
     }
 
     //-----------------------------------------------------------------------
@@ -1186,5 +1127,67 @@ namespace TGUI
         }
 
     };
+
+    //-----------------------------------------------------------------------
+    //                      i s R e n d e r C a c h e d
+    //-----------------------------------------------------------------------
+    bool TGControl::isRenderCached()
+    {
+        if(!m_quadCache.size() || m_redraw)
+        {
+            m_quadCache.clear();
+            return false;
+        }
+
+        if(!isVisible())
+            return true;
+
+        TGQuadList::iterator itr;
+
+        for(itr=m_quadCache.begin(); itr!=m_quadCache.end(); itr++)
+        {
+            m_systemCache.push_back(*itr);
+        }
+
+        TGControl::render();
+
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
+    //                             r e n d e r
+    //-----------------------------------------------------------------------
+    void TGControl::render()
+    {
+        int	x1, y1, x2, y2;
+        if(!isVisible())
+            return;
+
+        getBounds(x1, y1, x2, y2);
+
+        openClipArea(x1 + padLeft, y1 + padTop, x2 - padRight,
+            y2 - padBottom);
+
+        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
+        {
+            if (*itr == exclusiveChild)
+                continue;
+            (*itr)->render();
+            (*itr)->redraw(false);
+        }
+
+        if (exclusiveChild)
+        {
+            color(0, 0, 0, 96);
+            TGControl::fillRect(x1, y1, x2, y2);
+
+            exclusiveChild->render();
+            exclusiveChild->redraw(false);
+        }
+
+        closeClipArea();
+        m_redraw = false;
+    }
+
 
 }

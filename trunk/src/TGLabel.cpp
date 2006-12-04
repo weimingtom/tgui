@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G L a b e l
     //-----------------------------------------------------------------------
-    TGLabel::TGLabel(TGControl *parent, int x, int y, string text)
+    TGLabel::TGLabel(TGControl *parent,string text, int x, int y)
         : TGControl(parent)
     {
         move(x, y);
