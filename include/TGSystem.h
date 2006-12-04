@@ -64,7 +64,7 @@ namespace TGUI
         TGScreen* getActiveScreen() {return m_activeScreen;};
         TGTexture* getDefaultTexture() {return m_texture;};
 
-        void setMouseCursor(TGCursor* image);
+        void setMouseCursor(TGCursor* cursor);
         TGCursor* getMouseCursor() {return m_mouseCursor;};
 
         TGQuadList& getCache() {return m_cache;};

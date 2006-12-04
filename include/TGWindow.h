@@ -39,7 +39,6 @@ namespace TGUI
         int			    mX, mY;
         int             m_titleBarHeight;
         TGPopupMenu*    menu;
-        TGImage			*icon;
 
         TGWindow(string caption="");
         TGWindow(TGScreen *screen,string caption="");

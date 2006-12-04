@@ -40,7 +40,6 @@ namespace TGUI
         padTop = 6 + stringHeight();
         m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
-        icon = NULL;
         isTabbedCaption = false;
     }
 
@@ -58,7 +57,6 @@ namespace TGUI
         padTop = 6 + stringHeight();
         m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
-        icon = NULL;
     }
 
     //-----------------------------------------------------------------------
@@ -66,8 +64,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGWindow::~TGWindow()
     {
-        if (icon)
-            delete icon;
         if (menu)
             delete menu;
     }
@@ -184,10 +180,6 @@ namespace TGUI
             drawLine(x2 - 5, y2-1, x2-1, y2 - 5);
         }
 
-        if (icon)
-        {
-            icon->draw(x1 + 1, y1 + (titleY2-y1)/2 - icon->getHeight()/2);
-        }
         closeClip();
 
     }
@@ -216,16 +208,7 @@ namespace TGUI
         }
         else
         {
-            if (icon && menu && (x > x1 && x < x1 + (int)icon->getWidth() && y >
-                y1 + (titleY2-y1)/2 - (int)icon->getHeight()/2 &&
-                y < y1 + (titleY2-y1)/2 - (int)icon->getHeight()/2 +
-                (int)icon->getHeight()))
-            {
-                menu->run(x1 + 4, y1 + (titleY2-y1)/2 + icon->getHeight() -
-                    icon->getHeight()/2);
-                return;
-            }
-            else if ( (x > x1) && (x < x2) && (y > y1) && (y < titleY2) )
+            if ( (x > x1) && (x < x2) && (y > y1) && (y < titleY2) )
             {
                 moving = true;
                 mX = x-x1;

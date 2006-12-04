@@ -33,9 +33,11 @@ namespace TGUI
     public:
         TGCursor(string fname,string resourceGroup="");
         TGCursor(TGTexture* texture);
-
         virtual ~TGCursor();
         void move(int x, int y);
+        virtual void draw();
+        virtual void render() {};
+
     };
 }
 

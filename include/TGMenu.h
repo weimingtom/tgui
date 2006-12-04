@@ -35,14 +35,13 @@ namespace TGUI
     {
     public:
         string    		        caption;
-        TGImage*                image;
         TGMenuControl*          menuControl;
         TGPopupMenu*            subMenu;
 
-        TGMenuItem(TGControl *owner, string caption, TGImage *image=NULL);
+        TGMenuItem(TGControl *owner, string caption);
         virtual ~TGMenuItem();
 
-        virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
+        virtual TGMenuItem *addItem(string caption);
         virtual void clear();
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
@@ -80,7 +79,7 @@ namespace TGUI
 
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
-        virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
+        virtual TGMenuItem *addItem(string caption);
         virtual void clear();
         virtual void run(int x=-10000, int y=-10000);
         virtual void cancel();

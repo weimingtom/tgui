@@ -30,9 +30,12 @@ namespace TGUI
 
     class TGImage : public TGControl
     {
-        TGTexture*	texture;
         int         m_width;
         int         m_height;
+
+    public:
+        TGTexture*	texture;
+
 
     public:
         TGImage(TGControl *parent, int x, int y, string fname,string resourceGroup="");
@@ -45,7 +48,6 @@ namespace TGUI
         int getWidth() {return m_width;};
         int getHeight() {return m_height;};
 
-        virtual void draw(int x, int y);
         virtual void render();
     };
 }

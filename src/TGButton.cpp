@@ -30,13 +30,11 @@ namespace TGUI
     //                           T G B u t t o n
     //-----------------------------------------------------------------------
     TGButton::TGButton(TGControl *parent, int x1, int y1, int x2, int y2, 
-        string caption, TGImage* image) : TGControl(parent)
+        string caption) : TGControl(parent)
     {
         setBounds(x1, y1, x2, y2);
         m_caption = caption;
         m_pushed = m_highlighted = false;
-        m_image = image;
-        m_autoDeleteImage = true;
     }
 
     //-----------------------------------------------------------------------
@@ -44,8 +42,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGButton::~TGButton()
     {
-        if (m_autoDeleteImage && m_image)
-            delete m_image;
     }
 
     //-----------------------------------------------------------------------
@@ -54,17 +50,6 @@ namespace TGUI
     void TGButton::setCaption(string newCaption)
     {
         m_caption = newCaption;
-    }
-
-    //-----------------------------------------------------------------------
-    //                          s e t I m a g e
-    //-----------------------------------------------------------------------
-    void TGButton::setImage(TGImage* newImage, bool autoDelete)
-    {
-        if (m_autoDeleteImage && m_image)
-            delete m_image;
-        m_image = newImage;
-        m_autoDeleteImage = autoDelete;
     }
 
     //-----------------------------------------------------------------------
@@ -101,21 +86,11 @@ namespace TGUI
         }
 
         x1 = (x2 - x1 + 1)/2 + x1;
-        if (m_image)
-        {
-            x1 -= (stringWidth(m_caption) + m_image->getWidth() + 5)/2;
-            x2 = m_image->getWidth() + 5;
-        }
-        else
-        {
-            x1 -= stringWidth(m_caption)/2;
-            x2 = 0;
-        }
+        x1 -= stringWidth(m_caption)/2;
+        x2 = 0;
         openClip();
         drawString(x1 + x2, (y2-y1 + 1)/2 + y1 - 
             stringHeight()/2, m_caption);
-        if (m_image)
-            m_image->draw(x1, (y2 - y1 + 1)/2 + y1 - m_image->getHeight()/2);
         closeClip();
     }
 

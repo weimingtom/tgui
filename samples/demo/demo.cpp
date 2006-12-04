@@ -542,7 +542,7 @@ public:
         for (TGControlListItr itr = lbox->getChildren().begin(); itr != lbox->getChildren().end(); ++itr)
         {
             lbi = (TGListboxItem*)(*itr);
-            sub->addItem(lbi->getText(),NULL);
+            sub->addItem(lbi->getText());
         }
         return true;
     }
@@ -673,25 +673,25 @@ public:
         TGPopupMenu       *mainMenu = new TGPopupMenu();
         mainMenu->setName("mainMenu");
 
-        TGMenuItem* mi = mainMenu->addItem("Select file...", NULL);
+        TGMenuItem* mi = mainMenu->addItem("Select file...");
         mi->addEventHandler(TGEvent::Selected,new TGEventHandler(&DemoApp::selectFileAction,this));
         //new TGBitmap(INTERNALBMP_OPEN));
-        TGMenuItem	*sub = mainMenu->addItem("Submenu test", NULL);
-        sub->addItem("Sub menu item 1", NULL);
-        sub->addItem("Sub menu item 2", NULL);
-        sub->addItem("Sub menu item 3", NULL);
-        sub->addItem("-", NULL);
-        mi = sub->addItem("Sub sub menu", NULL);
-        mi->addItem("Hello!", NULL)->setName("Hello!");
+        TGMenuItem	*sub = mainMenu->addItem("Submenu test");
+        sub->addItem("Sub menu item 1");
+        sub->addItem("Sub menu item 2");
+        sub->addItem("Sub menu item 3");
+        sub->addItem("-");
+        mi = sub->addItem("Sub sub menu");
+        mi->addItem("Hello!")->setName("Hello!");
 
-        mi = sub->addItem("Dynamic submenu", NULL);
+        mi = sub->addItem("Dynamic submenu");
         mi->addItem(" ");
         mi->addEventHandler(TGEvent::MenuPopup,new TGEventHandler(&DemoApp::createDynamicSubmenuAction,this));
         
         mi = mainMenu->addItem("About...");
         mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::aboutBoxAction,this));
 
-        mi = mainMenu->addItem("-", NULL);
+        mi = mainMenu->addItem("-");
         //	new TGBitmap(INTERNALBMP_QUIT));
         mi = mainMenu->addItem("Quit");
         mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::terminateAppAction,this));

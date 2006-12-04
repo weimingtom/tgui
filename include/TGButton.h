@@ -30,18 +30,14 @@ namespace TGUI
     class TGButton : public TGControl
     {
         string	        m_caption;
-        TGImage*        m_image;
-        bool	        m_autoDeleteImage;
         bool	        m_pushed;
         bool	        m_highlighted;
 
     public:
-        TGButton(TGControl *parent, int x1, int y1, int x2, int y2, string caption,
-            TGImage* image=NULL);
+        TGButton(TGControl *parent, int x1, int y1, int x2, int y2, string caption);
         virtual ~TGButton();
 
         virtual void setCaption(string newCaption);
-        virtual void setImage(TGImage* newImage, bool autoDelete);
 
         virtual void render();
 
