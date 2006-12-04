@@ -174,6 +174,12 @@ template<> TGUI::TGSystem* TGSingleton<TGUI::TGSystem>::ms_Singleton = 0;
 namespace TGUI
 {
 
+    void TGResourceLoader::loadResource(Ogre::Resource* resource)
+    {
+        int i = 0;
+
+    }
+
     //-----------------------------------------------------------------------
     //                             T G S y s t e m
     //-----------------------------------------------------------------------
@@ -204,7 +210,8 @@ namespace TGUI
             2, 2,         // width & height
             0,                // number of mipmaps
             Ogre::PF_BYTE_BGRA,     // pixel format
-            Ogre::TU_DEFAULT);      // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
+            Ogre::TU_DEFAULT,
+            new TGResourceLoader());      // usage; should be TU_DYNAMIC_WRITE_ONLY_DISCARDABLE for
         // textures updated very often (e.g. each frame)
 
         // Get the pixel buffer

@@ -99,5 +99,18 @@ namespace TGUI
         void renderGUI();
     };
 
+    class TGResourceLoader : public Ogre::ManualResourceLoader
+	{
+	public:
+        TGResourceLoader() : ManualResourceLoader() {}
+		virtual ~TGResourceLoader() {}
+
+		/** Called when a resource wishes to load.
+		@param resource The resource which wishes to load
+		*/
+        virtual void loadResource(Ogre::Resource* resource);
+	};
+
+
 }
 #endif

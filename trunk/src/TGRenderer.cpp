@@ -33,7 +33,35 @@ namespace TGUI
     const size_t	TGRenderer::VERTEXBUFFER_INITIAL_CAPACITY	= 256;
     const size_t    TGRenderer::UNDERUSED_FRAME_THRESHOLD = 50000; // half buffer every 8 minutes on 100fps
 
-    TGQuadInfo TGQuadInfo::operator= (TGQuadInfo rhs)
+
+    TGQuadInfo::TGQuadInfo()
+    {
+        texture.setNull();
+    }
+
+    TGQuadInfo::TGQuadInfo(const TGQuadInfo& rhs)
+    {
+        isClipped = rhs.isClipped;
+        texture = rhs.texture;
+        position = rhs.position;
+        for(int i=0;i<6;i++)
+        {
+            lpos[i].x = rhs.lpos[i].x;
+            lpos[i].y = rhs.lpos[i].y;
+            lpos[i].z = rhs.lpos[i].z;
+            lpos[i].diffuse = rhs.lpos[i].diffuse;
+            lpos[i].tu1 = rhs.lpos[i].tu1;
+            lpos[i].tv1 = rhs.lpos[i].tv1;
+        }
+        z = rhs.z;
+        texPosition = rhs.texPosition;
+        topLeftCol = rhs.topLeftCol;
+        topRightCol = rhs.topRightCol;
+        bottomLeftCol = rhs.bottomLeftCol;
+        bottomRightCol = rhs.bottomRightCol;
+    }
+
+    TGQuadInfo& TGQuadInfo::operator= (const TGQuadInfo& rhs)
     {
         if ( &rhs != this )
         {
@@ -106,7 +134,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G R e n d e r e r 
     //-----------------------------------------------------------------------
-    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue) : m_quadList(TGSystem::getSingleton().getCache())
+    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue)
     {
         constructor_impl(window, queue_id, post_queue);
     }
@@ -114,7 +142,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G R e n d e r e r 
     //-----------------------------------------------------------------------
-    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue, Ogre::SceneManager* scene_manager) : m_quadList(TGSystem::getSingleton().getCache())
+    TGRenderer::TGRenderer(Ogre::RenderWindow* window, Ogre::uint8 queue_id, bool post_queue, Ogre::SceneManager* scene_manager)
     {
         constructor_impl(window, queue_id, post_queue);
 
@@ -212,55 +240,54 @@ namespace TGUI
 
             // setup Vertex 1...
             quad.lpos[0].x = quad.position.d_left;
-            quad.lpos[0].y = quad.position.d_bottom;
+            quad.lpos[0].y = quad.position.d_top;
             quad.lpos[0].z = quad.z;
             quad.lpos[0].diffuse = quad.topLeftCol;
             quad.lpos[0].tu1 = quad.texPosition.d_left;
-            quad.lpos[0].tv1 = quad.texPosition.d_bottom;
+            quad.lpos[0].tv1 = quad.texPosition.d_top;
 
             // setup Vertex 2...
 
             quad.lpos[1].x = quad.position.d_right;
-            quad.lpos[1].y = quad.position.d_bottom;
+            quad.lpos[1].y = quad.position.d_top;
             quad.lpos[1].z = quad.z;
             quad.lpos[1].diffuse = quad.topRightCol;
             quad.lpos[1].tu1 = quad.texPosition.d_right;
-            quad.lpos[1].tv1 = quad.texPosition.d_bottom;
+            quad.lpos[1].tv1 = quad.texPosition.d_top;
 
             // setup Vertex 3...
-            quad.lpos[2].x = quad.position.d_left;
-            quad.lpos[2].y = quad.position.d_top;
+            quad.lpos[2].x = quad.position.d_right;
+            quad.lpos[2].y = quad.position.d_bottom;
             quad.lpos[2].z = quad.z;
-            quad.lpos[2].diffuse = quad.bottomLeftCol;
-            quad.lpos[2].tu1 = quad.texPosition.d_left;
-            quad.lpos[2].tv1 = quad.texPosition.d_top;
+            quad.lpos[2].diffuse = quad.bottomRightCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_right;
+            quad.lpos[2].tv1 = quad.texPosition.d_bottom;
 
             // setup Vertex 4...
             quad.lpos[3].x = quad.position.d_right;
             quad.lpos[3].y = quad.position.d_bottom;
             quad.lpos[3].z = quad.z;
-            quad.lpos[3].diffuse = quad.topRightCol;
+            quad.lpos[3].diffuse = quad.bottomRightCol;
             quad.lpos[3].tu1 = quad.texPosition.d_right;
             quad.lpos[3].tv1 = quad.texPosition.d_bottom;
 
             // setup Vertex 5...
-            quad.lpos[4].x = quad.position.d_right;
-            quad.lpos[4].y = quad.position.d_top;
+            quad.lpos[4].x = quad.position.d_left;
+            quad.lpos[4].y = quad.position.d_bottom;
             quad.lpos[4].z = quad.z;
-            quad.lpos[4].diffuse = quad.bottomRightCol;
-            quad.lpos[4].tu1 = quad.texPosition.d_right;
-            quad.lpos[4].tv1 = quad.texPosition.d_top;
+            quad.lpos[4].diffuse = quad.bottomLeftCol;
+            quad.lpos[4].tu1 = quad.texPosition.d_left;
+            quad.lpos[4].tv1 = quad.texPosition.d_bottom;
 
             // setup Vertex 6...
 
             quad.lpos[5].x = quad.position.d_left;
             quad.lpos[5].y = quad.position.d_top;
             quad.lpos[5].z = quad.z;
-            quad.lpos[5].diffuse = quad.bottomLeftCol;
+            quad.lpos[5].diffuse = quad.topLeftCol;
             quad.lpos[5].tu1 = quad.texPosition.d_left;
             quad.lpos[5].tv1 = quad.texPosition.d_top;
 
-            m_quadList.push_back(quad);
         }
         return quad;
     }
@@ -270,6 +297,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
     {
+        TGQuadInfo quad;
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
@@ -343,40 +371,49 @@ namespace TGUI
             y = oRect.d_top;
             quad.lpos[1].x = preCos * x - preSin * y;
             quad.lpos[1].y = preSin * x + preCos * y;
-            quad.lpos[1].diffuse = quad.topLeftCol;
-            quad.lpos[1].tu1 = quad.texPosition.d_left;
-            quad.lpos[1].tv1 = quad.texPosition.d_bottom;
+            quad.lpos[1].diffuse = quad.topRightCol;
+            quad.lpos[1].tu1 = quad.texPosition.d_right;
+            quad.lpos[1].tv1 = quad.texPosition.d_top;
+
             x = oRect.d_right;
             y = oRect.d_bottom;
             quad.lpos[2].x = preCos * x - preSin * y;
             quad.lpos[2].y = preSin * x + preCos * y;
-            quad.lpos[2].diffuse = quad.topLeftCol;
-            quad.lpos[2].tu1 = quad.texPosition.d_left;
+            quad.lpos[2].diffuse = quad.bottomRightCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_right;
             quad.lpos[2].tv1 = quad.texPosition.d_bottom;
 
             quad.lpos[3].x = quad.lpos[2].x;
             quad.lpos[3].y = quad.lpos[2].y;
-            quad.lpos[3].diffuse = quad.topLeftCol;
-            quad.lpos[3].tu1 = quad.texPosition.d_left;
-            quad.lpos[3].tv1 = quad.texPosition.d_bottom;
+            quad.lpos[3].diffuse = quad.lpos[2].diffuse;
+            quad.lpos[3].tu1 = quad.lpos[2].tu1;
+            quad.lpos[3].tv1 = quad.lpos[2].tv1;
+
             x = oRect.d_left;
             y = oRect.d_bottom;
             quad.lpos[4].x = preCos * x - preSin * y;
             quad.lpos[4].y = preSin * x + preCos * y;
-            quad.lpos[4].diffuse = quad.topLeftCol;
+            quad.lpos[4].diffuse = quad.bottomLeftCol;
             quad.lpos[4].tu1 = quad.texPosition.d_left;
             quad.lpos[4].tv1 = quad.texPosition.d_bottom;
+
             quad.lpos[5].x = quad.lpos[0].x;
             quad.lpos[5].y = quad.lpos[0].y;
-            quad.lpos[5].diffuse = quad.topLeftCol;
-            quad.lpos[5].tu1 = quad.texPosition.d_left;
-            quad.lpos[5].tv1 = quad.texPosition.d_bottom;
+            quad.lpos[5].diffuse = quad.lpos[0].diffuse;
+            quad.lpos[5].tu1 = quad.lpos[0].tu1;
+            quad.lpos[5].tv1 = quad.lpos[0].tv1;
+
+            // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
+            quad.z				= -1 + z;
+            quad.texture		= ((TGTexture*)tex)->getOgreTexture();
+            quad.texPosition	= texRect;
 
             //
             // offset, flip, and convert
             //
             for(int i = 0; i < 6; i++)
             {
+                quad.lpos[i].z = quad.z;
                 quad.lpos[i].x += start_point.x;
                 quad.lpos[i].y += start_point.y;
 
@@ -399,13 +436,6 @@ namespace TGUI
 
             }
 
-
-            // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
-            quad.z				= -1 + z;
-            quad.texture		= ((TGTexture*)tex)->getOgreTexture();
-            quad.texPosition	= texRect;
-
-            m_quadList.push_back(quad);
         }
         return quad;
     }
@@ -451,21 +481,27 @@ namespace TGUI
                 // iterate over each quad in the list
                 for (TGQuadList::iterator i = quadList.begin(); i != quadList.end(); ++i)
                 {
-                    const TGQuadInfo& quad = (*i);
-
-                    for(int qi=0;qi<6;qi++)
+                    if(!i->isClipped)
                     {
-                        buffmem->x = quad.lpos[qi].x;
-                        buffmem->y = quad.lpos[qi].y;
-                        buffmem->z = quad.lpos[qi].z;
-                        buffmem->diffuse = quad.lpos[qi].diffuse;
-                        buffmem->tu1 = quad.lpos[qi].tu1;
-                        buffmem->tv1 = quad.lpos[qi].tv1;
-                        ++buffmem;
+                        const TGQuadInfo& quad = (*i);
+
+                        /*
+                        for(int qi=0;qi<6;qi++)
+                        {
+                            buffmem->x = quad.lpos[qi].x;
+                            buffmem->y = quad.lpos[qi].y;
+                            buffmem->z = quad.lpos[qi].z;
+                            buffmem->diffuse = quad.lpos[qi].diffuse;
+                            buffmem->tu1 = quad.lpos[qi].tu1;
+                            buffmem->tv1 = quad.lpos[qi].tv1;
+                            ++buffmem;
+                        }
+                        */
+
+                        memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
+                        buffmem += 6;
                     }
 
-                    //memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
-                    //buffmem += 6;
                 }
 
                 // ensure we leave the buffer in the unlocked state
@@ -480,23 +516,30 @@ namespace TGUI
             TGQuadList::iterator i = quadList.begin();
             while(i != quadList.end())
             {
-
-                d_currTexture = i->texture;
-                d_render_op.vertexData->vertexStart = d_bufferPos;
-
-                for (; i != quadList.end(); ++i)
+                if(!i->isClipped)
                 {
-                    const TGQuadInfo& quad = (*i);
-                    if (d_currTexture != quad.texture)
-                        /// If it has a different texture, render this quad in next operation
-                        break;
-                    d_bufferPos += VERTEX_PER_QUAD;
-                }
 
-                d_render_op.vertexData->vertexCount = d_bufferPos - d_render_op.vertexData->vertexStart;
-                /// Set texture, and do the render
-                m_renderSys->_setTexture(0, true, d_currTexture->getName());
-                m_renderSys->_render(d_render_op);
+                    d_currTexture = i->texture;
+                    d_render_op.vertexData->vertexStart = d_bufferPos;
+
+                    for (; i != quadList.end(); ++i)
+                    {
+                        if(!i->isClipped)
+                        {
+                            const TGQuadInfo& quad = (*i);
+                            if (d_currTexture != quad.texture)
+                                /// If it has a different texture, render this quad in next operation
+                                break;
+                            d_bufferPos += VERTEX_PER_QUAD;
+                        }
+                    }
+
+                    d_render_op.vertexData->vertexCount = d_bufferPos - d_render_op.vertexData->vertexStart;
+                    /// Set texture, and do the render
+                    m_renderSys->_setTexture(0, true, d_currTexture->getName());
+                    m_renderSys->_render(d_render_op);
+                }
+                else ++i;
             }
 
         }
@@ -911,6 +954,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     bool TGRenderer::clipQuad(TGClipArea* clip, TGRect& drect, TGRect& trect, TGColourRect colours)
     {
+        bool clipping = false;
+
         // check for total exclusion
         if((drect.d_right  < clip->x1) ||
             (drect.d_left   > clip->x2) ||
@@ -934,6 +979,9 @@ namespace TGUI
         float dwidth = drect.getWidth();
         float dheight = drect.getHeight();
         float dist,pct;
+
+        if(clipLeft || clipTop || clipRight || clipBot)
+            clipping = true;
 
         //
         // if clipping, adjust texture coordinates
