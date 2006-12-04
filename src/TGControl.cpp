@@ -1126,6 +1126,9 @@ namespace TGUI
     void TGControl::setColourTheme(TGColourTheme theme,bool updateChildren) 
     {
         m_theme = theme;
+        if(m_popupMenu)
+            m_popupMenu->setColourTheme(theme,true);
+
         if(!updateChildren)
             return;
 

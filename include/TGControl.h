@@ -174,7 +174,7 @@ namespace TGUI
         virtual void getClientSize(int &w, int &h);
 
         TGColourTheme getColourTheme() {return m_theme;};
-        void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         void setMouseTrackingControl(TGControl *control);
 

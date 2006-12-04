@@ -260,4 +260,21 @@ namespace TGUI
         moving = resizing = false;
         setMouseTrackingControl(NULL);
     }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E n t e r
+    //-----------------------------------------------------------------------
+    void TGWindow::onMouseEnter()
+    {
+        mouseOverControl = true;
+    }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E x i t
+    //-----------------------------------------------------------------------
+    void TGWindow::onMouseExit()
+    {
+        mouseOverControl = false;
+    }
+
 }
