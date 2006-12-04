@@ -37,7 +37,7 @@ namespace TGUI
     {
         m_message = msg;
         m_caption = caption;
-        TGLabel	*l = new TGLabel(this, 20, 20, msg);
+        TGLabel	*l = new TGLabel(this,msg, 20, 20);
         TGButton	*b = new TGButton(this, 0, 0, 100, 25, "Ok");
         resize((l->x2 - l->x1) + 40, 80);
         l->center();

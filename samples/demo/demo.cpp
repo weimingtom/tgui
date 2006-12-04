@@ -489,7 +489,7 @@ public:
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(true);
+        mFrameListener->showDebugOverlay(false);
         mRoot->addFrameListener(mFrameListener);
         ms = ((DemoListener*)mFrameListener)->getMouseState();
     }
@@ -631,7 +631,7 @@ public:
         win = new TGWindow("A fluffy window");
         win->center();
 
-        new TGLabel(win, 5, 0, "A Label");
+        new TGLabel(win,"A Label", 5, 0);
 
         new TGButton(win, 10, 55, 180, 80, "Another Button");
         new TGButton(win, 10, 85, 180, 110, "Yet another Button");
@@ -702,18 +702,18 @@ public:
         win3->move(win3->x1 - 200, win3->y1 - 70);
         win3->resize(190, 400);
 
-        new TGLabel(win3, 5, 25, "Object resolution:");
+        new TGLabel(win3,"Object resolution", 5, 25);
         stepCount = new TGSlider(win3, 10, 50, 180, 65);
         stepCount->setMax(61);
         stepCount->setValue(3);
         stepCount->addEventHandler(TGEvent::Modified, new TGEventHandler(&DemoApp::stepsModifiedAction,this));
 
-        new TGLabel(win3, 5, 80, "Object size:");
+        new TGLabel(win3,"Object size:", 5, 80);
         sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
         sizeSlider->setMax(5);
         sizeSlider->value.setDataSource(&size);
 
-        new TGLabel(win3, 5, 175, "Background intensity:");
+        new TGLabel(win3,"Background intensity", 5, 175);
         backSlider = new TGSlider(win3, 10, 200, 180, 215);
         backSlider->setMax(1.0f);
         backSlider->value.setDataSource(&backgnd);
@@ -722,7 +722,7 @@ public:
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
         new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
-        new TGLabel(sbox, 10, 120, "Clipped label");
+        new TGLabel(sbox,"Clipped label", 10, 120);
 
 
 
@@ -789,11 +789,37 @@ public:
     void createTest3()
     {
 
-        win = new TGWindow("A Test Window");
+
+        /*
+        TGWindow	*win = new TGWindow("A window");
         win->center();
-        win->resizeable = true;
-        (new TGCheckbox(win,"Checker", 10, 0, 180, 20))->setState(true);
-        new TGCheckbox(win,"Checker 2", 10, 25, 180, 45);
+        win->move(win->x1, win->y1-100);
+        win->resize(190, 400);
+
+        new TGLabel(win, 5, 80, "Object size:");
+        sizeSlider = new TGSlider(win, 10, 105, 180, 120);
+        sizeSlider->setMax(5);
+        sizeSlider->value.setDataSource(&size);
+
+        new TGLabel(win, 5, 175, "Background intensity:");
+        backSlider = new TGSlider(win, 10, 200, 180, 215);
+        backSlider->setMax(1.0f);
+        backSlider->value.setDataSource(&backgnd);
+
+        TGScrollbox	*sbox = new TGScrollbox(win, 10, 240, 175, 350);
+        new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
+        new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
+        new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
+        new TGLabel(sbox, 10, 120, "Clipped label");
+        */
+
+        TGWindow* win2 = new TGWindow("");
+        win2->move(10,10);
+        win2->resize(200,200);
+        win2->center();
+
+        TGLabel* l = new TGLabel(win2,"T",25,25);
+        win2->resizeable = true;
     }
 
     void createScene(void)
@@ -806,7 +832,7 @@ public:
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest2();
+        createTest3();
     }
 
 };
