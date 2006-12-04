@@ -50,12 +50,16 @@ namespace TGUI
         uint32		        bottomLeftCol;
         uint32		        bottomRightCol;
 
+        TGQuadInfo();
+        TGQuadInfo(const TGQuadInfo& rhs);
+
+        TGQuadInfo& TGQuadInfo::operator= (const TGQuadInfo& rhs);
+
         bool operator<(const TGQuadInfo& other) const
         {
             // this is intentionally reversed.
             return z > other.z;
         }
-        TGQuadInfo TGQuadInfo::operator= (TGQuadInfo rhs);
     };
 
     typedef std::list<TGQuadInfo> TGQuadList;
@@ -174,7 +178,6 @@ namespace TGUI
 
         TGRect				        m_displayArea;
 
-        TGQuadList&                 m_quadList;
         bool	                    m_queueing;	        // setting for queueing control.
 
         // Ogre specific bits.

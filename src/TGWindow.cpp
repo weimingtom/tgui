@@ -166,13 +166,12 @@ namespace TGUI
             color(m_theme.getTextColour());
         }
 
+        openClip();
         if(!caption.empty())
         {
-            openClip();
             if(!isTabbedCaption)
                 drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
             else drawString(x1+stringWidth("M"),y1 + 2, caption);
-            closeClip();
         }
 
         TGControl::render();
@@ -189,6 +188,8 @@ namespace TGUI
         {
             icon->draw(x1 + 1, y1 + (titleY2-y1)/2 - icon->getHeight()/2);
         }
+        closeClip();
+
     }
 
     //-----------------------------------------------------------------------

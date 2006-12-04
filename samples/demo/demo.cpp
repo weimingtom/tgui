@@ -811,15 +811,16 @@ public:
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
         new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
         new TGLabel(sbox, 10, 120, "Clipped label");
-        */
+*/
+        TGWindow* s = new TGWindow("");
+        s->move(10,10);
+        s->resize(200,200);
+        s->center();
 
-        TGWindow* win2 = new TGWindow("");
-        win2->move(10,10);
-        win2->resize(200,200);
-        win2->center();
+        //TGScreen* s = TGSystem::getSingleton().getActiveScreen();
+        new TGLabel(s,"T",25,45);
 
-        TGLabel* l = new TGLabel(win2,"T",25,25);
-        win2->resizeable = true;
+        s->resizeable = true;
     }
 
     void createScene(void)
@@ -832,7 +833,7 @@ public:
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest3();
+        createTest2();
     }
 
 };

@@ -287,6 +287,8 @@ namespace TGUI
 
         float sw,sh;
 
+        redraw();
+
         if(!m_parent)
         {
             sw = m_renderer->getWidth();
@@ -331,7 +333,6 @@ namespace TGUI
         }
         if (x1 != oldX1 || y1 != oldY1)
             fireEvent(TGEvent::Moved,TGEventArgs(this));
-        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -339,6 +340,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::setBounds(int x1, int y1, int x2, int y2)
     {
+        redraw();
         int	oldX1 = this->x1;
         int	oldY1 = this->y1;
         int	oldW = this->x2 - this->x1;
@@ -362,7 +364,6 @@ namespace TGUI
         }
         if (x1 != oldX1 || y1 != oldY1)
             fireEvent(TGEvent::Moved,TGEventArgs(this));
-        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -588,6 +589,7 @@ namespace TGUI
             padRight = right;
         if (bottom != -1)
             padBottom = bottom;
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -768,6 +770,7 @@ namespace TGUI
         TGColourRect cr(gColor);
         TGRect ruv(0.f,0.f,1.f,1.f);
         TGQuadInfo qi = m_renderer->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),ruv,cr);
+        m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
 
@@ -783,11 +786,9 @@ namespace TGUI
         TGRect ruv(0.f,0.f,1.f,1.f);
         TGColourRect cr(gColor);
 
-        int xdir= (x2-x1) < 0 ? -1 : 1;
-        int ydir= (y2-y1) < 0 ? -1 : 1;
-
         TGQuadInfo qi = m_renderer->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
             ruv,cr,thickness);
+        m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
 
@@ -863,6 +864,7 @@ namespace TGUI
             font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
 
             TGQuadInfo qi = m_renderer->addQuad(r,0,font->m_texture,ruv,cr);
+            m_systemCache.push_back(qi);
             m_quadCache.push_back(qi);
 
             cx += cWidth + 1.0f;
