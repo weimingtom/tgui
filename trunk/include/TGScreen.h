@@ -42,6 +42,8 @@ namespace TGUI
 
         int getWidth() {return width;};
         int getHeight() {return height;};
+        virtual void onMouseEnter();
+        virtual void onMouseExit();
 
         int getMouseX() {return mouseX;};
         int getMouseY() {return mouseY;};

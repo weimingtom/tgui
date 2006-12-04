@@ -60,4 +60,20 @@ namespace TGUI
         TGSystem::getSingleton().setActiveScreen(this);
         return prevScreen;
     }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E n t e r
+    //-----------------------------------------------------------------------
+    void TGScreen::onMouseEnter()
+    {
+        mouseOverControl = true;
+    }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E x i t
+    //-----------------------------------------------------------------------
+    void TGScreen::onMouseExit()
+    {
+        mouseOverControl = false;
+    }
 }

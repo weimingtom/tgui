@@ -44,6 +44,7 @@ namespace TGUI
 
         virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
         virtual void clear();
+        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         virtual void render();
         virtual void onMouseEnter();
@@ -76,6 +77,8 @@ namespace TGUI
 
         TGPopupMenu();
         virtual ~TGPopupMenu();
+
+        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         virtual TGMenuItem *addItem(string caption, TGImage *image=NULL);
         virtual void clear();
