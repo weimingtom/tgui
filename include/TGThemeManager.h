@@ -36,12 +36,17 @@ namespace TGUI
         TGSlider*           m_blue;
         TGSlider*           m_alpha;
         TGCheckbox*         m_activeOnly;
+        TGControl*          m_lastControl;
     protected:
         bool colourModified(const TGEventArgs& args);
 
     public:
         TGThemeManager();
         virtual ~TGThemeManager();
+        virtual void onFocusEnter(TGControl* oldFocus);
+        virtual string getControlType() {return "TGWindow";};
+
+
     };
 }
 #endif

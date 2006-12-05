@@ -76,6 +76,7 @@ using std::string;
 #include <tgscrollbox.h>
 #include <tglistbox.h>
 #include <tginputbox.h>
+#include <tgcombobox.h>
 #include <tgfilebrowser.h>
 #include <tgmessagebox.h>
 #include <tgmenu.h>

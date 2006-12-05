@@ -44,6 +44,8 @@ namespace TGUI
         virtual void setScrollingBounds(float hMax, float vMax);
 
         virtual void render();
+        virtual string getControlType() {return "TGScrollbox";};
+
         virtual void place(int x1, int y1, int x2, int y2);
         virtual void layout();
 

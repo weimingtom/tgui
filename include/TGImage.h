@@ -49,6 +49,7 @@ namespace TGUI
         int getHeight() {return m_height;};
 
         virtual void render();
+        virtual string getControlType() {return "TGImage";};
     };
 }
 #endif

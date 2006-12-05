@@ -37,6 +37,8 @@ namespace TGUI
         void move(int x, int y);
         virtual void draw();
         virtual void render() {};
+        virtual string getControlType() {return "TGCursor";};
+
 
     };
 }

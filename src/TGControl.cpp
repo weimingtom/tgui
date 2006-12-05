@@ -265,7 +265,7 @@ namespace TGUI
                 oldFocus->m_parent->redraw();
             oldFocus->onFocusExit();
         }
-        onFocusEnter();
+        onFocusEnter(oldFocus);
     }
 
     //-----------------------------------------------------------------------
