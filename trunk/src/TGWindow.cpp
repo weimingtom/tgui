@@ -170,14 +170,15 @@ namespace TGUI
             else drawString(x1+stringWidth("M"),y1 + 2, caption);
         }
 
+
         TGControl::render();
 
         if (resizeable)
         {
             color(frameColour);
             drawLine(x2 - 15, y2-1, x2-1, y2 - 15);
-            drawLine(x2 - 10, y2-1, x2-1, y2 - 10);
-            drawLine(x2 - 5, y2-1, x2-1, y2 - 5);
+            //drawLine(x2 - 10, y2-1, x2-1, y2 - 10);
+            //drawLine(x2 - 5, y2-1, x2-1, y2 - 5);
         }
 
         closeClip();

@@ -762,14 +762,16 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            f i l l R e c t
     //-----------------------------------------------------------------------
-    void TGControl::fillRect(int x1, int y1, int x2, int y2)
+    void TGControl::fillRect(int x1, int y1, int x2, int y2, TGTexture* tex)
     {
         if(!m_isVisible)
             return;
+        if(!tex)
+            tex = TGSystem::getSingleton().getDefaultTexture();
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
         TGRect ruv(0.f,0.f,1.f,1.f);
-        TGQuadInfo qi = m_renderer->addQuad(r,0,TGSystem::getSingleton().getDefaultTexture(),ruv,cr);
+        TGQuadInfo qi = m_renderer->addQuad(r,0,tex,ruv,cr);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
