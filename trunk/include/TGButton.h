@@ -40,6 +40,7 @@ namespace TGUI
         virtual void setCaption(string newCaption);
 
         virtual void render();
+        virtual string getControlType() {return "TGButton";}
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);

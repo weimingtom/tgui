@@ -85,10 +85,22 @@ namespace TGUI
         a = (float)m_alpha->value.get() / 255.f;
 
         TGColourTheme ct(TGColour(r,g,b,a));
+
         getActiveScreen()->setColourTheme(ct,true);
 
         return true;
     }
+
+    //-----------------------------------------------------------------------
+    //                         o n F o c u s E n t e r
+    //-----------------------------------------------------------------------
+    void TGThemeManager::onFocusEnter(TGControl* oldFocus)
+    {
+        TGControl::onFocusEnter(oldFocus);
+        m_lastControl = oldFocus;
+    
+    }
+
 
 
 }

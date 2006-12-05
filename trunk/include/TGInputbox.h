@@ -51,6 +51,7 @@ namespace TGUI
         virtual string getText();
 
         virtual void render();
+        virtual string getControlType() {return "TGInputbox";};
 
         virtual void pulse(float timeElapsed);
 

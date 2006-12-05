@@ -40,6 +40,8 @@ namespace TGUI
         virtual ~TGSlider();
 
         virtual void render();
+        virtual string getControlType() {return "TGSlider";};
+
 
         virtual void setValue(float newValue);
         virtual void setMax(float newMax);

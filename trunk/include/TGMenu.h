@@ -46,6 +46,8 @@ namespace TGUI
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         virtual void render();
+        virtual string getControlType() {return "TGMenuItem";};
+
         virtual void onMouseEnter();
         virtual void onMouseDown(int x, int y, int b){};
         virtual void onMouseUp(int x, int y, int b);
@@ -64,6 +66,7 @@ namespace TGUI
 
         virtual void layout();
         virtual void render();
+        virtual string getControlType() {return "TGMenuControl";};
 
         virtual void onFocusExit();
     };
@@ -83,6 +86,8 @@ namespace TGUI
         virtual void clear();
         virtual void run(int x=-10000, int y=-10000);
         virtual void cancel();
+        virtual string getControlType() {return "TGPopupMenu";};
+
     };
 }
 #endif

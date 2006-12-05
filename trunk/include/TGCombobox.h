@@ -22,27 +22,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGPROGRESSBAR_H__
-#define __TGPROGRESSBAR_H__
+#ifndef __TGCOMBOBOX_H__
+#define __TGCOMBOBOX_H__
 
 namespace TGUI
 {
 
-    class TGProgressBar : public TGControl
+    class TGCombobox : public TGInputbox
     {
-        TGDataManager<float>	max;
-        TGDataManager<float>	value;
+    private:
+        int             m_height;
 
     public:
 
-        TGProgressBar(TGControl *parent, int x1, int y1, int x2, int y2);
-        virtual ~TGProgressBar();
-
-        virtual void setMax(float newMax);
-        virtual void setValue(float newValue);
-        virtual string getControlType() {return "TGProgressBar";};
+        TGCombobox(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        virtual ~TGCombobox();
 
         virtual void render();
+        virtual string getControlType() {return "TGCombobox";};
+        virtual void setBounds(int x1, int y1, int x2, int y2);
+
+
     };
 }
 #endif

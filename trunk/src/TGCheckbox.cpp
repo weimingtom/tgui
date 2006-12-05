@@ -71,8 +71,12 @@ namespace TGUI
         else
             fs = FS_FLAT;
 
-        //drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
         drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
+
+        if (m_hover)
+            color(m_theme.getTextFocusedColour());
+        else
+            color(m_theme.getTextColour());
 
         if (m_checked.get())
         {
@@ -80,10 +84,7 @@ namespace TGUI
             drawLine(x1 + 12, y1 + 4, x1, y2 - 4);
         }
 
-        if (m_hover)
-            color(m_theme.getTextFocusedColour());
-        else
-            color(m_theme.getTextColour());
+
 
         drawString(x1 + 16,
             (y2-y1 + 1)/2 + y1 - (int)stringHeight()/2,

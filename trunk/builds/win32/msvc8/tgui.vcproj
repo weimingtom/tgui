@@ -183,6 +183,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGCombobox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGCombobox.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGControl.cpp"
 				>
 			</File>

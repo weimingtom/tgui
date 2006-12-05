@@ -42,6 +42,7 @@ namespace TGUI
         virtual void setCaption(string newCaption);
 
         virtual void render();
+        virtual string getControlType() {return "TGCheckbox";};
 
         virtual void setState(bool checked);
 

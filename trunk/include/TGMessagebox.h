@@ -39,6 +39,8 @@ namespace TGUI
         TGMessagebox(string msg, string caption="Message");
         virtual ~TGMessagebox();
         void show();
+        virtual string getControlType() {return "TGMessagebox";};
+
     };
 }
 

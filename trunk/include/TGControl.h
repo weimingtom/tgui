@@ -103,6 +103,8 @@ namespace TGUI
         TGControl* getFirstChild();
         TGControl* getLastChild();
 
+        virtual string getControlType() {return "TGControl";};
+
         TGControl* getFocusedChild(void) {return m_focusedChild;};
         void setFocusedChild(TGControl* child);
 
@@ -217,7 +219,7 @@ namespace TGUI
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);
         // focus events
-        virtual void onFocusEnter(){redraw();};
+        virtual void onFocusEnter(TGControl* oldFocus){redraw();};
         virtual void onFocusExit(){redraw();};
     };
 

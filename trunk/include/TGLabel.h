@@ -39,7 +39,8 @@ namespace TGUI
         virtual void setText(string newText);
 
         virtual void render();
-    };
+        virtual string getControlType() {return "TGLabel";};
+   };
 }
 
 #endif
