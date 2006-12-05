@@ -127,13 +127,7 @@ namespace TGUI
             return;
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-
-        TGRect r(x1,y1,x2,y2);
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        TGColourRect cr(gColor);
-        TGQuadInfo qi = m_renderer->addQuad(r,0,texture,ruv,cr);
-        m_systemCache.push_back(qi);
-        m_quadCache.push_back(qi);
+        fillRect(x1, y1, x2, y2, texture);
         TGControl::render();
     }
 }

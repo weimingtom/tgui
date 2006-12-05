@@ -489,7 +489,7 @@ public:
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(false);
+        mFrameListener->showDebugOverlay(true);
         mRoot->addFrameListener(mFrameListener);
         ms = ((DemoListener*)mFrameListener)->getMouseState();
     }
@@ -497,6 +497,8 @@ public:
     bool imageWinResizedAction(const TGEventArgs& args)
     {
         TGImage	*img = (TGImage*)args.m_control->getFirstChild();
+        if(!img)
+            return true;
         int	w, h;
         args.m_control->getClientSize(w, h);
         img->setBounds(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
@@ -812,15 +814,33 @@ public:
         new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
         new TGLabel(sbox, 10, 120, "Clipped label");
 */
-        TGWindow* s = new TGWindow("");
-        s->move(10,10);
-        s->resize(200,200);
-        s->center();
+        TGWindow	*win5 = new TGWindow("");
+        //TGColourTheme ct(TGColour(0.2,0.5,0.6,0.75));
+        //win5->setColourTheme(ct);
 
-        //TGScreen* s = TGSystem::getSingleton().getActiveScreen();
-        new TGLabel(s,"T",25,45);
+        win5->center();
+        win5->move(win5->x1, win5->y1 - 160);
 
-        s->resizeable = true;
+        
+        TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
+        cenda->center();
+        cenda->setName("cenda");
+        cenda->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::cendaClicked,this));
+
+        TGPopupMenu	*cendaMenu = new TGPopupMenu;
+        cendaMenu->addItem("No filtering");
+        cendaMenu->addItem("Bilinear filtering");
+        cenda->setPopupMenu(cendaMenu);
+        
+        win5->resizeable = true;
+        win5->addEventHandler(TGEvent::Resized,new TGEventHandler(&DemoApp::imageWinResizedAction,this));
+        //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
+
+        win5->menu = new TGPopupMenu;
+        win5->menu->addItem("No filtering");
+        win5->menu->addItem("Bilinear filtering");
+
+        win5->addEventHandler("controlResized",new TGEventHandler(&DemoApp::windowResized,this));
     }
 
     void createScene(void)
@@ -833,7 +853,7 @@ public:
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest2();
+        createTest3();
     }
 
 };

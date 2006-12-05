@@ -44,15 +44,7 @@ namespace TGUI
         isClipped = rhs.isClipped;
         texture = rhs.texture;
         position = rhs.position;
-        for(int i=0;i<6;i++)
-        {
-            lpos[i].x = rhs.lpos[i].x;
-            lpos[i].y = rhs.lpos[i].y;
-            lpos[i].z = rhs.lpos[i].z;
-            lpos[i].diffuse = rhs.lpos[i].diffuse;
-            lpos[i].tu1 = rhs.lpos[i].tu1;
-            lpos[i].tv1 = rhs.lpos[i].tv1;
-        }
+        memcpy(lpos,rhs.lpos,sizeof(TGQuadVertex)*6);
         z = rhs.z;
         texPosition = rhs.texPosition;
         topLeftCol = rhs.topLeftCol;
@@ -297,7 +289,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
     {
-        TGQuadInfo quad;
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
@@ -446,13 +437,20 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::doRender(TGQuadList& quadList)
     {
+        static int drCount=0;
+        static int sc1Count=0;
+        int scCount=0;
+
+        ++drCount;
+        
+
         // Render if overlays enabled and the quad list is not empty
         if (m_renderSys->_getViewport()->getOverlaysEnabled() && !quadList.empty())
         {
             /// Quad list needs to be sorted and thus the vertex buffer rebuilt. If not, we can
             /// reuse the vertex buffer resulting in a nice speed gain.
-            if(!d_sorted)
-            {
+            //if(!d_sorted)
+            //{
                 sortQuads();
                 /// Resize vertex buffer if it is too small
                 size_t size = d_buffer->getNumVertices();
@@ -498,15 +496,17 @@ namespace TGUI
                         }
                         */
 
+                        
                         memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
                         buffmem += 6;
+                        
                     }
 
                 }
 
                 // ensure we leave the buffer in the unlocked state
                 d_buffer->unlock();
-            }
+            //}
 
             /// Render the buffer
             initRenderStates();
