@@ -72,7 +72,7 @@ namespace TGUI
             fs = FS_FLAT;
 
         //drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
-        drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, FS_RAISED);
+        drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
 
         if (m_checked.get())
         {

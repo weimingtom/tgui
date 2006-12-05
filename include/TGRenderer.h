@@ -165,8 +165,6 @@ namespace TGUI
 
         void	initRenderStates(void);
 
-        void	sortQuads(void);
-
         bool clipQuad(TGClipArea* clip, TGRect& drect, TGRect& tRect, TGColourRect colours);
 
         void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
@@ -198,7 +196,7 @@ namespace TGUI
         TGRQListener*			    d_ourlistener;
         bool                        d_post_queue;		// true if we render after everything else in our queue.
         size_t                      d_bufferPos;		// index into buffer where next vertex should be put.
-        bool                        d_sorted;			// true when data in quad list is sorted.
+        bool                        d_modified;			// true when data in quad list is modified.
         TGPoint                     d_texelOffset;		// Offset required for proper texel mapping.
 
         std::list<TGTexture*>       d_texturelist;		// List used to track textures.
