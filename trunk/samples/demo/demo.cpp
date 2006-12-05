@@ -853,7 +853,7 @@ public:
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest3();
+        createTest2();
     }
 
 };

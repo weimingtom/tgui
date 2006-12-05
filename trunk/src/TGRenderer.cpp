@@ -102,7 +102,8 @@ namespace TGUI
 
         // create hardware vertex buffer
         d_buffer = HardwareBufferManager::getSingleton().createVertexBuffer(vd->getVertexSize(0), nquads,  
-            HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE, false);
+            HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
+            false); // no Ninnies here!!!
 
         // bind vertex buffer
         d_render_op.vertexData->vertexBufferBinding->setBinding(0, d_buffer);
@@ -204,7 +205,7 @@ namespace TGUI
         }
         else
         {
-            d_sorted = false;
+            d_modified = true;
 
             // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
             quad.position.d_left	= destRect.d_left;
@@ -324,7 +325,7 @@ namespace TGUI
         }
         else
         {
-            d_sorted = false;
+            d_modified = true;
 
             TGVector2 start_point(destRect.d_left,destRect.d_top);
             TGVector2 end_point(destRect.d_right,destRect.d_bottom);
@@ -437,21 +438,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::doRender(TGQuadList& quadList)
     {
-        static int drCount=0;
-        static int sc1Count=0;
-        int scCount=0;
-
-        ++drCount;
-        
 
         // Render if overlays enabled and the quad list is not empty
         if (m_renderSys->_getViewport()->getOverlaysEnabled() && !quadList.empty())
         {
             /// Quad list needs to be sorted and thus the vertex buffer rebuilt. If not, we can
             /// reuse the vertex buffer resulting in a nice speed gain.
-            //if(!d_sorted)
-            //{
-                sortQuads();
+            if(d_modified)
+            {
+                d_modified = false;
                 /// Resize vertex buffer if it is too small
                 size_t size = d_buffer->getNumVertices();
                 size_t requestedSize = quadList.size()*VERTEX_PER_QUAD;
@@ -497,7 +492,7 @@ namespace TGUI
                         */
 
                         
-                        memcpy(buffmem,&quad.lpos,sizeof(TGQuadVertex)*6);
+                        memcpy(buffmem,&quad.lpos[0],sizeof(TGQuadVertex)*6);
                         buffmem += 6;
                         
                     }
@@ -506,7 +501,7 @@ namespace TGUI
 
                 // ensure we leave the buffer in the unlocked state
                 d_buffer->unlock();
-            //}
+            }
 
             /// Render the buffer
             initRenderStates();
@@ -528,8 +523,10 @@ namespace TGUI
                         {
                             const TGQuadInfo& quad = (*i);
                             if (d_currTexture != quad.texture)
+                            {
                                 /// If it has a different texture, render this quad in next operation
                                 break;
+                            }
                             d_bufferPos += VERTEX_PER_QUAD;
                         }
                     }
@@ -646,17 +643,6 @@ namespace TGUI
         m_renderSys->_setSceneBlending(SBF_SOURCE_ALPHA, SBF_ONE_MINUS_SOURCE_ALPHA);
     }
 
-    //-----------------------------------------------------------------------
-    //                            s o r t Q u a d s
-    //-----------------------------------------------------------------------
-    void TGRenderer::sortQuads(void)
-    {
-        if (!d_sorted)
-        {
-            d_sorted = true;
-        }
-
-    }
 
     //-----------------------------------------------------------------------
     //                       r e n d e r Q u a d D i r e c t
@@ -822,7 +808,7 @@ namespace TGUI
         d_post_queue    = post_queue;
         d_sceneMngr     = NULL;
         d_bufferPos     = 0;
-        d_sorted        = true;
+        d_modified      = false;
         m_ogreRoot      = Root::getSingletonPtr();
         m_renderSys	    = m_ogreRoot->getRenderSystem();
         // set ID string
