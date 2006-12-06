@@ -90,16 +90,20 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
-        color(m_theme.getFrameColour());
+        if(mouseOverControl)
+            color(m_theme.getFrameFocusedColour());
+        else color(m_theme.getFrameColour());
         drawRect(x1,y1,x2,y2);        
         drawLine(x2 - 12, y1, x2 - 12, y2);
         drawLine(x1, y2 - 12, x2, y2 - 12);
 
-        
-
         int	x = x1, y = y1 + 1;
 
-        color(m_theme.getFrameColour());
+        if(mouseOverControl)
+            color(m_theme.getFrameFocusedColour());
+        else color(m_theme.getFrameColour());
+
+        color(m_theme.getBase());
         if (clientHeight > 0.0f)
         {
             if (vScroll != 0.0f)
@@ -114,8 +118,9 @@ namespace TGUI
             fillRect(x, y2 - 12, x + 11, y2-1);
         }
 
-        //color(255,0,0);
-        //fillRect(x1+1, y1 + 1, x2 - 13, y2 - 13);
+        color(m_theme.getBase());
+
+        fillRect(x1, y1 + 1, x2 - 13, y2 - 13);
         TGControl::render();
     }
 

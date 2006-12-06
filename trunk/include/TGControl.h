@@ -68,7 +68,6 @@ namespace TGUI
         float               maxWidth;
         float               maxHeight;
         bool                performLayout;
-        bool                mouseOverControl;
 
         TGControl*          m_focusedChild;
         TGPopupMenu*        m_popupMenu;
@@ -76,6 +75,7 @@ namespace TGUI
     public:
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
+        bool                mouseOverControl;
         float               xShift;
         float               yShift;
         int                 x1;

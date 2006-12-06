@@ -30,6 +30,7 @@ namespace TGUI
 
     class TGColourTheme
     {
+    public:
         TGColour        m_base;
         TGColour        m_baseOpaque;
         TGColour        m_caption;
