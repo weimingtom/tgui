@@ -34,7 +34,14 @@ namespace TGUI
     {
         m_height=0;
         m_listbox = new TGListbox(parent,0,0,5,5);
+
+        TGColourTheme ct = m_listbox->getColourTheme();
+        TGColour c = ct.getBase();
+        c.a = 1.f;
+     
+        m_listbox->setColourTheme(TGColourTheme(c),true);
         m_listbox->hide();
+        m_listbox->redraw();
 
         m_listbox->addEventHandler(TGEvent::Modified,TGEVENT_HANDLER(TGCombobox::itemSelected));
     }
@@ -110,11 +117,32 @@ namespace TGUI
         x2 += m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
         {
-            m_listbox->isVisible() ? m_listbox->hide() : m_listbox->show();
+            if(m_listbox->isVisible())
+                m_listbox->hide();
+            else 
+            {
+                m_listbox->show();
+                m_listbox->focus();
+                m_listbox->mouseOverControl = true;
+                mouseOverControl = true;
+            }
             return;
         }
 
         TGInputbox::onMouseDown(x, y, b);
+    }
+
+    //-----------------------------------------------------------------------
+    //                      s e t C o l o u r T h e m e
+    //-----------------------------------------------------------------------
+    void TGCombobox::setColourTheme(TGColourTheme theme,bool updateChildren)
+    {
+        TGControl::setColourTheme(theme,updateChildren);
+
+        TGColour c = theme.getBase();
+        c.a = 1.f;
+        m_listbox->setColourTheme(TGColourTheme(c),true);
+        m_listbox->redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -128,7 +156,7 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGInputbox::render();
-        if (mouseOverControl  || hasKeyboardFocus(this))
+        if (mouseOverControl  || hasKeyboardFocus(this) || m_listbox->isVisible())
             color(m_theme.getFrameFocusedColour());
         else
             color(m_theme.getFrameColour());
@@ -136,6 +164,14 @@ namespace TGUI
         drawRect(x2, y1, x2 + m_height, y2);
 
         drawTri(x2+2,y1+7, x2+m_height-3, y2-7,0);
+        if(m_listbox->isVisible())
+        {
+            int x1,y1,x2,y2;
+            m_listbox->getBounds(x1, y1, x2, y2);
+            color(m_listbox->getColourTheme().getBase());
+            fillRect(x1,y1,x2,y2);
+
+        }
     }
 
 }

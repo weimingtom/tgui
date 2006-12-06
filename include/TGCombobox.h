@@ -47,6 +47,8 @@ namespace TGUI
         virtual void setBounds(int x1, int y1, int x2, int y2);
         virtual TGControl *childAt(float x, float y);
         virtual bool pointInControl(float x, float y);
+        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+
 
         virtual void addItem(string text);
         virtual void onMouseDown(int x, int y, int b);

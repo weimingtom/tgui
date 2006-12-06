@@ -715,10 +715,25 @@ public:
         sizeSlider->setMax(5);
         sizeSlider->value.setDataSource(&size);
 
-        new TGLabel(win3,"Background intensity", 5, 175);
-        backSlider = new TGSlider(win3, 10, 200, 180, 215);
+        new TGLabel(win3,"Background intensity", 5, 135);
+        backSlider = new TGSlider(win3, 10, 155, 180, 170);
         backSlider->setMax(1.0f);
         backSlider->value.setDataSource(&backgnd);
+
+        new TGLabel(win3,"Test Combobox", 5, 185);
+        TGCombobox* cb = new TGCombobox(win3);
+        cb->move(5,205);
+        cb->resize(175,25);
+        cb->addItem("test item 1");
+        cb->addItem("test item 2");
+        cb->addItem("test item 3");
+        cb->addItem("test item 4");
+        cb->addItem("test item 5");
+        cb->addItem("test item 6");
+        cb->addItem("test item 7");
+        cb->addItem("test item 8");
+        cb->addItem("test item 9");
+        cb->addItem("test item 10");
 
         TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
@@ -809,6 +824,9 @@ public:
         cb->addItem("test item 8");
         cb->addItem("test item 9");
         cb->addItem("test item 10");
+
+        new TGLabel(win,"A Test Label",5,35);
+
     }
 
     void createScene(void)
@@ -821,7 +839,7 @@ public:
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
-        createTest3();
+        createTest2();
     }
 
 };
