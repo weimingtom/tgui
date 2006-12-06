@@ -489,7 +489,7 @@ public:
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(true);
+        mFrameListener->showDebugOverlay(false);
         mRoot->addFrameListener(mFrameListener);
         ms = ((DemoListener*)mFrameListener)->getMouseState();
     }
@@ -564,7 +564,7 @@ public:
     bool removeItemAction(const TGEventArgs& args)
     {
         TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
-        lbox->removeItem(lbox->active);
+        lbox->removeItem(lbox->getSelectedItem());
         return true;
     }
 
@@ -802,7 +802,13 @@ public:
         cb->addItem("test item 1");
         cb->addItem("test item 2");
         cb->addItem("test item 3");
-
+        cb->addItem("test item 4");
+        cb->addItem("test item 5");
+        cb->addItem("test item 6");
+        cb->addItem("test item 7");
+        cb->addItem("test item 8");
+        cb->addItem("test item 9");
+        cb->addItem("test item 10");
     }
 
     void createScene(void)

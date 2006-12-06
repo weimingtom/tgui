@@ -55,8 +55,9 @@ namespace TGUI
 
     class TGListbox : public TGScrollbox
     {
-    public:
-        TGListboxItem*          active;
+        friend class TGListboxItem;
+    protected:
+        TGListboxItem*          m_selectedItem;
 
     public:
         TGListbox(TGControl *parent, int x1, int y1, int x2, int y2);
@@ -71,6 +72,7 @@ namespace TGUI
         virtual void selectItem(TGListboxItem *item);
         virtual string getControlType() {return "TGListbox";};
 
+        virtual TGListboxItem* getSelectedItem() {return m_selectedItem;};
 
         virtual void layout();
     };
