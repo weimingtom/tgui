@@ -596,8 +596,6 @@ namespace TGUI
         m_cache.clear();
 
         m_renderer->resetZValue();
-        m_renderer->setQueueingEnabled(true);
-
         if (m_activeScreen)
         {
             m_activeScreen->render();
@@ -608,7 +606,6 @@ namespace TGUI
         // draw mouse
         if(m_mouseCursor)
         {
-            m_renderer->setQueueingEnabled(false);
             m_mouseCursor->draw();
         }
 

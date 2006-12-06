@@ -198,90 +198,196 @@ namespace TGUI
         }
 
 
-        // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
-        if (!m_queueing)
+        d_modified = true;
+
+        // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
+        quad.position.d_left	= destRect.d_left;
+        quad.position.d_right	= destRect.d_right;
+        quad.position.d_top		= daHeight - destRect.d_top;
+        quad.position.d_bottom	= daHeight - destRect.d_bottom;
+        quad.position.offset(d_texelOffset);
+
+        // convert quad co-ordinates for a -1 to 1 co-ordinate system.
+        quad.position.d_left	/= (daWidth * 0.5f);
+        quad.position.d_right	/= (daWidth * 0.5f);
+        quad.position.d_top		/= (daHeight * 0.5f);
+        quad.position.d_bottom	/= (daHeight * 0.5f);
+        quad.position.offset(TGPoint(-1.0f, -1.0f));
+
+        quad.z				= -1 + z;
+        quad.texture		= tex->getOgreTexture();
+        quad.texPosition	= texRect;
+
+        // covert colours for ogre, note that top / bottom are switched.
+        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+
+        // setup Vertex 1...
+        quad.lpos[0].x = quad.position.d_left;
+        quad.lpos[0].y = quad.position.d_top;
+        quad.lpos[0].z = quad.z;
+        quad.lpos[0].diffuse = quad.topLeftCol;
+        quad.lpos[0].tu1 = quad.texPosition.d_left;
+        quad.lpos[0].tv1 = quad.texPosition.d_top;
+
+        // setup Vertex 2...
+
+        quad.lpos[1].x = quad.position.d_right;
+        quad.lpos[1].y = quad.position.d_top;
+        quad.lpos[1].z = quad.z;
+        quad.lpos[1].diffuse = quad.topRightCol;
+        quad.lpos[1].tu1 = quad.texPosition.d_right;
+        quad.lpos[1].tv1 = quad.texPosition.d_top;
+
+        // setup Vertex 3...
+        quad.lpos[2].x = quad.position.d_right;
+        quad.lpos[2].y = quad.position.d_bottom;
+        quad.lpos[2].z = quad.z;
+        quad.lpos[2].diffuse = quad.bottomRightCol;
+        quad.lpos[2].tu1 = quad.texPosition.d_right;
+        quad.lpos[2].tv1 = quad.texPosition.d_bottom;
+
+        // setup Vertex 4...
+        quad.lpos[3].x = quad.position.d_right;
+        quad.lpos[3].y = quad.position.d_bottom;
+        quad.lpos[3].z = quad.z;
+        quad.lpos[3].diffuse = quad.bottomRightCol;
+        quad.lpos[3].tu1 = quad.texPosition.d_right;
+        quad.lpos[3].tv1 = quad.texPosition.d_bottom;
+
+        // setup Vertex 5...
+        quad.lpos[4].x = quad.position.d_left;
+        quad.lpos[4].y = quad.position.d_bottom;
+        quad.lpos[4].z = quad.z;
+        quad.lpos[4].diffuse = quad.bottomLeftCol;
+        quad.lpos[4].tu1 = quad.texPosition.d_left;
+        quad.lpos[4].tv1 = quad.texPosition.d_bottom;
+
+        // setup Vertex 6...
+
+        quad.lpos[5].x = quad.position.d_left;
+        quad.lpos[5].y = quad.position.d_top;
+        quad.lpos[5].z = quad.z;
+        quad.lpos[5].diffuse = quad.topLeftCol;
+        quad.lpos[5].tu1 = quad.texPosition.d_left;
+        quad.lpos[5].tv1 = quad.texPosition.d_top;
+        return quad;
+    }
+
+    //-----------------------------------------------------------------------
+    //                            a d d T r i
+    //-----------------------------------------------------------------------
+    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int pointDir)
+    {
+        quad.isClipped = false;
+
+        TGRect destRect=dest_rect;
+        TGRect texRect=texture_rect;
+        const float  daWidth = m_displayArea.getWidth();
+        const float  daHeight = m_displayArea.getHeight();
+
+        //
+        // clip quad.  returns false if completely outside the clip area
+        //
+
+        if(m_clipList.size())
         {
-            renderQuadDirect(destRect, z, tex, texRect, colours);
+            TGClipArea*   clip;
+            TGClipList::reverse_iterator first(m_clipList.end());
+            TGClipList::reverse_iterator last(m_clipList.begin());
+
+
+            while(first != last)
+            {
+                clip = *first;
+                if(!clipQuad(clip,destRect,texRect,colours))
+                {
+                    quad.isClipped = true;
+                    return quad;
+                }
+                ++first;
+            }
         }
-        else
-        {
-            d_modified = true;
 
-            // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
-            quad.position.d_left	= destRect.d_left;
-            quad.position.d_right	= destRect.d_right;
-            quad.position.d_top		= daHeight - destRect.d_top;
-            quad.position.d_bottom	= daHeight - destRect.d_bottom;
-            quad.position.offset(d_texelOffset);
 
-            // convert quad co-ordinates for a -1 to 1 co-ordinate system.
-            quad.position.d_left	/= (daWidth * 0.5f);
-            quad.position.d_right	/= (daWidth * 0.5f);
-            quad.position.d_top		/= (daHeight * 0.5f);
-            quad.position.d_bottom	/= (daHeight * 0.5f);
-            quad.position.offset(TGPoint(-1.0f, -1.0f));
+        d_modified = true;
 
-            quad.z				= -1 + z;
-            quad.texture		= tex->getOgreTexture();
-            quad.texPosition	= texRect;
+        // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
+        quad.position.d_left	= destRect.d_left;
+        quad.position.d_right	= destRect.d_right;
+        quad.position.d_top		= daHeight - destRect.d_top;
+        quad.position.d_bottom	= daHeight - destRect.d_bottom;
+        quad.position.offset(d_texelOffset);
 
-            // covert colours for ogre, note that top / bottom are switched.
-            quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-            quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-            quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-            quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+        // convert quad co-ordinates for a -1 to 1 co-ordinate system.
+        quad.position.d_left	/= (daWidth * 0.5f);
+        quad.position.d_right	/= (daWidth * 0.5f);
+        quad.position.d_top		/= (daHeight * 0.5f);
+        quad.position.d_bottom	/= (daHeight * 0.5f);
+        quad.position.offset(TGPoint(-1.0f, -1.0f));
 
-            // setup Vertex 1...
-            quad.lpos[0].x = quad.position.d_left;
-            quad.lpos[0].y = quad.position.d_top;
-            quad.lpos[0].z = quad.z;
-            quad.lpos[0].diffuse = quad.topLeftCol;
-            quad.lpos[0].tu1 = quad.texPosition.d_left;
-            quad.lpos[0].tv1 = quad.texPosition.d_top;
+        quad.z				= -1 + z;
+        quad.texture		= tex->getOgreTexture();
+        quad.texPosition	= texRect;
 
-            // setup Vertex 2...
+        // covert colours for ogre, note that top / bottom are switched.
+        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
 
-            quad.lpos[1].x = quad.position.d_right;
-            quad.lpos[1].y = quad.position.d_top;
-            quad.lpos[1].z = quad.z;
-            quad.lpos[1].diffuse = quad.topRightCol;
-            quad.lpos[1].tu1 = quad.texPosition.d_right;
-            quad.lpos[1].tv1 = quad.texPosition.d_top;
+        // setup Vertex 1...
+        quad.lpos[0].x = quad.position.d_left;
+        quad.lpos[0].y = quad.position.d_top;
+        quad.lpos[0].z = quad.z;
+        quad.lpos[0].diffuse = quad.topLeftCol;
+        quad.lpos[0].tu1 = quad.texPosition.d_left;
+        quad.lpos[0].tv1 = quad.texPosition.d_top;
 
-            // setup Vertex 3...
-            quad.lpos[2].x = quad.position.d_right;
-            quad.lpos[2].y = quad.position.d_bottom;
-            quad.lpos[2].z = quad.z;
-            quad.lpos[2].diffuse = quad.bottomRightCol;
-            quad.lpos[2].tu1 = quad.texPosition.d_right;
-            quad.lpos[2].tv1 = quad.texPosition.d_bottom;
+        // setup Vertex 2...
 
-            // setup Vertex 4...
-            quad.lpos[3].x = quad.position.d_right;
-            quad.lpos[3].y = quad.position.d_bottom;
-            quad.lpos[3].z = quad.z;
-            quad.lpos[3].diffuse = quad.bottomRightCol;
-            quad.lpos[3].tu1 = quad.texPosition.d_right;
-            quad.lpos[3].tv1 = quad.texPosition.d_bottom;
+        quad.lpos[1].x = quad.position.d_right;
+        quad.lpos[1].y = quad.position.d_top;
+        quad.lpos[1].z = quad.z;
+        quad.lpos[1].diffuse = quad.topRightCol;
+        quad.lpos[1].tu1 = quad.texPosition.d_right;
+        quad.lpos[1].tv1 = quad.texPosition.d_top;
 
-            // setup Vertex 5...
-            quad.lpos[4].x = quad.position.d_left;
-            quad.lpos[4].y = quad.position.d_bottom;
-            quad.lpos[4].z = quad.z;
-            quad.lpos[4].diffuse = quad.bottomLeftCol;
-            quad.lpos[4].tu1 = quad.texPosition.d_left;
-            quad.lpos[4].tv1 = quad.texPosition.d_bottom;
+        // setup Vertex 3...
+        quad.lpos[2].x = quad.position.d_left + ((quad.position.d_right-quad.position.d_left)/2.f);
+        quad.lpos[2].y = quad.position.d_bottom;
+        quad.lpos[2].z = quad.z;
+        quad.lpos[2].diffuse = quad.bottomRightCol;
+        quad.lpos[2].tu1 = quad.texPosition.d_right;
+        quad.lpos[2].tv1 = quad.texPosition.d_bottom;
 
-            // setup Vertex 6...
+        // setup Vertex 4...
+        quad.lpos[3].x = quad.lpos[2].x;
+        quad.lpos[3].y = quad.lpos[2].y;
+        quad.lpos[3].z = quad.z;
+        quad.lpos[3].diffuse = quad.lpos[2].diffuse;
+        quad.lpos[3].tu1 = quad.lpos[2].tu1;
+        quad.lpos[3].tv1 = quad.lpos[2].tv1;
 
-            quad.lpos[5].x = quad.position.d_left;
-            quad.lpos[5].y = quad.position.d_top;
-            quad.lpos[5].z = quad.z;
-            quad.lpos[5].diffuse = quad.topLeftCol;
-            quad.lpos[5].tu1 = quad.texPosition.d_left;
-            quad.lpos[5].tv1 = quad.texPosition.d_top;
+        // setup Vertex 5...
+        quad.lpos[4].x = quad.lpos[2].x;
+        quad.lpos[4].y = quad.lpos[2].y;
+        quad.lpos[4].z = quad.z;
+        quad.lpos[4].diffuse = quad.lpos[2].diffuse;
+        quad.lpos[4].tu1 = quad.lpos[2].tu1;
+        quad.lpos[4].tv1 = quad.lpos[2].tv1;
 
-        }
+        // setup Vertex 6...
+
+        quad.lpos[5].x = quad.lpos[2].x;
+        quad.lpos[5].y = quad.lpos[2].y;
+        quad.lpos[5].z = quad.z;
+        quad.lpos[5].diffuse = quad.lpos[2].diffuse;
+        quad.lpos[5].tu1 = quad.lpos[2].tu1;
+        quad.lpos[5].tv1 = quad.lpos[2].tv1;
+
         return quad;
     }
 
@@ -318,117 +424,109 @@ namespace TGUI
             }
         }
 
-        // if not queueing, render directly (as in, right now!). This is used for the mouse cursor.
-        if (!m_queueing)
+        d_modified = true;
+
+        TGVector2 start_point(destRect.d_left,destRect.d_top);
+        TGVector2 end_point(destRect.d_right,destRect.d_bottom);
+        TGVector2 newEnd = end_point - start_point;
+        float len = newEnd.length();
+
+        Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
+        float float_thick = (( float )thickness );
+
+        // covert colours for ogre, note that top / bottom are switched.
+        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+
+        //
+        // quad on the origin and rotate
+        //
+        TGRect oRect(0.f,-float_thick/2.f,len,float_thick/2.f);
+
+        const float preCos = cos( angle.valueRadians() );
+        const float preSin = sin( angle.valueRadians() );
+
+        float x,y;
+
+        x = oRect.d_left;
+        y = oRect.d_top;
+        quad.lpos[0].x = preCos * x - preSin * y;
+        quad.lpos[0].y = preSin * x + preCos * y;
+        quad.lpos[0].diffuse = quad.topLeftCol;
+        quad.lpos[0].tu1 = quad.texPosition.d_left;
+        quad.lpos[0].tv1 = quad.texPosition.d_bottom;
+
+        x = oRect.d_right;
+        y = oRect.d_top;
+        quad.lpos[1].x = preCos * x - preSin * y;
+        quad.lpos[1].y = preSin * x + preCos * y;
+        quad.lpos[1].diffuse = quad.topRightCol;
+        quad.lpos[1].tu1 = quad.texPosition.d_right;
+        quad.lpos[1].tv1 = quad.texPosition.d_top;
+
+        x = oRect.d_right;
+        y = oRect.d_bottom;
+        quad.lpos[2].x = preCos * x - preSin * y;
+        quad.lpos[2].y = preSin * x + preCos * y;
+        quad.lpos[2].diffuse = quad.bottomRightCol;
+        quad.lpos[2].tu1 = quad.texPosition.d_right;
+        quad.lpos[2].tv1 = quad.texPosition.d_bottom;
+
+        quad.lpos[3].x = quad.lpos[2].x;
+        quad.lpos[3].y = quad.lpos[2].y;
+        quad.lpos[3].diffuse = quad.lpos[2].diffuse;
+        quad.lpos[3].tu1 = quad.lpos[2].tu1;
+        quad.lpos[3].tv1 = quad.lpos[2].tv1;
+
+        x = oRect.d_left;
+        y = oRect.d_bottom;
+        quad.lpos[4].x = preCos * x - preSin * y;
+        quad.lpos[4].y = preSin * x + preCos * y;
+        quad.lpos[4].diffuse = quad.bottomLeftCol;
+        quad.lpos[4].tu1 = quad.texPosition.d_left;
+        quad.lpos[4].tv1 = quad.texPosition.d_bottom;
+
+        quad.lpos[5].x = quad.lpos[0].x;
+        quad.lpos[5].y = quad.lpos[0].y;
+        quad.lpos[5].diffuse = quad.lpos[0].diffuse;
+        quad.lpos[5].tu1 = quad.lpos[0].tu1;
+        quad.lpos[5].tv1 = quad.lpos[0].tv1;
+
+        // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
+        quad.z				= -1 + z;
+        quad.texture		= ((TGTexture*)tex)->getOgreTexture();
+        quad.texPosition	= texRect;
+
+        //
+        // offset, flip, and convert
+        //
+        for(int i = 0; i < 6; i++)
         {
-            renderQuadDirect(destRect, z, tex, texRect, colours);
-        }
-        else
-        {
-            d_modified = true;
-
-            TGVector2 start_point(destRect.d_left,destRect.d_top);
-            TGVector2 end_point(destRect.d_right,destRect.d_bottom);
-            TGVector2 newEnd = end_point - start_point;
-            float len = newEnd.length();
-
-            Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
-            float float_thick = (( float )thickness );
-
-            // covert colours for ogre, note that top / bottom are switched.
-            quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-            quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-            quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-            quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+            quad.lpos[i].z = quad.z;
+            quad.lpos[i].x += start_point.x;
+            quad.lpos[i].y += start_point.y;
 
             //
-            // quad on the origin and rotate
+            // flip
             //
-            TGRect oRect(0.f,-float_thick/2.f,len,float_thick/2.f);
+            quad.lpos[i].y = m_displayArea.getHeight() - quad.lpos[i].y;
 
-            const float preCos = cos( angle.valueRadians() );
-            const float preSin = sin( angle.valueRadians() );
-
-            float x,y;
-
-            x = oRect.d_left;
-            y = oRect.d_top;
-            quad.lpos[0].x = preCos * x - preSin * y;
-            quad.lpos[0].y = preSin * x + preCos * y;
-            quad.lpos[0].diffuse = quad.topLeftCol;
-            quad.lpos[0].tu1 = quad.texPosition.d_left;
-            quad.lpos[0].tv1 = quad.texPosition.d_bottom;
-
-            x = oRect.d_right;
-            y = oRect.d_top;
-            quad.lpos[1].x = preCos * x - preSin * y;
-            quad.lpos[1].y = preSin * x + preCos * y;
-            quad.lpos[1].diffuse = quad.topRightCol;
-            quad.lpos[1].tu1 = quad.texPosition.d_right;
-            quad.lpos[1].tv1 = quad.texPosition.d_top;
-
-            x = oRect.d_right;
-            y = oRect.d_bottom;
-            quad.lpos[2].x = preCos * x - preSin * y;
-            quad.lpos[2].y = preSin * x + preCos * y;
-            quad.lpos[2].diffuse = quad.bottomRightCol;
-            quad.lpos[2].tu1 = quad.texPosition.d_right;
-            quad.lpos[2].tv1 = quad.texPosition.d_bottom;
-
-            quad.lpos[3].x = quad.lpos[2].x;
-            quad.lpos[3].y = quad.lpos[2].y;
-            quad.lpos[3].diffuse = quad.lpos[2].diffuse;
-            quad.lpos[3].tu1 = quad.lpos[2].tu1;
-            quad.lpos[3].tv1 = quad.lpos[2].tv1;
-
-            x = oRect.d_left;
-            y = oRect.d_bottom;
-            quad.lpos[4].x = preCos * x - preSin * y;
-            quad.lpos[4].y = preSin * x + preCos * y;
-            quad.lpos[4].diffuse = quad.bottomLeftCol;
-            quad.lpos[4].tu1 = quad.texPosition.d_left;
-            quad.lpos[4].tv1 = quad.texPosition.d_bottom;
-
-            quad.lpos[5].x = quad.lpos[0].x;
-            quad.lpos[5].y = quad.lpos[0].y;
-            quad.lpos[5].diffuse = quad.lpos[0].diffuse;
-            quad.lpos[5].tu1 = quad.lpos[0].tu1;
-            quad.lpos[5].tv1 = quad.lpos[0].tv1;
-
-            // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
-            quad.z				= -1 + z;
-            quad.texture		= ((TGTexture*)tex)->getOgreTexture();
-            quad.texPosition	= texRect;
+            quad.lpos[i].x += d_texelOffset.x;
+            quad.lpos[i].y += d_texelOffset.y;
 
             //
-            // offset, flip, and convert
+            // convert coordinates
             //
-            for(int i = 0; i < 6; i++)
-            {
-                quad.lpos[i].z = quad.z;
-                quad.lpos[i].x += start_point.x;
-                quad.lpos[i].y += start_point.y;
+            quad.lpos[i].x /= (m_displayArea.getWidth() * 0.5f);
+            quad.lpos[i].y /= (m_displayArea.getHeight() * 0.5f);
 
-                //
-                // flip
-                //
-                quad.lpos[i].y = m_displayArea.getHeight() - quad.lpos[i].y;
-
-                quad.lpos[i].x += d_texelOffset.x;
-                quad.lpos[i].y += d_texelOffset.y;
-
-                //
-                // convert coordinates
-                //
-                quad.lpos[i].x /= (m_displayArea.getWidth() * 0.5f);
-                quad.lpos[i].y /= (m_displayArea.getHeight() * 0.5f);
-
-                quad.lpos[i].x -= 1.f;
-                quad.lpos[i].y -= 1.f;
-
-            }
+            quad.lpos[i].x -= 1.f;
+            quad.lpos[i].y -= 1.f;
 
         }
+
         return quad;
     }
 
@@ -481,20 +579,20 @@ namespace TGUI
                         /*
                         for(int qi=0;qi<6;qi++)
                         {
-                            buffmem->x = quad.lpos[qi].x;
-                            buffmem->y = quad.lpos[qi].y;
-                            buffmem->z = quad.lpos[qi].z;
-                            buffmem->diffuse = quad.lpos[qi].diffuse;
-                            buffmem->tu1 = quad.lpos[qi].tu1;
-                            buffmem->tv1 = quad.lpos[qi].tv1;
-                            ++buffmem;
+                        buffmem->x = quad.lpos[qi].x;
+                        buffmem->y = quad.lpos[qi].y;
+                        buffmem->z = quad.lpos[qi].z;
+                        buffmem->diffuse = quad.lpos[qi].diffuse;
+                        buffmem->tu1 = quad.lpos[qi].tu1;
+                        buffmem->tv1 = quad.lpos[qi].tv1;
+                        ++buffmem;
                         }
                         */
 
-                        
+
                         memcpy(buffmem,&quad.lpos[0],sizeof(TGQuadVertex)*6);
                         buffmem += 6;
-                        
+
                     }
 
                 }

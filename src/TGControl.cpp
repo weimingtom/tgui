@@ -795,6 +795,24 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                             d r a w T r i
+    //-----------------------------------------------------------------------
+    void TGControl::drawTri(int x1, int y1, int x2, int y2,int pointDir)
+    {
+        if(!m_isVisible)
+            return;
+
+        TGRect r(x1,y1,x2,y2);
+        TGRect ruv(0.f,0.f,1.f,1.f);
+        TGColourRect cr(gColor);
+
+        TGQuadInfo qi = m_renderer->addTri(r,0,TGSystem::getSingleton().getDefaultTexture(),
+            ruv,cr,pointDir);
+        m_systemCache.push_back(qi);
+        m_quadCache.push_back(qi);
+    }
+
+    //-----------------------------------------------------------------------
     //                            d r a w F r a m e
     //-----------------------------------------------------------------------
     void TGControl::drawFrame(int x1, int y1, int x2, int y2, FrameStyle s,int thickness)
