@@ -179,6 +179,19 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                              r e d r a w
+    //-----------------------------------------------------------------------
+    void TGScrollbox::redraw(bool value)
+    {
+        TGControl::redraw(value);
+
+        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
+        {
+            (*itr)->redraw(true);
+        }
+    }
+
+    //-----------------------------------------------------------------------
     //                            o n S c r o l l
     //-----------------------------------------------------------------------
     void TGScrollbox::onScroll(float hd, float vd)
