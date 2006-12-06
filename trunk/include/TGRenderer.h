@@ -123,16 +123,15 @@ namespace TGUI
 
         virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
         virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
+        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int pointDir);
+        void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
         virtual	void	doRender(TGQuadList& quadList);
 
-
-        virtual void	setQueueingEnabled(bool value)		{m_queueing = value;}
         virtual	TGTexture*	createTexture(void);
         virtual	TGTexture*	createTexture(const string& filename, const string& resourceGroup = "General");
         virtual	TGTexture*	createTexture(float size);
         virtual	void		destroyTexture(TGTexture* texture);
         virtual void		destroyAllTextures(void);
-
 
         virtual bool	isQueueingEnabled(void) const	{return m_queueing;}
         virtual float	getWidth(void) const		{return m_displayArea.getWidth();}
@@ -166,8 +165,6 @@ namespace TGUI
         void	initRenderStates(void);
 
         bool clipQuad(TGClipArea* clip, TGRect& drect, TGRect& tRect, TGColourRect colours);
-
-        void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
 
         uint32 colourToOgre(const TGColour& col) const;
 

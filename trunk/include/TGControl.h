@@ -197,6 +197,7 @@ namespace TGUI
         void drawRect(int x1, int y1, int x2, int y2,int thickness=1);
         void fillRect(int x1, int y1, int x2, int y2, TGTexture* tex=NULL);
         void drawLine(int x1, int y1, int x2, int y2,int thickness=1);
+        void drawTri(int x1, int y1, int x2, int y2, int pointDir);
         void drawFrame(int x1, int y1, int x2, int y2,
             FrameStyle s=FS_FLAT,int thickness=1);
         void drawString(int x, int y, string str, int length=-1);

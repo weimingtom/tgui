@@ -790,8 +790,6 @@ public:
 
     void createTest3()
     {
-
-
         
         TGWindow	*win = new TGWindow("A window");
         win->center();
@@ -801,6 +799,9 @@ public:
         TGCombobox* cb = new TGCombobox(win);
         cb->move(5,5);
         cb->resize(175,25);
+        cb->addItem("test item 1");
+        cb->addItem("test item 2");
+        cb->addItem("test item 3");
 
     }
 

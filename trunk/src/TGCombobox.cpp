@@ -33,6 +33,8 @@ namespace TGUI
         : TGInputbox(parent,x1,y1,x2,y2)
     {
         m_height=0;
+        m_listbox = new TGListbox(parent,0,0,5,5);
+        m_listbox->hide();
     }
 
     //-----------------------------------------------------------------------
@@ -50,7 +52,54 @@ namespace TGUI
         m_height = y2-y1;
         
         TGInputbox::setBounds(x1, y1, x2-m_height, y2);
+        m_listbox->setBounds(x1, y2, x2, y2 + m_height*5);
+    }
 
+    //-----------------------------------------------------------------------
+    //                       p o i n t I n C o n t r o l
+    //-----------------------------------------------------------------------
+    bool TGCombobox::pointInControl(float x, float y)
+    {
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+        x2 += m_height;
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+            return true;
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    //                            c h i l d A t
+    //-----------------------------------------------------------------------
+    TGControl* TGCombobox::childAt(float x, float y)
+    {
+        return this;
+    }
+
+    //-----------------------------------------------------------------------
+    //                            a d d I t e m
+    //-----------------------------------------------------------------------
+    void TGCombobox::addItem(string text)
+    {
+        m_listbox->addItem(text);
+    }
+
+    //-----------------------------------------------------------------------
+    //                        o n M o u s e D o w n
+    //-----------------------------------------------------------------------
+    void TGCombobox::onMouseDown(int x, int y, int b)
+    {
+        int x1,y1,x2,y2;
+        getBounds(x1, y1, x2, y2);
+        x1 = x2;
+        x2 += m_height;
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+        {
+            m_listbox->isVisible() ? m_listbox->hide() : m_listbox->show();
+            return;
+        }
+
+        TGInputbox::onMouseDown(x, y, b);
     }
 
     //-----------------------------------------------------------------------
@@ -71,7 +120,7 @@ namespace TGUI
 
         drawRect(x2, y1, x2 + m_height, y2);
 
-
+        drawTri(x2+2,y1+7, x2+m_height-3, y2-7,0);
     }
 
 }

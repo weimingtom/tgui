@@ -32,6 +32,7 @@ namespace TGUI
     {
     private:
         int             m_height;
+        TGListbox*      m_listbox;
 
     public:
 
@@ -41,7 +42,11 @@ namespace TGUI
         virtual void render();
         virtual string getControlType() {return "TGCombobox";};
         virtual void setBounds(int x1, int y1, int x2, int y2);
+        virtual TGControl *childAt(float x, float y);
+        virtual bool pointInControl(float x, float y);
 
+        virtual void addItem(string text);
+        virtual void onMouseDown(int x, int y, int b);
 
     };
 }
