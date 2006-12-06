@@ -66,7 +66,7 @@ namespace TGUI
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
-        if (box->active == this)
+        if (box->m_selectedItem == this)
         {
             color(m_theme.getCaptionColour());
             fillRect(x1, y1, x2, y2);
@@ -91,9 +91,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGListboxItem::focus()
     {
-        if (box->active != this)
+        if (box->m_selectedItem != this)
         {
-            box->active = this;
+            box->m_selectedItem = this;
             fireEvent(TGEvent::Selected,TGEventArgs(this));
             box->fireEvent(TGEvent::Modified,TGEventArgs(box));
         }
@@ -107,7 +107,7 @@ namespace TGUI
     TGListbox::TGListbox(TGControl *parent, int x1, int y1, int x2, int y2)
         : TGScrollbox(parent, x1, y1, x2, y2)
     {
-        active = NULL;
+        m_selectedItem = NULL;
     }
 
     //-----------------------------------------------------------------------
@@ -171,8 +171,8 @@ namespace TGUI
         if (!item)
             return;
         
-        if(item == active)
-            active = 0;
+        if(item == m_selectedItem)
+            m_selectedItem = 0;
         removeChild(item);
         delete item;
     }
@@ -190,10 +190,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGListbox::selectItem(TGListboxItem *item)
     {
-        if (!item || item == active)
+        if (!item || item == m_selectedItem)
             return;
-        active = item;
-        active->fireEvent(TGEvent::Selected,TGEventArgs(active));
+        m_selectedItem = item;
+        m_selectedItem->fireEvent(TGEvent::Selected,TGEventArgs(m_selectedItem));
         fireEvent(TGEvent::Modified,TGEventArgs(this));
     }
 
@@ -224,8 +224,8 @@ namespace TGUI
             y += lbi->itemHeight;
         }
 
-        if (!active)
-            active = (TGListboxItem*)getFirstChild();
+        if (!m_selectedItem)
+            m_selectedItem = (TGListboxItem*)getFirstChild();
 
         TGScrollbox::layout();
     }

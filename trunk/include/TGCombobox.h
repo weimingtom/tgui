@@ -34,6 +34,9 @@ namespace TGUI
         int             m_height;
         TGListbox*      m_listbox;
 
+    private:
+        bool itemSelected(const TGEventArgs& args);
+
     public:
 
         TGCombobox(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);

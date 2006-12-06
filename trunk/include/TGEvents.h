@@ -115,5 +115,7 @@ namespace TGUI
         TGFunctor* m_functor;
     };
 
+#define TGEVENT_HANDLER(memberfunc) new TGEventHandler(&memberfunc,this)
+
 }
 #endif

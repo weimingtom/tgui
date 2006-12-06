@@ -67,7 +67,7 @@ namespace TGUI
     bool TGFileBrowser::selectFileBrowserAction(const TGEventArgs& args)
     {
         TGFileBrowser	*browser = (TGFileBrowser*)args.m_control->m_parent;
-        browser->filename->setText(browser->files->active->getText());
+        browser->filename->setText(browser->files->getSelectedItem()->getText());
         return true;
     }
 

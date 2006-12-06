@@ -35,6 +35,8 @@ namespace TGUI
         m_height=0;
         m_listbox = new TGListbox(parent,0,0,5,5);
         m_listbox->hide();
+
+        m_listbox->addEventHandler(TGEvent::Modified,TGEVENT_HANDLER(TGCombobox::itemSelected));
     }
 
     //-----------------------------------------------------------------------
@@ -42,6 +44,19 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCombobox::~TGCombobox()
     {
+    }
+
+    //-----------------------------------------------------------------------
+    //                          i t e m S e l e c t e d
+    //-----------------------------------------------------------------------
+    bool TGCombobox::itemSelected(const TGEventArgs& args)
+    {
+        TGListboxItem* lbi = m_listbox->getSelectedItem();
+        if(!lbi)
+            return true;
+        setText(lbi->getText());
+        m_listbox->hide();
+        return true;
     }
 
     //-----------------------------------------------------------------------
