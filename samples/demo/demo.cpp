@@ -421,7 +421,7 @@ public:
     //----------------------------------------------------------------//
     bool mouseMoved( const OIS::MouseEvent &arg )
     {
-        TGUI::TGSystem::getSingleton().injectMouseMove( arg.state.relX,arg.state.relY);
+        TGUI::TGSystem::getSingleton().injectMouseMove( arg.state.X.rel,arg.state.Y.rel);
         return true;
     }
 
@@ -429,7 +429,7 @@ public:
     bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
     {
         OIS::MouseState ms = getMouseState();
-        TGUI::TGSystem::getSingleton().injectMouseButtonDown(arg.state.relX,arg.state.relY,id);
+        TGUI::TGSystem::getSingleton().injectMouseButtonDown(arg.state.X.rel,arg.state.Y.rel,id);
         return true;
     }
 
@@ -437,7 +437,7 @@ public:
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
     {
         OIS::MouseState ms = getMouseState();
-        TGUI::TGSystem::getSingleton().injectMouseButtonUp(arg.state.relX,arg.state.relY,id);
+        TGUI::TGSystem::getSingleton().injectMouseButtonUp(arg.state.X.rel,arg.state.Y.rel,id);
         return true;
     }
 
