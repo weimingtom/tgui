@@ -29,58 +29,34 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
-    TGCombobox::TGCombobox(TGControl *parent, int x1, int y1, int x2, int y2)
+    TGSpinner::TGSpinner(TGControl *parent, int x1, int y1, int x2, int y2)
         : TGInputbox(parent,x1,y1,x2,y2)
     {
         m_height=0;
-        m_listbox = new TGListbox(parent,0,0,5,5);
-
-        TGColourTheme ct = m_listbox->getColourTheme();
-        TGColour c = ct.getBase();
-        c.a = 1.f;
      
-        m_listbox->setColourTheme(TGColourTheme(c),true);
-        m_listbox->hide();
-        m_listbox->redraw();
-
-        m_listbox->addEventHandler(TGEvent::Modified,TGEVENT_HANDLER(TGCombobox::itemSelected));
     }
 
     //-----------------------------------------------------------------------
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
-    TGCombobox::~TGCombobox()
+    TGSpinner::~TGSpinner()
     {
-    }
-
-    //-----------------------------------------------------------------------
-    //                          i t e m S e l e c t e d
-    //-----------------------------------------------------------------------
-    bool TGCombobox::itemSelected(const TGEventArgs& args)
-    {
-        TGListboxItem* lbi = m_listbox->getSelectedItem();
-        if(!lbi)
-            return true;
-        setText(lbi->getText());
-        m_listbox->hide();
-        return true;
     }
 
     //-----------------------------------------------------------------------
     //                           s e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGCombobox::setBounds(int x1, int y1, int x2, int y2)
+    void TGSpinner::setBounds(int x1, int y1, int x2, int y2)
     {
         m_height = y2-y1;
         
         TGInputbox::setBounds(x1, y1, x2-m_height, y2);
-        m_listbox->setBounds(x1, y2, x2, y2 + m_height*5);
     }
 
     //-----------------------------------------------------------------------
     //                       p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGCombobox::pointInControl(float x, float y)
+    bool TGSpinner::pointInControl(float x, float y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
@@ -93,23 +69,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl* TGCombobox::childAt(float x, float y)
+    TGControl* TGSpinner::childAt(float x, float y)
     {
         return this;
     }
 
     //-----------------------------------------------------------------------
-    //                            a d d I t e m
-    //-----------------------------------------------------------------------
-    void TGCombobox::addItem(string text)
-    {
-        m_listbox->addItem(text);
-    }
-
-    //-----------------------------------------------------------------------
     //                        o n M o u s e D o w n
     //-----------------------------------------------------------------------
-    void TGCombobox::onMouseDown(int x, int y, int b)
+    void TGSpinner::onMouseDown(int x, int y, int b)
     {
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
@@ -117,15 +85,6 @@ namespace TGUI
         x2 += m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
         {
-            if(m_listbox->isVisible())
-                m_listbox->hide();
-            else 
-            {
-                m_listbox->show();
-                m_listbox->focus();
-                m_listbox->mouseOverControl = true;
-                mouseOverControl = true;
-            }
             return;
         }
 
@@ -135,20 +94,18 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      s e t C o l o u r T h e m e
     //-----------------------------------------------------------------------
-    void TGCombobox::setColourTheme(TGColourTheme theme,bool updateChildren)
+    void TGSpinner::setColourTheme(TGColourTheme theme,bool updateChildren)
     {
         TGControl::setColourTheme(theme,updateChildren);
 
         TGColour c = theme.getBase();
         c.a = 1.f;
-        m_listbox->setColourTheme(TGColourTheme(c),true);
-        m_listbox->redraw();
     }
 
     //-----------------------------------------------------------------------
     //                             r e n d e r
     //-----------------------------------------------------------------------
-    void TGCombobox::render()
+    void TGSpinner::render()
     {
         if(isRenderCached())
             return;
@@ -156,7 +113,7 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGInputbox::render();
-        if (mouseOverControl  || hasKeyboardFocus(this) || m_listbox->isVisible())
+        if (mouseOverControl  || hasKeyboardFocus(this))
             color(m_theme.getFrameFocusedColour());
         else
             color(m_theme.getFrameColour());

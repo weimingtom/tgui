@@ -825,7 +825,7 @@ public:
         cb->addItem("test item 9");
         cb->addItem("test item 10");
 
-        new TGLabel(win,"A Test Label",5,35);
+        new TGLabel(win,"A Test Label 123456789",5,35);
 
     }
 

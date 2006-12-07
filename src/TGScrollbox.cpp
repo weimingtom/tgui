@@ -90,6 +90,11 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
+        TGColour c = m_theme.getBase();
+        c.a = 1.f;
+        color(c);
+        fillRect(x1,y1,x2,y2);
+
         if(mouseOverControl)
             color(m_theme.getFrameFocusedColour());
         else color(m_theme.getFrameColour());

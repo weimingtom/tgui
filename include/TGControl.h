@@ -55,6 +55,7 @@ namespace TGUI
         TGQuadList          m_quadCache;
         TGQuadList&         m_systemCache;
         TGRenderer*         m_renderer;
+        TGTexture*          m_texture;
 
         TGColour            gColor;
 
@@ -141,6 +142,9 @@ namespace TGUI
         virtual bool isRenderCached();
         virtual void render();
         virtual void redraw(bool value=true);
+
+        virtual void setTexture(TGTexture* value) {m_texture = value;};
+        virtual TGTexture* getTexture() {return m_texture;};
 
         //
         // integer values = pixels

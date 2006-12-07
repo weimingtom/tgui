@@ -339,6 +339,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGSpinner.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGSpinner.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGSystem.cpp"
 				>
 			</File>

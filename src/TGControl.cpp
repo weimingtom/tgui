@@ -42,6 +42,7 @@ namespace TGUI
         m_parent = parent;
         m_redraw = false;
         m_popupMenu = NULL;
+        m_texture = TGSystem::getSingleton().getDefaultTexture();
         exclusiveChild = NULL;
         if (m_parent)
         {
@@ -767,7 +768,7 @@ namespace TGUI
         if(!m_isVisible)
             return;
         if(!tex)
-            tex = TGSystem::getSingleton().getDefaultTexture();
+            tex = m_texture;
         TGRect r(x1,y1,x2,y2);
         TGColourRect cr(gColor);
         TGRect ruv(0.f,0.f,1.f,1.f);
