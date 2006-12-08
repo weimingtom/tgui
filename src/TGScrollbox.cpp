@@ -95,7 +95,7 @@ namespace TGUI
         color(c);
         fillRect(x1,y1,x2,y2);
 
-        if(mouseOverControl)
+        if(focused())
             color(m_theme.getFrameFocusedColour());
         else color(m_theme.getFrameColour());
         drawRect(x1,y1,x2,y2);        
@@ -104,11 +104,10 @@ namespace TGUI
 
         int	x = x1, y = y1 + 1;
 
-        if(mouseOverControl)
+        if(focused())
             color(m_theme.getFrameFocusedColour());
         else color(m_theme.getFrameColour());
 
-        color(m_theme.getBase());
         if (clientHeight > 0.0f)
         {
             if (vScroll != 0.0f)

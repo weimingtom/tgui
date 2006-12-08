@@ -113,6 +113,15 @@ namespace TGUI
     {
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
+
+        if ((x >= x1 && y >= y1 && x <= (x2-m_height) && y <= y2))
+        {
+            if(m_listbox->isVisible())
+                m_listbox->hide();
+            TGInputbox::onMouseDown(x, y, b);
+            return;
+        }
+
         x1 = x2;
         x2 += m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
@@ -129,8 +138,63 @@ namespace TGUI
             return;
         }
 
-        TGInputbox::onMouseDown(x, y, b);
+    TGInputbox::onMouseDown(x, y, b);
     }
+
+    //-----------------------------------------------------------------------
+    //                            o n F o c u s E x i t
+    //-----------------------------------------------------------------------
+    void TGCombobox::onFocusExit()
+    {
+
+        TGInputbox::onFocusExit();
+        if(m_listbox->isVisible())
+            m_listbox->hide();
+
+    }
+
+    //-----------------------------------------------------------------------
+    //                               f o c u s
+    //-----------------------------------------------------------------------
+    void TGCombobox::focus()
+    {
+        if (!m_parent)
+            return;
+
+        TGInputbox::focus();
+
+        m_parent->focus();
+
+        if (m_parent->getLastChild() == this)
+            return;
+
+        TGControl *oldFocus = m_parent->getLastChild()->getFocusedChild();
+
+        m_parent->setFocusedChild(this);
+
+        if(oldFocus)
+        {
+            if(oldFocus->m_parent)
+                oldFocus->m_parent->redraw();
+            oldFocus->onFocusExit();
+        }
+        onFocusEnter(oldFocus);
+    }
+
+    //-----------------------------------------------------------------------
+    //                              f o c u s e d
+    //-----------------------------------------------------------------------
+    bool TGCombobox::focused()
+    {
+        if (!m_parent)
+            return true;
+        TGControl* c = m_parent->getFocusedChild();
+        if(c == this || c == m_listbox)
+            return true;
+        else return false;
+    }
+
+
 
     //-----------------------------------------------------------------------
     //                      s e t C o l o u r T h e m e
