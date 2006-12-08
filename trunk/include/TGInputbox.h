@@ -57,7 +57,7 @@ namespace TGUI
 
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);
-        virtual void onFocusEnter();
+        virtual void onFocusEnter(TGControl* oldFocus);
         virtual void onFocusExit();
 
     };

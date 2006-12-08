@@ -195,8 +195,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       o n F o c u s E n t e r
     //-----------------------------------------------------------------------
-    void TGInputbox::onFocusEnter()
+    void TGInputbox::onFocusEnter(TGControl* oldFocus)
     {
+        TGControl::onFocusEnter(oldFocus);
         m_cursorVisible = true;
         m_pulseTime = 0.f;
     }
