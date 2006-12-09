@@ -201,6 +201,29 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                       p o i n t I n C o n t r o l
+    //-----------------------------------------------------------------------
+    bool TGScrollbox::pointInControl(float x, float y)
+    {
+
+        return TGControl::pointInControl(x,y);
+    }
+
+    //-----------------------------------------------------------------------
+    //                           c h i l d A t
+    //-----------------------------------------------------------------------
+    TGControl* TGScrollbox::childAt(float x, float y)
+    {
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+
+        if( (x >= x1) && (y >= y1) && (x < (x2-12)) && (y < (y2-12)) )
+            return TGControl::childAt(x,y);
+
+        return this;
+    }
+
+    //-----------------------------------------------------------------------
     //                            o n S c r o l l
     //-----------------------------------------------------------------------
     void TGScrollbox::onScroll(float hd, float vd)

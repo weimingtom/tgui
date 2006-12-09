@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    struct TGScrollbox : public TGControl
+    class TGScrollbox : public TGControl
     {
         float   clientWidth;
         float   clientHeight;
@@ -38,6 +38,7 @@ namespace TGUI
         float   vScroll;
         int	scrolling;      // 0=no, 1=vertical, 2=horizontal
 
+    public:
         TGScrollbox(TGControl *parent, int x1, int y1, int x2, int y2);
         virtual ~TGScrollbox();
 
@@ -50,6 +51,9 @@ namespace TGUI
 
         virtual void place(int x1, int y1, int x2, int y2);
         virtual void layout();
+
+        virtual bool pointInControl(float x, float y);
+        virtual TGControl *childAt(float x, float y);
 
         virtual void onScroll(float hd, float vd);
 

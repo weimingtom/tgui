@@ -71,7 +71,7 @@ namespace TGUI
             y = maxHeight;
        
 
-        TGImage::move(x,y);
+        TGImage::moveRel(x,y);
     }
 
    //-----------------------------------------------------------------------

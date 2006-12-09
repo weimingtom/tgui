@@ -170,8 +170,8 @@ namespace TGUI
         virtual void getHeight(int &height);
         virtual void getHeight(float &height);
 
-        virtual void move(int x, int y);
-        virtual void move(float x, float y);
+        virtual void moveRel(int x, int y);
+        virtual void moveRel(float x, float y);
 
         virtual void resize(int width, int height);
         virtual void center(bool horizontal=true, bool vertical=true);

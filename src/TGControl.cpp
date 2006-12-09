@@ -372,7 +372,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::setPos(int x1, int y1)
     {
-        move(x1,y1);
+        moveRel(x1,y1);
     }
 
     //-----------------------------------------------------------------------
@@ -380,7 +380,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::setPos(float x1, float y1)
     {
-        move(x1,y1);
+        moveRel(x1,y1);
 
     }
 
@@ -403,7 +403,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              m o v e
     //-----------------------------------------------------------------------
-    void TGControl::move(int x, int y)
+    void TGControl::moveRel(int x, int y)
     {
         int	dx = x2 - x1, dy = y2 - y1;
         setBounds(x, y, x + dx, y + dy);
@@ -412,7 +412,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              m o v e
     //-----------------------------------------------------------------------
-    void TGControl::move(float x, float y)
+    void TGControl::moveRel(float x, float y)
     {
         float sw,sh;
 
@@ -433,7 +433,7 @@ namespace TGUI
 
         int nx1 = sw * x;
         int ny1 = sh * y;
-        move(nx1,ny1);
+        moveRel(nx1,ny1);
     }
 
     //-----------------------------------------------------------------------
@@ -457,9 +457,9 @@ namespace TGUI
         getClientSize(w, h);
 
         if (horizontal)
-            move(pw/2 - w/2, y1);
+            moveRel(pw/2 - w/2, y1);
         if (vertical)
-            move(x1, ph/2 - h/2);
+            moveRel(x1, ph/2 - h/2);
     }
 
     //-----------------------------------------------------------------------

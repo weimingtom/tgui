@@ -55,7 +55,7 @@ void newWindowAction(TGControl *sender)
 {
 TGWindow	*w = new TGWindow("A simple window");
 w->place(10, 10, 300, 100);
-w->move(rand()%600+30, rand()%500+30);
+w->moveRel(rand()%600+30, rand()%500+30);
 
 TGButton	*button = new TGButton(w, 10, 20, 280, 55, "Close me");
 button->clicked = new TGCallbackAction(closeWindowAction);
@@ -241,7 +241,7 @@ pbar2->setMax(61);
 
 TGWindow	*win3 = new TGWindow("A window");
 win3->center();
-win3->move(win3->x1 - 200, win3->y1 - 70);
+win3->moveRel(win3->x1 - 200, win3->y1 - 70);
 win3->resize(190, 400);
 
 new TGLabel(win3, 5, 25, "Object resolution:");
@@ -270,7 +270,7 @@ new TGLabel(sbox, 10, 120, "Clipped label");
 /*
 TGWindow	*win4 = new TGWindow("TGModelView control");
 win4->center();
-win4->move(win4->x1, win4->y1 + 160);
+win4->moveRel(win4->x1, win4->y1 + 160);
 
 TGModelView	*mview = new TGModelView(win4, 10, 10, 175, 110);
 mview->renderView = new TGCallbackAction(renderObjectAction);
@@ -278,7 +278,7 @@ mview->renderView = new TGCallbackAction(renderObjectAction);
 
 TGWindow	*win5 = new TGWindow("TGImage control");
 win5->center();
-win5->move(win5->x1, win5->y1 - 160);
+win5->moveRel(win5->x1, win5->y1 - 160);
 TGImage	*cenda = new TGImage(win5, 0, 0, "demo/cenda.bmp");
 cenda->center();
 cenda->setName("cenda");
@@ -640,7 +640,7 @@ public:
 
         TGWindow	*win2 = new TGWindow("Another fluffy window");
         win2->center();
-        win2->move(win2->x1 + 200, win2->y1 - 70);
+        win2->moveRel(win2->x1 + 200, win2->y1 - 70);
         win2->resize(win2->x2-win2->x1+1, win2->y2-win2->y1+270);
 
         TGProgressBar	*pbar2 = new TGProgressBar(win2, 10, 360, 175, 387);
@@ -701,7 +701,7 @@ public:
 
         TGWindow	*win3 = new TGWindow("A window");
         win3->center();
-        win3->move(win3->x1 - 200, win3->y1 - 70);
+        win3->moveRel(win3->x1 - 200, win3->y1 - 70);
         win3->resize(190, 400);
 
         new TGLabel(win3,"Object resolution", 5, 25);
@@ -722,7 +722,7 @@ public:
 
         new TGLabel(win3,"Test Combobox", 5, 185);
         TGCombobox* cb = new TGCombobox(win3);
-        cb->move(5,205);
+        cb->moveRel(5,205);
         cb->resize(175,25);
         cb->addItem("test item 1");
         cb->addItem("test item 2");
@@ -735,12 +735,13 @@ public:
         cb->addItem("test item 9");
         cb->addItem("test item 10");
 
+        
         TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
         new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
         new TGLabel(sbox,"Clipped label", 10, 120);
-
+        
 
 
         screen1 = TGSystem::getSingleton().getActiveScreen();
@@ -766,7 +767,7 @@ public:
         //win5->setColourTheme(ct);
 
         win5->center();
-        win5->move(win5->x1, win5->y1 - 160);
+        win5->moveRel(win5->x1, win5->y1 - 160);
         TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
         cenda->center();
         cenda->setName("cenda");
@@ -808,11 +809,11 @@ public:
         
         TGWindow	*win = new TGWindow("A window");
         win->center();
-        win->move(win->x1, win->y1-100);
+        win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
 
         TGCombobox* cb = new TGCombobox(win);
-        cb->move(5,5);
+        cb->moveRel(5,5);
         cb->resize(175,25);
         cb->addItem("test item 1");
         cb->addItem("test item 2");
