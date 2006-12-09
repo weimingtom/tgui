@@ -32,7 +32,7 @@ namespace TGUI
     TGLabel::TGLabel(TGControl *parent,string text, int x, int y)
         : TGControl(parent)
     {
-        move(x, y);
+        setPos(x, y);
         resize(stringWidth(text), stringHeight());
         m_text = text;
     }

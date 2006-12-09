@@ -41,7 +41,7 @@ namespace TGUI
         TGButton	*b = new TGButton(this, 0, 0, 100, 25, "Ok");
         resize((l->x2 - l->x1) + 40, 80);
         l->center();
-        b->move(0, l->y2 + 15);
+        b->moveRel(0, l->y2 + 15);
         b->center(true, false);
         resize(x2 - x1 + 1, y2 - y1 + 16 + b->y2 - b->y1);
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGMessagebox::closeMessageBox,this));

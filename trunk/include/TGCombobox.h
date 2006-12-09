@@ -28,10 +28,11 @@
 namespace TGUI
 {
 
-    class TGCombobox : public TGInputbox
+    class TGCombobox : public TGControl
     {
     private:
         int             m_height;
+        TGInputbox*     m_inputbox;
         TGListbox*      m_listbox;
 
     private:
@@ -55,6 +56,7 @@ namespace TGUI
 
         virtual void addItem(string text);
         virtual void onMouseDown(int x, int y, int b);
+        virtual void onMouseMoved(int x, int y);
 
     };
 }

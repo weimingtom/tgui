@@ -226,7 +226,7 @@ namespace TGUI
     void TGWindow::onMouseMoved(int x, int y)
     {
         if (moving)
-            move(x-mX, y-mY);
+            moveRel(x-mX, y-mY);
         if (resizing)
         {
             resize((x2-x1+1)+x-mX, (y2-y1+1)+y-mY);

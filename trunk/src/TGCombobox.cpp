@@ -30,10 +30,11 @@ namespace TGUI
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
     TGCombobox::TGCombobox(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGInputbox(parent,x1,y1,x2,y2)
+        : TGControl(parent)
     {
         m_height=0;
-        m_listbox = new TGListbox(parent,0,0,5,5);
+        m_listbox = new TGListbox(this,0,0,5,5);
+        m_inputbox = new TGInputbox(this,0,0,5,5);
 
         TGColourTheme ct = m_listbox->getColourTheme();
         TGColour c = ct.getBase();
@@ -61,7 +62,7 @@ namespace TGUI
         TGListboxItem* lbi = m_listbox->getSelectedItem();
         if(!lbi)
             return true;
-        setText(lbi->getText());
+        m_inputbox->setText(lbi->getText());
         m_listbox->hide();
         return true;
     }
@@ -72,9 +73,11 @@ namespace TGUI
     void TGCombobox::setBounds(int x1, int y1, int x2, int y2)
     {
         m_height = y2-y1;
-        
-        TGInputbox::setBounds(x1, y1, x2-m_height, y2);
-        m_listbox->setBounds(x1, y2, x2, y2 + m_height*5);
+
+        TGControl::setBounds(x1,y1,x2,y2 + m_height*5);
+
+        m_inputbox->setBounds(0,0,x2-x1-m_height,m_height);
+        m_listbox->setBounds(0,m_height,x2-x1,m_height + m_height*5);
     }
 
     //-----------------------------------------------------------------------
@@ -83,8 +86,12 @@ namespace TGUI
     bool TGCombobox::pointInControl(float x, float y)
     {
         int	x1, y1, x2, y2;
+        if(m_listbox->isVisible())
+            return TGControl::pointInControl(x,y);
+
+
         getBounds(x1, y1, x2, y2);
-        x2 += m_height;
+        y2 = y1 + m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
             return true;
         return false;
@@ -95,6 +102,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGControl* TGCombobox::childAt(float x, float y)
     {
+        //return TGControl::childAt(x,y);
+
+        if(m_listbox->isVisible() && m_listbox->pointInControl(x,y))
+            return m_listbox->childAt(x,y);
         return this;
     }
 
@@ -114,17 +125,16 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
 
-        if ((x >= x1 && y >= y1 && x <= (x2-m_height) && y <= y2))
+        if (m_inputbox->pointInControl(x,y))
         {
             if(m_listbox->isVisible())
                 m_listbox->hide();
-            TGInputbox::onMouseDown(x, y, b);
+            m_inputbox->onMouseDown(x, y, b);
             return;
         }
 
-        x1 = x2;
-        x2 += m_height;
-        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+        x1 = x2-m_height;
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y1+m_height))
         {
             if(m_listbox->isVisible())
                 m_listbox->hide();
@@ -132,14 +142,29 @@ namespace TGUI
             {
                 m_listbox->show();
                 m_listbox->focus();
-                m_listbox->mouseOverControl = true;
                 mouseOverControl = true;
             }
             return;
         }
+        else m_listbox->onMouseDown(x,y,b);
 
-    TGInputbox::onMouseDown(x, y, b);
     }
+
+    void TGCombobox::onMouseMoved(int x, int y)
+    {
+        if(m_listbox->isVisible())
+            if(m_listbox->pointInControl(x,y))
+            {
+                m_listbox->mouseOverControl = true;
+                m_listbox->onMouseMoved(x,y);
+                return;
+            }
+
+
+            TGControl::onMouseMoved(x,y);
+    }
+
+
 
     //-----------------------------------------------------------------------
     //                            o n F o c u s E x i t
@@ -147,7 +172,11 @@ namespace TGUI
     void TGCombobox::onFocusExit()
     {
 
-        TGInputbox::onFocusExit();
+//        if(mouseOverControl)
+        if(mouseOverControl || m_listbox->mouseOverControl)
+            return;
+
+        m_inputbox->onFocusExit();
         if(m_listbox->isVisible())
             m_listbox->hide();
 
@@ -158,12 +187,16 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGCombobox::focus()
     {
-        if (!m_parent)
-            return;
+        TGControl::focus();
 
-        TGInputbox::focus();
+        //if (!m_parent)
+           // return;
 
-        m_parent->focus();
+        //m_inputbox->focus();
+
+        //m_parent->focus();
+
+        /*
 
         if (m_parent->getLastChild() == this)
             return;
@@ -179,6 +212,7 @@ namespace TGUI
             oldFocus->onFocusExit();
         }
         onFocusEnter(oldFocus);
+        */
     }
 
     //-----------------------------------------------------------------------
@@ -217,17 +251,19 @@ namespace TGUI
         if(isRenderCached())
             return;
 
+        m_inputbox->render();
+        m_listbox->render();
+
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
-        TGInputbox::render();
         if (mouseOverControl  || hasKeyboardFocus(this) || m_listbox->isVisible())
             color(m_theme.getFrameFocusedColour());
         else
             color(m_theme.getFrameColour());
 
-        drawRect(x2, y1, x2 + m_height, y2);
+        drawRect(x2-m_height, y1, x2, y1+m_height);
 
-        drawTri(x2+2,y1+7, x2+m_height-3, y2-7,0);
+        drawTri(x2-m_height+2,y1+7, x2-3, y1+m_height-7,0);
 
         /*
         if(m_listbox->isVisible())

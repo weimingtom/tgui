@@ -302,7 +302,7 @@ namespace TGUI
         menu->calcSize();
         menu->layout();
         TGSystem::getSingleton().getActiveScreen()->addChild(menu);
-        menu->move(x, y);
+        menu->moveRel(x, y);
         menu->focus();
     }
 
