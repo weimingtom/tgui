@@ -57,6 +57,8 @@ namespace TGUI
         virtual void addItem(string text);
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseMoved(int x, int y);
+        virtual void onMouseEnter();
+        virtual void onMouseExit();
 
     };
 }

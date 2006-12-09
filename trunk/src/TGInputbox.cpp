@@ -89,7 +89,7 @@ namespace TGUI
 
         openClip();
 
-        if(hasKeyboardFocus(this))
+        if(hasKeyboardFocus(this) || mouseOverControl)
             color(m_theme.getTextFocusedColour());
         else color(m_theme.getTextColour());
         drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
