@@ -22,7 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#include "demo.h"
+#include "obsdemo.h"
 #include <ExampleApplication.h>
 #include <ExampleFrameListener.h>
 #include <math.h>
@@ -39,343 +39,6 @@ TGWindow	*win;
 TGScreen	*screen1, *screen2;
 TGLabel	*fps;
 
-
-/*
-void terminateAppAction(TGControl *sender)
-{
-running = false;
-}
-
-void closeWindowAction(TGControl *sender)
-{
-delete sender->m_parent;
-}
-
-void newWindowAction(TGControl *sender)
-{
-TGWindow	*w = new TGWindow("A simple window");
-w->place(10, 10, 300, 100);
-w->moveRel(rand()%600+30, rand()%500+30);
-
-TGButton	*button = new TGButton(w, 10, 20, 280, 55, "Close me");
-button->clicked = new TGCallbackAction(closeWindowAction);
-}
-
-
-void addTheAboveTextAction(TGControl *sender)
-{
-TGListbox *lbox = (TGListbox*)screen->findChild("listbox");
-lbox->addItem(((TGInputbox*)screen->findChild("inputbox"))->getText());
-((TGInputbox*)screen->findChild("inputbox"))->setText("");
-screen->findChild("inputbox")->focus();
-}
-
-void createDynamicSubmenuAction(TGControl *sender)
-{
-TGMenuItem        *sub = (TGMenuItem*)sender;
-TGListbox         *lbox = (TGListbox*)screen1->findChild("listbox");
-sub->clear();
-for (TGListboxItem *item = (TGListboxItem*)lbox->firstChild;item;
-item = (TGListboxItem*)item->next)
-sub->addItem(item->text, NULL);
-}
-
-void activateScreen1(TGControl *sender)
-{
-screen1->activate();
-}
-
-void activateScreen2(TGControl *sender)
-{
-screen2->activate();
-}
-
-void renderObject()
-{
-/*
-glDisable(GL_CULL_FACE);
-glBegin(GL_TRIANGLES);
-float	a = 0.0f, step;
-step = (360.0f/(float)steps)*3.14f/180.0f;
-for (int i=0;i<steps;i++,a+=step)
-{
-glColor3f(i/(float)steps, i/((float)steps+1.0f),
-i/((float)steps+2.0f));
-glVertex3f(0.0f, size, 0.0f);
-glVertex3f(sinf(a)*size, 0.0f, cosf(a)*size);
-glVertex3f(sinf(a+step)*size, 0.0f, cosf(a+step)*size);
-}
-a = 0.0f;
-for (int i=0;i<steps;i++,a+=step)
-{
-glColor3f(i/(float)steps, i/((float)steps+1.0f),
-i/((float)steps+2.0f));
-glVertex3f(0.0f, -size, 0.0f);
-glVertex3f(sinf(a)*size, 0.0f, cosf(a)*size);
-glVertex3f(sinf(a+step)*size, 0.0f, cosf(a+step)*size);
-}
-glEnd();
-glEnable(GL_CULL_FACE);
-
-}
-
-
-void renderObjectAction(TGControl *sender)
-{
-/*
-glTranslatef(0.0f, 0.0f, -5.0f);
-glRotatef(rotation, 0.0f, 1.0f, 0.0f);
-
-renderObject();
-
-}
-
-void fileSelectedAction(TGControl *sender)
-{
-string fname = ((TGFileBrowser*)sender)->getFilename();
-printf("File selected: %s\n", fname.c_str());
-}
-
-void selectFileAction(TGControl *sender)
-{
-TGFileBrowser	*browser = new TGFileBrowser("Select File");
-browser->selected = new TGCallbackAction(fileSelectedAction);
-}
-
-void aboutBoxAction(TGControl *sender)
-{
-messageBox("BSGUI (Bad Sector's OpenGL GUI) version 0.2 Demo", "About");
-}
-
-void imageWinResizedAction(TGControl *sender)
-{
-TGImage	*img = (TGImage*)sender->firstChild;
-int	w, h;
-sender->getClientSize(w, h);
-img->minWidth = 10;
-img->minHeight = 10;
-img->place(img->x1, img->y1, w-img->x1 - 1, h-img->y1 - 1);
-}
-
-void enableFiltering(TGControl *sender)
-{
-TGImage	*img = (TGImage*)screen->findChild("cenda");
-//	img->bitmap->setFiltering(true);
-}
-
-void disableFiltering(TGControl *sender)
-{
-TGImage	*img = (TGImage*)screen->findChild("cenda");
-//	img->bitmap->setFiltering(false);
-}
-
-void cendaClicked(TGControl *sender)
-{
-messageBox("Hello, i am Cenda :-)");
-}
-
-void render()
-{
-//renderOffscreenBSGUIControls();
-
-/*
-glClearColor((146.0f/255.0f)*backgnd, (139.0f/255.0f)*backgnd,
-(125.0f/255.0f)*backgnd, 1.0f);
-glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-glLoadIdentity();
-
-glTranslatef(0.0f, 0.0f, -5.0f);
-glRotatef(rotation, 1.0f, 0.0f, 0.0f);
-glRotatef(rotation/0.6f, 0.0f, 1.0f, 0.0f);
-
-renderObject();
-
-renderBSGUI();
-
-SDL_GL_SwapBuffers();
-
-
-progress += 0.008;
-}
-
-void initOpenGL()
-{
-/*
-SDL_Init(SDL_INIT_VIDEO);
-SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-SDL_SetVideoMode(800, 600, 32, SDL_OPENGL);
-SDL_WM_SetCaption("Bad Sector's OpenGL GUI Demo", "demo");
-SDL_ShowCursor(false);
-
-SDL_EnableUNICODE(true);
-SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
-SDL_DEFAULT_REPEAT_INTERVAL);
-
-glShadeModel(GL_SMOOTH);
-glEnable(GL_CULL_FACE);
-glEnable(GL_DEPTH_TEST);
-glClearColor(0, 0, 0, 0);
-glViewport(0, 0, 800, 600);
-glMatrixMode(GL_PROJECTION);
-gluPerspective(60.0f, 800.0f/600.0f, 1.0f, 1024.0f);
-glMatrixMode(GL_MODELVIEW);
-
-}
-
-void createUI()
-{
-//TGUI::loadFontData("demo/fontdata.bmp", "demo/fontsize.dat");
-//TGUI::loadCursorImage("demo/cursor.bmp", "demo/cursorAlpha.bmp");
-
-TGWindow* win2;
-
-TGProgressBar	*pbar = new TGProgressBar(win2, 10, 330, 175, 355);
-pbar->value.setDataSource(&progress);
-TGProgressBar	*pbar2 = new TGProgressBar(win2, 10, 360, 175, 385);
-pbar2->setName("pbar2");
-pbar2->setMax(61);
-
-TGWindow	*win3 = new TGWindow("A window");
-win3->center();
-win3->moveRel(win3->x1 - 200, win3->y1 - 70);
-win3->resize(190, 400);
-
-new TGLabel(win3, 5, 25, "Object resolution:");
-stepCount = new TGSlider(win3, 10, 50, 180, 65);
-stepCount->setMax(61);
-stepCount->setValue(3);
-stepCount->modified = new TGCallbackAction(stepsModifiedAction);
-
-new TGLabel(win3, 5, 80, "Object size:");
-sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
-sizeSlider->setMax(5);
-sizeSlider->value.setDataSource(&size);
-
-new TGLabel(win3, 5, 175, "Background intensity:");
-backSlider = new TGSlider(win3, 10, 200, 180, 215);
-backSlider->setMax(1.0f);
-backSlider->value.setDataSource(&backgnd);
-
-TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
-new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
-new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
-new TGCheckbox(sbox, 10, 80, 200, 100, "Clipped checkbox");
-new TGLabel(sbox, 10, 120, "Clipped label");
-
-
-/*
-TGWindow	*win4 = new TGWindow("TGModelView control");
-win4->center();
-win4->moveRel(win4->x1, win4->y1 + 160);
-
-TGModelView	*mview = new TGModelView(win4, 10, 10, 175, 110);
-mview->renderView = new TGCallbackAction(renderObjectAction);
-
-
-TGWindow	*win5 = new TGWindow("TGImage control");
-win5->center();
-win5->moveRel(win5->x1, win5->y1 - 160);
-TGImage	*cenda = new TGImage(win5, 0, 0, "demo/cenda.bmp");
-cenda->center();
-cenda->setName("cenda");
-cenda->clicked = new TGCallbackAction(cendaClicked);
-TGPopupMenu	*cendaMenu = new TGPopupMenu;
-cendaMenu->addItem("No filtering", new TGCallbackAction(disableFiltering));
-cendaMenu->addItem("Bilinear filtering",
-new TGCallbackAction(enableFiltering));
-cenda->popupMenu = cendaMenu;
-win5->resizeable = true;
-win5->resized = new TGCallbackAction(imageWinResizedAction);
-//win5->icon = new TGBitmap(INTERNALBMP_WINICON);
-win5->menu = new TGPopupMenu;
-win5->menu->addItem("No filtering",
-new TGCallbackAction(disableFiltering));
-win5->menu->addItem("Bilinear filtering",
-new TGCallbackAction(enableFiltering));
-
-(new TGButton(screen, 750, 5, 795, 30, "Quit"))->clicked =
-new TGCallbackAction(terminateAppAction);
-
-
-TGPopupMenu       *mainMenu = new TGPopupMenu;
-mainMenu->addItem("Select file...",
-new TGCallbackAction(selectFileAction), NULL);
-//new TGBitmap(INTERNALBMP_OPEN));
-TGMenuItem	*sub = mainMenu->addItem("Submenu test", NULL);
-sub->addItem("Sub menu item 1", NULL);
-sub->addItem("Sub menu item 2", NULL);
-sub->addItem("Sub menu item 3", NULL);
-sub->addItem("-", NULL);
-sub->addItem("Sub sub menu", NULL)->addItem("Hello!", NULL);
-sub->addItem("Dynamic submenu", NULL)->popup =
-new TGCallbackAction(createDynamicSubmenuAction);
-mainMenu->addItem("About...", new TGCallbackAction(aboutBoxAction));
-mainMenu->addItem("-", NULL);
-mainMenu->addItem("Quit", new TGCallbackAction(terminateAppAction),NULL);
-//	new TGBitmap(INTERNALBMP_QUIT));
-
-screen1 = screen;
-screen2 = new TGScreen();
-TGWindow	*nwin = new TGWindow(screen2, "A window in screen 2");
-nwin->center();
-
-screen1->popupMenu = screen2->popupMenu = mainMenu;
-
-
-(new TGButton(screen, 5, 5, 105, 30, "TGScreen 1"))->clicked =
-new TGCallbackAction(activateScreen1);
-(new TGButton(screen, 110, 5, 210, 30, "TGScreen 2"))->clicked =
-new TGCallbackAction(activateScreen2);
-(new TGButton(screen2, 5, 5, 105, 30, "TGScreen 1"))->clicked =
-new TGCallbackAction(activateScreen1);
-(new TGButton(screen2, 110, 5, 210, 30, "TGScreen 2"))->clicked =
-new TGCallbackAction(activateScreen2);
-
-fps = new TGLabel(screen1, 5, 40, "?? fps");
-}
-
-void runMe()
-{
-//TGEvent	event;
-/*
-uint		last = SDL_GetTicks();
-float		frames = 0, tenths = 0;
-
-while (running)
-{
-frames++;
-if (SDL_GetTicks() - last > 10)
-{
-char	buff[128];
-rotation += 1;
-last = SDL_GetTicks();
-tenths++;
-float seconds = tenths/100.0f;
-sprintf(buff, "%i fps for %i seconds and %i frames",
-(int)(frames/seconds), (int)seconds,
-(int)frames);
-fps->setText(buff);
-}
-tickBSGUI();
-while (SDL_PollEvent(&event))
-{
-if (!handleSDLEvent(&event))
-switch (event.type)
-{
-case SDL_QUIT:
-running = false;
-break;
-}
-}
-render();
-}
-
-}
-*/
 
 
 void enableFiltering(TGControl *sender)
@@ -486,6 +149,25 @@ public:
         delete mGUISystem;
     }
 
+    /** Configures the application - returns false if the user chooses to abandon configuration. */
+    virtual bool configure(void)
+    {
+        // Show the configuration dialog and initialise the system
+        // You can skip this and use root.restoreConfig() to load configuration
+        // settings if you were sure there are valid ones saved in ogre.cfg
+        if(mRoot->showConfigDialog())
+        {
+            // If returned true, user clicked OK so initialise
+            // Here we choose to let the system create a default rendering window by passing 'true'
+            mWindow = mRoot->initialise(true,"Original BS GUI Demo");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     void createFrameListener(void)
     {
         mFrameListener= new DemoListener(mWindow, mCamera);
@@ -521,7 +203,7 @@ public:
 
     bool aboutBoxAction(const TGEventArgs& args)
     {
-        (new TGMessagebox("BSGUI (Bad Sector's OpenGL GUI) version 0.2 Demo", "About"))->show();
+        (new TGMessagebox("tgui version 0.1 Demo", "About"))->show();
         return true;
     }
 
@@ -582,19 +264,6 @@ public:
     bool selectFileAction(const TGEventArgs& args)
     {
         TGFileBrowser	*browser = new TGFileBrowser("Select File");
-        return true;
-    }
-
-    bool configure(void)
-    {
-        // Show the configuration dialog and initialise the system
-        // You can skip this and use root.restoreConfig() to load configuration
-        // settings if you were sure there are valid ones saved in ogre.cfg
-        //if(mRoot->showConfigDialog())
-        if(mRoot->restoreConfig())
-        {
-            mWindow = mRoot->initialise(true);
-        }
         return true;
     }
 
@@ -833,10 +502,6 @@ public:
     void createScene(void)
     {
         // setup GUI system
-
-        //TGColourTheme ct(TGColour(0.6,0.2,0.2,0.75),TGColour());
-        //TGColourTheme ct(TGColour(0.1,0.6,0.2,0.75),TGColour(0.9,0.9,0,1.0));
-        //TGColourTheme ct(TGColour(0.2,0.2,0.6,0.75));
         TGColourTheme ct;
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
 
