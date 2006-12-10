@@ -43,38 +43,38 @@ namespace TGUI
             PF_RGBA
         };
 
-        virtual	ushort	getWidth(void) const		{return d_width;}
-        virtual	ushort	getHeight(void) const		{return d_height;}
-        virtual ushort getOriginalWidth(void) const { return getWidth(); }
-        virtual float getXScale(void) const { return 1.0f / static_cast<float>(getOriginalWidth()); } 
-        virtual ushort getOriginalHeight(void) const { return getHeight(); }
-        virtual float getYScale(void) const { return 1.0f / static_cast<float>(getOriginalHeight()); }
+        virtual	ushort	getWidth(void)          const {return m_width;}
+        virtual	ushort	getHeight(void)         const {return m_height;}
+        virtual ushort  getOriginalWidth(void)  const { return getWidth(); }
+        virtual float   getXScale(void)         const { return 1.0f / static_cast<float>(getOriginalWidth()); } 
+        virtual ushort  getOriginalHeight(void) const { return getHeight(); }
+        virtual float   getYScale(void) const { return 1.0f / static_cast<float>(getOriginalHeight()); }
         virtual void	loadFromFile(const string& filename, const string& resourceGroup);
-        TGRenderer*	getRenderer(void) const			{return d_owner;}
+        TGRenderer*	    getRenderer(void)       const {return m_owner;}
 
-        Ogre::TexturePtr	getOgreTexture(void) const		{return d_ogre_texture;}
+        Ogre::TexturePtr	getOgreTexture(void) const		{return m_ogre_texture;}
         void	setOgreTextureSize(uint size);
         void	setOgreTexture(Ogre::TexturePtr& texture);
 
 
     protected:
-        TGTexture(TGRenderer* owner) : d_owner(owner) {}
+        TGTexture(TGRenderer* owner) : m_owner(owner) {}
         virtual ~TGTexture(void) {};
     private:
-        TGRenderer* d_owner;		                // Renderer object that created and owns this texture
+        TGRenderer* m_owner;		                // Renderer object that created and owns this texture
         void	freeOgreTexture(void);
 
         // return a Ogre::string that contains a unique name.
         Ogre::String	getUniqueName(void);
 
-        static	uint32          d_texturenumber;	// Counter used to provide unique texture names.
+        static	uint32          m_texturenumber;	// Counter used to provide unique texture names.
 
-        Ogre::TexturePtr		d_ogre_texture;		// The 'real' texture.
+        Ogre::TexturePtr		m_ogre_texture;		// The 'real' texture.
 
-        ushort					d_width;			// cached width of the texture
-        ushort					d_height;			// cached height of the texture
+        ushort					m_width;			// cached width of the texture
+        ushort					m_height;			// cached height of the texture
 
-        bool	d_isLinked;		                    // True if we are linked to a texture we did not actually create.
+        bool	                m_isLinked;         // True if we are linked to a texture we did not actually create.
 
     };
 
