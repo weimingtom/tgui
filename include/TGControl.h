@@ -77,6 +77,7 @@ namespace TGUI
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
         bool                mouseOverControl;
+        bool                isComposite;
         float               xShift;
         float               yShift;
         int                 x1;
@@ -217,7 +218,7 @@ namespace TGUI
         // mouse events
         virtual void onMouseEnter();
         virtual void onMouseMoved(int x, int y);
-        virtual void onMouseExit();
+        virtual void onMouseExit(int x, int y);
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);
         // keyboard events

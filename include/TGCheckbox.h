@@ -49,7 +49,7 @@ namespace TGUI
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);
         virtual void onMouseEnter();
-        virtual void onMouseExit();
+        virtual void onMouseExit(int x, int y);
     };
 }
 #endif
