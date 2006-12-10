@@ -26,7 +26,7 @@
 
 namespace TGUI
 {
-    uint32    TGTexture::d_texturenumber=0;	        // Counter used to provide unique texture names.
+    uint32    TGTexture::m_texturenumber=0;	        // Counter used to provide unique texture names.
 
     //-----------------------------------------------------------------------
     //                       s e t O g r e T e x t u r e S i z e
@@ -39,13 +39,13 @@ namespace TGUI
         freeOgreTexture();
 
         // Try to create an empty texture of the given size
-        d_ogre_texture = TextureManager::getSingleton().createManual(getUniqueName(), "General", TEX_TYPE_2D, size, size, 0, PF_A8R8G8B8, TU_DEFAULT);
+        m_ogre_texture = TextureManager::getSingleton().createManual(getUniqueName(), "General", TEX_TYPE_2D, size, size, 0, PF_A8R8G8B8, TU_DEFAULT);
 
         // if we got a pointer cache some details
-        if (!d_ogre_texture.isNull())
+        if (!m_ogre_texture.isNull())
         {
-            d_width		= d_ogre_texture->getWidth();
-            d_height	= d_ogre_texture->getHeight();
+            m_width		= m_ogre_texture->getWidth();
+            m_height	= m_ogre_texture->getHeight();
         }
         // no texture so throw.
         else
@@ -60,11 +60,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGTexture::freeOgreTexture(void)
     {
-        if ((!d_ogre_texture.isNull()) && !d_isLinked)
+        if ((!m_ogre_texture.isNull()) && !m_isLinked)
         {
-            Ogre::TextureManager::getSingleton().remove(d_ogre_texture->getHandle());
+            Ogre::TextureManager::getSingleton().remove(m_ogre_texture->getHandle());
         }
-        d_ogre_texture.setNull();
+        m_ogre_texture.setNull();
     }
 
     //-----------------------------------------------------------------------
@@ -75,10 +75,10 @@ namespace TGUI
         Ogre::String str;
 
         Ogre::StringUtil::StrStreamType strstream;
-        strstream << "_cegui_ogre_" << d_texturenumber;
+        strstream << "_tgui_ogre_" << m_texturenumber;
         str = strstream.str();
 
-        ++d_texturenumber;
+        ++m_texturenumber;
 
         return str;
     }
@@ -90,10 +90,10 @@ namespace TGUI
     {
         freeOgreTexture();
 
-        d_ogre_texture = texture;
-        d_width	 = d_ogre_texture->getWidth();
-        d_height = d_ogre_texture->getHeight();
-        d_isLinked = true;
+        m_ogre_texture = texture;
+        m_width	 = m_ogre_texture->getWidth();
+        m_height = m_ogre_texture->getHeight();
+        m_isLinked = true;
     }
 
     //-----------------------------------------------------------------------
@@ -117,8 +117,8 @@ namespace TGUI
             if (!ogreTexture.isNull())
             {
                 // texture already exists, so create a 'linked' texture (ensures texture is not destroyed twice)
-                d_ogre_texture = ogreTexture;
-                d_isLinked = true;
+                m_ogre_texture = ogreTexture;
+                m_isLinked = true;
             }
             // texture does not already exist, so load it in
             else
@@ -134,8 +134,8 @@ namespace TGUI
                     orpGroup = resourceGroup;
                 }
 
-                d_ogre_texture = TextureManager::getSingleton().load(filename.c_str(), orpGroup.c_str(), TEX_TYPE_2D, 0, 1.0f);
-                d_isLinked = false;
+                m_ogre_texture = TextureManager::getSingleton().load(filename.c_str(), orpGroup.c_str(), TEX_TYPE_2D, 0, 1.0f);
+                m_isLinked = false;
             }
 
         }
@@ -145,10 +145,10 @@ namespace TGUI
         }
 
         // if we got a pointer cache some details
-        if (!d_ogre_texture.isNull())
+        if (!m_ogre_texture.isNull())
         {
-            d_width		= d_ogre_texture->getWidth();
-            d_height	= d_ogre_texture->getHeight();
+            m_width		= m_ogre_texture->getWidth();
+            m_height	= m_ogre_texture->getHeight();
         }
         // no texture from image so throw.
         else
