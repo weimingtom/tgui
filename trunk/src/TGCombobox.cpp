@@ -105,8 +105,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGControl* TGCombobox::childAt(float x, float y)
     {
-        //return TGControl::childAt(x,y);
-
         if(m_listbox->isVisible() && m_listbox->pointInControl(x,y))
             return m_listbox->childAt(x,y);
         return this;
@@ -233,39 +231,6 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                               f o c u s
-    //-----------------------------------------------------------------------
-    void TGCombobox::focus()
-    {
-        TGControl::focus();
-
-        //if (!m_parent)
-           // return;
-
-        //m_inputbox->focus();
-
-        //m_parent->focus();
-
-        /*
-
-        if (m_parent->getLastChild() == this)
-            return;
-
-        TGControl *oldFocus = m_parent->getLastChild()->getFocusedChild();
-
-        m_parent->setFocusedChild(this);
-
-        if(oldFocus)
-        {
-            if(oldFocus->m_parent)
-                oldFocus->m_parent->redraw();
-            oldFocus->onFocusExit();
-        }
-        onFocusEnter(oldFocus);
-        */
-    }
-
-    //-----------------------------------------------------------------------
     //                              f o c u s e d
     //-----------------------------------------------------------------------
     bool TGCombobox::focused()
@@ -277,8 +242,6 @@ namespace TGUI
             return true;
         else return false;
     }
-
-
 
     //-----------------------------------------------------------------------
     //                      s e t C o l o u r T h e m e
@@ -313,19 +276,7 @@ namespace TGUI
             color(m_theme.getFrameColour());
 
         drawRect(x2-m_height, y1, x2, y1+m_height);
-
         drawTri(x2-m_height+2,y1+7, x2-3, y1+m_height-7,0);
-
-        /*
-        if(m_listbox->isVisible())
-        {
-            int x1,y1,x2,y2;
-            m_listbox->getBounds(x1, y1, x2, y2);
-            color(m_listbox->getColourTheme().getBase());
-            fillRect(x1,y1,x2,y2);
-
-        }
-        */
     }
 
 }

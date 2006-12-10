@@ -51,7 +51,6 @@ namespace TGUI
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
         virtual void onFocusExit();
 
-        virtual void focus();
         virtual bool focused();
 
         virtual void addItem(string text);
