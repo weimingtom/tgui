@@ -35,6 +35,8 @@ namespace TGUI
         m_height=0;
         m_listbox = new TGListbox(this,0,0,5,5);
         m_inputbox = new TGInputbox(this,0,0,5,5);
+        m_listbox->isComposite = true;
+        m_inputbox->isComposite = true;
 
         TGColourTheme ct = m_listbox->getColourTheme();
         TGColour c = ct.getBase();
@@ -180,10 +182,14 @@ namespace TGUI
             m_inputbox->onMouseMoved(x,y);
             return;
         }
+        m_inputbox->mouseOverControl = true;
 
         TGControl::onMouseMoved(x,y);
     }
 
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E n t e r
+    //-----------------------------------------------------------------------
     void TGCombobox::onMouseEnter()
     {
         TGControl::onMouseEnter();
@@ -194,13 +200,16 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            o n M o u s e E x i t
     //-----------------------------------------------------------------------
-    void TGCombobox::onMouseExit()
+    void TGCombobox::onMouseExit(int x, int y)
     {
+        if(pointInControl(x,y))
+            return;
+        
         m_inputbox->mouseOverControl = false;
         m_listbox->mouseOverControl = false;
         mouseOverControl = false;
-        m_inputbox->onMouseExit();
-        TGControl::onMouseExit();
+        m_inputbox->onMouseExit(x, y);
+        TGControl::onMouseExit(x, y);
 
     }
 
@@ -210,7 +219,7 @@ namespace TGUI
     void TGCombobox::onFocusExit()
     {
 
-        if(mouseOverControl || m_listbox->mouseOverControl)
+        if(mouseOverControl || m_listbox->mouseOverControl )
             return;
 
         m_inputbox->onFocusExit();

@@ -149,9 +149,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        o n M o u s e E x i t 
     //-----------------------------------------------------------------------
-    void TGCheckbox::onMouseExit()
+    void TGCheckbox::onMouseExit(int x, int y)
     {
-        TGControl::onMouseExit();
+        TGControl::onMouseExit(x,y);
         m_hover = false;
     }
 }

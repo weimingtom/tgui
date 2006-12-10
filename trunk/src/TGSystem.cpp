@@ -342,7 +342,7 @@ namespace TGUI
         if (m_lastChildUnderMouse != m_childUnderMouse)
         {
             if (m_lastChildUnderMouse)
-                m_lastChildUnderMouse->onMouseExit();
+                m_lastChildUnderMouse->onMouseExit(absX, absY);
             m_lastChildUnderMouse = m_childUnderMouse;
 
             m_childUnderMouse->onMouseEnter();

@@ -39,6 +39,7 @@ namespace TGUI
         maxWidth = maxHeight = 0x7FFFFFFF;
         name = "";
         m_focusedChild = 0;
+        isComposite = false;
         m_parent = parent;
         m_redraw = false;
         m_popupMenu = NULL;
@@ -642,7 +643,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          o n M o u s e E x i t
     //-----------------------------------------------------------------------
-    void TGControl::onMouseExit()
+    void TGControl::onMouseExit(int x, int y)
     {
         mouseOverControl = false;
         redraw();
