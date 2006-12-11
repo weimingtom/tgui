@@ -185,6 +185,7 @@ public:
 
         tex = TGSystem::getSingleton().getRenderer()->createTexture("tilerust.png");
         win2->setTexture(tex);
+        win2->resizeable = true;
 
 
     }
