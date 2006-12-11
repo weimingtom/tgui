@@ -122,11 +122,11 @@ namespace TGUI
         void closeClipArea();
         void resetClipping();
 
-        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush);
-        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int thickness);
-        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int pointDir);
+        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGSBrush brush);
+        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGSBrush brush, int thickness);
+        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGSBrush brush, int pointDir);
 
-        void renderQuadDirect(const TGRect& dest_rect, float z, const TGRect& texture_rect, TGSBrush brush);
+        void renderQuadDirect(const TGRect& dest_rect, float z, TGSBrush brush);
         virtual	void	doRender(TGQuadList& quadList);
 
         virtual	TGTexture*	createTexture(void);

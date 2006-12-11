@@ -32,6 +32,7 @@ namespace TGUI
     public:
         TGColourRect        m_colourRect;
         TGTexture*          m_texture;
+        TGRect              m_uv;
     public:
 
 

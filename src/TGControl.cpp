@@ -752,8 +752,7 @@ namespace TGUI
         if(!m_isVisible)
             return;
         TGRect r(x1,y1,x2,y2);
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        TGQuadInfo qi = m_renderer->addQuad(r,0,ruv,brush);
+        TGQuadInfo qi = m_renderer->addQuad(r,0,brush);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -767,8 +766,7 @@ namespace TGUI
         if(!m_isVisible)
             return;
         TGRect r(x1,y1,x2,y2);
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        TGQuadInfo qi = m_renderer->addLine(r,0, ruv,brush,thickness);
+        TGQuadInfo qi = m_renderer->addLine(r,0,brush,thickness);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -782,8 +780,7 @@ namespace TGUI
             return;
 
         TGRect r(x1,y1,x2,y2);
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        TGQuadInfo qi = m_renderer->addTri(r,0,ruv,brush,pointDir);
+        TGQuadInfo qi = m_renderer->addTri(r,0,brush,pointDir);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -856,11 +853,11 @@ namespace TGUI
 
 
             TGRect r(cx,y,x2,y2);
-            TGRect ruv;
 
-            font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
+            font->m_font->getGlyphTexCoords(ch,brush->m_uv.d_left,
+                brush->m_uv.d_top,brush->m_uv.d_right,brush->m_uv.d_bottom);
 
-            TGQuadInfo qi = m_renderer->addQuad(r,0,ruv,brush);
+            TGQuadInfo qi = m_renderer->addQuad(r,0,brush);
             m_systemCache.push_back(qi);
             m_quadCache.push_back(qi);
 
