@@ -55,28 +55,30 @@ namespace TGUI
         Ogre::TexturePtr	getOgreTexture(void) const		{return m_ogre_texture;}
         void	setOgreTextureSize(uint size);
         void	setOgreTexture(Ogre::TexturePtr& texture);
+        virtual ~TGTexture(void) {};
 
 
     protected:
         TGTexture(TGRenderer* owner) : m_owner(owner) {}
-        virtual ~TGTexture(void) {};
     private:
         TGRenderer* m_owner;		                // Renderer object that created and owns this texture
         void	freeOgreTexture(void);
 
         // return a Ogre::string that contains a unique name.
-        Ogre::String	getUniqueName(void);
+        Ogre::String	    getUniqueName(void);
 
-        static	uint32          m_texturenumber;	// Counter used to provide unique texture names.
+        static	uint32      m_texturenumber;	// Counter used to provide unique texture names.
 
-        Ogre::TexturePtr		m_ogre_texture;		// The 'real' texture.
+        Ogre::TexturePtr    m_ogre_texture;		// The 'real' texture.
 
-        ushort					m_width;			// cached width of the texture
-        ushort					m_height;			// cached height of the texture
+        ushort				m_width;			// cached width of the texture
+        ushort				m_height;			// cached height of the texture
 
-        bool	                m_isLinked;         // True if we are linked to a texture we did not actually create.
+        bool	            m_isLinked;         // True if we are linked to a texture we did not actually create.
 
     };
+
+    typedef Ogre::SharedPtr<TGTexture> TGSTexture;
 
 } 
 
