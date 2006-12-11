@@ -34,6 +34,7 @@ namespace TGUI
         moving = resizing = resizeable = false;
         minWidth = 50;
         minHeight = 50;
+        m_capTexture = TGSystem::getSingleton().getDefaultTexture();
         setBounds(10, 10, 200, 160);
         this->caption = caption;
         padLeft = padRight = padBottom = 2;
@@ -133,7 +134,7 @@ namespace TGUI
         {
 
             color(m_theme.getCaptionColour());
-            fillRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
+            fillRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom,m_capTexture);
 
             color(m_theme.getBase());
             fillRect(x1, titleY2, x2, y2);
@@ -200,6 +201,7 @@ namespace TGUI
 
         if (b == LeftButton)
             focus();
+
         if (resizeable && x >= x2-10 && y >= y2-10)
         {
             resizing = true;
@@ -261,5 +263,11 @@ namespace TGUI
     {
         mouseOverControl = false;
     }
+
+    void TGWindow::onFocusExit()
+    {
+        redraw();
+    }
+
 
 }

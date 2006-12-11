@@ -173,7 +173,19 @@ public:
         win->center();
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
-        win->resizeable = true;      
+        win->resizeable = true;   
+
+        TGTexture *tex = TGSystem::getSingleton().getRenderer()->createTexture("DirtyMetal.png");
+        win->setTexture(tex);
+
+
+        TGWindow *win2 = new TGWindow("Another Window");
+        win2->setPos(10,10);
+        win2->resize(200,300);
+
+        tex = TGSystem::getSingleton().getRenderer()->createTexture("tilerust.png");
+        win2->setTexture(tex);
+
 
     }
 

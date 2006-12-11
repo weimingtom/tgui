@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="minimal"
+	Name="app_minimal"
 	ProjectGUID="{FEC6B343-3BFB-4309-8F1D-0B2AED6CAA4A}"
 	RootNamespace="minimal"
 	Keyword="Win32Proj"
@@ -44,7 +44,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="minimal.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
@@ -61,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="OgreMain_d.lib OIS_d.lib $(tgui)\libs\tgui_d.lib"
-				OutputFile="$(TGUI)\bin\app_$(ProjectName).exe"
+				OutputFile="$(TGUI)\bin\$(ProjectName).exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -185,6 +186,18 @@
 			<File
 				RelativePath=".\minimal.h"
 				>
+			</File>
+			<File
+				RelativePath=".\precomp.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>
