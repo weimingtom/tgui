@@ -186,6 +186,14 @@ public:
         win2->setTexture(tex);
         win2->resizeable = true;
 
+        new TGButton(win2,10,10,100,40,"Test");
+
+        TGColourTheme ct = win2->getColourTheme();
+        ct.m_base->m_colourRect = TGColourRect(TGColour(0,0,1),TGColour(0,0,1),TGColour(0,1,0),TGColour(0,1,0));
+        win2->setColourTheme(ct);
+
+        new TGButton(win2,10,50,100,90,"Test 2");
+
 
     }
 
