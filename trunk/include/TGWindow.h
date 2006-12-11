@@ -31,9 +31,9 @@ namespace TGUI
     class TGWindow : public TGControl
     {
     public:
-        string			caption;
+        string			m_caption;
         TGTexture*      m_capTexture;
-        bool            isTabbedCaption;
+        bool            m_isTabbedCaption;
         bool			moving;
         bool			resizing;
         bool			resizeable;
@@ -56,9 +56,6 @@ namespace TGUI
         virtual void onMouseUp(int x, int y, int b);
         virtual void onMouseEnter();
         virtual void onMouseExit();
-        virtual void onFocusExit();
-
-
 
     };
 }
