@@ -30,18 +30,21 @@ namespace TGUI
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
     TGWindow::TGWindow(string caption) : TGControl(getActiveScreen())
+        , moving(false)
+        , resizing(false)
+        , resizeable(false)
+        , m_capTexture(TGSystem::getSingleton().getDefaultTexture())
     {
-        moving = resizing = resizeable = false;
         minWidth = 50;
         minHeight = 50;
-        m_capTexture = TGSystem::getSingleton().getDefaultTexture();
+
         setBounds(10, 10, 200, 160);
-        this->caption = caption;
+        m_caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
         m_titleBarHeight = stringHeight() + 2;
         menu = NULL;
-        isTabbedCaption = false;
+        m_isTabbedCaption = false;
     }
 
     //-----------------------------------------------------------------------
@@ -53,7 +56,7 @@ namespace TGUI
         minWidth = 1;
         minHeight = 1;
         setBounds(10, 10, 200, 160);
-        this->caption = caption;
+        m_caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
         m_titleBarHeight = stringHeight() + 2;
@@ -74,7 +77,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::setCaption(string newCaption)
     {
-        caption = newCaption;
+        m_caption = newCaption;
     }
 
     //-----------------------------------------------------------------------
@@ -82,7 +85,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     bool TGWindow::pointInControl(float x, float y)
     {
-        if(!isTabbedCaption)
+        if(!m_isTabbedCaption)
             return TGControl::pointInControl(x,y);
 
         int	x1, y1, x2, y2;
@@ -102,8 +105,8 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
         y2 = y1 + m_titleBarHeight;
-        if(isTabbedCaption)
-            x2 = x1+stringWidth(caption)+(stringWidth("M")*2);
+        if(m_isTabbedCaption)
+            x2 = x1+stringWidth(m_caption)+(stringWidth("M")*2);
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
             return true;
 
@@ -125,14 +128,14 @@ namespace TGUI
 
         titleY2 = y1 + m_titleBarHeight;
 
-        clen = (int)stringWidth(caption);
-        if(isTabbedCaption)
+        clen = (int)stringWidth(m_caption);
+        if(m_isTabbedCaption)
             cRect = TGRect(x1, y1, x1+clen+(stringWidth("M")*2),titleY2);
         else cRect = TGRect(x1, y1, x2, titleY2);
 
         TGSBrush brush;
 
-        if(!caption.empty())
+        if(!m_caption.empty())
         {
 
             brush = m_theme.getCaptionBrush();
@@ -165,11 +168,11 @@ namespace TGUI
         }
 
         openClip();
-        if(!caption.empty())
+        if(!m_caption.empty())
         {
-            if(!isTabbedCaption)
-                drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption, textBrush);
-            else drawString(x1+stringWidth("M"),y1 + 2, caption, textBrush);
+            if(!m_isTabbedCaption)
+                drawString((x2-x1)/2 + x1 - clen/2, y1 + 2,m_caption, textBrush);
+            else drawString(x1+stringWidth("M"),y1 + 2, m_caption, textBrush);
         }
 
 
@@ -181,9 +184,7 @@ namespace TGUI
         }
 
         TGControl::render();
-
         closeClip();
-
     }
 
     //-----------------------------------------------------------------------
@@ -194,8 +195,8 @@ namespace TGUI
         int	x1, y1, x2, y2, titleY2;
         getBounds(x1, y1, x2, y2);
 
-        if(isTabbedCaption)
-            x2 = x1+stringWidth(caption)+(stringWidth("M")*2);
+        if(m_isTabbedCaption)
+            x2 = x1+stringWidth(m_caption)+(stringWidth("M")*2);
 
         titleY2 = stringHeight() + y1 + 2;
 
@@ -219,7 +220,6 @@ namespace TGUI
                 setMouseTrackingControl(this);
             }
         }
-        //setMouseTrackingControl(this);
     }
 
     //-----------------------------------------------------------------------
@@ -229,6 +229,7 @@ namespace TGUI
     {
         if (moving)
             moveRel(x-mX, y-mY);
+
         if (resizing)
         {
             resize((x2-x1+1)+x-mX, (y2-y1+1)+y-mY);
@@ -263,11 +264,5 @@ namespace TGUI
     {
         mouseOverControl = false;
     }
-
-    void TGWindow::onFocusExit()
-    {
-        redraw();
-    }
-
 
 }

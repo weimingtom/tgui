@@ -30,7 +30,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C o n t r o l
     //-----------------------------------------------------------------------
-    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache()),  m_theme(TGColourTheme())
+    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
+        ,  m_theme(TGColourTheme())
     {
         x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
             yShift = 0;

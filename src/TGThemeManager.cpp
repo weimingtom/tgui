@@ -31,7 +31,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGThemeManager::TGThemeManager() : TGWindow(getActiveScreen(),"Theme Manager")
     {
-        isTabbedCaption = true;
+        m_isTabbedCaption = true;
         setBounds(0.1f,0.1f,0.55f,0.5f);
         (new TGLabel(this,"Red"))->setPos(0.1f,0.1f);
         (new TGLabel(this,"Green"))->setPos(0.1f,0.2f);

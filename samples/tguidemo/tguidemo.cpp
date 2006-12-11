@@ -174,8 +174,10 @@ public:
         win->resize(190, 200);
         win->resizeable = true;   
 
-        TGTexture *tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
-        win->setTexture(tex);
+        TGTexture *tex;
+
+        //tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
+        //win->setTexture(tex);
 
 
         TGWindow *win2 = new TGWindow("Another Window");
