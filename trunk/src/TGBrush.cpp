@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush()
+    TGBrush::TGBrush() : m_uv(0.f,0.f,1.f,1.f)
     {
         m_colourRect = TGColourRect(TGColour(1.0,1.0,1.0,1.0));
         m_texture = TGSystem::getSingleton().getDefaultTexture();
@@ -39,7 +39,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(TGTexture* texture)
+    TGBrush::TGBrush(TGTexture* texture) : m_uv(0.f,0.f,1.f,1.f)
     {
         m_texture = texture;
     }
@@ -47,7 +47,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(const TGColour& col, TGTexture* texture)
+    TGBrush::TGBrush(const TGColour& col, TGTexture* texture) : m_uv(0.f,0.f,1.f,1.f)
     {
         m_colourRect = TGColourRect(col);
         m_texture = texture;
@@ -58,7 +58,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(const TGColourRect& colRect, TGTexture* texture)
+    TGBrush::TGBrush(const TGColourRect& colRect, TGTexture* texture) : m_uv(0.f,0.f,1.f,1.f)
     {
         m_colourRect = colRect;
         m_texture = texture;

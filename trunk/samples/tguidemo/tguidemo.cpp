@@ -130,7 +130,8 @@ public:
         // Show the configuration dialog and initialise the system
         // You can skip this and use root.restoreConfig() to load configuration
         // settings if you were sure there are valid ones saved in ogre.cfg
-        if(mRoot->showConfigDialog())
+        //if(mRoot->showConfigDialog())
+        if(mRoot->restoreConfig())
         {
             // If returned true, user clicked OK so initialise
             // Here we choose to let the system create a default rendering window by passing 'true'
@@ -142,7 +143,6 @@ public:
             return false;
         }
     }
-
 
     void createFrameListener(void)
     {
@@ -189,11 +189,12 @@ public:
         new TGButton(win2,10,10,100,40,"Test");
 
         TGColourTheme ct = win2->getColourTheme();
-        ct.m_base->m_colourRect = TGColourRect(TGColour(0,0,1),TGColour(0,0,1),TGColour(0,1,0),TGColour(0,1,0));
+        ct.m_base->m_colourRect = TGColourRect(TGColour(1,1,1));
+        //ct.m_base->m_colourRect = TGColourRect(TGColour(0,1,1),TGColour(0,0,1,0),TGColour(0,1,0),TGColour(0,1,0));
+        ct.m_base->m_texture = tex;
         win2->setColourTheme(ct);
 
         new TGButton(win2,10,50,100,90,"Test 2");
-
 
     }
 

@@ -82,8 +82,7 @@ namespace TGUI
    void TGCursor::draw()
     {
         TGRect r(x1,y1,x2,y2);
-        TGRect ruv(0.f,0.f,1.f,1.f);
-        getRenderer()->renderQuadDirect(r,0,ruv,m_brush);
+        getRenderer()->renderQuadDirect(r,0,m_brush);
     }
 
 

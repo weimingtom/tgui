@@ -165,12 +165,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush)
+    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGSBrush brush)
     {
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
-        TGRect texRect=texture_rect;
+        TGRect texRect=brush->m_uv;
         const float  daWidth = m_displayArea.getWidth();
         const float  daHeight = m_displayArea.getHeight();
 
@@ -279,12 +279,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d T r i
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int pointDir)
+    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGSBrush brush, int pointDir)
     {
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
-        TGRect texRect=texture_rect;
+        TGRect texRect=brush->m_uv;
         const float  daWidth = m_displayArea.getWidth();
         const float  daHeight = m_displayArea.getHeight();
 
@@ -394,12 +394,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int thickness)
+    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGSBrush brush, int thickness)
     {
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
-        TGRect texRect=texture_rect;
+        TGRect texRect=brush->m_uv;
 
         //
         // clip line.  returns false if completely outside the clip area
@@ -745,7 +745,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       r e n d e r Q u a d D i r e c t
     //-----------------------------------------------------------------------
-    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush)
+    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z,  const TGSBrush brush)
     {
         if (m_renderSys->_getViewport()->getOverlaysEnabled())
         {
@@ -780,8 +780,8 @@ namespace TGUI
             buffmem->y	= final_rect. d_bottom;
             buffmem->z	= z;
             buffmem->diffuse = topLeftCol;
-            buffmem->tu1	= texture_rect.d_left;
-            buffmem->tv1	= texture_rect.d_bottom;
+            buffmem->tu1	= brush->m_uv.d_left;
+            buffmem->tv1	= brush->m_uv.d_bottom;
             ++buffmem;
 
             // setup Vertex 2...
@@ -789,8 +789,8 @@ namespace TGUI
             buffmem->y = final_rect.d_bottom;
             buffmem->z	= z;
             buffmem->diffuse = topRightCol;
-            buffmem->tu1	= texture_rect.d_right;
-            buffmem->tv1	= texture_rect.d_bottom;
+            buffmem->tu1	= brush->m_uv.d_right;
+            buffmem->tv1	= brush->m_uv.d_bottom;
             ++buffmem;
 
             // setup Vertex 3...
@@ -798,8 +798,8 @@ namespace TGUI
             buffmem->y	= final_rect.d_top;
             buffmem->z	= z;
             buffmem->diffuse = bottomLeftCol;
-            buffmem->tu1	= texture_rect.d_left;
-            buffmem->tv1	= texture_rect.d_top;
+            buffmem->tu1	= brush->m_uv.d_left;
+            buffmem->tv1	= brush->m_uv.d_top;
             ++buffmem;
 
             // setup Vertex 4...
@@ -807,8 +807,8 @@ namespace TGUI
             buffmem->y	= final_rect.d_bottom;
             buffmem->z	= z;
             buffmem->diffuse = topRightCol;
-            buffmem->tu1	= texture_rect.d_right;
-            buffmem->tv1	= texture_rect.d_bottom;
+            buffmem->tu1	= brush->m_uv.d_right;
+            buffmem->tv1	= brush->m_uv.d_bottom;
             ++buffmem;
 
             // setup Vertex 5...
@@ -816,8 +816,8 @@ namespace TGUI
             buffmem->y	= final_rect.d_top;
             buffmem->z	= z;
             buffmem->diffuse = bottomRightCol;
-            buffmem->tu1	= texture_rect.d_right;
-            buffmem->tv1	= texture_rect.d_top;
+            buffmem->tu1	= brush->m_uv.d_right;
+            buffmem->tv1	= brush->m_uv.d_top;
             ++buffmem;
 
             // setup Vertex 6...
@@ -826,8 +826,8 @@ namespace TGUI
             buffmem->y = final_rect.d_top;
             buffmem->z	= z;
             buffmem->diffuse = bottomLeftCol;
-            buffmem->tu1	= texture_rect.d_left;
-            buffmem->tv1	= texture_rect.d_top;
+            buffmem->tu1	= brush->m_uv.d_left;
+            buffmem->tv1	= brush->m_uv.d_top;
 
             d_direct_buffer->unlock();
 
