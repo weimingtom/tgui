@@ -66,24 +66,24 @@ namespace TGUI
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
+        TGSBrush brush;
+
         if (box->m_selectedItem == this)
         {
-            color(m_theme.getCaptionColour());
-            fillRect(x1, y1, x2, y2);
-            color(m_theme.getTextFocusedColour());
-            //if (box->focused())
-            //    drawRect(x1 + 2, y1 + 2, x2 - 1, y2 - 2);
+            brush = m_theme.getCaptionBrush();
+            fillRect(x1, y1, x2, y2, brush);
+            brush = m_theme.getTextFocusedBrush();
         }
         else
         {
             if (mouseOverControl)
-                color(m_theme.getTextFocusedColour());
+                brush = m_theme.getTextFocusedBrush();
             else
-                color(m_theme.getTextColour());
+                brush = m_theme.getTextBrush();
         }
         drawString(x1 + 8,
             (y2-y1 + 1)/2 + y1 - stringHeight()/2,
-            text);
+            text, brush);
     }
 
     //-----------------------------------------------------------------------

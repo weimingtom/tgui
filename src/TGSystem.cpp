@@ -183,8 +183,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S y s t e m
     //-----------------------------------------------------------------------
-    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont,
-        TGColourTheme defaultTheme)
+    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont) : m_currentFont(NULL), m_defaultFont(NULL)
     {
         m_activeScreen = 0;
         m_childUnderMouse = 0;
@@ -193,7 +192,6 @@ namespace TGUI
         m_trackControl = 0;
         m_keyboardFocusControl = 0;
         m_logger = 0;
-        m_theme = defaultTheme;
 
         m_renderer = new TGUI::TGRenderer(window, 
             Ogre::RENDER_QUEUE_OVERLAY, false, sceneMgr);
@@ -236,9 +234,13 @@ namespace TGUI
         m_texture->setOgreTexture(texture);
         m_logger = new TGLogger();
 
+        m_theme = TGColourTheme();
+
         m_defaultFont = new TGFont(defaultFont);
         m_defaultFont->setHeight(18);
         setCurrentFont(m_defaultFont);
+
+        m_theme.setFont(m_defaultFont);
 
         m_defaultScreen = new TGScreen();
         m_defaultScreen->activate();

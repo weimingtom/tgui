@@ -84,31 +84,32 @@ namespace TGUI
             return;
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        color(m_theme.getBase());
-        fillRect(x1, y1 + 1, x2 - 1, y2);
+        TGSBrush brush;
+        brush = m_theme.getBase();
+        fillRect(x1, y1 + 1, x2 - 1, y2, brush);
 
         openClip();
 
         if(hasKeyboardFocus(this) || mouseOverControl  ||
             (isComposite && m_parent->mouseOverControl))
-            color(m_theme.getTextFocusedColour());
-        else color(m_theme.getTextColour());
+            brush = m_theme.getTextFocusedBrush();
+        else brush = m_theme.getTextBrush();
         drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
-            stringHeight()/2, text.get());
+            stringHeight()/2, text.get(), brush);
 
         closeClip();
 
         if (m_cursorVisible)
         {
             drawLine(x1 + 5 + cursorX - tScroll, y1 + 4,
-                x1 + 5 + cursorX - tScroll, y2 - 4);
+                x1 + 5 + cursorX - tScroll, y2 - 4, brush);
         }
 
         if (mouseOverControl  || hasKeyboardFocus(this))
-            color(m_theme.getFrameFocusedColour());
+            brush = m_theme.getFrameFocusedBrush();
         else
-            color(m_theme.getFrameColour());
-        drawRect(x1, y1, x2, y2);
+            brush = m_theme.getFrameBrush();
+        drawRect(x1, y1, x2, y2, brush);
     }
 
     //-----------------------------------------------------------------------

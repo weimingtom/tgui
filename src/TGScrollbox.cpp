@@ -90,41 +90,40 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
-        TGColour c = m_theme.getBase();
-        c.a = 1.f;
-        color(c);
-        fillRect(x1,y1,x2,y2);
+        TGSBrush brush;
+        brush = m_theme.getBaseOpaque();
+        fillRect(x1,y1,x2,y2,brush);
 
         if(focused())
-            color(m_theme.getFrameFocusedColour());
-        else color(m_theme.getFrameColour());
-        drawRect(x1,y1,x2,y2);        
-        drawLine(x2 - 12, y1, x2 - 12, y2);
-        drawLine(x1, y2 - 12, x2, y2 - 12);
+            brush = m_theme.getFrameFocusedBrush();
+        else brush = m_theme.getFrameBrush();
+        drawRect(x1,y1,x2,y2, brush);        
+        drawLine(x2 - 12, y1, x2 - 12, y2, brush);
+        drawLine(x1, y2 - 12, x2, y2 - 12, brush);
 
         int	x = x1, y = y1 + 1;
 
         if(focused())
-            color(m_theme.getFrameFocusedColour());
-        else color(m_theme.getFrameColour());
+            brush = m_theme.getFrameFocusedBrush();
+        else brush = m_theme.getFrameBrush();
 
         if (clientHeight > 0.0f)
         {
             if (vScroll != 0.0f)
                 y = (int)((y2 - y1 - 24)*vScroll/clientHeight + y1);
-            fillRect(x2 - 12, y-1, x2-1, y + 11);
+            fillRect(x2 - 12, y-1, x2-1, y + 11, brush);
         }
 
         if (clientWidth > 0.0f)
         {
             if (hScroll != 0.0f)
                 x = (int)((x2 - x1 - 24)*hScroll/clientWidth + x1 + 1);
-            fillRect(x, y2 - 12, x + 11, y2-1);
+            fillRect(x, y2 - 12, x + 11, y2-1, brush);
         }
 
-        color(m_theme.getBase());
+        brush = m_theme.getBase();
 
-        fillRect(x1, y1 + 1, x2 - 13, y2 - 13);
+        fillRect(x1, y1 + 1, x2 - 13, y2 - 13, brush);
         TGControl::render();
     }
 

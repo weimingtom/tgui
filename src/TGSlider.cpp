@@ -62,11 +62,11 @@ namespace TGUI
 
         sx = (int)(x1 + (width-9)*value.get()/max + 4);
 
-        color(m_theme.getFrameFocusedColour());
-        drawLine(x1 + 4, y1 + height/2, x2 - 4, y1 + height/2);
+        TGSBrush brush = m_theme.getFrameFocusedBrush();
+        drawLine(x1 + 4, y1 + height/2, x2 - 4, y1 + height/2, brush);
 
         if(mouseOverControl)
-            fillRect(sx - 4, y1, sx + 4, y2);
+            fillRect(sx - 4, y1, sx + 4, y2, brush);
         else drawFrame(sx - 4, y1, sx + 4, y2, FS_RAISED);
     }
 

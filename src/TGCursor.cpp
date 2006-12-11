@@ -32,6 +32,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCursor::TGCursor(string fname,string resourceGroup) : TGImage(NULL,0,0,fname,resourceGroup)
     {
+        m_brush.bind(new TGBrush(TGColour(1,1,1,1)));
 
     }
 
@@ -40,6 +41,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,0,0,texture)
     {
+        m_brush.bind(new TGBrush(TGColour(1,1,1,1),texture));
     }
 
     //-----------------------------------------------------------------------
@@ -81,8 +83,7 @@ namespace TGUI
     {
         TGRect r(x1,y1,x2,y2);
         TGRect ruv(0.f,0.f,1.f,1.f);
-        TGColourRect cr(gColor);
-        getRenderer()->renderQuadDirect(r,0,texture,ruv,cr);
+        getRenderer()->renderQuadDirect(r,0,ruv,m_brush);
     }
 
 

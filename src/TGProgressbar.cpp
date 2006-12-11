@@ -84,8 +84,8 @@ namespace TGUI
         float	value = this->value.get();
         getBounds(x1, y1, x2, y2);
 
-        color(m_theme.getFrameFocusedColour());
-        drawRect(x1, y1, x2, y2);
+        TGSBrush brush = m_theme.getFrameFocusedBrush();
+        drawRect(x1, y1, x2, y2, brush);
 
         if (value < 0.0f)
             value = 0.0f;
@@ -97,6 +97,6 @@ namespace TGUI
 
         w = (int)((float)(x2-x1-2)*value/max.get());
 
-        fillRect(x1 + 1, y1 + 1, x1 + w, y2 - 2);
+        fillRect(x1 + 1, y1 + 1, x1 + w, y2 - 2, brush);
     }
 }

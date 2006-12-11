@@ -46,6 +46,28 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                            o p e r a t o r =
+    //-----------------------------------------------------------------------
+    TGColourTheme& TGColourTheme::operator= (const TGColourTheme& rhs)
+    {
+        if ( &rhs != this )
+        {
+            m_base= rhs.m_base;
+            m_baseOpaque= rhs.m_baseOpaque;
+            m_caption= rhs.m_caption;
+            m_captionFocused= rhs.m_captionFocused;
+            m_frame= rhs.m_frame;
+            m_frameFocused= rhs.m_frameFocused;
+            m_frameSelected= rhs.m_frameSelected;
+            m_text= rhs.m_text;
+            m_textInverted= rhs.m_textInverted;
+            m_textFocused= rhs.m_textFocused;
+            m_textHilited= rhs.m_textHilited;
+        }
+        return *this;
+    }
+
+    //-----------------------------------------------------------------------
     //                       ~ T G C o l o u r T h e m e
     //-----------------------------------------------------------------------
     TGColourTheme::~TGColourTheme()
@@ -57,22 +79,64 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGColourTheme::setBase(TGColour baseColour, TGColour baseTextColour)
     {
-        m_base = baseColour;
-        m_baseOpaque = m_base;
-        m_baseOpaque.a = 1.f;
-        m_caption = clamp(m_base * 1.12f);
-        m_caption.a = 245.f/255.f;
-        m_frame = clamp(m_base * 1.18f);
-        m_frame.a = 1.f;
-        m_frameFocused = clamp(m_base * 1.9f);
-        m_frameFocused.a = 1.f;
-        m_frameSelected = clamp(m_base * 0.8f);
-        m_frameSelected.a = 1.f;
-        m_text = baseTextColour;
-        m_textFocused = clamp(m_text * 1.9f);
-        m_textFocused.a = m_text.a;
-        m_textInverted = clamp(m_text * 0.2f);
-        m_textInverted.a = m_text.a;
+        TGColour c = baseColour;
+        c.a = 1.f;
+        m_base.bind(new TGBrush(baseColour));
+        m_baseOpaque.bind(new TGBrush(c));
+
+        c = clamp(baseColour * 1.12f);
+        c.a = 245.f/255.f;
+        m_caption.bind(new TGBrush(c));
+        m_captionFocused = m_caption;
+
+        c = clamp(baseColour * 1.18f);
+        c.a = 1.f;
+        m_frame.bind(new TGBrush(c));
+
+        c = clamp(baseColour * 1.9f);
+        c.a = 1.f;
+        m_frameFocused.bind(new TGBrush(c));
+
+        c = clamp(baseColour * 0.8f);
+        c.a = 1.f;
+        m_frameSelected.bind(new TGBrush(c));
+
+        TGFont* font = TGSystem::getSingleton().getCurrentFont();
+
+        if(font)
+        {
+            m_text.bind(new TGBrush(baseTextColour,font->m_texture ));
+
+            c = clamp(baseTextColour * 1.9f);
+            c.a = baseTextColour.a;
+            m_textFocused.bind(new TGBrush(c, font->m_texture));
+
+            c = clamp(baseTextColour * 0.2f);
+            c.a = baseTextColour.a;
+            m_textInverted.bind(new TGBrush(c, font->m_texture));
+        }
+        else
+        {
+            m_text.bind(new TGBrush(baseTextColour));
+
+            c = clamp(baseTextColour * 1.9f);
+            c.a = baseTextColour.a;
+            m_textFocused.bind(new TGBrush(c));
+
+            c = clamp(baseTextColour * 0.2f);
+            c.a = baseTextColour.a;
+            m_textInverted.bind(new TGBrush(c));
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    //                            s e t F o n t
+    //-----------------------------------------------------------------------
+    void TGColourTheme::setFont(TGFont* font)
+    {
+        m_text->setTexture(font->m_texture);
+        m_textFocused->setTexture(font->m_texture);
+        m_textInverted->setTexture(font->m_texture);
     }
 
     //-----------------------------------------------------------------------

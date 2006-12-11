@@ -57,8 +57,6 @@ namespace TGUI
         TGRenderer*         m_renderer;
         TGTexture*          m_texture;
 
-        TGColour            gColor;
-
         string              name;
         float               padLeft;
         float               padTop;
@@ -196,16 +194,13 @@ namespace TGUI
         void openClipArea(int x1, int y1, int x2, int y2);
         void closeClipArea();
 
-
-        void color(int r, int g, int b, int a=255);
-        void color(TGColour c);
-        void drawRect(int x1, int y1, int x2, int y2,int thickness=1);
-        void fillRect(int x1, int y1, int x2, int y2, TGTexture* tex=NULL);
-        void drawLine(int x1, int y1, int x2, int y2,int thickness=1);
-        void drawTri(int x1, int y1, int x2, int y2, int pointDir);
+        void drawRect(int x1, int y1, int x2, int y2, TGSBrush brush, int thickness=1);
+        void fillRect(int x1, int y1, int x2, int y2, TGSBrush brush);
+        void drawLine(int x1, int y1, int x2, int y2,TGSBrush brush, int thickness=1);
+        void drawTri(int x1, int y1, int x2, int y2, TGSBrush brush, int pointDir=0);
         void drawFrame(int x1, int y1, int x2, int y2,
             FrameStyle s=FS_FLAT,int thickness=1);
-        void drawString(int x, int y, string str, int length=-1);
+        void drawString(int x, int y, string str, TGSBrush brush, int length=-1);
 
         int stringWidth(string str, size_t length=-1);
         int stringHeight();

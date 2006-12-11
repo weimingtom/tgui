@@ -29,6 +29,7 @@ namespace TGUI
 {
     class TGCursor : public TGImage
     {
+        TGSBrush        m_brush;
 
     public:
         TGCursor(string fname,string resourceGroup="");

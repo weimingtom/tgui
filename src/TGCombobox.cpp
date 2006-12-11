@@ -38,11 +38,6 @@ namespace TGUI
         m_listbox->isComposite = true;
         m_inputbox->isComposite = true;
 
-        TGColourTheme ct = m_listbox->getColourTheme();
-        TGColour c = ct.getBase();
-        c.a = 1.f;
-     
-        m_listbox->setColourTheme(TGColourTheme(c),true);
         m_listbox->hide();
         m_listbox->redraw();
 
@@ -249,11 +244,6 @@ namespace TGUI
     void TGCombobox::setColourTheme(TGColourTheme theme,bool updateChildren)
     {
         TGControl::setColourTheme(theme,updateChildren);
-
-        TGColour c = theme.getBase();
-        c.a = 1.f;
-        m_listbox->setColourTheme(TGColourTheme(c),true);
-        m_listbox->redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -269,14 +259,15 @@ namespace TGUI
 
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
+        TGSBrush brush;
         if (mouseOverControl  || hasKeyboardFocus(this) || 
             hasKeyboardFocus(m_inputbox) || m_listbox->isVisible())
-            color(m_theme.getFrameFocusedColour());
+            brush = m_theme.getFrameFocusedBrush();
         else
-            color(m_theme.getFrameColour());
+            brush = m_theme.getFrameBrush();
 
-        drawRect(x2-m_height, y1, x2, y1+m_height);
-        drawTri(x2-m_height+2,y1+7, x2-3, y1+m_height-7,0);
+        drawRect(x2-m_height, y1, x2, y1+m_height,brush);
+        drawTri(x2-m_height+2,y1+7, x2-3, y1+m_height-7,brush,0);
     }
 
 }

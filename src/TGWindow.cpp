@@ -130,54 +130,54 @@ namespace TGUI
             cRect = TGRect(x1, y1, x1+clen+(stringWidth("M")*2),titleY2);
         else cRect = TGRect(x1, y1, x2, titleY2);
 
+        TGSBrush brush;
+
         if(!caption.empty())
         {
 
-            color(m_theme.getCaptionColour());
-            fillRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom,m_capTexture);
+            brush = m_theme.getCaptionBrush();
+            fillRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
 
-            color(m_theme.getBase());
-            fillRect(x1, titleY2, x2, y2);
+            brush = m_theme.getBase();
+            fillRect(x1, titleY2, x2, y2, brush);
         }
         else
         {
-            color(m_theme.getBase());
-            fillRect(this->x1, this->y1, this->x2, this->y2);
+            brush = m_theme.getBase();
+            fillRect(this->x1, this->y1, this->x2, this->y2, brush);
         }
 
         TGColour frameColour;
+        TGSBrush textBrush;
         if (focused())
         {
-            frameColour = m_theme.getFrameFocusedColour();
-            color(frameColour);
-            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
-            drawRect(x1, titleY2, x2, y2);
-            color(m_theme.getTextFocusedColour());
+            brush = m_theme.getFrameFocusedBrush();
+            textBrush = m_theme.getTextFocusedBrush();
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+            drawRect(x1, titleY2, x2, y2, brush);
         }
         else
         {
-            frameColour = m_theme.getFrameColour();
-            color(frameColour);
-            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom);
-            drawRect(x1, titleY2, x2, y2);
-            color(m_theme.getTextColour());
+            brush = m_theme.getFrameBrush();
+            textBrush = m_theme.getTextBrush();
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+            drawRect(x1, titleY2, x2, y2, brush);
         }
 
         openClip();
         if(!caption.empty())
         {
             if(!isTabbedCaption)
-                drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption);
-            else drawString(x1+stringWidth("M"),y1 + 2, caption);
+                drawString((x2-x1)/2 + x1 - clen/2, y1 + 2, caption, textBrush);
+            else drawString(x1+stringWidth("M"),y1 + 2, caption, textBrush);
         }
 
 
         if (resizeable)
         {
-            color(frameColour);
-            drawLine(x2 - 15, y2-1, x2-1, y2 - 15);
-            drawLine(x2 - 10, y2-1, x2-1, y2 - 10);
-            drawLine(x2 - 5, y2-1, x2-1, y2 - 5);
+            drawLine(x2 - 15, y2-1, x2-1, y2 - 15, brush);
+            drawLine(x2 - 10, y2-1, x2-1, y2 - 10, brush);
+            drawLine(x2 - 5, y2-1, x2-1, y2 - 5, brush);
         }
 
         TGControl::render();

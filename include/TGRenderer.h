@@ -30,6 +30,8 @@ namespace TGUI
 
     class TGTexture;
     class TGRenderer;
+    class TGBrush;
+    typedef Ogre::SharedPtr<TGBrush> TGSBrush;
 
     struct TGQuadVertex {
         float x, y, z;                          // The position for the vertex.
@@ -120,11 +122,11 @@ namespace TGUI
         void closeClipArea();
         void resetClipping();
 
+        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush);
+        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int thickness);
+        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int pointDir);
 
-        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
-        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness);
-        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int pointDir);
-        void renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours);
+        void renderQuadDirect(const TGRect& dest_rect, float z, const TGRect& texture_rect, TGSBrush brush);
         virtual	void	doRender(TGQuadList& quadList);
 
         virtual	TGTexture*	createTexture(void);
