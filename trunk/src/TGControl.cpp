@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C o n t r o l
     //-----------------------------------------------------------------------
-    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
+    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache()),  m_theme(TGColourTheme())
     {
         x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
             yShift = 0;
@@ -43,6 +43,7 @@ namespace TGUI
         m_parent = parent;
         m_redraw = false;
         m_popupMenu = NULL;
+
         m_texture = TGSystem::getSingleton().getDefaultTexture();
         exclusiveChild = NULL;
         if (m_parent)
@@ -622,8 +623,7 @@ namespace TGUI
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        color(m_theme.getFrameSelectedColour());
-        drawRect(x1 + 3, y1 + 3, x2 - 3, y2 - 3);
+        drawRect(x1 + 3, y1 + 3, x2 - 3, y2 - 3,m_theme.getFrameSelectedBrush());
     }
 
     //-----------------------------------------------------------------------
@@ -731,51 +731,29 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                                c o l o r
-    //-----------------------------------------------------------------------
-    void TGControl::color(int r, int g, int b, int a)
-    {
-        gColor.r = r/255.f;
-        gColor.g = g/255.f;
-        gColor.b = b/255.f;
-        gColor.a = a/255.f;
-    }
-
-    //-----------------------------------------------------------------------
-    //                                c o l o r
-    //-----------------------------------------------------------------------
-    void TGControl::color(TGColour c)
-    {
-        gColor = c;
-    }
-
-    //-----------------------------------------------------------------------
     //                            d r a w R e c t
     //-----------------------------------------------------------------------
-    void TGControl::drawRect(int x1, int y1, int x2, int y2,int thickness)
+    void TGControl::drawRect(int x1, int y1, int x2, int y2,TGSBrush brush, int thickness)
     {
         if(!m_isVisible)
             return;
 
-        drawLine(x1,y1,x2,y1,thickness);
-        drawLine(x2,y1,x2,y2,thickness);
-        drawLine(x1,y2,x2,y2,thickness);
-        drawLine(x1,y1,x1,y2,thickness);
+        drawLine(x1,y1,x2,y1,brush,thickness);
+        drawLine(x2,y1,x2,y2,brush,thickness);
+        drawLine(x1,y2,x2,y2,brush,thickness);
+        drawLine(x1,y1,x1,y2,brush,thickness);
     }
 
     //-----------------------------------------------------------------------
     //                            f i l l R e c t
     //-----------------------------------------------------------------------
-    void TGControl::fillRect(int x1, int y1, int x2, int y2, TGTexture* tex)
+    void TGControl::fillRect(int x1, int y1, int x2, int y2, TGSBrush brush)
     {
         if(!m_isVisible)
             return;
-        if(!tex)
-            tex = m_texture;
         TGRect r(x1,y1,x2,y2);
-        TGColourRect cr(gColor);
         TGRect ruv(0.f,0.f,1.f,1.f);
-        TGQuadInfo qi = m_renderer->addQuad(r,0,tex,ruv,cr);
+        TGQuadInfo qi = m_renderer->addQuad(r,0,ruv,brush);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -784,16 +762,13 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            d r a w L i n e
     //-----------------------------------------------------------------------
-    void TGControl::drawLine(int x1, int y1, int x2, int y2,int thickness)
+    void TGControl::drawLine(int x1, int y1, int x2, int y2,TGSBrush brush, int thickness)
     {
         if(!m_isVisible)
             return;
         TGRect r(x1,y1,x2,y2);
         TGRect ruv(0.f,0.f,1.f,1.f);
-        TGColourRect cr(gColor);
-
-        TGQuadInfo qi = m_renderer->addLine(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            ruv,cr,thickness);
+        TGQuadInfo qi = m_renderer->addLine(r,0, ruv,brush,thickness);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -801,17 +776,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             d r a w T r i
     //-----------------------------------------------------------------------
-    void TGControl::drawTri(int x1, int y1, int x2, int y2,int pointDir)
+    void TGControl::drawTri(int x1, int y1, int x2, int y2,TGSBrush brush, int pointDir)
     {
         if(!m_isVisible)
             return;
 
         TGRect r(x1,y1,x2,y2);
         TGRect ruv(0.f,0.f,1.f,1.f);
-        TGColourRect cr(gColor);
-
-        TGQuadInfo qi = m_renderer->addTri(r,0,TGSystem::getSingleton().getDefaultTexture(),
-            ruv,cr,pointDir);
+        TGQuadInfo qi = m_renderer->addTri(r,0,ruv,brush,pointDir);
         m_systemCache.push_back(qi);
         m_quadCache.push_back(qi);
     }
@@ -823,26 +795,28 @@ namespace TGUI
     {
         if(!m_isVisible)
             return;
-        color(m_theme.getBaseOpaque());
+
+        TGSBrush brush;
+
+        brush = m_theme.getBaseOpaque();
+        fillRect(x1, y1, x2, y2, brush);
         if (!s)
         {
-            fillRect(x1, y1, x2, y2);
             return;
         }
-        fillRect(x1, y1, x2, y2);
         switch (s)
         {
         case FS_FLAT:
-            color(m_theme.getFrameColour());
-            drawRect(x1, y1, x2, y2);
+            brush = m_theme.getFrameBrush();
+            drawRect(x1, y1, x2, y2, brush );
             break;
         case FS_RAISED:
-            color(m_theme.getFrameFocusedColour());
-            drawRect(x1, y1, x2, y2);
+            brush = m_theme.getFrameFocusedBrush();
+            drawRect(x1, y1, x2, y2, brush);
             break;
-        case FS_LOWERED:
-            color(m_theme.getFrameSelectedColour());
-            drawRect(x1, y1, x2, y2);
+        case FS_LOWERED:            
+            brush = m_theme.getFrameSelectedBrush();
+            drawRect(x1, y1, x2, y2, brush);
             break;
         default:
             break;
@@ -852,7 +826,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           d r a w S t r i n g
     //-----------------------------------------------------------------------
-    void TGControl::drawString(int x, int y, string str, int length)
+    void TGControl::drawString(int x, int y, string str, TGSBrush brush, int length)
     {
         if(!m_isVisible)
             return;
@@ -882,12 +856,11 @@ namespace TGUI
 
 
             TGRect r(cx,y,x2,y2);
-            TGColourRect cr(gColor);
             TGRect ruv;
 
             font->m_font->getGlyphTexCoords(ch,ruv.d_left,ruv.d_top,ruv.d_right,ruv.d_bottom);
 
-            TGQuadInfo qi = m_renderer->addQuad(r,0,font->m_texture,ruv,cr);
+            TGQuadInfo qi = m_renderer->addQuad(r,0,ruv,brush);
             m_systemCache.push_back(qi);
             m_quadCache.push_back(qi);
 
@@ -1204,8 +1177,9 @@ namespace TGUI
 
         if (exclusiveChild)
         {
-            color(0, 0, 0, 96);
-            TGControl::fillRect(x1, y1, x2, y2);
+            TGSBrush brush;
+            brush.bind(new TGBrush(TGColour(0, 0, 0, 96)));
+            TGControl::fillRect(x1, y1, x2, y2, brush);
 
             exclusiveChild->render();
             exclusiveChild->redraw(false);

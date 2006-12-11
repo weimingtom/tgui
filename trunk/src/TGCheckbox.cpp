@@ -73,22 +73,24 @@ namespace TGUI
 
         drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
 
+        TGSBrush brush;
+
         if (m_hover)
-            color(m_theme.getTextFocusedColour());
+            brush = m_theme.getTextFocusedBrush();
         else
-            color(m_theme.getTextColour());
+            brush = m_theme.getTextBrush();
 
         if (m_checked.get())
         {
-            drawLine(x1, y1 + 4, x1 + 12, y2 - 4);
-            drawLine(x1 + 12, y1 + 4, x1, y2 - 4);
+            drawLine(x1, y1 + 4, x1 + 12, y2 - 4, brush);
+            drawLine(x1 + 12, y1 + 4, x1, y2 - 4, brush);
         }
 
 
 
         drawString(x1 + 16,
             (y2-y1 + 1)/2 + y1 - (int)stringHeight()/2,
-            m_caption);
+            m_caption,brush);
     }
 
     //-----------------------------------------------------------------------

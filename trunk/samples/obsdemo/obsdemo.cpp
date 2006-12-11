@@ -502,8 +502,7 @@ public:
     void createScene(void)
     {
         // setup GUI system
-        TGColourTheme ct;
-        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
+        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
         createTest2();
     }

@@ -63,6 +63,7 @@ namespace TGUI
             x2 = x1 + 9;
             y2 = y1 + 9;
         }
+        m_brush.bind(new TGBrush(texture));
         setBounds(x1, y1, x2, y2);
     }
 
@@ -79,6 +80,7 @@ namespace TGUI
         y2 = y1 + m_height - 1;
 
         setBounds(x1,y1,x2,y2);
+        m_brush.bind(new TGBrush(texture));
     }
 
 
@@ -127,7 +129,7 @@ namespace TGUI
             return;
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        fillRect(x1, y1, x2, y2, texture);
+        fillRect(x1, y1, x2, y2, m_brush);
         TGControl::render();
     }
 }

@@ -33,13 +33,13 @@ namespace TGUI
     TGBrush::TGBrush()
     {
         m_colourRect = TGColourRect(TGColour(1.0,1.0,1.0,1.0));
-        m_texture.bind(TGSystem::getSingleton().getDefaultTexture());
+        m_texture = TGSystem::getSingleton().getDefaultTexture();
     }
 
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(TGSTexture texture)
+    TGBrush::TGBrush(TGTexture* texture)
     {
         m_texture = texture;
     }
@@ -47,21 +47,23 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(const TGColour& col, TGSTexture texture)
+    TGBrush::TGBrush(const TGColour& col, TGTexture* texture)
     {
         m_colourRect = TGColourRect(col);
-        if(texture.isNull())
-            m_texture.bind(TGSystem::getSingleton().getDefaultTexture());
+        m_texture = texture;
+        if(!texture)
+            m_texture = TGSystem::getSingleton().getDefaultTexture();
     }
 
     //-----------------------------------------------------------------------
     //                             T G B r u s h
     //-----------------------------------------------------------------------
-    TGBrush::TGBrush(const TGColourRect& colRect, TGSTexture texture)
+    TGBrush::TGBrush(const TGColourRect& colRect, TGTexture* texture)
     {
         m_colourRect = colRect;
-        if(texture.isNull())
-            m_texture.bind(TGSystem::getSingleton().getDefaultTexture());
+        m_texture = texture;
+        if(!m_texture)
+            m_texture = TGSystem::getSingleton().getDefaultTexture();
     }
 
     //-----------------------------------------------------------------------
@@ -90,7 +92,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           s e t T e x t u r e
     //-----------------------------------------------------------------------
-    void TGBrush::setTexture(const TGSTexture texture)
+    void TGBrush::setTexture(TGTexture* texture)
     {
         m_texture = texture;
     }

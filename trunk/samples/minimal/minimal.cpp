@@ -166,8 +166,7 @@ public:
 
     void createScene(void)
     {
-        TGColourTheme ct;
-        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond",ct);
+        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
         TGWindow	*win = new TGWindow("A tgui Window");
         win->center();

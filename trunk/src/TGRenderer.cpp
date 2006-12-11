@@ -165,7 +165,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
+    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush)
     {
         quad.isClipped = false;
 
@@ -188,7 +188,7 @@ namespace TGUI
             while(first != last)
             {
                 clip = *first;
-                if(!clipQuad(clip,destRect,texRect,colours))
+                if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
@@ -215,14 +215,14 @@ namespace TGUI
         quad.position.offset(TGPoint(-1.0f, -1.0f));
 
         quad.z				= -1 + z;
-        quad.texture		= tex->getOgreTexture();
+        quad.texture		= brush->m_texture->getOgreTexture();
         quad.texPosition	= texRect;
 
         // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
 
         // setup Vertex 1...
         quad.lpos[0].x = quad.position.d_left;
@@ -279,7 +279,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d T r i
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int pointDir)
+    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int pointDir)
     {
         quad.isClipped = false;
 
@@ -302,7 +302,7 @@ namespace TGUI
             while(first != last)
             {
                 clip = *first;
-                if(!clipQuad(clip,destRect,texRect,colours))
+                if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
@@ -329,14 +329,14 @@ namespace TGUI
         quad.position.offset(TGPoint(-1.0f, -1.0f));
 
         quad.z				= -1 + z;
-        quad.texture		= tex->getOgreTexture();
+        quad.texture		= brush->m_texture->getOgreTexture();
         quad.texPosition	= texRect;
 
         // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
 
         // setup Vertex 1...
         quad.lpos[0].x = quad.position.d_left;
@@ -394,7 +394,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours, int thickness)
+    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush, int thickness)
     {
         quad.isClipped = false;
 
@@ -415,7 +415,7 @@ namespace TGUI
             while(first != last)
             {
                 clip = *first;
-                if(!clipQuad(clip,destRect,texRect,colours))
+                if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
@@ -435,10 +435,10 @@ namespace TGUI
         float float_thick = (( float )thickness );
 
         // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(colours.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(colours.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(colours.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(colours.m_topRight);
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
 
         //
         // quad on the origin and rotate
@@ -496,7 +496,7 @@ namespace TGUI
 
         // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
         quad.z				= -1 + z;
-        quad.texture		= ((TGTexture*)tex)->getOgreTexture();
+        quad.texture		= brush->m_texture->getOgreTexture();
         quad.texPosition	= texRect;
 
         //
@@ -745,7 +745,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       r e n d e r Q u a d D i r e c t
     //-----------------------------------------------------------------------
-    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGTexture* tex, const TGRect& texture_rect, const TGColourRect& colours)
+    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z, const TGRect& texture_rect, const TGSBrush brush)
     {
         if (m_renderSys->_getViewport()->getOverlaysEnabled())
         {
@@ -768,10 +768,10 @@ namespace TGUI
             final_rect.offset(TGPoint(-1.0f, -1.0f));
 
             // convert colours for ogre, note that top / bottom are switched.
-            uint32 topLeftCol	= colourToOgre(colours.m_bottomLeft);
-            uint32 topRightCol	= colourToOgre(colours.m_bottomRight);
-            uint32 bottomLeftCol	= colourToOgre(colours.m_topLeft);
-            uint32 bottomRightCol= colourToOgre(colours.m_topRight);
+            uint32 topLeftCol	= colourToOgre(brush->m_colourRect.m_bottomLeft);
+            uint32 topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
+            uint32 bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
+            uint32 bottomRightCol= colourToOgre(brush->m_colourRect.m_topRight);
 
             TGQuadVertex*	buffmem = (TGQuadVertex*)d_direct_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
 
@@ -835,7 +835,7 @@ namespace TGUI
             // perform rendering...
             //
             initRenderStates();
-            m_renderSys->_setTexture(0, true, ((TGTexture*)tex)->getOgreTexture()->getName());
+            m_renderSys->_setTexture(0, true, brush->m_texture->getOgreTexture()->getName());
             d_direct_render_op.vertexData->vertexCount = VERTEX_PER_QUAD;
             m_renderSys->_render(d_direct_render_op);
         }

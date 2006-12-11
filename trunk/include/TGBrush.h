@@ -31,20 +31,21 @@ namespace TGUI
     {
     public:
         TGColourRect        m_colourRect;
-        TGSTexture          m_texture;
+        TGTexture*          m_texture;
     public:
 
 
         TGBrush();
-        TGBrush(TGSTexture tex);
-        TGBrush(const TGColour& col, TGSTexture texture=TGSTexture());
-        TGBrush(const TGColourRect& colRect, TGSTexture texture=TGSTexture());
+        TGBrush(TGTexture* texture);
+        TGBrush(const TGColour& col, TGTexture* texture=NULL);
+        TGBrush(const TGColourRect& colRect, TGTexture* texture=NULL);
+
 
         virtual ~TGBrush();
 
         void    setColour(const TGColour& col);
         void    setColour(const TGColourRect& colRect);
-        void    setTexture(const TGSTexture texture);
+        void    setTexture(TGTexture* texture);
 
     };
 

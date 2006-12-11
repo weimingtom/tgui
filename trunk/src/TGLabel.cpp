@@ -64,8 +64,8 @@ namespace TGUI
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
-        color(m_theme.getTextColour());
-        drawString(x1, y1, m_text);
+        TGSBrush brush = m_theme.getTextBrush();
+        drawString(x1, y1, m_text, brush);
     }
 
 }

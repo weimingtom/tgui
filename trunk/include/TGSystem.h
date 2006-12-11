@@ -53,8 +53,7 @@ namespace TGUI
         void createDefaultCursor();
 
     public:
-        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont,
-            TGColourTheme defaultTheme=TGColourTheme());
+        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont);
         ~TGSystem();
 
         static TGSystem& getSingleton(void);

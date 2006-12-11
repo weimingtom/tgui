@@ -32,6 +32,7 @@ namespace TGUI
     {
         int         m_width;
         int         m_height;
+        TGSBrush    m_brush;
 
     public:
         TGTexture*	texture;

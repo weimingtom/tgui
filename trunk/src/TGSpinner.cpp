@@ -97,9 +97,6 @@ namespace TGUI
     void TGSpinner::setColourTheme(TGColourTheme theme,bool updateChildren)
     {
         TGControl::setColourTheme(theme,updateChildren);
-
-        TGColour c = theme.getBase();
-        c.a = 1.f;
     }
 
     //-----------------------------------------------------------------------
@@ -113,14 +110,15 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGInputbox::render();
+        TGSBrush brush;
         if (mouseOverControl  || hasKeyboardFocus(this))
-            color(m_theme.getFrameFocusedColour());
+            brush = m_theme.getFrameFocusedBrush();
         else
-            color(m_theme.getFrameColour());
+            brush = m_theme.getFrameBrush();
 
-        drawRect(x2, y1, x2 + m_height, y2);
+        drawRect(x2, y1, x2 + m_height, y2, brush);
 
-        drawTri(x2+2,y1+7, x2+m_height-3, y2-7,0);
+        drawTri(x2+2,y1+7, x2+m_height-3, y2-7,brush, 0);
 
         /*
         if(m_listbox->isVisible())

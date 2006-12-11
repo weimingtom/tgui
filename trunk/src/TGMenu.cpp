@@ -86,25 +86,27 @@ namespace TGUI
         int     x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
 
+        TGSBrush brush;
+
         if (caption[0] == '-' && !caption[1])
         {
-            color(m_theme.getFrameFocusedColour());
+            brush = m_theme.getFrameFocusedBrush();
             drawLine(x1, y1 + (y2 - y1 + 1)/2, x2 + 1,
-                y1 + (y2 - y1 + 1)/2);
+                y1 + (y2 - y1 + 1)/2, brush);
             return;
         }
 
         if (mouseOverControl || (subMenu && subMenu->menu->m_parent))
         {
-            color(m_theme.getCaptionColour());
-            fillRect(x1, y1, x2, y2);
-            color(m_theme.getTextInvertedColour());
+            brush = m_theme.getCaptionBrush();
+            fillRect(x1, y1, x2, y2, brush);
+            brush = m_theme.getTextInvertedBrush();
         }
         else
-            color(m_theme.getTextFocusedColour());
+            brush = m_theme.getTextFocusedBrush();
 
         drawString(x1 + ((TGMenuControl*)m_parent)->iconPad + 5, y1 + 1,
-            caption);
+            caption, brush);
     }
 
     //-----------------------------------------------------------------------
@@ -228,10 +230,11 @@ namespace TGUI
         if(isRenderCached())
             return;
 
-        color(m_theme.getBase());
-        fillRect(x1, y1, x2, y2);
-        color(m_theme.getFrameFocusedColour());
-        drawRect(x1, y1, x2, y2);
+        TGSBrush  brush;
+        brush = m_theme.getBase();
+        fillRect(x1, y1, x2, y2, brush);
+        brush = m_theme.getFrameFocusedBrush();
+        drawRect(x1, y1, x2, y2, brush);
 
         TGControl::render();
     }

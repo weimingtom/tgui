@@ -76,13 +76,15 @@ namespace TGUI
             drawOwnFocus();
         }
 
+        TGSBrush brush;
+
         if (m_pushed)
-            color(m_theme.getTextInvertedColour());
+            brush = m_theme.getTextInvertedBrush();
         else
         {
             if(mouseOverControl)
-                color(m_theme.getTextFocusedColour());
-            else color(m_theme.getTextColour());
+                brush = m_theme.getTextFocusedBrush();
+            else brush = m_theme.getTextBrush();
         }
 
         x1 = (x2 - x1 + 1)/2 + x1;
@@ -90,7 +92,7 @@ namespace TGUI
         x2 = 0;
         openClip();
         drawString(x1 + x2, (y2-y1 + 1)/2 + y1 - 
-            stringHeight()/2, m_caption);
+            stringHeight()/2, m_caption, brush);
         closeClip();
     }
 
