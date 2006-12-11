@@ -175,7 +175,7 @@ public:
         win->resize(190, 200);
         win->resizeable = true;   
 
-        TGTexture *tex = TGSystem::getSingleton().getRenderer()->createTexture("DirtyMetal.png");
+        TGTexture *tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
         win->setTexture(tex);
 
 
@@ -183,7 +183,7 @@ public:
         win2->setPos(10,10);
         win2->resize(200,300);
 
-        tex = TGSystem::getSingleton().getRenderer()->createTexture("tilerust.png");
+        tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
         win2->setTexture(tex);
         win2->resizeable = true;
 
