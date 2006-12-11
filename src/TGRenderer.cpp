@@ -218,11 +218,11 @@ namespace TGUI
         quad.texture		= brush->m_texture->getOgreTexture();
         quad.texPosition	= texRect;
 
-        // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        // convert colours
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
 
         // setup Vertex 1...
         quad.lpos[0].x = quad.position.d_left;
@@ -332,11 +332,11 @@ namespace TGUI
         quad.texture		= brush->m_texture->getOgreTexture();
         quad.texPosition	= texRect;
 
-        // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        // convert colours
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
 
         // setup Vertex 1...
         quad.lpos[0].x = quad.position.d_left;
@@ -434,11 +434,11 @@ namespace TGUI
         Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
         float float_thick = (( float )thickness );
 
-        // covert colours for ogre, note that top / bottom are switched.
-        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_bottomLeft);
-        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
-        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
-        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        // convert colours
+        quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_topLeft);
+        quad.topRightCol	= colourToOgre(brush->m_colourRect.m_topRight);
+        quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_bottomLeft);
+        quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
 
         //
         // quad on the origin and rotate
