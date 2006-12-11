@@ -258,6 +258,8 @@ namespace TGUI
         //    return;
 
         TGControl *oldFocus = m_parent->getLastChild()->getFocusedChild();
+        if(!oldFocus)
+            oldFocus = m_parent->getLastChild();
 
         m_parent->setFocusedChild(this);
 

@@ -32,6 +32,7 @@ namespace TGUI
     {
     public:
         string			caption;
+        TGTexture*      m_capTexture;
         bool            isTabbedCaption;
         bool			moving;
         bool			resizing;
@@ -55,6 +56,8 @@ namespace TGUI
         virtual void onMouseUp(int x, int y, int b);
         virtual void onMouseEnter();
         virtual void onMouseExit();
+        virtual void onFocusExit();
+
 
 
     };
