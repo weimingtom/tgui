@@ -168,33 +168,32 @@ public:
     {
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
-        TGWindow	*win = new TGWindow("A tgui Window");
+        TGWindow	*win = new TGWindow("");
         win->center();
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
         win->resizeable = true;   
+        TGSBrush    brush;
+
+        brush.bind(new TGBrush(TGColourRect(TGColour(1,0,0,.7f),TGColour(1,0,0,.9f),
+            TGColour(0,0,1), TGColour(0,1,0))));
+        win->getColourTheme().m_base = brush;
+        win->setFrameEnabled(false);
 
         TGTexture *tex;
-
-        //tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
-        //win->setTexture(tex);
-
 
         TGWindow *win2 = new TGWindow("Another Window");
         win2->setPos(10,10);
         win2->resize(200,300);
 
-        tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
-        win2->setTexture(tex);
         win2->resizeable = true;
 
         new TGButton(win2,10,10,100,40,"Test");
 
-        TGColourTheme ct = win2->getColourTheme();
-        ct.m_base->m_colourRect = TGColourRect(TGColour(1,1,1));
-        //ct.m_base->m_colourRect = TGColourRect(TGColour(0,1,1),TGColour(0,0,1,0),TGColour(0,1,0),TGColour(0,1,0));
-        ct.m_base->m_texture = tex;
-        win2->setColourTheme(ct);
+        tex = TGSystem::getSingleton().getRenderer()->createTexture("DirtyMetal.png");
+        brush.setNull();
+        brush.bind(new TGBrush(tex));
+        win2->getColourTheme().m_base = brush;
 
         new TGButton(win2,10,50,100,90,"Test 2");
 

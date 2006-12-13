@@ -42,6 +42,7 @@ namespace TGUI
     TGBrush::TGBrush(TGTexture* texture) : m_uv(0.f,0.f,1.f,1.f)
     {
         m_texture = texture;
+        m_colourRect = TGColourRect(TGColour(1.0,1.0,1.0,1.0));
     }
 
     //-----------------------------------------------------------------------
