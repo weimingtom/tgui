@@ -152,19 +152,22 @@ namespace TGUI
 
         TGColour frameColour;
         TGSBrush textBrush;
-        if (focused())
+        if(m_frameEnabled)
         {
-            brush = m_theme.getFrameFocusedBrush();
-            textBrush = m_theme.getTextFocusedBrush();
-            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
-            drawRect(x1, titleY2, x2, y2, brush);
-        }
-        else
-        {
-            brush = m_theme.getFrameBrush();
-            textBrush = m_theme.getTextBrush();
-            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
-            drawRect(x1, titleY2, x2, y2, brush);
+            if (focused())
+            {
+                brush = m_theme.getFrameFocusedBrush();
+                textBrush = m_theme.getTextFocusedBrush();
+                drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+                drawRect(x1, titleY2, x2, y2, brush);
+            }
+            else
+            {
+                brush = m_theme.getFrameBrush();
+                textBrush = m_theme.getTextBrush();
+                drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+                drawRect(x1, titleY2, x2, y2, brush);
+            }
         }
 
         openClip();

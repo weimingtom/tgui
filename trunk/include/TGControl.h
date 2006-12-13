@@ -49,6 +49,7 @@ namespace TGUI
     protected:
         bool                m_isVisible;
         bool                m_redraw;
+        bool                m_frameEnabled;
         TGControlList       m_children;
         TGEventMap          m_handlers;
         TGColourTheme       m_theme;
@@ -104,6 +105,9 @@ namespace TGUI
         TGControl* getLastChild();
 
         virtual string getControlType() {return "TGControl";};
+
+        bool getFrameEnabled() {return m_frameEnabled;};
+        void setFrameEnabled(bool value) {m_frameEnabled = value; redraw();};
 
         TGControl* getFocusedChild(void) {return m_focusedChild;};
         void setFocusedChild(TGControl* child);
@@ -179,7 +183,7 @@ namespace TGUI
             int bottom=-1);
         virtual void getClientSize(int &w, int &h);
 
-        TGColourTheme getColourTheme() {return m_theme;};
+        TGColourTheme& getColourTheme() {return m_theme;};
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         void setMouseTrackingControl(TGControl *control);
