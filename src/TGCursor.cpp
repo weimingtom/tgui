@@ -32,6 +32,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCursor::TGCursor(string fname,string resourceGroup) : TGImage(NULL,0,0,fname,resourceGroup)
     {
+        m_hotSpot = TGPoint(0,0);
         m_brush.bind(new TGBrush(TGColour(1,1,1,1)));
 
     }
@@ -41,6 +42,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,0,0,texture)
     {
+        m_hotSpot = TGPoint(0,0);
         m_brush.bind(new TGBrush(TGColour(1,1,1,1),texture));
     }
 
@@ -81,6 +83,9 @@ namespace TGUI
    //-----------------------------------------------------------------------
    void TGCursor::draw()
     {
+        if(!m_isVisible)
+            return;
+
         TGRect r(x1,y1,x2,y2);
         getRenderer()->renderQuadDirect(r,0,m_brush);
     }

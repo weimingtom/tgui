@@ -30,10 +30,11 @@ namespace TGUI
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
     TGWindow::TGWindow(string caption) : TGControl(getActiveScreen())
-        , moving(false)
-        , resizing(false)
-        , resizeable(false)
-        , m_capTexture(TGSystem::getSingleton().getDefaultTexture())
+        , m_moving(false)
+        , m_resizing(false)
+        , m_resizeable(false)
+        , m_movable(true)
+        , m_titlebarEnabled(true)
     {
         minWidth = 50;
         minHeight = 50;
@@ -42,7 +43,7 @@ namespace TGUI
         m_caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
-        m_titleBarHeight = stringHeight() + 2;
+        m_titlebarHeight = stringHeight() + 4;
         menu = NULL;
         m_isTabbedCaption = false;
     }
@@ -51,15 +52,19 @@ namespace TGUI
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
     TGWindow::TGWindow(TGScreen *screen, string caption) : TGControl(screen)
+        , m_moving(false)
+        , m_resizing(false)
+        , m_resizeable(false)
+        , m_movable(true)
+        , m_titlebarEnabled(true)
     {
-        moving = resizing = resizeable = false;
-        minWidth = 1;
-        minHeight = 1;
+        minWidth = 50;
+        minHeight = 50;
         setBounds(10, 10, 200, 160);
         m_caption = caption;
         padLeft = padRight = padBottom = 2;
         padTop = 6 + stringHeight();
-        m_titleBarHeight = stringHeight() + 2;
+        m_titlebarHeight = stringHeight() + 2;
         menu = NULL;
     }
 
@@ -90,7 +95,7 @@ namespace TGUI
 
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        y1 = y1 + m_titleBarHeight;
+        y1 = y1 + m_titlebarHeight;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
             return true;
 
@@ -104,7 +109,7 @@ namespace TGUI
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
-        y2 = y1 + m_titleBarHeight;
+        y2 = y1 + m_titlebarHeight;
         if(m_isTabbedCaption)
             x2 = x1+stringWidth(m_caption)+(stringWidth("M")*2);
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
@@ -126,7 +131,7 @@ namespace TGUI
         TGRect cRect;
         getBounds(x1, y1, x2, y2);
 
-        titleY2 = y1 + m_titleBarHeight;
+        titleY2 = y1 + m_titlebarHeight;
 
         clen = (int)stringWidth(m_caption);
         if(m_isTabbedCaption)
@@ -135,7 +140,7 @@ namespace TGUI
 
         TGSBrush brush;
 
-        if(!m_caption.empty())
+        if(m_titlebarEnabled)
         {
 
             brush = m_theme.getCaptionBrush();
@@ -152,26 +157,26 @@ namespace TGUI
 
         TGColour frameColour;
         TGSBrush textBrush;
+        if (focused())
+        {
+            brush = m_theme.getFrameFocusedBrush();
+            textBrush = m_theme.getTextFocusedBrush();
+        }
+        else
+        {
+            brush = m_theme.getFrameBrush();
+            textBrush = m_theme.getTextBrush();
+        }
         if(m_frameEnabled)
         {
-            if (focused())
-            {
-                brush = m_theme.getFrameFocusedBrush();
-                textBrush = m_theme.getTextFocusedBrush();
-                drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
-                drawRect(x1, titleY2, x2, y2, brush);
-            }
-            else
-            {
-                brush = m_theme.getFrameBrush();
-                textBrush = m_theme.getTextBrush();
-                drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
-                drawRect(x1, titleY2, x2, y2, brush);
-            }
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+            drawRect(x1, titleY2, x2, y2, brush);
+            drawRect(cRect.d_left, cRect.d_top, cRect.d_right, cRect.d_bottom, brush);
+            drawRect(x1, titleY2, x2, y2, brush);
         }
 
         openClip();
-        if(!m_caption.empty())
+        if(m_titlebarEnabled && !m_caption.empty())
         {
             if(!m_isTabbedCaption)
                 drawString((x2-x1)/2 + x1 - clen/2, y1 + 2,m_caption, textBrush);
@@ -179,7 +184,7 @@ namespace TGUI
         }
 
 
-        if (resizeable)
+        if (m_resizeable)
         {
             drawLine(x2 - 15, y2-1, x2-1, y2 - 15, brush);
             drawLine(x2 - 10, y2-1, x2-1, y2 - 10, brush);
@@ -201,23 +206,23 @@ namespace TGUI
         if(m_isTabbedCaption)
             x2 = x1+stringWidth(m_caption)+(stringWidth("M")*2);
 
-        titleY2 = stringHeight() + y1 + 2;
+        titleY2 = m_titlebarHeight + y1 + 2;
 
         if (b == LeftButton)
             focus();
 
-        if (resizeable && x >= x2-10 && y >= y2-10)
+        if (m_resizeable && x >= x2-10 && y >= y2-10)
         {
-            resizing = true;
+            m_resizing = true;
             mX = x;
             mY = y;
             setMouseTrackingControl(this);
         }
         else
         {
-            if ( (x > x1) && (x < x2) && (y > y1) && (y < titleY2) )
+            if ( m_movable && (x > x1) && (x < x2) && (y > y1) && (y < titleY2) )
             {
-                moving = true;
+                m_moving = true;
                 mX = x-x1;
                 mY = y-y1;
                 setMouseTrackingControl(this);
@@ -230,10 +235,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::onMouseMoved(int x, int y)
     {
-        if (moving)
+        if (m_moving)
             moveRel(x-mX, y-mY);
 
-        if (resizing)
+        if (m_resizing)
         {
             resize((x2-x1+1)+x-mX, (y2-y1+1)+y-mY);
             mX = x;
@@ -246,9 +251,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::onMouseUp(int x, int y, int b)
     {
-        if (!(moving || resizing))
+        if (!(m_moving || m_resizing))
             return;
-        moving = resizing = false;
+        m_moving = m_resizing = false;
         setMouseTrackingControl(NULL);
     }
 

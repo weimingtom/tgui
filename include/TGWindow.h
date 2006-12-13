@@ -30,15 +30,18 @@ namespace TGUI
 
     class TGWindow : public TGControl
     {
-    public:
+    protected:
         string			m_caption;
-        TGTexture*      m_capTexture;
         bool            m_isTabbedCaption;
-        bool			moving;
-        bool			resizing;
-        bool			resizeable;
+        bool			m_moving;
+        bool			m_resizing;
+        bool			m_resizeable;
+        bool            m_movable;
+        bool            m_titlebarEnabled;
+        int             m_titlebarHeight;
+
+    public:
         int			    mX, mY;
-        int             m_titleBarHeight;
         TGPopupMenu*    menu;
 
         TGWindow(string caption="");
@@ -48,6 +51,14 @@ namespace TGUI
         virtual void setCaption(string newCaption);
         virtual bool pointInControl(float x, float y);
         virtual bool pointInCaption(float x, float y);
+        virtual void setResizeEnabled(bool value) {m_resizeable = value;};
+        virtual bool getResizeEnabled() {return m_resizeable;};
+        virtual void setMoveEnabled(bool value) {m_movable = value;};
+        virtual bool getMoveEnabled() {return m_movable;};
+        virtual void setTitlebarEnabled(bool value) {m_titlebarEnabled = value;};
+        virtual bool getTitlebarEnabled() {return m_titlebarEnabled;};
+        virtual void setTitlebarHeight(int value) {m_titlebarHeight = value;};
+        virtual int getTitlebarheight() {return m_titlebarHeight;};
 
         virtual void render();
 
