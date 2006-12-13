@@ -29,12 +29,17 @@ namespace TGUI
 {
     class TGCursor : public TGImage
     {
+        TGPoint         m_hotSpot;
         TGSBrush        m_brush;
 
     public:
         TGCursor(string fname,string resourceGroup="");
         TGCursor(TGTexture* texture);
         virtual ~TGCursor();
+
+        void setHotSpot(TGPoint value) {m_hotSpot = value;};
+        TGPoint getHotSpot() {return m_hotSpot;};
+
         void move(int x, int y);
         virtual void draw();
         virtual void render() {};

@@ -251,6 +251,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGImageButton.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGImageButton.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\TGImageSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGImageSet.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGInputbox.cpp"
 				>
 			</File>
