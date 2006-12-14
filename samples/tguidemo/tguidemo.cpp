@@ -185,6 +185,12 @@ public:
         win->getColourTheme().m_caption = brush;
 
 
+        TGImageButton* b = new TGImageButton(TGSystem::getSingleton().getActiveScreen(),"playbutton.png");
+        b->setPos(0.5f,0.5f);
+        b->setWidth(256);
+        b->setHeight(128);
+
+        /*
         TGWindow *win2 = new TGWindow("Another Window");
         win2->setPos(10,10);
         win2->resize(200,300);
@@ -200,6 +206,7 @@ public:
         win->getColourTheme().m_base = brush;
 
         new TGButton(win2,10,50,100,90,"Test 2");
+        */
     }
 };
 

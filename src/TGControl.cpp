@@ -503,10 +503,10 @@ namespace TGUI
         float sw = m_renderer->getWidth();
         float sh = m_renderer->getHeight();
 
-        x1 = (float)ix1 * sw;
-        x2 = (float)ix2 * sw;
-        y1 = (float)iy1 * sh;
-        y2 = (float)iy2 * sh;
+        x1 = (float)ix1 / sw;
+        x2 = (float)ix2 / sw;
+        y1 = (float)iy1 / sh;
+        y2 = (float)iy2 / sh;
     }
 
     //-----------------------------------------------------------------------

@@ -29,11 +29,12 @@ namespace TGUI
 {
     class TGImageButton : public TGControl
     {
+        TGImageSet*     m_images;
         bool	        m_pushed;
         bool	        m_highlighted;
 
     public:
-        TGImageButton(TGControl *parent);
+        TGImageButton(TGControl *parent,string imageName, string resourceGroup="");
         virtual ~TGImageButton();
 
         virtual void render();
