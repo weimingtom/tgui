@@ -28,18 +28,24 @@
 namespace TGUI
 {
 
+    typedef std::list<TGRect> TGUVList;
+
     class TGImageSet
     {
     protected:
         int             m_width;
         int             m_height;
+        int             m_imageCount;
         TGTexture*	    m_texture;
+        TGUVList        m_uvList;
 
     public:
-        TGImageSet(string fname,string resourceGroup="");
+        TGImageSet(string fname,int imagecount, string resourceGroup="");
         virtual ~TGImageSet();
         int getWidth() {return m_width;};
         int getHeight() {return m_height;};
+        TGRect getUVRect(int index);
+        TGTexture* getTexture() {return m_texture;};
 
     };
 }

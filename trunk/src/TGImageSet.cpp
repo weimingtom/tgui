@@ -29,9 +29,34 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G I m a g e S e t
     //-----------------------------------------------------------------------
-    TGImageSet::TGImageSet(string fname,string resourceGroup)
+    TGImageSet::TGImageSet(string fname,int imagecount, string resourceGroup)
     {
+        m_imageCount = imagecount;
+        if(resourceGroup.empty())
+        {
+            resourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME.c_str();
+        }
+        m_texture = TGSystem::getSingleton().getRenderer()->createTexture(fname,resourceGroup);
+        m_width = m_texture->getWidth();
+        m_height = m_texture->getHeight();
 
+        float w=m_width,h=m_height;
+        int ih = m_height / m_imageCount;
+
+        TGRect  uv;
+        uv.d_left = 0.f;
+        uv.d_right = 1.f;
+
+        for(int i=0;i<m_imageCount;i++)
+        {
+            int ps = ih * i + i;
+            int pe = ps + ih;
+
+            uv.d_top = (float) ps / m_height;
+            uv.d_bottom = (float) pe / m_height;
+
+            m_uvList.push_back(TGRect(uv));
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -40,5 +65,27 @@ namespace TGUI
     TGImageSet::~TGImageSet()
     {
     }
+
+    //-----------------------------------------------------------------------
+    //                           g e t U V R e c t
+    //-----------------------------------------------------------------------
+    TGRect TGImageSet::getUVRect(int index)
+    {
+        TGRect res;
+        int i = 0;
+        std::list<TGRect>::iterator itr;
+
+        itr = m_uvList.begin();
+        while(i < index)
+        {
+            ++itr;
+            ++i;
+        }
+
+        res = *itr;
+
+        return res;
+    }
+
 
 }

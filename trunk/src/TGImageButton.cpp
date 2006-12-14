@@ -29,10 +29,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G I m a g e B u t t o n
     //-----------------------------------------------------------------------
-    TGImageButton::TGImageButton(TGControl *parent) : TGControl(parent)
+    TGImageButton::TGImageButton(TGControl *parent, string imageName, string resourceGroup) : TGControl(parent)
     {
         setBounds(x1, y1, x2, y2);
         m_pushed = m_highlighted = false;
+
+        m_images = new TGImageSet(imageName,4,resourceGroup);
     }
 
     //-----------------------------------------------------------------------
@@ -51,41 +53,14 @@ namespace TGUI
             return;
 
         int			x1, y1, x2, y2;
-        FrameStyle	fs = FS_FLAT;
         getBounds(x1, y1, x2, y2);
 
-        if (mouseOverControl)
-            fs = m_pushed?FS_LOWERED:FS_RAISED;
-        else
-            fs = FS_FLAT;
-
-        drawFrame(x1, y1, x2, y2, fs);
-
-        if (focused())
-        {
-            drawOwnFocus();
-        }
-
         TGSBrush brush;
+        brush.bind(new TGBrush(m_images->getTexture()));
+        brush->m_uv = m_images->getUVRect(0);
 
-        if (m_pushed)
-            brush = m_theme.getTextInvertedBrush();
-        else
-        {
-            if(mouseOverControl)
-                brush = m_theme.getTextFocusedBrush();
-            else brush = m_theme.getTextBrush();
-        }
+        fillRect(x1,y1,x2,y2,brush);
 
-        /*
-        x1 = (x2 - x1 + 1)/2 + x1;
-        x1 -= stringWidth(m_caption)/2;
-        x2 = 0;
-        openClip();
-        drawString(x1 + x2, (y2-y1 + 1)/2 + y1 - 
-            stringHeight()/2, m_caption, brush);
-        closeClip();
-        */
     }
 
     //-----------------------------------------------------------------------
