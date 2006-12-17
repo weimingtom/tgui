@@ -255,8 +255,8 @@ public:
         TGScreen* screen = TGSystem::getSingleton().getActiveScreen();
 
         TGListbox *lbox = (TGListbox*)screen->findChild("listbox");
-        lbox->addItem(((TGInputbox*)screen->findChild("inputbox"))->getText());
-        ((TGInputbox*)screen->findChild("inputbox"))->setText("");
+        lbox->addItem(((TGEditbox*)screen->findChild("inputbox"))->getText());
+        ((TGEditbox*)screen->findChild("inputbox"))->setText("");
         screen->findChild("inputbox")->focus();
         return true;
     }
@@ -336,7 +336,7 @@ public:
         (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::removeItemAction,this));
 
-        (new TGInputbox(win2, 10, 270, 175, 295))->setName("inputbox");
+        (new TGEditbox(win2, 10, 270, 175, 295))->setName("inputbox");
 
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
@@ -446,7 +446,7 @@ public:
         cendaMenu->addItem("No filtering");
         cendaMenu->addItem("Bilinear filtering");
         cenda->setPopupMenu(cendaMenu);
-        win5->resizeable = true;
+        win5->setResizeEnabled(true);
         win5->addEventHandler(TGEvent::Resized,new TGEventHandler(&DemoApp::imageWinResizedAction,this));
         //win5->icon = new TGBitmap(INTERNALBMP_WINICON);
 

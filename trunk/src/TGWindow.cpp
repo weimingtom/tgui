@@ -184,7 +184,7 @@ namespace TGUI
         }
 
 
-        if (m_resizeable)
+        if (m_frameEnabled && m_resizeable)
         {
             drawLine(x2 - 15, y2-1, x2-1, y2 - 15, brush);
             drawLine(x2 - 10, y2-1, x2-1, y2 - 10, brush);

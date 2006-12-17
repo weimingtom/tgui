@@ -27,9 +27,9 @@ namespace TGUI
 {
 
     //-----------------------------------------------------------------------
-    //                          T G I n p u t b o x
+    //                          T G E d i t b o x
     //-----------------------------------------------------------------------
-    TGInputbox::TGInputbox(TGControl *parent, int x1, int y1, int x2, int y2)
+    TGEditbox::TGEditbox(TGControl *parent, int x1, int y1, int x2, int y2)
         : TGControl(parent)
     {
         text.setControl(this);
@@ -46,16 +46,16 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                        ~ T G I n p u t b o x
+    //                        ~ T G E d i t b o x
     //-----------------------------------------------------------------------
-    TGInputbox::~TGInputbox()
+    TGEditbox::~TGEditbox()
     {
     }
 
     //-----------------------------------------------------------------------
     //                            s e t T e x t
     //-----------------------------------------------------------------------
-    void TGInputbox::setText(string newText)
+    void TGEditbox::setText(string newText)
     {
         int     w, h;
         getClientSize(w, h);
@@ -70,7 +70,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           g e t T e x t
     //-----------------------------------------------------------------------
-    string TGInputbox::getText()
+    string TGEditbox::getText()
     {
         return text.get();
     }
@@ -78,7 +78,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            r e n d e r
     //-----------------------------------------------------------------------
-    void TGInputbox::render()
+    void TGEditbox::render()
     {
         if(isRenderCached())
             return;
@@ -101,6 +101,8 @@ namespace TGUI
 
         if (m_cursorVisible)
         {
+            TGSBrush brush;
+            brush.bind(new TGBrush(TGColour(1,1,1)));
             drawLine(x1 + 5 + cursorX - tScroll, y1 + 4,
                 x1 + 5 + cursorX - tScroll, y2 - 4, brush);
         }
@@ -115,7 +117,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         o n K e y D o w n
     //-----------------------------------------------------------------------
-    void TGInputbox::onKeyDown(int key, unsigned char ascii)
+    void TGEditbox::onKeyDown(int key, unsigned char ascii)
     {
         int     w, h;
 
@@ -161,7 +163,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           o n K e y U p
     //-----------------------------------------------------------------------
-    void TGInputbox::onKeyUp(int key, unsigned char ascii)
+    void TGEditbox::onKeyUp(int key, unsigned char ascii)
     {
         m_lastKey = -1;
     }
@@ -169,7 +171,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            p u l s e
     //-----------------------------------------------------------------------
-    void TGInputbox::pulse(float timeElapsed)
+    void TGEditbox::pulse(float timeElapsed)
     {
         if(!focused())
             return;
@@ -197,7 +199,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       o n F o c u s E n t e r
     //-----------------------------------------------------------------------
-    void TGInputbox::onFocusEnter(TGControl* oldFocus)
+    void TGEditbox::onFocusEnter(TGControl* oldFocus)
     {
         TGControl::onFocusEnter(oldFocus);
         m_cursorVisible = true;
@@ -207,7 +209,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        o n F o c u s E x i t
     //-----------------------------------------------------------------------
-    void TGInputbox::onFocusExit()
+    void TGEditbox::onFocusExit()
     {
         m_cursorVisible = false;
     }

@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGSpinner : public TGInputbox
+    class TGSpinner : public TGEditbox
     {
     private:
         int             m_height;

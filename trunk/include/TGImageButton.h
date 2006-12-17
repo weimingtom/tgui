@@ -32,6 +32,7 @@ namespace TGUI
         TGImageSet*     m_images;
         bool	        m_pushed;
         bool	        m_highlighted;
+        int             m_uvIndex;
 
     public:
         TGImageButton(TGControl *parent,string imageName, string resourceGroup="");
@@ -42,6 +43,9 @@ namespace TGUI
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);
+        virtual void onMouseEnter();
+        virtual void onMouseExit(int x, int y);
+
     };
 }
 
