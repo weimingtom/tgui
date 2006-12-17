@@ -29,18 +29,18 @@ namespace TGUI
 {
     class TGButton : public TGControl
     {
-        string	        m_caption;
+        TGString        m_caption;
         bool	        m_pushed;
         bool	        m_highlighted;
 
     public:
-        TGButton(TGControl *parent, int x1, int y1, int x2, int y2, string caption);
+        TGButton(TGControl *parent, int x1, int y1, int x2, int y2, TGString caption);
         virtual ~TGButton();
 
-        virtual void setCaption(string newCaption);
+        virtual void setCaption(TGString newCaption);
 
         virtual void render();
-        virtual string getControlType() {return "TGButton";}
+        virtual TGString getControlType() {return "TGButton";}
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);

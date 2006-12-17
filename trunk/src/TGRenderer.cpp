@@ -26,7 +26,7 @@
 
 namespace TGUI
 {
-    const float     TGRenderer::GuiZInitialValue              = 1.0f;
+    const TGReal     TGRenderer::GuiZInitialValue              = 1.0f;
 
     const size_t	TGRenderer::VERTEX_PER_QUAD			= 6;
     const size_t	TGRenderer::VERTEX_PER_TRIANGLE		= 3;
@@ -165,14 +165,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d Q u a d
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, float z, const TGSBrush brush)
+    TGQuadInfo TGRenderer::addQuad(const TGRect& dest_rect, TGReal z, const TGSBrush brush)
     {
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
         TGRect texRect=brush->m_uv;
-        const float  daWidth = m_displayArea.getWidth();
-        const float  daHeight = m_displayArea.getHeight();
+        const TGReal  daWidth = m_displayArea.getWidth();
+        const TGReal  daHeight = m_displayArea.getHeight();
 
         //
         // clip quad.  returns false if completely outside the clip area
@@ -279,14 +279,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d T r i
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, float z, const TGSBrush brush, int pointDir)
+    TGQuadInfo TGRenderer::addTri(const TGRect& dest_rect, TGReal z, const TGSBrush brush, int pointDir)
     {
         quad.isClipped = false;
 
         TGRect destRect=dest_rect;
         TGRect texRect=brush->m_uv;
-        const float  daWidth = m_displayArea.getWidth();
-        const float  daHeight = m_displayArea.getHeight();
+        const TGReal  daWidth = m_displayArea.getWidth();
+        const TGReal  daHeight = m_displayArea.getHeight();
 
         //
         // clip quad.  returns false if completely outside the clip area
@@ -394,7 +394,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d L i n e
     //-----------------------------------------------------------------------
-    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, float z, const TGSBrush brush, int thickness)
+    TGQuadInfo TGRenderer::addLine(const TGRect& dest_rect, TGReal z, const TGSBrush brush, int thickness)
     {
         quad.isClipped = false;
 
@@ -429,10 +429,10 @@ namespace TGUI
         TGVector2 start_point(destRect.d_left,destRect.d_top);
         TGVector2 end_point(destRect.d_right,destRect.d_bottom);
         TGVector2 newEnd = end_point - start_point;
-        float len = newEnd.length();
+        TGReal len = newEnd.length();
 
         Ogre::Radian angle( atan2(newEnd.y, newEnd.x) );
-        float float_thick = (( float )thickness );
+        TGReal float_thick = (( TGReal )thickness );
 
         // convert colours
         quad.topLeftCol		= colourToOgre(brush->m_colourRect.m_topLeft);
@@ -445,10 +445,10 @@ namespace TGUI
         //
         TGRect oRect(0.f,-float_thick/2.f,len,float_thick/2.f);
 
-        const float preCos = cos( angle.valueRadians() );
-        const float preSin = sin( angle.valueRadians() );
+        const TGReal preCos = cos( angle.valueRadians() );
+        const TGReal preSin = sin( angle.valueRadians() );
 
-        float x,y;
+        TGReal x,y;
 
         x = oRect.d_left;
         y = oRect.d_top;
@@ -658,7 +658,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         c r e a t e T e x t u r e
     //-----------------------------------------------------------------------
-    TGTexture* TGRenderer::createTexture(const string& filename, const string& resourceGroup)
+    TGTexture* TGRenderer::createTexture(const TGString& filename, const TGString& resourceGroup)
     {
         TGTexture* tex = (TGTexture*)createTexture();
         tex->loadFromFile(filename, resourceGroup);
@@ -669,7 +669,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         c r e a t e T e x t u r e
     //-----------------------------------------------------------------------
-    TGTexture* TGRenderer::createTexture(float size)
+    TGTexture* TGRenderer::createTexture(TGReal size)
     {
         TGTexture* tex = (TGTexture*)createTexture();
         tex->setOgreTextureSize((uint)size);
@@ -745,7 +745,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       r e n d e r Q u a d D i r e c t
     //-----------------------------------------------------------------------
-    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, float z,  const TGSBrush brush)
+    void TGRenderer::renderQuadDirect(const TGRect& dest_rect, TGReal z,  const TGSBrush brush)
     {
         if (m_renderSys->_getViewport()->getOverlaysEnabled())
         {
@@ -909,7 +909,7 @@ namespace TGUI
         d_modified      = false;
         m_ogreRoot      = Root::getSingletonPtr();
         m_renderSys	    = m_ogreRoot->getRenderSystem();
-        // set ID string
+        // set ID TGString
         //d_identifierString = "CEGUI::OgreRenderer - Official Ogre based renderer module for CEGUI";
 
         // Create and initialise the Ogre specific parts required for use in rendering later.
@@ -927,7 +927,7 @@ namespace TGUI
         m_displayArea.d_bottom	= window->getHeight();
 
         // initialise required texel offset
-        d_texelOffset = TGPoint((float)m_renderSys->getHorizontalTexelOffset(), -(float)m_renderSys->getVerticalTexelOffset());
+        d_texelOffset = TGPoint((TGReal)m_renderSys->getHorizontalTexelOffset(), -(TGReal)m_renderSys->getVerticalTexelOffset());
 
         // create listener which will handler the rendering side of things for us.
         d_ourlistener = new TGRQListener(this, queue_id, post_queue);
@@ -1058,11 +1058,11 @@ namespace TGUI
         if(drect.d_bottom > clip->y2)
             clipBot = true;
 
-        float twidth=trect.getWidth();
-        float theight=trect.getHeight();
-        float dwidth = drect.getWidth();
-        float dheight = drect.getHeight();
-        float dist,pct;
+        TGReal twidth=trect.getWidth();
+        TGReal theight=trect.getHeight();
+        TGReal dwidth = drect.getWidth();
+        TGReal dheight = drect.getHeight();
+        TGReal dist,pct;
 
         if(clipLeft || clipTop || clipRight || clipBot)
             clipping = true;

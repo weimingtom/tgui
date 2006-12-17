@@ -78,11 +78,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     bool TGThemeManager::colourModified(const TGEventArgs& args)
     {
-        float r,g,b,a;
-        r = (float)m_red->value.get() / 255.f;
-        g = (float)m_green->value.get() / 255.f;
-        b = (float)m_blue->value.get() / 255.f;
-        a = (float)m_alpha->value.get() / 255.f;
+        TGReal r,g,b,a;
+        r = (TGReal)m_red->value.get() / 255.f;
+        g = (TGReal)m_green->value.get() / 255.f;
+        b = (TGReal)m_blue->value.get() / 255.f;
+        a = (TGReal)m_alpha->value.get() / 255.f;
 
         TGColourTheme ct(TGColour(r,g,b,a));
 

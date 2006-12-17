@@ -56,7 +56,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGSpinner::pointInControl(float x, float y)
+    bool TGSpinner::pointInControl(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
@@ -69,7 +69,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl* TGSpinner::childAt(float x, float y)
+    TGControl* TGSpinner::childAt(TGReal x, TGReal y)
     {
         return this;
     }

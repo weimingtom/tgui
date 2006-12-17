@@ -30,16 +30,16 @@ namespace TGUI
     class TGMessagebox : public TGWindow
     {
     protected:
-        string          m_caption;
-        string          m_message; 
+        TGString          m_caption;
+        TGString          m_message; 
     private:
         bool closeMessageBox(const TGEventArgs& args);
 
     public:
-        TGMessagebox(string msg, string caption="Message");
+        TGMessagebox(TGString msg, TGString caption="Message");
         virtual ~TGMessagebox();
         void show();
-        virtual string getControlType() {return "TGMessagebox";};
+        virtual TGString getControlType() {return "TGMessagebox";};
 
     };
 }

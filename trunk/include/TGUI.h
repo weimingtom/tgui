@@ -47,12 +47,12 @@ namespace TGUI
     typedef Ogre::uint	 uint;
     typedef Ogre::uint32 uint32;
     typedef Ogre::ushort ushort;
+    typedef Ogre::String TGString;
+    typedef Ogre::Real   TGReal;
 #define LeftButton 0
 #define RightButton 1
 #define MiddleButton 2
 }
-
-using std::string;
 
 #include <tglogger.h>
 #include <tgcolour.h>

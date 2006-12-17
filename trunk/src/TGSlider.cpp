@@ -73,7 +73,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             s e t V a l u e
     //-----------------------------------------------------------------------
-    void TGSlider::setValue(float newValue)
+    void TGSlider::setValue(TGReal newValue)
     {
         value.set(newValue);
         fireEvent(TGEvent::Modified,TGEventArgs(this));
@@ -82,7 +82,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             s e t M a x
     //-----------------------------------------------------------------------
-    void TGSlider::setMax(float newMax)
+    void TGSlider::setMax(TGReal newMax)
     {
         max = newMax;
         if (value.get() > max)
@@ -108,7 +108,7 @@ namespace TGUI
     void TGSlider::onMouseMoved(int x, int y)
     {
         int	x1, y1, x2, y2, width, height;
-        float   oldValue = value.get();
+        TGReal   oldValue = value.get();
 
         if (!sliding)
             return;
@@ -123,7 +123,7 @@ namespace TGUI
             if (x > x2-4)
                 x = x2-4;
 
-        value.set(max*(float)(x-3-x1)/(float)(width-8));
+        value.set(max*(TGReal)(x-3-x1)/(TGReal)(width-8));
         if (value.get() < 0.0f)
             value.set(0.0f);
         else

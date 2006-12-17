@@ -50,7 +50,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             s e t M a x
     //-----------------------------------------------------------------------
-    void TGProgressBar::setMax(float newMax)
+    void TGProgressBar::setMax(TGReal newMax)
     {
         if (newMax < 0.0f)
             newMax = 0.0f;
@@ -62,7 +62,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           s e t V a l u e
     //-----------------------------------------------------------------------
-    void TGProgressBar::setValue(float newValue)
+    void TGProgressBar::setValue(TGReal newValue)
     {
         if (newValue < 0)
             newValue = 0;
@@ -81,7 +81,7 @@ namespace TGUI
             return;
 
         int	x1, y1, x2, y2, w;
-        float	value = this->value.get();
+        TGReal	value = this->value.get();
         getBounds(x1, y1, x2, y2);
 
         TGSBrush brush = m_theme.getFrameFocusedBrush();
@@ -95,7 +95,7 @@ namespace TGUI
         if (max.get() == 0.0f || value == 0.0f)
             return;
 
-        w = (int)((float)(x2-x1-2)*value/max.get());
+        w = (int)((TGReal)(x2-x1-2)*value/max.get());
 
         fillRect(x1 + 1, y1 + 1, x1 + w, y2 - 2, brush);
     }

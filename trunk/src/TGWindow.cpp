@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
-    TGWindow::TGWindow(string caption) : TGControl(getActiveScreen())
+    TGWindow::TGWindow(TGString caption) : TGControl(getActiveScreen())
         , m_moving(false)
         , m_resizing(false)
         , m_resizeable(false)
@@ -51,7 +51,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
-    TGWindow::TGWindow(TGScreen *screen, string caption) : TGControl(screen)
+    TGWindow::TGWindow(TGScreen *screen, TGString caption) : TGControl(screen)
         , m_moving(false)
         , m_resizing(false)
         , m_resizeable(false)
@@ -80,7 +80,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           s e t C a p t i o n
     //-----------------------------------------------------------------------
-    void TGWindow::setCaption(string newCaption)
+    void TGWindow::setCaption(TGString newCaption)
     {
         m_caption = newCaption;
     }
@@ -88,7 +88,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGWindow::pointInControl(float x, float y)
+    bool TGWindow::pointInControl(TGReal x, TGReal y)
     {
         if(!m_isTabbedCaption)
             return TGControl::pointInControl(x,y);
@@ -105,7 +105,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      p o i n t I n C a p t i o n
     //-----------------------------------------------------------------------
-    bool TGWindow::pointInCaption(float x,float y)
+    bool TGWindow::pointInCaption(TGReal x,TGReal y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);

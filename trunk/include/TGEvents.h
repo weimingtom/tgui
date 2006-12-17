@@ -32,20 +32,20 @@ namespace TGUI
     class TGEvent
     {
     public:
-        static const string Resized;
-        static const string Moved;
-        static const string Scrolled;
-        static const string Modified;
-        static const string Selected;
+        static const TGString Resized;
+        static const TGString Moved;
+        static const TGString Scrolled;
+        static const TGString Modified;
+        static const TGString Selected;
 
-        static const string MouseEnter;
-        static const string MouseLeave;
-        static const string MouseDown;
-        static const string MouseUp;
-        static const string MouseMove;
-        static const string MouseClicked;
+        static const TGString MouseEnter;
+        static const TGString MouseLeave;
+        static const TGString MouseDown;
+        static const TGString MouseUp;
+        static const TGString MouseMove;
+        static const TGString MouseClicked;
 
-        static const string MenuPopup;
+        static const TGString MenuPopup;
     };
 
     class TGEventArgs
@@ -54,7 +54,7 @@ namespace TGUI
         TGEventArgs(TGControl* control) : m_control(control) {}
         virtual ~TGEventArgs(void) {}
         TGControl*      m_control;
-        string          m_eventID;
+        TGString          m_eventID;
     };
 
     class TGMouseEventArgs : public TGEventArgs

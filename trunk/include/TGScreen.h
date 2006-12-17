@@ -49,7 +49,7 @@ namespace TGUI
         int getMouseY() {return mouseY;};
         void setMouseX(int value) {mouseX = value;};
         void setMouseY(int value) {mouseY = value;};
-        virtual string getControlType() {return "TGScreen";};
+        virtual TGString getControlType() {return "TGScreen";};
 
     };
 

@@ -51,9 +51,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                    s e t S c r o l l i n g B o u n d s
     //-----------------------------------------------------------------------
-    void TGScrollbox::setScrollingBounds(float hMax, float vMax)
+    void TGScrollbox::setScrollingBounds(TGReal hMax, TGReal vMax)
     {
-        float   oldHScroll = hScroll, oldVScroll = vScroll;
+        TGReal   oldHScroll = hScroll, oldVScroll = vScroll;
         if (hMax < 1.0f)
             hMax = 1.0f;
         if (vMax < 1.0f)
@@ -172,7 +172,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGScrollbox::layout()
     {
-        float   hMax = 1.0f, vMax = 1.0f;
+        TGReal   hMax = 1.0f, vMax = 1.0f;
 
         TGControl* child;
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
@@ -202,7 +202,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGScrollbox::pointInControl(float x, float y)
+    bool TGScrollbox::pointInControl(TGReal x, TGReal y)
     {
 
         return TGControl::pointInControl(x,y);
@@ -211,7 +211,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl* TGScrollbox::childAt(float x, float y)
+    TGControl* TGScrollbox::childAt(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
@@ -225,7 +225,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            o n S c r o l l
     //-----------------------------------------------------------------------
-    void TGScrollbox::onScroll(float hd, float vd)
+    void TGScrollbox::onScroll(TGReal hd, TGReal vd)
     {
         TGControl* child;
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
@@ -242,7 +242,7 @@ namespace TGUI
     void TGScrollbox::onMouseMoved(int x, int y)
     {
         int	x1, y1, x2, y2;
-        float	oldHScroll, oldVScroll;
+        TGReal	oldHScroll, oldVScroll;
         if (!scrolling)
             return;
         getBounds(x1, y1, x2, y2);
@@ -252,7 +252,7 @@ namespace TGUI
 
         if (scrolling == 1)
         {
-            vScroll = (float)(y - y1 - 6)*clientHeight/(float)(y2 - y1 -24);
+            vScroll = (TGReal)(y - y1 - 6)*clientHeight/(TGReal)(y2 - y1 -24);
             if (vScroll > clientHeight)
                 vScroll = clientHeight;
             else
@@ -261,7 +261,7 @@ namespace TGUI
         }
         else
         {
-            hScroll = (float)(x - x1 - 6)*clientWidth/(float)(x2 - x1 - 24);
+            hScroll = (TGReal)(x - x1 - 6)*clientWidth/(TGReal)(x2 - x1 - 24);
             if (hScroll > clientWidth)
                 hScroll = clientWidth;
             else

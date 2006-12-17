@@ -30,7 +30,7 @@ namespace TGUI
     //                           T G B u t t o n
     //-----------------------------------------------------------------------
     TGButton::TGButton(TGControl *parent, int x1, int y1, int x2, int y2, 
-        string caption) : TGControl(parent)
+        TGString caption) : TGControl(parent)
     {
         setBounds(x1, y1, x2, y2);
         m_caption = caption;
@@ -47,7 +47,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          s e t C a p t i o n
     //-----------------------------------------------------------------------
-    void TGButton::setCaption(string newCaption)
+    void TGButton::setCaption(TGString newCaption)
     {
         m_caption = newCaption;
     }

@@ -39,19 +39,19 @@ namespace TGUI
 
 
     public:
-        TGImage(TGControl *parent, int x, int y, string fname,string resourceGroup="");
+        TGImage(TGControl *parent, int x, int y, TGString fname,TGString resourceGroup="");
         TGImage(TGControl *parent, int x, int y, TGTexture* texture);
         virtual ~TGImage();
 
         virtual void setTexture(TGTexture *newTexture, bool resize=true);
-        virtual void setTexture(string fname, string resourceGroop="", bool resize=true);
+        virtual void setTexture(TGString fname, TGString resourceGroop="", bool resize=true);
 
         int getWidth() {return m_width;};
         int getHeight() {return m_height;};
 
 
         virtual void render();
-        virtual string getControlType() {return "TGImage";};
+        virtual TGString getControlType() {return "TGImage";};
     };
 }
 #endif

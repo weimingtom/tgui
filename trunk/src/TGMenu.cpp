@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M e n u I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem::TGMenuItem(TGControl *owner, string caption) : TGControl(owner)
+    TGMenuItem::TGMenuItem(TGControl *owner, TGString caption) : TGControl(owner)
     {
         this->caption = caption;
         subMenu = NULL;
@@ -47,7 +47,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGMenuItem::addItem(string caption)
+    TGMenuItem *TGMenuItem::addItem(TGString caption)
     {
         if (!subMenu)
         {
@@ -274,7 +274,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           a d d I t e m
     //-----------------------------------------------------------------------
-    TGMenuItem *TGPopupMenu::addItem(string caption)
+    TGMenuItem *TGPopupMenu::addItem(TGString caption)
     {
         TGMenuItem        *item = new TGMenuItem(menu, caption);
         item->menuControl = rootMenuControl?rootMenuControl:menu;

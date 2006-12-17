@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G I m a g e B u t t o n
     //-----------------------------------------------------------------------
-    TGImageButton::TGImageButton(TGControl *parent, string imageName, string resourceGroup) : TGControl(parent)
+    TGImageButton::TGImageButton(TGControl *parent, TGString imageName, TGString resourceGroup) : TGControl(parent)
     {
         m_uvIndex = 0;
         setBounds(x1, y1, x2, y2);

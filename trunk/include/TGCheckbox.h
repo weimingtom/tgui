@@ -30,19 +30,19 @@ namespace TGUI
 
     class TGCheckbox : public TGControl
     {
-        string			m_caption;
+        TGString        m_caption;
         bool			m_hover;
         bool			m_pushed;
         TGDataManager<bool>	m_checked;
 
     public:
-        TGCheckbox(TGControl *parent,string caption="", int x1=0, int y1=0, int x2=5, int y2=5);
+        TGCheckbox(TGControl *parent,TGString caption="", int x1=0, int y1=0, int x2=5, int y2=5);
         virtual ~TGCheckbox();
 
-        virtual void setCaption(string newCaption);
+        virtual void setCaption(TGString newCaption);
 
         virtual void render();
-        virtual string getControlType() {return "TGCheckbox";};
+        virtual TGString getControlType() {return "TGCheckbox";};
 
         virtual void setState(bool checked);
 

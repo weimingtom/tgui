@@ -101,7 +101,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           s e t T e x t u r e
     //-----------------------------------------------------------------------
-    void TGBrush::setTexture(string tname, string resourceGroup)
+    void TGBrush::setTexture(TGString tname, TGString resourceGroup)
     {
         TGTexture* tex;
         tex = TGSystem::getSingleton().getRenderer()->createTexture(tname,resourceGroup);

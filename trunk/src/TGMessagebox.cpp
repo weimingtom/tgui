@@ -33,7 +33,7 @@ namespace TGUI
     }
 
 
-    TGMessagebox::TGMessagebox(string msg, string caption) : TGWindow(TGSystem::getSingleton().getActiveScreen(),caption)
+    TGMessagebox::TGMessagebox(TGString msg, TGString caption) : TGWindow(TGSystem::getSingleton().getActiveScreen(),caption)
     {
         m_message = msg;
         m_caption = caption;

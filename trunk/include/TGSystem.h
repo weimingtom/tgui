@@ -53,7 +53,7 @@ namespace TGUI
         void createDefaultCursor();
 
     public:
-        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont);
+        TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,TGString defaultFont);
         ~TGSystem();
 
         static TGSystem& getSingleton(void);
@@ -70,12 +70,12 @@ namespace TGUI
 
         void setLogger(TGLogger* logger);
         TGLogger* getLogger();
-        void logMessage(string message);
+        void logMessage(TGString message);
 
         TGColourTheme getColourTheme() {return m_theme;};
         void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
-        TGFont* loadFont(string fontName,string resourceGroup="");
+        TGFont* loadFont(TGString fontName,TGString resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};
         void setCurrentFont(TGFont* font) {m_currentFont = font;};
 
@@ -93,7 +93,7 @@ namespace TGUI
         void injectMouseButtonUp(int relX, int relY, int buttonID);
         void injectKeyDown(int key,unsigned char ascii);
         void injectKeyUp(int key,unsigned char ascii);
-        void injectTimePulse(float timeElapsed);
+        void injectTimePulse(TGReal timeElapsed);
 
         void renderGUI();
     };

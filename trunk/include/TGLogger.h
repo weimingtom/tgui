@@ -33,7 +33,7 @@ namespace TGUI
     public:
         TGLogger() {};
         virtual ~TGLogger() {};
-        virtual void logMessage(string message);
+        virtual void logMessage(TGString message);
     };
 
 }

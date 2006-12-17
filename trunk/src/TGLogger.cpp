@@ -27,7 +27,7 @@
 namespace TGUI
 {
 
-    void TGLogger::logMessage(string message)
+    void TGLogger::logMessage(TGString message)
     {
         Ogre::LogManager::getSingleton().logMessage(message);
     }

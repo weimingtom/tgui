@@ -35,11 +35,11 @@ namespace TGUI
         int             m_uvIndex;
 
     public:
-        TGImageButton(TGControl *parent,string imageName, string resourceGroup="");
+        TGImageButton(TGControl *parent,TGString imageName, TGString resourceGroup="");
         virtual ~TGImageButton();
 
         virtual void render();
-        virtual string getControlType() {return "TGImageButton";}
+        virtual TGString getControlType() {return "TGImageButton";}
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);

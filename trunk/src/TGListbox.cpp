@@ -49,7 +49,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t T e x t
     //-----------------------------------------------------------------------
-    void TGListboxItem::setText(string newText)
+    void TGListboxItem::setText(TGString newText)
     {
         text = newText;
         minimumWidth = stringWidth(newText) + 16;
@@ -120,7 +120,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             a d d I t e m
     //-----------------------------------------------------------------------
-    void TGListbox::addItem(string text)
+    void TGListbox::addItem(TGString text)
     {
         (new TGListboxItem(this))->setText(text);
         layout();
@@ -137,7 +137,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             f i n d I t e m
     //-----------------------------------------------------------------------
-    TGListboxItem *TGListbox::findItem(string text)
+    TGListboxItem *TGListbox::findItem(TGString text)
     {
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)

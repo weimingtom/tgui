@@ -34,9 +34,9 @@ namespace TGUI
     typedef Ogre::SharedPtr<TGBrush> TGSBrush;
 
     struct TGQuadVertex {
-        float x, y, z;                          // The position for the vertex.
+        TGReal x, y, z;                          // The position for the vertex.
         Ogre::RGBA diffuse;                     // colour of the vertex
-        float tu1, tv1;                         // texture coordinates
+        TGReal tu1, tv1;                         // texture coordinates
     };
 
     struct TGQuadInfo
@@ -45,7 +45,7 @@ namespace TGUI
         Ogre::TexturePtr	texture;
         TGRect				position;
         TGQuadVertex        lpos[6];
-        float				z;
+        TGReal				z;
         TGRect				texPosition;
         uint32		        topLeftCol;
         uint32		        topRightCol;
@@ -122,22 +122,22 @@ namespace TGUI
         void closeClipArea();
         void resetClipping();
 
-        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, float z, const TGSBrush brush);
-        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, float z, const TGSBrush brush, int thickness);
-        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, float z, const TGSBrush brush, int pointDir);
+        virtual	TGQuadInfo	addQuad(const TGRect& dest_rect, TGReal z, const TGSBrush brush);
+        virtual	TGQuadInfo	addLine(const TGRect& dest_rect, TGReal z, const TGSBrush brush, int thickness);
+        virtual	TGQuadInfo	addTri(const TGRect& dest_rect, TGReal z, const TGSBrush brush, int pointDir);
 
-        void renderQuadDirect(const TGRect& dest_rect, float z, TGSBrush brush);
+        void renderQuadDirect(const TGRect& dest_rect, TGReal z, TGSBrush brush);
         virtual	void	doRender(TGQuadList& quadList);
 
         virtual	TGTexture*	createTexture(void);
-        virtual	TGTexture*	createTexture(const string& filename, const string& resourceGroup = "General");
-        virtual	TGTexture*	createTexture(float size);
+        virtual	TGTexture*	createTexture(const TGString& filename, const TGString& resourceGroup = "General");
+        virtual	TGTexture*	createTexture(TGReal size);
         virtual	void		destroyTexture(TGTexture* texture);
         virtual void		destroyAllTextures(void);
 
         virtual bool	isQueueingEnabled(void) const	{return m_queueing;}
-        virtual float	getWidth(void) const		{return m_displayArea.getWidth();}
-        virtual float	getHeight(void) const		{return m_displayArea.getHeight();}
+        virtual TGReal	getWidth(void) const		{return m_displayArea.getWidth();}
+        virtual TGReal	getHeight(void) const		{return m_displayArea.getHeight();}
         virtual TGSize	getSize(void) const			{return m_displayArea.getSize();}
         virtual TGRect	getRect(void) const			{return m_displayArea;}
         virtual	uint	getMaxTextureSize(void) const		{return 2048;}		// TODO: Change to proper value
@@ -149,15 +149,15 @@ namespace TGUI
         void	setDisplaySize(const TGSize& sz);
         void	resetZValue(void)				{d_current_z = GuiZInitialValue;}
         void	advanceZValue(void)				{d_current_z -= GuiZElementStep;}
-        float	getCurrentZ(void) const			{return d_current_z;}
-        float	getZLayer(uint layer) const		{return d_current_z - ((float)layer * GuiZLayerStep);}
+        TGReal	getCurrentZ(void) const			{return d_current_z;}
+        TGReal	getZLayer(uint layer) const		{return d_current_z - ((TGReal)layer * GuiZLayerStep);}
     private:
-        static const float	GuiZInitialValue;       // Initial value to use for 'z' each frame.
-        static const float	GuiZElementStep;        // Value to step 'z' for each GUI element.
-        static const float	GuiZLayerStep;          // Value to step 'z' for each GUI layer.
+        static const TGReal	GuiZInitialValue;       // Initial value to use for 'z' each frame.
+        static const TGReal	GuiZElementStep;        // Value to step 'z' for each GUI element.
+        static const TGReal	GuiZLayerStep;          // Value to step 'z' for each GUI layer.
 
 
-        float	d_current_z;		//!< The current z co-ordinate value.
+        TGReal	d_current_z;		//!< The current z co-ordinate value.
 
         static const size_t    VERTEX_PER_QUAD;     // number of vertices per quad
         static const size_t    VERTEX_PER_TRIANGLE;	// number of vertices for a triangle

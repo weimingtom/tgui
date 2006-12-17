@@ -39,7 +39,7 @@ namespace TGUI
         m_renderer = TGSystem::getSingleton().getRenderer();
         minWidth = minHeight = 0;
         maxWidth = maxHeight = 0x7FFFFFFF;
-        name = "";
+        m_name = "";
         m_focusedChild = 0;
         isComposite = false;
         m_parent = parent;
@@ -94,19 +94,19 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             s e t N a m e
     //-----------------------------------------------------------------------
-    void TGControl::setName(string newName)
+    void TGControl::setName(TGString value)
     {
-        name = newName;
+        m_name = value;
     }
 
     //-----------------------------------------------------------------------
     //                             f i n d C h i l d
     //-----------------------------------------------------------------------
-    TGControl *TGControl::findChild(string name)
+    TGControl *TGControl::findChild(TGString name)
     {
         if (name.empty())
             return NULL;
-        if (!name.compare(this->name))
+        if (!name.compare(m_name))
             return this;
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
@@ -178,7 +178,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl *TGControl::childAt(float x, float y)
+    TGControl *TGControl::childAt(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
@@ -202,7 +202,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGControl::pointInControl(float x, float y)
+    bool TGControl::pointInControl(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
@@ -234,7 +234,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                                p u l s e
     //-----------------------------------------------------------------------
-    void TGControl::pulse(float timeElapsed)
+    void TGControl::pulse(TGReal timeElapsed)
     {
         if (performLayout)
         {
@@ -288,11 +288,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          s e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGControl::setBounds(float fx1, float fy1, float fx2, float fy2)
+    void TGControl::setBounds(TGReal fx1, TGReal fy1, TGReal fx2, TGReal fy2)
     {
         int x1,x2,y1,y2;
 
-        float sw,sh;
+        TGReal sw,sh;
 
         redraw();
 
@@ -384,7 +384,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              s e t P o s
     //-----------------------------------------------------------------------
-    void TGControl::setPos(float x1, float y1)
+    void TGControl::setPos(TGReal x1, TGReal y1)
     {
         moveRel(x1,y1);
 
@@ -402,7 +402,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              g e t P o s
     //-----------------------------------------------------------------------
-    void TGControl::getPos(float &x1, float &y1)
+    void TGControl::getPos(TGReal &x1, TGReal &y1)
     {
     }
 
@@ -418,9 +418,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                              m o v e
     //-----------------------------------------------------------------------
-    void TGControl::moveRel(float x, float y)
+    void TGControl::moveRel(TGReal x, TGReal y)
     {
-        float sw,sh;
+        TGReal sw,sh;
 
         if(!m_parent)
         {
@@ -496,17 +496,17 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           g e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGControl::getBounds(float &x1, float &y1, float &x2, float &y2)
+    void TGControl::getBounds(TGReal &x1, TGReal &y1, TGReal &x2, TGReal &y2)
     {
         int ix1,iy1,ix2,iy2;
         getBounds(ix1,iy1,ix2,iy2);
-        float sw = m_renderer->getWidth();
-        float sh = m_renderer->getHeight();
+        TGReal sw = m_renderer->getWidth();
+        TGReal sh = m_renderer->getHeight();
 
-        x1 = (float)ix1 / sw;
-        x2 = (float)ix2 / sw;
-        y1 = (float)iy1 / sh;
-        y2 = (float)iy2 / sh;
+        x1 = (TGReal)ix1 / sw;
+        x2 = (TGReal)ix2 / sw;
+        y1 = (TGReal)iy1 / sh;
+        y2 = (TGReal)iy2 / sh;
     }
 
     //-----------------------------------------------------------------------
@@ -520,9 +520,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             s e t W i d t h
     //-----------------------------------------------------------------------
-    void TGControl::setWidth(float width)
+    void TGControl::setWidth(TGReal width)
     {
-        float fx1,fx2,fy1,fy2;
+        TGReal fx1,fx2,fy1,fy2;
         getBounds(fx1,fy1,fx2,fy2);
         setBounds(fx1,fy1,fx1+width,fy2);
     }
@@ -538,9 +538,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             g e t W i d t h
     //-----------------------------------------------------------------------
-    void TGControl::getWidth(float &width)
+    void TGControl::getWidth(TGReal &width)
     {
-        float fx1,fx2,fy1,fy2;
+        TGReal fx1,fx2,fy1,fy2;
         getBounds(fx1,fy1,fx2,fy2);
         width = fx2-fx1;
     }
@@ -556,9 +556,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t H e i g h t
     //-----------------------------------------------------------------------
-    void TGControl::setHeight(float height)
+    void TGControl::setHeight(TGReal height)
     {
-        float fx1,fx2,fy1,fy2;
+        TGReal fx1,fx2,fy1,fy2;
         getBounds(fx1,fy1,fx2,fy2);
         setBounds(fx1,fy1,fx2,fy1+height);
     }
@@ -574,9 +574,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            g e t H e i g h t
     //-----------------------------------------------------------------------
-    void TGControl::getHeight(float &height)
+    void TGControl::getHeight(TGReal &height)
     {
-        float fx1,fx2,fy1,fy2;
+        TGReal fx1,fx2,fy1,fy2;
         getBounds(fx1,fy1,fx2,fy2);
         height = fy2-fy1;
     }
@@ -825,7 +825,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           d r a w S t r i n g
     //-----------------------------------------------------------------------
-    void TGControl::drawString(int x, int y, string str, TGSBrush brush, int length)
+    void TGControl::drawString(int x, int y, TGString str, TGSBrush brush, int length)
     {
         if(!m_isVisible)
             return;
@@ -835,7 +835,7 @@ namespace TGUI
 
         int cHeight=font->getHeight();
 
-        float	cx = x;
+        TGReal	cx = x;
         if (length == -1)
             length = (int)str.length();
 
@@ -872,12 +872,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          s t r i n g W i d t h
     //-----------------------------------------------------------------------
-    int TGControl::stringWidth(string str, size_t length)
+    int TGControl::stringWidth(TGString str, size_t length)
     {
         TGFont* font = TGSystem::getSingleton().getCurrentFont();
         if(!font)
             return 0;
-        float	cx = 0;
+        TGReal	cx = 0;
         if (length == -1)
             length = str.length();
 
@@ -993,7 +993,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                     a d d E v e n t H a n d l e r
     //-----------------------------------------------------------------------
-    void TGControl::addEventHandler(string eventID, TGEventHandler* handler)
+    void TGControl::addEventHandler(TGString eventID, TGEventHandler* handler)
     {
 
         TGEventMap::iterator itr;
@@ -1014,7 +1014,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                  r e m o v e E v e n t H a n d l e r
     //-----------------------------------------------------------------------
-    void TGControl::removeEventHandler(string eventID, TGEventHandler* handler)
+    void TGControl::removeEventHandler(TGString eventID, TGEventHandler* handler)
     {
     }
 
@@ -1054,7 +1054,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          l o g M e s s a g e
     //-----------------------------------------------------------------------
-    void TGControl::logMessage(string message)
+    void TGControl::logMessage(TGString message)
     {
         TGSystem::getSingleton().logMessage(message);
     }
@@ -1082,7 +1082,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         f i r e E v e n t
     //-----------------------------------------------------------------------
-    bool TGControl::fireEvent(string eventID,TGEventArgs& args)
+    bool TGControl::fireEvent(TGString eventID,TGEventArgs& args)
     {
         bool rc=false;
 

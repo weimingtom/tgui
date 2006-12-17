@@ -80,7 +80,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGCombobox::pointInControl(float x, float y)
+    bool TGCombobox::pointInControl(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
         if(m_listbox->isVisible())
@@ -98,7 +98,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl* TGCombobox::childAt(float x, float y)
+    TGControl* TGCombobox::childAt(TGReal x, TGReal y)
     {
         if(m_listbox->isVisible() && m_listbox->pointInControl(x,y))
             return m_listbox->childAt(x,y);
@@ -108,7 +108,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            a d d I t e m
     //-----------------------------------------------------------------------
-    void TGCombobox::addItem(string text)
+    void TGCombobox::addItem(TGString text)
     {
         m_listbox->addItem(text);
     }

@@ -183,7 +183,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S y s t e m
     //-----------------------------------------------------------------------
-    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,string defaultFont) : m_currentFont(NULL), m_defaultFont(NULL)
+    TGSystem::TGSystem(Ogre::RenderWindow* window, Ogre::SceneManager* sceneMgr,TGString defaultFont) : m_currentFont(NULL), m_defaultFont(NULL)
     {
         m_activeScreen = 0;
         m_childUnderMouse = 0;
@@ -435,7 +435,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                    i n j e c t T i m e P u l s e
     //-----------------------------------------------------------------------
-    void TGSystem::injectTimePulse(float timeElapsed)
+    void TGSystem::injectTimePulse(TGReal timeElapsed)
     {
         if(m_activeScreen)
             m_activeScreen->pulse(timeElapsed);
@@ -469,7 +469,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          l o a d F o n t
     //-----------------------------------------------------------------------
-    TGFont* TGSystem::loadFont(string fontName,string resourceGroup)
+    TGFont* TGSystem::loadFont(TGString fontName,TGString resourceGroup)
     {
 
         TGFont*     font;
@@ -576,7 +576,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           l o g M e s s a g e
     //-----------------------------------------------------------------------
-    void TGSystem::logMessage(string message)
+    void TGSystem::logMessage(TGString message)
     {
         if(m_logger)
             m_logger->logMessage(message);

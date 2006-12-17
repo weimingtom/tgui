@@ -44,16 +44,16 @@ namespace TGUI
         virtual ~TGCombobox();
 
         virtual void render();
-        virtual string getControlType() {return "TGCombobox";};
+        virtual TGString getControlType() {return "TGCombobox";};
         virtual void setBounds(int x1, int y1, int x2, int y2);
-        virtual TGControl *childAt(float x, float y);
-        virtual bool pointInControl(float x, float y);
+        virtual TGControl *childAt(TGReal x, TGReal y);
+        virtual bool pointInControl(TGReal x, TGReal y);
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
         virtual void onFocusExit();
 
         virtual bool focused();
 
-        virtual void addItem(string text);
+        virtual void addItem(TGString text);
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseMoved(int x, int y);
         virtual void onMouseEnter();

@@ -30,30 +30,30 @@ namespace TGUI
 
     class TGEditbox : public TGControl
     {
-        TGDataManager<string>	text;
+        TGDataManager<TGString>	text;
         int     		        tScroll;
         size_t     		        cursor;
         int     		        cursorX;
-        float                   m_pulseTime;
+        TGReal                   m_pulseTime;
         bool                    m_cursorVisible;
         int                     m_lastKey;
         char                    m_lastChar;
-        float                   m_repeatRate;
-        float                   m_repeatDelay;
-        float                   m_repeatElapsed;
+        TGReal                   m_repeatRate;
+        TGReal                   m_repeatDelay;
+        TGReal                   m_repeatElapsed;
 
     public:
 
         TGEditbox(TGControl *parent, int x1, int y1, int x2, int y2);
         virtual ~TGEditbox();
 
-        virtual void setText(string newText);
-        virtual string getText();
+        virtual void setText(TGString newText);
+        virtual TGString getText();
 
         virtual void render();
-        virtual string getControlType() {return "TGEditbox";};
+        virtual TGString getControlType() {return "TGEditbox";};
 
-        virtual void pulse(float timeElapsed);
+        virtual void pulse(TGReal timeElapsed);
 
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);

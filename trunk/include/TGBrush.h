@@ -48,7 +48,7 @@ namespace TGUI
         void    setColour(const TGColour& col);
         void    setColour(const TGColourRect& colRect);
         void    setTexture(TGTexture* texture);
-        void    setTexture(string tname, string resourceGroup = "");
+        void    setTexture(TGString tname, TGString resourceGroup = "");
 
     };
 
