@@ -31,8 +31,8 @@ namespace TGUI
     class TGSlider : public TGControl
     {
     public:
-        float			max;
-        TGDataManager<float>	value;
+        TGReal			max;
+        TGDataManager<TGReal>	value;
         bool			sliding;
 
     public:
@@ -40,11 +40,11 @@ namespace TGUI
         virtual ~TGSlider();
 
         virtual void render();
-        virtual string getControlType() {return "TGSlider";};
+        virtual TGString getControlType() {return "TGSlider";};
 
 
-        virtual void setValue(float newValue);
-        virtual void setMax(float newMax);
+        virtual void setValue(TGReal newValue);
+        virtual void setMax(TGReal newMax);
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseMoved(int x, int y);

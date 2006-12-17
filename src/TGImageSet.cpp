@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G I m a g e S e t
     //-----------------------------------------------------------------------
-    TGImageSet::TGImageSet(string fname,int imagecount, string resourceGroup)
+    TGImageSet::TGImageSet(TGString fname,int imagecount, TGString resourceGroup)
     {
         m_imageCount = imagecount;
         if(resourceGroup.empty())
@@ -40,7 +40,7 @@ namespace TGUI
         m_width = m_texture->getWidth();
         m_height = m_texture->getHeight();
 
-        float w=m_width,h=m_height;
+        TGReal w=m_width,h=m_height;
         int ih = m_height / m_imageCount;
 
         TGRect  uv;
@@ -52,8 +52,8 @@ namespace TGUI
             int ps = ih * i;
             int pe = ps + ih;
 
-            uv.d_top = (float) ps / m_height;
-            uv.d_bottom = (float) pe / m_height;
+            uv.d_top = (TGReal) ps / m_height;
+            uv.d_bottom = (TGReal) pe / m_height;
 
             m_uvList.push_back(TGRect(uv));
         }

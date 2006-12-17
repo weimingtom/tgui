@@ -31,7 +31,7 @@ namespace TGUI
     class TGWindow : public TGControl
     {
     protected:
-        string			m_caption;
+        TGString	    m_caption;
         bool            m_isTabbedCaption;
         bool			m_moving;
         bool			m_resizing;
@@ -44,13 +44,13 @@ namespace TGUI
         int			    mX, mY;
         TGPopupMenu*    menu;
 
-        TGWindow(string caption="");
-        TGWindow(TGScreen *screen,string caption="");
+        TGWindow(TGString caption="");
+        TGWindow(TGScreen *screen,TGString caption="");
         virtual ~TGWindow();
 
-        virtual void setCaption(string newCaption);
-        virtual bool pointInControl(float x, float y);
-        virtual bool pointInCaption(float x, float y);
+        virtual void setCaption(TGString newCaption);
+        virtual bool pointInControl(TGReal x, TGReal y);
+        virtual bool pointInCaption(TGReal x, TGReal y);
         virtual void setResizeEnabled(bool value) {m_resizeable = value;};
         virtual bool getResizeEnabled() {return m_resizeable;};
         virtual void setMoveEnabled(bool value) {m_movable = value;};

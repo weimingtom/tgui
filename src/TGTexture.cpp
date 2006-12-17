@@ -99,7 +99,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          l o a d F r o m F i l e
     //-----------------------------------------------------------------------
-    void TGTexture::loadFromFile(const string& filename, const string& resourceGroup)
+    void TGTexture::loadFromFile(const TGString& filename, const TGString& resourceGroup)
     {
         using namespace Ogre;
 

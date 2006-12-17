@@ -42,7 +42,7 @@ namespace TGUI
     typedef std::list<TGControl *>::iterator TGControlListItr;
     typedef std::list<TGControl *>::reverse_iterator TGControlListRevItr;
     typedef std::list<TGEventHandler *> TGEventHandlers;
-    typedef std::map<string, TGEventHandlers> TGEventMap;
+    typedef std::map<TGString, TGEventHandlers> TGEventMap;
 
     class TGControl
     {
@@ -58,15 +58,15 @@ namespace TGUI
         TGRenderer*         m_renderer;
         TGTexture*          m_texture;
 
-        string              name;
-        float               padLeft;
-        float               padTop;
-        float               padRight;
-        float               padBottom;
-        float               minWidth;
-        float               minHeight;
-        float               maxWidth;
-        float               maxHeight;
+        TGString            m_name;
+        TGReal               padLeft;
+        TGReal               padTop;
+        TGReal               padRight;
+        TGReal               padBottom;
+        TGReal               minWidth;
+        TGReal               minHeight;
+        TGReal               maxWidth;
+        TGReal               maxHeight;
         bool                performLayout;
 
         TGControl*          m_focusedChild;
@@ -77,8 +77,8 @@ namespace TGUI
         TGControl*          exclusiveChild;
         bool                mouseOverControl;
         bool                isComposite;
-        float               xShift;
-        float               yShift;
+        TGReal               xShift;
+        TGReal               yShift;
         int                 x1;
         int                 y1;
         int                 x2;
@@ -90,13 +90,13 @@ namespace TGUI
 
         TGRenderer* getRenderer();
 
-        virtual string getName() {return name;};
-        virtual void setName(string newName);
+        virtual TGString getName() {return m_name;};
+        virtual void setName(TGString value);
 
         TGControlList& getChildren() {return m_children;};
 
 
-        virtual TGControl *findChild(string name);
+        virtual TGControl *findChild(TGString name);
 
         TGPopupMenu* getPopupMenu() {return m_popupMenu;};
         void setPopupMenu(TGPopupMenu* value) {m_popupMenu = value;};
@@ -104,7 +104,7 @@ namespace TGUI
         TGControl* getFirstChild();
         TGControl* getLastChild();
 
-        virtual string getControlType() {return "TGControl";};
+        virtual TGString getControlType() {return "TGControl";};
 
         bool getFrameEnabled() {return m_frameEnabled;};
         void setFrameEnabled(bool value) {m_frameEnabled = value; redraw();};
@@ -112,21 +112,21 @@ namespace TGUI
         TGControl* getFocusedChild(void) {return m_focusedChild;};
         void setFocusedChild(TGControl* child);
 
-        void logMessage(string message);
+        void logMessage(TGString message);
 
         virtual void addChild(TGControl *child);
         virtual void removeChild(TGControl *child);
         virtual void removeAllChildren();
         virtual void layout(){};
 
-        bool fireEvent(string eventID,TGEventArgs& args);
-        void addEventHandler(string eventID, TGEventHandler* handler);
-        void removeEventHandler(string eventID, TGEventHandler* handler);
+        bool fireEvent(TGString eventID,TGEventArgs& args);
+        void addEventHandler(TGString eventID, TGEventHandler* handler);
+        void removeEventHandler(TGString eventID, TGEventHandler* handler);
         void removeAllHandlers(void* obj);
         void removeAllHandlers(TGControl* control);
 
-        virtual TGControl *childAt(float x, float y);
-        virtual bool pointInControl(float x, float y);
+        virtual TGControl *childAt(TGReal x, TGReal y);
+        virtual bool pointInControl(TGReal x, TGReal y);
 
         TGScreen *getScreen();
 
@@ -138,7 +138,7 @@ namespace TGUI
 
         virtual TGScreen* getActiveScreen();
 
-        virtual void pulse(float timeElapsed);
+        virtual void pulse(TGReal timeElapsed);
         virtual void focus();
         virtual bool focused();
 
@@ -151,30 +151,30 @@ namespace TGUI
 
         //
         // integer values = pixels
-        // float values = percentage of screen area
+        // TGReal values = percentage of screen area
         //
         virtual void setBounds(int x1, int y1, int x2, int y2);
-        virtual void setBounds(float fx1, float fy1, float fx2, float fy2);
+        virtual void setBounds(TGReal fx1, TGReal fy1, TGReal fx2, TGReal fy2);
         virtual void getBounds(int &x1, int &y1, int &x2, int &y2);
-        virtual void getBounds(float &x1, float &y1, float &x2, float &y2);
+        virtual void getBounds(TGReal &x1, TGReal &y1, TGReal &x2, TGReal &y2);
 
         virtual void setPos(int x1, int y1);
-        virtual void setPos(float x1, float y1);
+        virtual void setPos(TGReal x1, TGReal y1);
         virtual void getPos(int &x1, int &y1);
-        virtual void getPos(float &x1, float &y1);
+        virtual void getPos(TGReal &x1, TGReal &y1);
 
         virtual void setWidth(int width);
-        virtual void setWidth(float width);
+        virtual void setWidth(TGReal width);
         virtual void getWidth(int &width);
-        virtual void getWidth(float &width);
+        virtual void getWidth(TGReal &width);
 
         virtual void setHeight(int height);
-        virtual void setHeight(float height);
+        virtual void setHeight(TGReal height);
         virtual void getHeight(int &height);
-        virtual void getHeight(float &height);
+        virtual void getHeight(TGReal &height);
 
         virtual void moveRel(int x, int y);
-        virtual void moveRel(float x, float y);
+        virtual void moveRel(TGReal x, TGReal y);
 
         virtual void resize(int width, int height);
         virtual void center(bool horizontal=true, bool vertical=true);
@@ -204,9 +204,9 @@ namespace TGUI
         void drawTri(int x1, int y1, int x2, int y2, TGSBrush brush, int pointDir=0);
         void drawFrame(int x1, int y1, int x2, int y2,
             FrameStyle s=FS_FLAT,int thickness=1);
-        void drawString(int x, int y, string str, TGSBrush brush, int length=-1);
+        void drawString(int x, int y, TGString str, TGSBrush brush, int length=-1);
 
-        int stringWidth(string str, size_t length=-1);
+        int stringWidth(TGString str, size_t length=-1);
         int stringHeight();
 
         void setKeyboardFocusControl(TGControl *control);

@@ -33,7 +33,7 @@ namespace TGUI
         TGSBrush        m_brush;
 
     public:
-        TGCursor(string fname,string resourceGroup="");
+        TGCursor(TGString fname,TGString resourceGroup="");
         TGCursor(TGTexture* texture);
         virtual ~TGCursor();
 
@@ -43,7 +43,7 @@ namespace TGUI
         void move(int x, int y);
         virtual void draw();
         virtual void render() {};
-        virtual string getControlType() {return "TGCursor";};
+        virtual TGString getControlType() {return "TGCursor";};
 
 
     };

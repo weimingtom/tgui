@@ -30,16 +30,16 @@ namespace TGUI
 
     class TGLabel : public TGControl
     {
-        string              m_text;
+        TGString              m_text;
 
     public:
-        TGLabel(TGControl *parent, string text, int x=5, int y=5);
+        TGLabel(TGControl *parent, TGString text, int x=5, int y=5);
         virtual ~TGLabel();
 
-        virtual void setText(string newText);
+        virtual void setText(TGString newText);
 
         virtual void render();
-        virtual string getControlType() {return "TGLabel";};
+        virtual TGString getControlType() {return "TGLabel";};
    };
 }
 

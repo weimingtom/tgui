@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G F o n t
     //-----------------------------------------------------------------------
-    TGFont::TGFont(string fontName,string resourceGroup)
+    TGFont::TGFont(TGString fontName,TGString resourceGroup)
     {
         if(resourceGroup.empty())
             resourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME.c_str();

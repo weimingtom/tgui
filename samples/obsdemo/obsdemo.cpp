@@ -32,7 +32,7 @@ using namespace TGUI;
 static bool mShutdownRequested=false;
 
 bool	running = true;
-float	rotation = 0.0f, size = 1.0f, backgnd = 0.2f, progress = 0.0f;
+TGReal	rotation = 0.0f, size = 1.0f, backgnd = 0.2f, progress = 0.0f;
 int	steps = 5;
 TGSlider	*stepCount, *sizeSlider, *backSlider;
 TGWindow	*win;

@@ -38,7 +38,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G I m a g e
     //-----------------------------------------------------------------------
-    TGImage::TGImage(TGControl *parent, int x, int y, string fname, string resourceGroup)
+    TGImage::TGImage(TGControl *parent, int x, int y, TGString fname, TGString resourceGroup)
         : TGControl(parent)
     {
         int	x1 = x, y1 = y, x2, y2;
@@ -107,7 +107,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         s e t T e x t u r e
     //-----------------------------------------------------------------------
-    void TGImage::setTexture(string fname, string resourceGroup, bool resize)
+    void TGImage::setTexture(TGString fname, TGString resourceGroup, bool resize)
     {
         if(resourceGroup.empty())
         {

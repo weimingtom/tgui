@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G R e c t
     //-----------------------------------------------------------------------
-    TGRect::TGRect(float left, float top, float right, float bottom)
+    TGRect::TGRect(TGReal left, TGReal top, TGReal right, TGReal bottom)
     {
         d_top = top;
         d_bottom = bottom;

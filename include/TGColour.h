@@ -38,17 +38,17 @@ namespace TGUI
         TGColourRect(const TGColour& top_left, const TGColour& top_right, const TGColour& bottom_left, const TGColour& bottom_right);
 
 
-        void	setAlpha(float alpha);
-        void	setTopAlpha(float alpha);
-        void	setBottomAlpha(float alpha);
-        void	setLeftAlpha(float alpha);
-        void	setRightAlpha(float alpha);
+        void	setAlpha(TGReal alpha);
+        void	setTopAlpha(TGReal alpha);
+        void	setBottomAlpha(TGReal alpha);
+        void	setLeftAlpha(TGReal alpha);
+        void	setRightAlpha(TGReal alpha);
 
         bool	isMonochromatic() const;
-        TGColourRect getSubRectangle( float left, float right, float top, float bottom ) const;
-        TGColour getColourAtPoint( float x, float y ) const;
+        TGColourRect getSubRectangle( TGReal left, TGReal right, TGReal top, TGReal bottom ) const;
+        TGColour getColourAtPoint( TGReal x, TGReal y ) const;
         void	setColours(const TGColour& col);
-        void	modulateAlpha(float alpha);
+        void	modulateAlpha(TGReal alpha);
         TGColourRect& operator*=(const TGColourRect& other);
 
         TGColour	m_topLeft, m_topRight, m_bottomLeft, m_bottomRight;		//<! ColourRect component colours

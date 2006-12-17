@@ -63,7 +63,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           s e t A l p h a
     //-----------------------------------------------------------------------
-    void TGColourRect::setAlpha(float alpha)
+    void TGColourRect::setAlpha(TGReal alpha)
     {
         m_topLeft.a = alpha;
         m_topRight.a = alpha;
@@ -74,7 +74,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        s e t T o p A l p h a
     //-----------------------------------------------------------------------
-    void TGColourRect::setTopAlpha(float alpha)
+    void TGColourRect::setTopAlpha(TGReal alpha)
     {
         m_topLeft.a = alpha;
         m_topRight.a = alpha;
@@ -83,7 +83,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                     s e t B o t t o m p A l p h a
     //-----------------------------------------------------------------------
-    void TGColourRect::setBottomAlpha(float alpha)
+    void TGColourRect::setBottomAlpha(TGReal alpha)
     {
         m_bottomLeft.a = alpha;
         m_bottomRight.a = alpha;
@@ -92,7 +92,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        s e t L e f t p A l p h a
     //-----------------------------------------------------------------------
-    void TGColourRect::setLeftAlpha(float alpha)
+    void TGColourRect::setLeftAlpha(TGReal alpha)
     {
         m_topLeft.a = alpha;
         m_bottomLeft.a = alpha;
@@ -101,7 +101,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        s e t R i g h t A l p h a
     //-----------------------------------------------------------------------
-    void TGColourRect::setRightAlpha(float alpha)
+    void TGColourRect::setRightAlpha(TGReal alpha)
     {
         m_topRight.a = alpha;
         m_bottomRight.a = alpha;
@@ -120,7 +120,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                    g e t C o l o u r A t P o i n t
     //-----------------------------------------------------------------------
-    TGColour TGColourRect::getColourAtPoint( float x, float y ) const
+    TGColour TGColourRect::getColourAtPoint( TGReal x, TGReal y ) const
     {
         TGColour h1((m_topRight - m_topLeft) * x + m_topLeft);
         TGColour h2((m_bottomRight - m_bottomLeft) * x + m_bottomLeft);
@@ -130,7 +130,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      g e t S u b R e c t a n g l e
     //-----------------------------------------------------------------------
-    TGColourRect TGColourRect::getSubRectangle( float left, float right, float top, float bottom ) const
+    TGColourRect TGColourRect::getSubRectangle( TGReal left, TGReal right, TGReal top, TGReal bottom ) const
     {
         return TGColourRect(
             getColourAtPoint(left, top),
@@ -151,7 +151,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      m o d u l a t e A l p h a 
     //-----------------------------------------------------------------------
-    void TGColourRect::modulateAlpha(float alpha)
+    void TGColourRect::modulateAlpha(TGReal alpha)
     {
         m_topLeft.a = (m_topLeft.a*alpha);
         m_topRight.a = (m_topRight.a*alpha);

@@ -30,32 +30,32 @@ namespace TGUI
 
     class TGScrollbox : public TGControl
     {
-        float   clientWidth;
-        float   clientHeight;
-        float   hScrollMax;
-        float   vScrollMax;
-        float   hScroll;
-        float   vScroll;
+        TGReal   clientWidth;
+        TGReal   clientHeight;
+        TGReal   hScrollMax;
+        TGReal   vScrollMax;
+        TGReal   hScroll;
+        TGReal   vScroll;
         int	scrolling;      // 0=no, 1=vertical, 2=horizontal
 
     public:
         TGScrollbox(TGControl *parent, int x1, int y1, int x2, int y2);
         virtual ~TGScrollbox();
 
-        virtual void setScrollingBounds(float hMax, float vMax);
+        virtual void setScrollingBounds(TGReal hMax, TGReal vMax);
 
         virtual void redraw(bool value=true);
 
         virtual void render();
-        virtual string getControlType() {return "TGScrollbox";};
+        virtual TGString getControlType() {return "TGScrollbox";};
 
         virtual void place(int x1, int y1, int x2, int y2);
         virtual void layout();
 
-        virtual bool pointInControl(float x, float y);
-        virtual TGControl *childAt(float x, float y);
+        virtual bool pointInControl(TGReal x, TGReal y);
+        virtual TGControl *childAt(TGReal x, TGReal y);
 
-        virtual void onScroll(float hd, float vd);
+        virtual void onScroll(TGReal hd, TGReal vd);
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseMoved(int x, int y);

@@ -39,10 +39,10 @@ namespace TGUI
         virtual ~TGSpinner();
 
         virtual void render();
-        virtual string getControlType() {return "TGSpinner";};
+        virtual TGString getControlType() {return "TGSpinner";};
         virtual void setBounds(int x1, int y1, int x2, int y2);
-        virtual TGControl *childAt(float x, float y);
-        virtual bool pointInControl(float x, float y);
+        virtual TGControl *childAt(TGReal x, TGReal y);
+        virtual bool pointInControl(TGReal x, TGReal y);
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         virtual void onMouseDown(int x, int y, int b);

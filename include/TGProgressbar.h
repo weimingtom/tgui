@@ -30,17 +30,17 @@ namespace TGUI
 
     class TGProgressBar : public TGControl
     {
-        TGDataManager<float>	max;
-        TGDataManager<float>	value;
+        TGDataManager<TGReal>	max;
+        TGDataManager<TGReal>	value;
 
     public:
 
         TGProgressBar(TGControl *parent, int x1, int y1, int x2, int y2);
         virtual ~TGProgressBar();
 
-        virtual void setMax(float newMax);
-        virtual void setValue(float newValue);
-        virtual string getControlType() {return "TGProgressBar";};
+        virtual void setMax(TGReal newMax);
+        virtual void setValue(TGReal newValue);
+        virtual TGString getControlType() {return "TGProgressBar";};
 
         virtual void render();
     };

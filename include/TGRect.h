@@ -33,22 +33,22 @@ namespace TGUI
         TGRect(void) {}
 
 
-        TGRect(float left, float top, float right, float bottom);
+        TGRect(TGReal left, TGReal top, TGReal right, TGReal bottom);
 
         TGRect(TGPoint pos, TGSize sz);
 
         TGPoint	getPosition(void) const		{return TGPoint(d_left, d_top);}
 
-        float	getWidth(void) const		{return d_right - d_left;}
+        TGReal	getWidth(void) const		{return d_right - d_left;}
 
-        float	getHeight(void) const		{return d_bottom - d_top;}
+        TGReal	getHeight(void) const		{return d_bottom - d_top;}
         TGSize	getSize(void) const			{return TGSize(getWidth(), getHeight());}
 
         void	setPosition(const TGPoint& pt);
 
 
-        void	setWidth(float width)		{d_right = d_left + width;}
-        void	setHeight(float height)		{d_bottom = d_top + height;}
+        void	setWidth(TGReal width)		{d_right = d_left + width;}
+        void	setHeight(TGReal height)		{d_bottom = d_top + height;}
 
         void	setSize(const TGSize& sze)	{setWidth(sze.x); setHeight(sze.y);}
 
@@ -72,10 +72,10 @@ namespace TGUI
 
         TGRect&	operator=(const TGRect& rhs);
 
-        TGRect operator*(float scalar) const      { return TGRect(d_left * scalar, d_top * scalar, d_right * scalar, d_bottom * scalar); }
-        const TGRect& operator*=(float scalar)    { d_left *= scalar; d_top *= scalar; d_right *= scalar; d_bottom *= scalar; return *this; }
+        TGRect operator*(TGReal scalar) const      { return TGRect(d_left * scalar, d_top * scalar, d_right * scalar, d_bottom * scalar); }
+        const TGRect& operator*=(TGReal scalar)    { d_left *= scalar; d_top *= scalar; d_right *= scalar; d_bottom *= scalar; return *this; }
 
-        float	d_top, d_bottom, d_left, d_right;
+        TGReal	d_top, d_bottom, d_left, d_right;
     };
 
 }

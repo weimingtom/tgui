@@ -44,7 +44,7 @@ namespace TGUI
         TGFileBrowser	*browser = (TGFileBrowser*)args.m_control->m_parent;
         if (browser->filename->getText()[0] == '/')
         {
-            string newPath;
+            TGString newPath;
             if (!browser->filename->getText().compare("/."))
             {
                 browser->reloadFiles();
@@ -74,7 +74,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      T G F i l e B r o w s e r
     //-----------------------------------------------------------------------
-    TGFileBrowser::TGFileBrowser(string caption, string path)
+    TGFileBrowser::TGFileBrowser(TGString caption, TGString path)
         : TGWindow(caption)
     {
         int	w, h;
@@ -114,9 +114,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         g e t F i l e n a m e
     //-----------------------------------------------------------------------
-    string TGFileBrowser::getFilename()
+    TGString TGFileBrowser::getFilename()
     {
-        string fname;
+        TGString fname;
         fname = path+"/"+filename->getText();
         return fname;
     }

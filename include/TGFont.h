@@ -37,7 +37,7 @@ namespace TGUI
         int                 m_height;
 
     public:
-        TGFont(string fontName,string resourceGroup="");
+        TGFont(TGString fontName,TGString resourceGroup="");
         virtual ~TGFont();
         void setHeight(int value) {m_height = value;};
         int getHeight() {return m_height;};

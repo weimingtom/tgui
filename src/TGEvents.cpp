@@ -27,17 +27,17 @@
 namespace TGUI
 {
 
-    const string TGEvent::Resized("resized");
-    const string TGEvent::Moved("moved");
-    const string TGEvent::Scrolled("scrolled");
-    const string TGEvent::Modified("modified");
-    const string TGEvent::Selected("selected");
-    const string TGEvent::MouseEnter("mouseEnter");
-    const string TGEvent::MouseLeave("mouseLeave");
-    const string TGEvent::MouseDown("mouseDown");
-    const string TGEvent::MouseUp("mouseUp");
-    const string TGEvent::MouseMove("mouseMove");
-    const string TGEvent::MouseClicked("clicked");
-    const string TGEvent::MenuPopup("menuPopup");
+    const TGString TGEvent::Resized("resized");
+    const TGString TGEvent::Moved("moved");
+    const TGString TGEvent::Scrolled("scrolled");
+    const TGString TGEvent::Modified("modified");
+    const TGString TGEvent::Selected("selected");
+    const TGString TGEvent::MouseEnter("mouseEnter");
+    const TGString TGEvent::MouseLeave("mouseLeave");
+    const TGString TGEvent::MouseDown("mouseDown");
+    const TGString TGEvent::MouseUp("mouseUp");
+    const TGString TGEvent::MouseMove("mouseMove");
+    const TGString TGEvent::MouseClicked("clicked");
+    const TGString TGEvent::MenuPopup("menuPopup");
 
 }

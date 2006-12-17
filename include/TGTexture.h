@@ -30,8 +30,8 @@ namespace TGUI
     class TGTexture
     {
         friend	TGTexture* TGRenderer::createTexture(void);
-        friend	TGTexture* TGRenderer::createTexture(const string& filename, const string& resourceGroup);
-        friend	TGTexture* TGRenderer::createTexture(float size);
+        friend	TGTexture* TGRenderer::createTexture(const TGString& filename, const TGString& resourceGroup);
+        friend	TGTexture* TGRenderer::createTexture(TGReal size);
         friend	void	 TGRenderer::destroyTexture(TGTexture* texture);
 
     public:
@@ -46,10 +46,10 @@ namespace TGUI
         virtual	ushort	getWidth(void)          const {return m_width;}
         virtual	ushort	getHeight(void)         const {return m_height;}
         virtual ushort  getOriginalWidth(void)  const { return getWidth(); }
-        virtual float   getXScale(void)         const { return 1.0f / static_cast<float>(getOriginalWidth()); } 
+        virtual TGReal   getXScale(void)         const { return 1.0f / static_cast<TGReal>(getOriginalWidth()); } 
         virtual ushort  getOriginalHeight(void) const { return getHeight(); }
-        virtual float   getYScale(void) const { return 1.0f / static_cast<float>(getOriginalHeight()); }
-        virtual void	loadFromFile(const string& filename, const string& resourceGroup);
+        virtual TGReal   getYScale(void) const { return 1.0f / static_cast<TGReal>(getOriginalHeight()); }
+        virtual void	loadFromFile(const TGString& filename, const TGString& resourceGroup);
         TGRenderer*	    getRenderer(void)       const {return m_owner;}
 
         Ogre::TexturePtr	getOgreTexture(void) const		{return m_ogre_texture;}
@@ -64,7 +64,7 @@ namespace TGUI
         TGRenderer* m_owner;		                // Renderer object that created and owns this texture
         void	freeOgreTexture(void);
 
-        // return a Ogre::string that contains a unique name.
+        // return a Ogre::TGString that contains a unique name.
         Ogre::String	    getUniqueName(void);
 
         static	uint32      m_texturenumber;	// Counter used to provide unique texture names.

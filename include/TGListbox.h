@@ -33,7 +33,7 @@ namespace TGUI
     class TGListboxItem : public TGControl
     {
         TGListbox*              box;
-        string                  text;
+        TGString                text;
 
     public:
         unsigned int            minimumWidth;
@@ -45,8 +45,8 @@ namespace TGUI
         TGListboxItem(TGControl *parent);
         virtual ~TGListboxItem();
 
-        virtual void setText(string newText);
-        virtual string getText() {return text;};
+        virtual void setText(TGString newText);
+        virtual TGString getText() {return text;};
         size_t  getIndex() {return index;};
 
         virtual void render();
@@ -63,14 +63,14 @@ namespace TGUI
         TGListbox(TGControl *parent, int x1, int y1, int x2, int y2);
         virtual ~TGListbox();
 
-        virtual void addItem(string text);
+        virtual void addItem(TGString text);
         virtual void addItem(TGListboxItem *item);
-        virtual TGListboxItem *findItem(string text);
+        virtual TGListboxItem *findItem(TGString text);
         virtual TGListboxItem *getItem(unsigned int index);
         virtual void removeItem(TGListboxItem *item);
         virtual void selectItem(unsigned int index);
         virtual void selectItem(TGListboxItem *item);
-        virtual string getControlType() {return "TGListbox";};
+        virtual TGString getControlType() {return "TGListbox";};
 
         virtual TGListboxItem* getSelectedItem() {return m_selectedItem;};
 

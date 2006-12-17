@@ -34,19 +34,19 @@ namespace TGUI
     class TGMenuItem : public TGControl
     {
     public:
-        string    		        caption;
+        TGString    		    caption;
         TGMenuControl*          menuControl;
         TGPopupMenu*            subMenu;
 
-        TGMenuItem(TGControl *owner, string caption);
+        TGMenuItem(TGControl *owner, TGString caption);
         virtual ~TGMenuItem();
 
-        virtual TGMenuItem *addItem(string caption);
+        virtual TGMenuItem *addItem(TGString caption);
         virtual void clear();
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
         virtual void render();
-        virtual string getControlType() {return "TGMenuItem";};
+        virtual TGString getControlType() {return "TGMenuItem";};
 
         virtual void onMouseEnter();
         virtual void onMouseDown(int x, int y, int b){};
@@ -66,7 +66,7 @@ namespace TGUI
 
         virtual void layout();
         virtual void render();
-        virtual string getControlType() {return "TGMenuControl";};
+        virtual TGString getControlType() {return "TGMenuControl";};
 
         virtual void onFocusExit();
     };
@@ -82,11 +82,11 @@ namespace TGUI
 
         virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
 
-        virtual TGMenuItem *addItem(string caption);
+        virtual TGMenuItem *addItem(TGString caption);
         virtual void clear();
         virtual void run(int x=-10000, int y=-10000);
         virtual void cancel();
-        virtual string getControlType() {return "TGPopupMenu";};
+        virtual TGString getControlType() {return "TGPopupMenu";};
 
     };
 }

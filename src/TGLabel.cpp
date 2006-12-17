@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G L a b e l
     //-----------------------------------------------------------------------
-    TGLabel::TGLabel(TGControl *parent,string text, int x, int y)
+    TGLabel::TGLabel(TGControl *parent,TGString text, int x, int y)
         : TGControl(parent)
     {
         setPos(x, y);
@@ -47,7 +47,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t T e x t
     //-----------------------------------------------------------------------
-    void TGLabel::setText(string newText)
+    void TGLabel::setText(TGString newText)
     {
         m_text = newText;
         resize(stringWidth(m_text), stringHeight());

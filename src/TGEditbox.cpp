@@ -55,7 +55,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t T e x t
     //-----------------------------------------------------------------------
-    void TGEditbox::setText(string newText)
+    void TGEditbox::setText(TGString newText)
     {
         int     w, h;
         getClientSize(w, h);
@@ -70,7 +70,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           g e t T e x t
     //-----------------------------------------------------------------------
-    string TGEditbox::getText()
+    TGString TGEditbox::getText()
     {
         return text.get();
     }
@@ -126,7 +126,7 @@ namespace TGUI
         else m_repeatElapsed = 0.f;
         m_lastKey = key;
         m_lastChar = ascii;
-        string text = this->text.get();
+        TGString text = this->text.get();
         getClientSize(w, h);
         switch (ascii)
         {
@@ -171,7 +171,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            p u l s e
     //-----------------------------------------------------------------------
-    void TGEditbox::pulse(float timeElapsed)
+    void TGEditbox::pulse(TGReal timeElapsed)
     {
         if(!focused())
             return;

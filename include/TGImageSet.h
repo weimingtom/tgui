@@ -40,7 +40,7 @@ namespace TGUI
         TGUVList        m_uvList;
 
     public:
-        TGImageSet(string fname,int imagecount, string resourceGroup="");
+        TGImageSet(TGString fname,int imagecount, TGString resourceGroup="");
         virtual ~TGImageSet();
         int getWidth() {return m_width;};
         int getHeight() {return m_height;};

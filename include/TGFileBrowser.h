@@ -30,20 +30,20 @@ namespace TGUI
 
     struct TGFileBrowser : public TGWindow
     {
-        TGListbox*          files;
+        TGListbox*         files;
         TGEditbox*         filename;
-        string              path;
+        TGString           path;
 
-        TGFileBrowser(string caption, string = "");
+        TGFileBrowser(TGString caption, TGString = "");
         virtual ~TGFileBrowser();
 
-        virtual string getFilename();
+        virtual TGString getFilename();
         virtual void reloadFiles();
 
         bool cancelFileBrowserAction(const TGEventArgs& args);
         bool closeFileBrowserAction(const TGEventArgs& args);
         bool selectFileBrowserAction(const TGEventArgs& args);
-        virtual string getControlType() {return "TGFileBrowser";};
+        virtual TGString getControlType() {return "TGFileBrowser";};
 
 
 
