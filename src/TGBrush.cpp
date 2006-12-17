@@ -98,5 +98,15 @@ namespace TGUI
         m_texture = texture;
     }
 
+    //-----------------------------------------------------------------------
+    //                           s e t T e x t u r e
+    //-----------------------------------------------------------------------
+    void TGBrush::setTexture(string tname, string resourceGroup)
+    {
+        TGTexture* tex;
+        tex = TGSystem::getSingleton().getRenderer()->createTexture(tname,resourceGroup);
+        setTexture(tex);
+        m_colourRect = TGColourRect(TGColour(1,1,1));
+    }
 
 }

@@ -219,6 +219,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGEditbox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGEditbox.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGEvents.cpp"
 				>
 			</File>
@@ -264,14 +272,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\include\TGImageSet.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\TGInputbox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\include\TGInputbox.h"
 				>
 			</File>
 			<File

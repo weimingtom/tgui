@@ -34,7 +34,7 @@ namespace TGUI
     {
         m_height=0;
         m_listbox = new TGListbox(this,0,0,5,5);
-        m_inputbox = new TGInputbox(this,0,0,5,5);
+        m_inputbox = new TGEditbox(this,0,0,5,5);
         m_listbox->isComposite = true;
         m_inputbox->isComposite = true;
 

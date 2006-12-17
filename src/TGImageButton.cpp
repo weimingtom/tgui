@@ -31,6 +31,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGImageButton::TGImageButton(TGControl *parent, string imageName, string resourceGroup) : TGControl(parent)
     {
+        m_uvIndex = 0;
         setBounds(x1, y1, x2, y2);
         m_pushed = m_highlighted = false;
 
@@ -57,7 +58,7 @@ namespace TGUI
 
         TGSBrush brush;
         brush.bind(new TGBrush(m_images->getTexture()));
-        brush->m_uv = m_images->getUVRect(0);
+        brush->m_uv = m_images->getUVRect(m_uvIndex);
 
         fillRect(x1,y1,x2,y2,brush);
 
@@ -73,6 +74,7 @@ namespace TGUI
         {
             setMouseTrackingControl(this);
             m_pushed = true;
+            m_uvIndex = 2;
             redraw();
         }
     }
@@ -88,9 +90,30 @@ namespace TGUI
         {
             setMouseTrackingControl(NULL);
             if (mouseOverControl)
+            {
+                m_uvIndex = 1;
                 fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
+            }
+            else m_uvIndex = 0;
             redraw();
         }
         m_pushed = false;
     }
+
+    void TGImageButton::onMouseEnter()
+    {
+        TGControl::onMouseEnter();
+        if(!m_pushed)
+            m_uvIndex = 1;
+        else m_uvIndex = 2;
+    }
+
+    void TGImageButton::onMouseExit(int x, int y)
+    {
+        TGControl::onMouseExit(x,y);
+        if(!m_pushed)
+            m_uvIndex = 0;
+        else m_uvIndex = 1;
+    }
+
 }

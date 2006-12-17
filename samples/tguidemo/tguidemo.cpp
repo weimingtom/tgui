@@ -169,26 +169,22 @@ public:
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
         TGSBrush    brush;
-        TGTexture *tex;
 
         TGWindow	*win = new TGWindow("");
+        win->resize(400, 200);
         win->center();
-        win->moveRel(win->x1, win->y1-100);
-        win->resize(190, 200);
         win->setResizeEnabled(true);
         win->setTitlebarEnabled(true);
         win->setFrameEnabled(false);
         win->setTitlebarHeight(50);
-        tex = TGSystem::getSingleton().getRenderer()->createTexture("cap1.png");
-        brush.setNull();
-        brush.bind(new TGBrush(tex));
-        win->getColourTheme().m_caption = brush;
+
+        win->getColourTheme().m_caption->setTexture("cap1.png");
 
 
-        TGImageButton* b = new TGImageButton(TGSystem::getSingleton().getActiveScreen(),"playbutton.png");
-        b->setPos(0.5f,0.5f);
-        b->setWidth(256);
-        b->setHeight(128);
+        TGImageButton* b = new TGImageButton(win,"playbutton.png");
+        b->setPos(20,20);
+        b->setWidth(128);
+        b->setHeight(64);
 
         /*
         TGWindow *win2 = new TGWindow("Another Window");

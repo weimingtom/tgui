@@ -30,7 +30,7 @@ namespace TGUI
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
     TGSpinner::TGSpinner(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGInputbox(parent,x1,y1,x2,y2)
+        : TGEditbox(parent,x1,y1,x2,y2)
     {
         m_height=0;
      
@@ -50,7 +50,7 @@ namespace TGUI
     {
         m_height = y2-y1;
         
-        TGInputbox::setBounds(x1, y1, x2-m_height, y2);
+        TGEditbox::setBounds(x1, y1, x2-m_height, y2);
     }
 
     //-----------------------------------------------------------------------
@@ -88,7 +88,7 @@ namespace TGUI
             return;
         }
 
-        TGInputbox::onMouseDown(x, y, b);
+        TGEditbox::onMouseDown(x, y, b);
     }
 
     //-----------------------------------------------------------------------
@@ -109,7 +109,7 @@ namespace TGUI
 
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
-        TGInputbox::render();
+        TGEditbox::render();
         TGSBrush brush;
         if (mouseOverControl  || hasKeyboardFocus(this))
             brush = m_theme.getFrameFocusedBrush();

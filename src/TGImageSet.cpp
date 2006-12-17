@@ -49,7 +49,7 @@ namespace TGUI
 
         for(int i=0;i<m_imageCount;i++)
         {
-            int ps = ih * i + i;
+            int ps = ih * i;
             int pe = ps + ih;
 
             uv.d_top = (float) ps / m_height;

@@ -33,6 +33,7 @@ namespace TGUI
         TGColourRect        m_colourRect;
         TGTexture*          m_texture;
         TGRect              m_uv;
+
     public:
 
 
@@ -47,6 +48,7 @@ namespace TGUI
         void    setColour(const TGColour& col);
         void    setColour(const TGColourRect& colRect);
         void    setTexture(TGTexture* texture);
+        void    setTexture(string tname, string resourceGroup = "");
 
     };
 

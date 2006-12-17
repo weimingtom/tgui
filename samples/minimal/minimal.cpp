@@ -172,7 +172,7 @@ public:
         win->center();
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
-        win->resizeable = true;
+        win->setResizeEnabled(true);
 
     }
 

@@ -32,7 +32,7 @@ namespace TGUI
     {
     private:
         int             m_height;
-        TGInputbox*     m_inputbox;
+        TGEditbox*      m_inputbox;
         TGListbox*      m_listbox;
 
     private:

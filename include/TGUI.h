@@ -78,7 +78,7 @@ using std::string;
 #include <tgslider.h>
 #include <tgscrollbox.h>
 #include <tglistbox.h>
-#include <tginputbox.h>
+#include <tgeditbox.h>
 #include <tgcombobox.h>
 #include <tgspinner.h>
 #include <tgfilebrowser.h>

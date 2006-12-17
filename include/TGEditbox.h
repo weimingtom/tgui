@@ -22,13 +22,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGINPUTBOX_H__
-#define __TGINPUTBOX_H__
+#ifndef __TGEDITBOX_H__
+#define __TGEDITBOX_H__
 
 namespace TGUI
 {
 
-    class TGInputbox : public TGControl
+    class TGEditbox : public TGControl
     {
         TGDataManager<string>	text;
         int     		        tScroll;
@@ -44,14 +44,14 @@ namespace TGUI
 
     public:
 
-        TGInputbox(TGControl *parent, int x1, int y1, int x2, int y2);
-        virtual ~TGInputbox();
+        TGEditbox(TGControl *parent, int x1, int y1, int x2, int y2);
+        virtual ~TGEditbox();
 
         virtual void setText(string newText);
         virtual string getText();
 
         virtual void render();
-        virtual string getControlType() {return "TGInputbox";};
+        virtual string getControlType() {return "TGEditbox";};
 
         virtual void pulse(float timeElapsed);
 
