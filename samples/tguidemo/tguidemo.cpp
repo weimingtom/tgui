@@ -147,7 +147,7 @@ public:
     void createFrameListener(void)
     {
         mFrameListener= new MinListener(mWindow, mCamera);
-        mFrameListener->showDebugOverlay(true);
+        mFrameListener->showDebugOverlay(false);
         mRoot->addFrameListener(mFrameListener);
         ms = ((MinListener*)mFrameListener)->getMouseState();
     }
@@ -164,11 +164,8 @@ public:
         return true;
     }
 
-    void createScene(void)
+    void createTest1()
     {
-        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
-
-        mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
 
         TGSBrush    brush;
 
@@ -211,6 +208,45 @@ public:
         win2->getTheme().m_base = brush;
 
         //new TGButton(win2,10,50,100,90,"Test 2");
+
+    }
+
+    void createTest2()
+    {
+
+        TGWindow	*win = new TGWindow("Test Window");
+        win->center();
+        win->moveRel(win->x1, win->y1-100);
+        win->resize(190, 200);
+        win->setResizeEnabled(true);
+
+        TGCombobox* cb = new TGCombobox(win);
+        cb->setPos(5,15);
+        cb->resize(175,25);
+        cb->addItem("test item 1");
+        cb->addItem("test item 2");
+        cb->addItem("test item 3");
+        cb->addItem("test item 4");
+        cb->addItem("test item 5");
+        cb->addItem("test item 6");
+        cb->addItem("test item 7");
+        cb->addItem("test item 8");
+        cb->addItem("test item 9");
+        cb->addItem("test item 10");
+
+        TGSpinEdit* se = new TGSpinEdit(win);
+        se->setPos(5,60);
+        se->resize(175,25);
+
+    }
+
+    void createScene()
+    {
+        mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
+
+        mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
+
+        createTest2();
     }
 };
 

@@ -355,11 +355,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGSpinner.cpp"
+				RelativePath="..\..\..\src\TGSpinEdit.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGSpinner.h"
+				RelativePath="..\..\..\include\TGSpinEdit.h"
 				>
 			</File>
 			<File
