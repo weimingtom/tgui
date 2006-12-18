@@ -182,7 +182,6 @@ public:
 INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
 {
 
-    int i =1;
     MinimalApp app;
 
     app.go();

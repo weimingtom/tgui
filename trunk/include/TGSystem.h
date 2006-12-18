@@ -41,7 +41,7 @@ namespace TGUI
         TGControl*	        m_keyboardFocusControl;
         TGCursor*           m_mouseCursor;
         TGLogger*           m_logger;
-        TGColourTheme       m_theme;
+        TGTheme             m_theme;
         TGControlList       m_dead;
 
         TGFont*             m_defaultFont;
@@ -72,8 +72,8 @@ namespace TGUI
         TGLogger* getLogger();
         void logMessage(TGString message);
 
-        TGColourTheme getColourTheme() {return m_theme;};
-        void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        TGTheme getTheme() {return m_theme;};
+        void setTheme(TGTheme theme,bool updateChildren=false);
 
         TGFont* loadFont(TGString fontName,TGString resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};
@@ -99,16 +99,16 @@ namespace TGUI
     };
 
     class TGResourceLoader : public Ogre::ManualResourceLoader
-	{
-	public:
+    {
+    public:
         TGResourceLoader() : ManualResourceLoader() {}
-		virtual ~TGResourceLoader() {}
+        virtual ~TGResourceLoader() {}
 
-		/** Called when a resource wishes to load.
-		@param resource The resource which wishes to load
-		*/
+        /** Called when a resource wishes to load.
+        @param resource The resource which wishes to load
+        */
         virtual void loadResource(Ogre::Resource* resource);
-	};
+    };
 
 
 }

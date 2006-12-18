@@ -31,7 +31,7 @@ namespace TGUI
     //                           T G C o n t r o l
     //-----------------------------------------------------------------------
     TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
-        , m_theme(TGColourTheme())
+        , m_theme(TGTheme())
         , m_frameEnabled(true)
     {
         x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
@@ -51,11 +51,11 @@ namespace TGUI
         if (m_parent)
         {
             m_parent->addChild(this);
-            setColourTheme(m_parent->getColourTheme());
+            setTheme(m_parent->getTheme());
         }
         else
         {
-            setColourTheme(TGSystem::getSingleton().getColourTheme());
+            setTheme(TGSystem::getSingleton().getTheme());
         }
         performLayout = true;
         mouseOverControl = false;
@@ -1060,20 +1060,20 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                       s e t C o l o u r T h e m e
+    //                           s e t T h e m e
     //-----------------------------------------------------------------------
-    void TGControl::setColourTheme(TGColourTheme theme,bool updateChildren) 
+    void TGControl::setTheme(TGTheme theme,bool updateChildren) 
     {
         m_theme = theme;
         if(m_popupMenu)
-            m_popupMenu->setColourTheme(theme,true);
+            m_popupMenu->setTheme(theme,true);
 
         if(!updateChildren)
             return;
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
-            (*itr)->setColourTheme(theme,true);
+            (*itr)->setTheme(theme,true);
         }
         redraw();
 

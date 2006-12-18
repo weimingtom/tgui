@@ -35,6 +35,7 @@ namespace TGUI
         , m_resizeable(false)
         , m_movable(true)
         , m_titlebarEnabled(true)
+        , m_isTabbedCaption(false)
     {
         minWidth = 50;
         minHeight = 50;
@@ -45,7 +46,6 @@ namespace TGUI
         padTop = 6 + stringHeight();
         m_titlebarHeight = stringHeight() + 4;
         menu = NULL;
-        m_isTabbedCaption = false;
     }
 
     //-----------------------------------------------------------------------
@@ -57,6 +57,7 @@ namespace TGUI
         , m_resizeable(false)
         , m_movable(true)
         , m_titlebarEnabled(true)
+        , m_isTabbedCaption(false)
     {
         minWidth = 50;
         minHeight = 50;

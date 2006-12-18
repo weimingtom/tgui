@@ -84,9 +84,9 @@ namespace TGUI
         b = (TGReal)m_blue->value.get() / 255.f;
         a = (TGReal)m_alpha->value.get() / 255.f;
 
-        TGColourTheme ct(TGColour(r,g,b,a));
+        TGTheme ct(TGColour(r,g,b,a));
 
-        getActiveScreen()->setColourTheme(ct,true);
+        getActiveScreen()->setTheme(ct,true);
 
         return true;
     }
