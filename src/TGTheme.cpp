@@ -26,21 +26,21 @@
 
 namespace TGUI
 {
-    const TGColour TGColourTheme::DefaultText = TGColour(169.f/255.f,175.f/255.f,186.f/255.f,1.0f);
+    const TGColour TGTheme::DefaultText = TGColour(169.f/255.f,175.f/255.f,186.f/255.f,1.0f);
 
     //-----------------------------------------------------------------------
-    //                        T G C o l o u r T h e m e
+    //                            T G T h e m e
     //-----------------------------------------------------------------------
-    TGColourTheme::TGColourTheme()
+    TGTheme::TGTheme()
     {
         setBase(TGColour(100.f/255.f, 114.f/255.f, 115.f/255.f, 204.f/255.f),
                 DefaultText);
     }
 
     //-----------------------------------------------------------------------
-    //                        T G C o l o u r T h e m e
+    //                            T G T h e m e
     //-----------------------------------------------------------------------
-    TGColourTheme::TGColourTheme(TGColour baseColour, TGColour baseTextColour)
+    TGTheme::TGTheme(TGColour baseColour, TGColour baseTextColour)
     {
         setBase(baseColour,baseTextColour);
     }
@@ -48,11 +48,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            o p e r a t o r =
     //-----------------------------------------------------------------------
-    TGColourTheme& TGColourTheme::operator= (const TGColourTheme& rhs)
+    TGTheme& TGTheme::operator= (const TGTheme& rhs)
     {
         if ( &rhs != this )
         {
             m_base= rhs.m_base;
+            m_baseBright = rhs.m_baseBright;
             m_baseOpaque= rhs.m_baseOpaque;
             m_caption= rhs.m_caption;
             m_captionFocused= rhs.m_captionFocused;
@@ -70,19 +71,23 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       ~ T G C o l o u r T h e m e
     //-----------------------------------------------------------------------
-    TGColourTheme::~TGColourTheme()
+    TGTheme::~TGTheme()
     {
     }
 
     //-----------------------------------------------------------------------
     //                            s e t B a s e
     //-----------------------------------------------------------------------
-    void TGColourTheme::setBase(TGColour baseColour, TGColour baseTextColour)
+    void TGTheme::setBase(TGColour baseColour, TGColour baseTextColour)
     {
         TGColour c = baseColour;
+
         c.a = 1.f;
         m_base.bind(new TGBrush(baseColour));
         m_baseOpaque.bind(new TGBrush(c));
+
+        c = clamp(baseColour * 1.5f);
+        m_baseBright.bind(new TGBrush(c));
 
         c = clamp(baseColour * 1.12f);
         c.a = 245.f/255.f;
@@ -132,7 +137,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t F o n t
     //-----------------------------------------------------------------------
-    void TGColourTheme::setFont(TGFont* font)
+    void TGTheme::setFont(TGFont* font)
     {
         m_text->setTexture(font->m_texture);
         m_textFocused->setTexture(font->m_texture);
@@ -142,7 +147,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            s e t B a s e
     //-----------------------------------------------------------------------
-    TGColour TGColourTheme::clamp(TGColour c)
+    TGColour TGTheme::clamp(TGColour c)
     {
         TGColour clamped=c;
 

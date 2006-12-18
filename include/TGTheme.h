@@ -22,8 +22,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGCOLOURTHEME_H__
-#define __TGCOLOURTHEME_H__
+#ifndef __TGTHEME_H__
+#define __TGTHEME_H__
 
 namespace TGUI
 {
@@ -31,11 +31,12 @@ namespace TGUI
     class TGFont;
     typedef Ogre::SharedPtr<TGBrush> TGSBrush;
 
-    class TGColourTheme
+    class TGTheme
     {
     public:
         TGSBrush        m_base;
         TGSBrush        m_baseOpaque;
+        TGSBrush        m_baseBright;
         TGSBrush        m_caption;
         TGSBrush        m_captionFocused;
         TGSBrush        m_frame;
@@ -50,14 +51,15 @@ namespace TGUI
         static const TGColour DefaultText;
 
 
-        TGColourTheme();
-        TGColourTheme(TGColour baseColour, TGColour baseTextColour=DefaultText);
-        TGColourTheme& TGColourTheme::operator= (const TGColourTheme& rhs);
+        TGTheme();
+        TGTheme(TGColour baseColour, TGColour baseTextColour=DefaultText);
+        TGTheme& TGTheme::operator= (const TGTheme& rhs);
 
-        virtual ~TGColourTheme();
+        virtual ~TGTheme();
         TGColour clamp(TGColour c);
 
         inline const TGSBrush getBase() {return m_base;};
+        inline const TGSBrush getBaseBright() {return m_baseBright;};
         inline const TGSBrush getBaseOpaque() {return m_baseOpaque;};
         inline const TGSBrush getTextBrush() {return m_text;};
         inline const TGSBrush getTextFocusedBrush() {return m_textFocused;};

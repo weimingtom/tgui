@@ -180,8 +180,8 @@ public:
         win->setFrameEnabled(false);
         win->setTitlebarHeight(50);
 
-        win->getColourTheme().m_caption->setTexture("cap2.png");
-        win->getColourTheme().m_base->setTexture("win2.png");
+        win->getTheme().m_caption->setTexture("cap2.png");
+        win->getTheme().m_base->setTexture("win2.png");
         //win->getColourTheme().m_base->setColour(TGColour(.5f,0,0));
 
 
@@ -208,7 +208,7 @@ public:
         TGTexture* tex = TGSystem::getSingleton().getRenderer()->createTexture("win1.png");
         brush.setNull();
         brush.bind(new TGBrush(tex));
-        win2->getColourTheme().m_base = brush;
+        win2->getTheme().m_base = brush;
 
         //new TGButton(win2,10,50,100,90,"Test 2");
     }

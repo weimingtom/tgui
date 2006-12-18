@@ -52,7 +52,7 @@ namespace TGUI
         bool                m_frameEnabled;
         TGControlList       m_children;
         TGEventMap          m_handlers;
-        TGColourTheme       m_theme;
+        TGTheme             m_theme;
         TGQuadList          m_quadCache;
         TGQuadList&         m_systemCache;
         TGRenderer*         m_renderer;
@@ -183,8 +183,8 @@ namespace TGUI
             int bottom=-1);
         virtual void getClientSize(int &w, int &h);
 
-        TGColourTheme& getColourTheme() {return m_theme;};
-        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        TGTheme& getTheme() {return m_theme;};
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
 
         void setMouseTrackingControl(TGControl *control);
 

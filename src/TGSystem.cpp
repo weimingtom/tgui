@@ -234,7 +234,7 @@ namespace TGUI
         m_texture->setOgreTexture(texture);
         m_logger = new TGLogger();
 
-        m_theme = TGColourTheme();
+        m_theme = TGTheme();
 
         m_defaultFont = new TGFont(defaultFont);
         m_defaultFont->setHeight(18);
@@ -547,9 +547,9 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                       s e t C o l o u r T h e m e
+    //                          s e t T h e m e
     //-----------------------------------------------------------------------
-    void TGSystem::setColourTheme(TGColourTheme theme,bool updateChildren) 
+    void TGSystem::setTheme(TGTheme theme,bool updateChildren) 
     {
         m_theme = theme;
     }

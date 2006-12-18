@@ -43,7 +43,7 @@ namespace TGUI
 
         virtual TGMenuItem *addItem(TGString caption);
         virtual void clear();
-        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
 
         virtual void render();
         virtual TGString getControlType() {return "TGMenuItem";};
@@ -80,7 +80,7 @@ namespace TGUI
         TGPopupMenu();
         virtual ~TGPopupMenu();
 
-        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
 
         virtual TGMenuItem *addItem(TGString caption);
         virtual void clear();

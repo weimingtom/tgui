@@ -48,7 +48,7 @@ namespace TGUI
         virtual void setBounds(int x1, int y1, int x2, int y2);
         virtual TGControl *childAt(TGReal x, TGReal y);
         virtual bool pointInControl(TGReal x, TGReal y);
-        virtual void setColourTheme(TGColourTheme theme,bool updateChildren=false);
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
         virtual void onFocusExit();
 
         virtual bool focused();

@@ -94,9 +94,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      s e t C o l o u r T h e m e
     //-----------------------------------------------------------------------
-    void TGSpinner::setColourTheme(TGColourTheme theme,bool updateChildren)
+    void TGSpinner::setTheme(TGTheme theme,bool updateChildren)
     {
-        TGControl::setColourTheme(theme,updateChildren);
+        TGControl::setTheme(theme,updateChildren);
     }
 
     //-----------------------------------------------------------------------

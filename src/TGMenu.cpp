@@ -67,13 +67,13 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                       s e t C o l o u r T h e m e
+    //                          s e t T h e m e
     //-----------------------------------------------------------------------
-    void TGMenuItem::setColourTheme(TGColourTheme theme,bool updateChildren)
+    void TGMenuItem::setTheme(TGTheme theme,bool updateChildren)
     {
-        TGControl::setColourTheme(theme,updateChildren);
+        TGControl::setTheme(theme,updateChildren);
         if(subMenu)
-            subMenu->setColourTheme(theme,true);
+            subMenu->setTheme(theme,true);
     }
     //-----------------------------------------------------------------------
     //                            r e n d e r
@@ -333,12 +333,12 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                       s e t C o l o u r T h e m e
+    //                          s e t T h e m e
     //-----------------------------------------------------------------------
-    void TGPopupMenu::setColourTheme(TGColourTheme theme,bool updateChildren)
+    void TGPopupMenu::setTheme(TGTheme theme,bool updateChildren)
     {
-        TGControl::setColourTheme(theme,updateChildren);
-        menu->setColourTheme(theme,updateChildren);
+        TGControl::setTheme(theme,updateChildren);
+        menu->setTheme(theme,updateChildren);
     }
 
 }

@@ -56,7 +56,7 @@ namespace TGUI
 
 #include <tglogger.h>
 #include <tgcolour.h>
-#include <tgcolourtheme.h>
+#include <tgtheme.h>
 #include <tgvector.h>
 #include <tgrect.h>
 #include <tgrenderer.h>
