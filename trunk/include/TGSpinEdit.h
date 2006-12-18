@@ -32,6 +32,8 @@ namespace TGUI
     {
     private:
         int             m_height;
+        bool            m_upPressed;
+        bool            m_downPressed;
         TGEditbox*      m_inputbox;
 
     public:
@@ -50,6 +52,8 @@ namespace TGUI
         virtual bool focused();
 
         virtual void onMouseDown(int x, int y, int b);
+        virtual void onMouseUp(int x, int y, int b);
+
         virtual void onMouseMoved(int x, int y);
         virtual void onMouseEnter();
         virtual void onMouseExit(int x, int y);

@@ -31,11 +31,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGSpinEdit::TGSpinEdit(TGControl *parent, int x1, int y1, int x2, int y2)
         : TGControl(parent)
+        , m_upPressed(false)
+        , m_downPressed(false)
+        , m_height(0)
     {
-        m_height=0;
         m_inputbox = new TGEditbox(this,0,0,5,5);
-        m_inputbox->isComposite = true;
-     
+        m_inputbox->isComposite = true;     
     }
 
     //-----------------------------------------------------------------------
@@ -94,17 +95,53 @@ namespace TGUI
             return;
         }
 
+        if (y < y1+(m_height / 2))
+            m_upPressed = true;
+        else m_downPressed = true;
+
+        setMouseTrackingControl(this);
+        redraw();
+    }
+
+    //-----------------------------------------------------------------------
+    //                        o n M o u s e U p 
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::onMouseUp(int x, int y, int b)
+    {
+
+        if(m_upPressed || m_downPressed)
+        {
+            setMouseTrackingControl(NULL);
+            m_upPressed = false;
+            m_downPressed = false;
+            redraw();
+            return;
+        }
+
+        int x1,y1,x2,y2;
+        getBounds(x1, y1, x2, y2);
+
+        if (m_inputbox->pointInControl(x,y))
+        {
+            m_inputbox->onMouseUp(x, y, b);
+            return;
+        }
+
         x1 = x2-m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y1+m_height))
         {
         }
     }
-
     //-----------------------------------------------------------------------
     //                          o n M o u s e M o v e d
     //-----------------------------------------------------------------------
     void TGSpinEdit::onMouseMoved(int x, int y)
     {
+        if(m_upPressed || m_downPressed)
+        {
+            return;
+        }
+
         if(m_inputbox->pointInControl(x,y))
         {
             m_inputbox->mouseOverControl = true;
@@ -121,6 +158,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSpinEdit::onMouseEnter()
     {
+        if(m_upPressed || m_downPressed)
+        {
+            return;
+        }
         TGControl::onMouseEnter();
         m_inputbox->onMouseEnter();
     }
@@ -130,6 +171,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSpinEdit::onMouseExit(int x, int y)
     {
+        if(m_upPressed || m_downPressed)
+        {
+            return;
+        }
         if(pointInControl(x,y))
             return;
         
@@ -197,9 +242,14 @@ namespace TGUI
             brush = m_theme.getFrameBrush();
 
         drawRect(x2-m_height, y1, x2, y1+m_height,brush);
-        drawTri(x2-m_height+2,y1+1, x2-3, y1+(m_height/2)-1,brush,1);
 
-        drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,brush,0);
+        if(!m_upPressed)
+            drawTri(x2-m_height+2,y1+1, x2-3, y1+(m_height/2)-1,brush,1);
+        else drawTri(x2-m_height+2,y1+1, x2-3, y1+(m_height/2)-1,m_theme.getFrameBrush(),1);
+
+        if(!m_downPressed)
+            drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,brush,0);
+        else drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,m_theme.getFrameBrush(),0);
     }
 
 }

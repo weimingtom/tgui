@@ -177,8 +177,15 @@ public:
         win->setFrameEnabled(false);
         win->setTitlebarHeight(50);
 
-        win->getTheme().m_caption->setTexture("cap2.png");
-        win->getTheme().m_base->setTexture("win2.png");
+        
+        TGSBrush b1,b2;
+        b1.bind(new TGBrush());
+        b1->setTexture("cap2.png");
+        win->getTheme().m_caption = b1;
+
+        b2.bind(new TGBrush());
+        b2->setTexture("win2.png");
+        win->getTheme().m_base = b2;
         //win->getColourTheme().m_base->setColour(TGColour(.5f,0,0));
 
 
@@ -236,7 +243,7 @@ public:
 
         TGSpinEdit* se = new TGSpinEdit(win);
         se->setPos(5,60);
-        se->resize(175,25);
+        se->resize(80,25);
 
     }
 
@@ -246,6 +253,7 @@ public:
 
         mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
 
+        //createTest1();
         createTest2();
     }
 };

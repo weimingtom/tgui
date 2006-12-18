@@ -30,16 +30,16 @@ namespace TGUI
 
     template <class TGData> class TGDataManager
     {
-        TGData	data;
-        TGData	*dataSource;
-        TGControl	*m_control;
+        TGData	    m_data;
+        TGData*	    m_dataSource;
+        TGControl*  m_control;
 
     public:
 
         TGDataManager()
         {
             m_control = NULL;
-            dataSource = &data;
+            m_dataSource = &m_data;
         }
         ~TGDataManager()
         {
@@ -54,14 +54,14 @@ namespace TGUI
         void setDataSource(TGData *place)
         {
             if (place)
-                dataSource = (TGData*)place;
+                m_dataSource = (TGData*)place;
             else
-                dataSource = &data;
+                m_dataSource = &m_data;
         }
 
         void set(TGData newData)
         {
-            *dataSource = newData;
+            *m_dataSource = newData;
 
             if(m_control)
                 m_control->fireEvent(TGEvent::Modified,TGEventArgs(m_control));
@@ -69,7 +69,7 @@ namespace TGUI
 
         TGData get()
         {
-            return *dataSource;
+            return *m_dataSource;
         }
     };
 }
