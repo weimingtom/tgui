@@ -29,47 +29,53 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
-    TGSpinner::TGSpinner(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGEditbox(parent,x1,y1,x2,y2)
+    TGSpinEdit::TGSpinEdit(TGControl *parent, int x1, int y1, int x2, int y2)
+        : TGControl(parent)
     {
         m_height=0;
+        m_inputbox = new TGEditbox(this,0,0,5,5);
+        m_inputbox->isComposite = true;
      
     }
 
     //-----------------------------------------------------------------------
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
-    TGSpinner::~TGSpinner()
+    TGSpinEdit::~TGSpinEdit()
     {
     }
 
     //-----------------------------------------------------------------------
     //                           s e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGSpinner::setBounds(int x1, int y1, int x2, int y2)
+    void TGSpinEdit::setBounds(int x1, int y1, int x2, int y2)
     {
         m_height = y2-y1;
-        
-        TGEditbox::setBounds(x1, y1, x2-m_height, y2);
+
+        TGControl::setBounds(x1,y1,x2,y2 + m_height*5);
+
+        m_inputbox->setBounds(0,0,x2-x1-m_height,m_height);
     }
 
     //-----------------------------------------------------------------------
     //                       p o i n t I n C o n t r o l
     //-----------------------------------------------------------------------
-    bool TGSpinner::pointInControl(TGReal x, TGReal y)
+    bool TGSpinEdit::pointInControl(TGReal x, TGReal y)
     {
         int	x1, y1, x2, y2;
+
         getBounds(x1, y1, x2, y2);
-        x2 += m_height;
+        y2 = y1 + m_height;
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
             return true;
+
         return false;
     }
 
     //-----------------------------------------------------------------------
     //                            c h i l d A t
     //-----------------------------------------------------------------------
-    TGControl* TGSpinner::childAt(TGReal x, TGReal y)
+    TGControl* TGSpinEdit::childAt(TGReal x, TGReal y)
     {
         return this;
     }
@@ -77,24 +83,96 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        o n M o u s e D o w n
     //-----------------------------------------------------------------------
-    void TGSpinner::onMouseDown(int x, int y, int b)
+    void TGSpinEdit::onMouseDown(int x, int y, int b)
     {
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
-        x1 = x2;
-        x2 += m_height;
-        if ((x >= x1 && y >= y1 && x <= x2 && y <= y2))
+
+        if (m_inputbox->pointInControl(x,y))
         {
+            m_inputbox->onMouseDown(x, y, b);
             return;
         }
 
-        TGEditbox::onMouseDown(x, y, b);
+        x1 = x2-m_height;
+        if ((x >= x1 && y >= y1 && x <= x2 && y <= y1+m_height))
+        {
+        }
     }
 
     //-----------------------------------------------------------------------
-    //                      s e t C o l o u r T h e m e
+    //                          o n M o u s e M o v e d
     //-----------------------------------------------------------------------
-    void TGSpinner::setTheme(TGTheme theme,bool updateChildren)
+    void TGSpinEdit::onMouseMoved(int x, int y)
+    {
+        if(m_inputbox->pointInControl(x,y))
+        {
+            m_inputbox->mouseOverControl = true;
+            m_inputbox->onMouseMoved(x,y);
+            return;
+        }
+        m_inputbox->mouseOverControl = true;
+
+        TGControl::onMouseMoved(x,y);
+    }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E n t e r
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::onMouseEnter()
+    {
+        TGControl::onMouseEnter();
+        m_inputbox->onMouseEnter();
+    }
+
+    //-----------------------------------------------------------------------
+    //                            o n M o u s e E x i t
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::onMouseExit(int x, int y)
+    {
+        if(pointInControl(x,y))
+            return;
+        
+        m_inputbox->mouseOverControl = false;
+        mouseOverControl = false;
+        m_inputbox->onMouseExit(x, y);
+        TGControl::onMouseExit(x, y);
+
+    }
+
+    //-----------------------------------------------------------------------
+    //                            o n F o c u s E x i t
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::onFocusExit()
+    {
+
+        if(mouseOverControl)
+            return;
+
+        m_inputbox->onFocusExit();
+        m_inputbox->mouseOverControl = false;
+        setKeyboardFocusControl(0);
+
+        redraw(true);
+    }
+
+    //-----------------------------------------------------------------------
+    //                              f o c u s e d
+    //-----------------------------------------------------------------------
+    bool TGSpinEdit::focused()
+    {
+        if (!m_parent)
+            return true;
+        TGControl* c = m_parent->getFocusedChild();
+        if(c == this)
+            return true;
+        else return false;
+    }
+
+    //-----------------------------------------------------------------------
+    //                           s e t T h e m e
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::setTheme(TGTheme theme,bool updateChildren)
     {
         TGControl::setTheme(theme,updateChildren);
     }
@@ -102,34 +180,26 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             r e n d e r
     //-----------------------------------------------------------------------
-    void TGSpinner::render()
+    void TGSpinEdit::render()
     {
-        if(isRenderCached())
+        if(isRenderCached() && m_inputbox->isRenderCached())
             return;
+
+        m_inputbox->render();
 
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
-        TGEditbox::render();
         TGSBrush brush;
-        if (mouseOverControl  || hasKeyboardFocus(this))
+        if (mouseOverControl  || hasKeyboardFocus(this) || 
+            hasKeyboardFocus(m_inputbox))
             brush = m_theme.getFrameFocusedBrush();
         else
             brush = m_theme.getFrameBrush();
 
-        drawRect(x2, y1, x2 + m_height, y2, brush);
+        drawRect(x2-m_height, y1, x2, y1+m_height,brush);
+        drawTri(x2-m_height+2,y1+1, x2-3, y1+(m_height/2)-1,brush,1);
 
-        drawTri(x2+2,y1+7, x2+m_height-3, y2-7,brush, 0);
-
-        /*
-        if(m_listbox->isVisible())
-        {
-            int x1,y1,x2,y2;
-            m_listbox->getBounds(x1, y1, x2, y2);
-            color(m_listbox->getColourTheme().getBase());
-            fillRect(x1,y1,x2,y2);
-
-        }
-        */
+        drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,brush,0);
     }
 
 }

@@ -338,30 +338,60 @@ namespace TGUI
         quad.bottomLeftCol	= colourToOgre(brush->m_colourRect.m_bottomLeft);
         quad.bottomRightCol	= colourToOgre(brush->m_colourRect.m_bottomRight);
 
-        // setup Vertex 1...
-        quad.lpos[0].x = quad.position.d_left;
-        quad.lpos[0].y = quad.position.d_top;
-        quad.lpos[0].z = quad.z;
-        quad.lpos[0].diffuse = quad.topLeftCol;
-        quad.lpos[0].tu1 = quad.texPosition.d_left;
-        quad.lpos[0].tv1 = quad.texPosition.d_top;
+        if(!pointDir)
+        {
+            // setup Vertex 1...
+            quad.lpos[0].x = quad.position.d_left;
+            quad.lpos[0].y = quad.position.d_top;
+            quad.lpos[0].z = quad.z;
+            quad.lpos[0].diffuse = quad.topLeftCol;
+            quad.lpos[0].tu1 = quad.texPosition.d_left;
+            quad.lpos[0].tv1 = quad.texPosition.d_top;
 
-        // setup Vertex 2...
+            // setup Vertex 2...
 
-        quad.lpos[1].x = quad.position.d_right;
-        quad.lpos[1].y = quad.position.d_top;
-        quad.lpos[1].z = quad.z;
-        quad.lpos[1].diffuse = quad.topRightCol;
-        quad.lpos[1].tu1 = quad.texPosition.d_right;
-        quad.lpos[1].tv1 = quad.texPosition.d_top;
+            quad.lpos[1].x = quad.position.d_right;
+            quad.lpos[1].y = quad.position.d_top;
+            quad.lpos[1].z = quad.z;
+            quad.lpos[1].diffuse = quad.topRightCol;
+            quad.lpos[1].tu1 = quad.texPosition.d_right;
+            quad.lpos[1].tv1 = quad.texPosition.d_top;
 
-        // setup Vertex 3...
-        quad.lpos[2].x = quad.position.d_left + ((quad.position.d_right-quad.position.d_left)/2.f);
-        quad.lpos[2].y = quad.position.d_bottom;
-        quad.lpos[2].z = quad.z;
-        quad.lpos[2].diffuse = quad.bottomRightCol;
-        quad.lpos[2].tu1 = quad.texPosition.d_right;
-        quad.lpos[2].tv1 = quad.texPosition.d_bottom;
+            // setup Vertex 3...
+            quad.lpos[2].x = quad.position.d_left + ((quad.position.d_right-quad.position.d_left)/2.f);
+            quad.lpos[2].y = quad.position.d_bottom;
+            quad.lpos[2].z = quad.z;
+            quad.lpos[2].diffuse = quad.bottomRightCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_right;
+            quad.lpos[2].tv1 = quad.texPosition.d_bottom;
+        }
+        else
+        {
+            // setup Vertex 1...
+            quad.lpos[0].x = quad.position.d_right;
+            quad.lpos[0].y = quad.position.d_bottom;
+            quad.lpos[0].z = quad.z;
+            quad.lpos[0].diffuse = quad.bottomRightCol;
+            quad.lpos[0].tu1 = quad.texPosition.d_right;
+            quad.lpos[0].tv1 = quad.texPosition.d_bottom;
+
+            // setup Vertex 2...
+
+            quad.lpos[1].x = quad.position.d_left;
+            quad.lpos[1].y = quad.position.d_bottom;
+            quad.lpos[1].z = quad.z;
+            quad.lpos[1].diffuse = quad.bottomLeftCol;
+            quad.lpos[1].tu1 = quad.texPosition.d_left;
+            quad.lpos[1].tv1 = quad.texPosition.d_bottom;
+
+            // setup Vertex 3...
+            quad.lpos[2].x = quad.position.d_left + ((quad.position.d_right-quad.position.d_left)/2.f);
+            quad.lpos[2].y = quad.position.d_top;
+            quad.lpos[2].z = quad.z;
+            quad.lpos[2].diffuse = quad.topLeftCol;
+            quad.lpos[2].tu1 = quad.texPosition.d_left;
+            quad.lpos[2].tv1 = quad.texPosition.d_top;
+        }
 
         // setup Vertex 4...
         quad.lpos[3].x = quad.lpos[2].x;

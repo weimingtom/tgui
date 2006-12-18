@@ -22,30 +22,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGSPINNER_H__
-#define __TGSPINNER_H__
+#ifndef __TGSPINEDIT_H__
+#define __TGSPINEDIT_H__
 
 namespace TGUI
 {
 
-    class TGSpinner : public TGEditbox
+    class TGSpinEdit : public TGControl
     {
     private:
         int             m_height;
+        TGEditbox*      m_inputbox;
 
     public:
 
-        TGSpinner(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
-        virtual ~TGSpinner();
+        TGSpinEdit(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        virtual ~TGSpinEdit();
 
         virtual void render();
-        virtual TGString getControlType() {return "TGSpinner";};
+        virtual TGString getControlType() {return "TGSpinEdit";};
         virtual void setBounds(int x1, int y1, int x2, int y2);
         virtual TGControl *childAt(TGReal x, TGReal y);
         virtual bool pointInControl(TGReal x, TGReal y);
         virtual void setTheme(TGTheme theme,bool updateChildren=false);
+        virtual void onFocusExit();
+
+        virtual bool focused();
 
         virtual void onMouseDown(int x, int y, int b);
+        virtual void onMouseMoved(int x, int y);
+        virtual void onMouseEnter();
+        virtual void onMouseExit(int x, int y);
 
     };
 }

@@ -133,7 +133,9 @@ namespace TGUI
         if ((x >= x1 && y >= y1 && x <= x2 && y <= y1+m_height))
         {
             if(m_listbox->isVisible())
+            {
                 m_listbox->hide();
+            }
             else 
             {
                 m_listbox->show();
@@ -251,7 +253,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGCombobox::render()
     {
-        if(isRenderCached())
+        if(isRenderCached() && m_inputbox->isRenderCached() && m_listbox->isRenderCached())
             return;
 
         m_inputbox->render();

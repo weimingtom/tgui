@@ -82,8 +82,10 @@ namespace TGUI
     {
         if(isRenderCached())
             return;
+
         int			x1, y1, x2, y2;
         getBounds(x1, y1, x2, y2);
+
         TGSBrush brush;
         brush = m_theme.getBase();
         fillRect(x1, y1 + 1, x2 - 1, y2, brush);
@@ -112,6 +114,7 @@ namespace TGUI
             brush = m_theme.getFrameFocusedBrush();
         else
             brush = m_theme.getFrameBrush();
+
         drawRect(x1, y1, x2, y2, brush);
     }
 
@@ -205,6 +208,7 @@ namespace TGUI
         TGControl::onFocusEnter(oldFocus);
         m_cursorVisible = true;
         m_pulseTime = 0.f;
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -213,6 +217,7 @@ namespace TGUI
     void TGEditbox::onFocusExit()
     {
         m_cursorVisible = false;
+        redraw();
     }
 
 

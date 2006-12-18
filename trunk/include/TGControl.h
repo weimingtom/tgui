@@ -132,8 +132,8 @@ namespace TGUI
 
         virtual void makeExclusive();
 
-        virtual void show() {m_isVisible = true;};
-        virtual void hide() {m_isVisible = false;};
+        virtual void show() {m_isVisible = true; redraw();};
+        virtual void hide() {m_isVisible = false; redraw();};
         virtual bool isVisible() {return m_isVisible;};
 
         virtual TGScreen* getActiveScreen();
@@ -145,6 +145,7 @@ namespace TGUI
         virtual bool isRenderCached();
         virtual void render();
         virtual void redraw(bool value=true);
+        virtual bool needsRedraw() {return m_redraw;};
 
         virtual void setTexture(TGTexture* value) {m_texture = value;};
         virtual TGTexture* getTexture() {return m_texture;};

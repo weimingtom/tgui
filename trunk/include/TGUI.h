@@ -80,7 +80,7 @@ namespace TGUI
 #include <tglistbox.h>
 #include <tgeditbox.h>
 #include <tgcombobox.h>
-#include <tgspinner.h>
+#include <tgspinedit.h>
 #include <tgfilebrowser.h>
 #include <tgmessagebox.h>
 #include <tgmenu.h>

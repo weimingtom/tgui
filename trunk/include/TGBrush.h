@@ -38,6 +38,7 @@ namespace TGUI
 
 
         TGBrush();
+        TGBrush& TGBrush::operator= (const TGBrush& rhs);
         TGBrush(TGTexture* texture);
         TGBrush(const TGColour& col, TGTexture* texture=NULL);
         TGBrush(const TGColourRect& colRect, TGTexture* texture=NULL);
