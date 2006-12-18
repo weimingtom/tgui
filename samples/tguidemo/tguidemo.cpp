@@ -168,41 +168,49 @@ public:
     {
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
+        mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
+
         TGSBrush    brush;
 
         TGWindow	*win = new TGWindow("");
-        win->resize(400, 200);
+        win->resize(256, 256);
         win->center();
         win->setResizeEnabled(true);
         win->setTitlebarEnabled(true);
         win->setFrameEnabled(false);
         win->setTitlebarHeight(50);
 
-        win->getColourTheme().m_caption->setTexture("cap1.png");
+        win->getColourTheme().m_caption->setTexture("cap2.png");
+        win->getColourTheme().m_base->setTexture("win2.png");
+        //win->getColourTheme().m_base->setColour(TGColour(.5f,0,0));
 
 
         TGImageButton* b = new TGImageButton(win,"playbutton.png");
-        b->setPos(20,20);
         b->setWidth(128);
         b->setHeight(64);
+        b->center();
 
-        /*
-        TGWindow *win2 = new TGWindow("Another Window");
+        
+        TGWindow *win2 = new TGWindow("");
         win2->setPos(10,10);
-        win2->resize(200,300);
-
+        win2->resize(384,256);
         win2->setResizeEnabled(true);
+        win2->setFrameEnabled(false);
+        win2->setTitlebarEnabled(false);
 
-        new TGButton(win2,10,10,100,40,"Test");
+        b = new TGImageButton(win2,"playbutton.png");
+        b->setPos(60,94);
+        b->setWidth(256);
+        b->setHeight(128);
 
-        tex = TGSystem::getSingleton().getRenderer()->createTexture("CardFront.png");
+        //new TGButton(win2,10,10,100,40,"Test");
+
+        TGTexture* tex = TGSystem::getSingleton().getRenderer()->createTexture("win1.png");
         brush.setNull();
         brush.bind(new TGBrush(tex));
         win2->getColourTheme().m_base = brush;
-        win->getColourTheme().m_base = brush;
 
-        new TGButton(win2,10,50,100,90,"Test 2");
-        */
+        //new TGButton(win2,10,50,100,90,"Test 2");
     }
 };
 

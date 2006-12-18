@@ -32,15 +32,15 @@ namespace TGUI
     {
         TGDataManager<TGString>	text;
         int     		        tScroll;
-        size_t     		        cursor;
-        int     		        cursorX;
-        TGReal                   m_pulseTime;
+        size_t     		        m_cursor;
+        int     		        m_cursorX;
+        TGReal                  m_pulseTime;
         bool                    m_cursorVisible;
         int                     m_lastKey;
         char                    m_lastChar;
-        TGReal                   m_repeatRate;
-        TGReal                   m_repeatDelay;
-        TGReal                   m_repeatElapsed;
+        TGReal                  m_repeatRate;
+        TGReal                  m_repeatDelay;
+        TGReal                  m_repeatElapsed;
 
     public:
 
