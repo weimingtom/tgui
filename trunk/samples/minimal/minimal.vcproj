@@ -140,7 +140,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="OgreMain.lib OIS.lib $(tgui)\libs\tgui.lib"
-				OutputFile="$(TGUI)\bin\app_$(ProjectName).exe"
+				OutputFile="$(TGUI)\bin\$(ProjectName).exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"

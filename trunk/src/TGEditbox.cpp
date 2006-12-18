@@ -42,7 +42,7 @@ namespace TGUI
         m_repeatDelay = 0.25;
         m_repeatRate = 0.1f;
         m_repeatElapsed = 0.f;
-        cursor = cursorX = 0;
+        m_cursor = m_cursorX = 0;
     }
 
     //-----------------------------------------------------------------------
@@ -60,11 +60,11 @@ namespace TGUI
         int     w, h;
         getClientSize(w, h);
         text.set(newText);
-        cursor = newText.length();
-        cursorX = stringWidth(newText);
+        m_cursor = newText.length();
+        m_cursorX = stringWidth(newText);
         tScroll = 0;
-        if (cursorX - tScroll > w - 10)
-            tScroll = cursorX - w + (w/2);
+        if (m_cursorX - tScroll > w - 10)
+            tScroll = m_cursorX - w + (w/2);
     }
 
     //-----------------------------------------------------------------------
@@ -94,6 +94,7 @@ namespace TGUI
             (isComposite && m_parent->mouseOverControl))
             brush = m_theme.getTextFocusedBrush();
         else brush = m_theme.getTextBrush();
+
         drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
             stringHeight()/2, text.get(), brush);
 
@@ -103,8 +104,8 @@ namespace TGUI
         {
             TGSBrush brush;
             brush.bind(new TGBrush(TGColour(1,1,1)));
-            drawLine(x1 + 5 + cursorX - tScroll, y1 + 4,
-                x1 + 5 + cursorX - tScroll, y2 - 4, brush);
+            drawLine(x1 + 5 + m_cursorX - tScroll, y1 + 4,
+                x1 + 5 + m_cursorX - tScroll, y2 - 4, brush);
         }
 
         if (mouseOverControl  || hasKeyboardFocus(this))
@@ -134,10 +135,10 @@ namespace TGUI
             if (!text.empty())
             {
                 text = text.substr(0,text.length()-1);
-                cursorX = stringWidth(text,--cursor);
-                if (cursorX - tScroll < 0)
+                m_cursorX = stringWidth(text,--m_cursor);
+                if (m_cursorX - tScroll < 0)
                 {
-                    tScroll = cursorX - (w/2);
+                    tScroll = m_cursorX - (w/2);
                     if (tScroll < 0)
                         tScroll = 0;
                 }
@@ -151,9 +152,9 @@ namespace TGUI
             }
 
             text += ascii;
-            cursorX = stringWidth(text, ++cursor);
-            if (cursorX - tScroll > w - 10)
-                tScroll = cursorX - w + (w/2);
+            m_cursorX = stringWidth(text, ++m_cursor);
+            if (m_cursorX - tScroll > w - 10)
+                tScroll = m_cursorX - w + (w/2);
             break;
         }
         this->text.set(text);
