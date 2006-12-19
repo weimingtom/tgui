@@ -221,8 +221,6 @@ namespace TGUI
         m_inputbox->mouseOverControl = false;
         if(m_listbox->isVisible())
             m_listbox->hide();
-        setKeyboardFocusControl(0);
-        setFocusedChild(m_listbox);
 
         redraw(true);
     }
@@ -235,7 +233,7 @@ namespace TGUI
         if (!m_parent)
             return true;
         TGControl* c = m_parent->getFocusedChild();
-        if(c == this || c == m_listbox)
+        if(c == this || c == m_listbox || c == m_inputbox)
             return true;
         else return false;
     }
