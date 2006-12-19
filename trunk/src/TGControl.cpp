@@ -272,7 +272,7 @@ namespace TGUI
                 oldFocus->m_parent->redraw();
             oldFocus->onFocusExit();
         }
-        onFocusEnter(oldFocus);
+        onFocusEnter(this);
     }
 
     //-----------------------------------------------------------------------

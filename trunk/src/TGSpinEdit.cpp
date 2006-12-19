@@ -196,7 +196,6 @@ namespace TGUI
 
         m_inputbox->onFocusExit();
         m_inputbox->mouseOverControl = false;
-        setKeyboardFocusControl(0);
 
         redraw(true);
     }
