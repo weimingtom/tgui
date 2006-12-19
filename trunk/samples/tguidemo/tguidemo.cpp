@@ -227,11 +227,13 @@ public:
         win->resize(190, 200);
         win->setResizeEnabled(true);
 
+        
         TGCombobox* cb = new TGCombobox(win);
         cb->setPos(5,15);
         cb->resize(175,25);
         cb->addItem("test item 1");
         cb->addItem("test item 2");
+        
         cb->addItem("test item 3");
         cb->addItem("test item 4");
         cb->addItem("test item 5");
@@ -240,10 +242,15 @@ public:
         cb->addItem("test item 8");
         cb->addItem("test item 9");
         cb->addItem("test item 10");
+        
 
+
+        /*
         TGSpinEdit* se = new TGSpinEdit(win);
         se->setPos(5,60);
         se->resize(80,25);
+        */
+        win->focus();
 
     }
 
