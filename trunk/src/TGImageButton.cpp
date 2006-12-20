@@ -89,7 +89,7 @@ namespace TGUI
         if (b == LeftButton && m_pushed)
         {
             setMouseTrackingControl(NULL);
-            if (mouseOverControl)
+            if (m_mouseOverControl)
             {
                 m_uvIndex = 1;
                 fireEvent(TGEvent::MouseClicked,TGEventArgs(this));

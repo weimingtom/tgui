@@ -76,7 +76,7 @@ namespace TGUI
         }
         else
         {
-            if (mouseOverControl)
+            if (m_mouseOverControl)
                 brush = m_theme.getTextFocusedBrush();
             else
                 brush = m_theme.getTextBrush();

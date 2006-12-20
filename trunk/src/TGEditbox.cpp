@@ -92,8 +92,8 @@ namespace TGUI
 
         openClip();
 
-        if(hasKeyboardFocus(this) || mouseOverControl  ||
-            (isComposite && m_parent->mouseOverControl))
+        if(hasKeyboardFocus(this) || m_mouseOverControl  ||
+            (isComposite && m_parent->getMouseOverControl()))
             brush = m_theme.getTextFocusedBrush();
         else brush = m_theme.getTextBrush();
 
@@ -112,7 +112,7 @@ namespace TGUI
         }
         
 
-        if (mouseOverControl  || hasKeyboardFocus(this))
+        if (m_mouseOverControl  || hasKeyboardFocus(this))
             brush = m_theme.getFrameFocusedBrush();
         else
             brush = m_theme.getFrameBrush();

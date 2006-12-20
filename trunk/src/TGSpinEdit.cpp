@@ -144,11 +144,11 @@ namespace TGUI
 
         if(m_inputbox->pointInControl(x,y))
         {
-            m_inputbox->mouseOverControl = true;
+            m_inputbox->setMouseOverControl(true);
             m_inputbox->onMouseMoved(x,y);
             return;
         }
-        m_inputbox->mouseOverControl = true;
+        m_inputbox->setMouseOverControl(true);
 
         TGControl::onMouseMoved(x,y);
     }
@@ -178,8 +178,8 @@ namespace TGUI
         if(pointInControl(x,y))
             return;
         
-        m_inputbox->mouseOverControl = false;
-        mouseOverControl = false;
+        m_inputbox->setMouseOverControl(false);
+        setMouseOverControl(false);
         m_inputbox->onMouseExit(x, y);
         TGControl::onMouseExit(x, y);
 
@@ -191,11 +191,11 @@ namespace TGUI
     void TGSpinEdit::onFocusExit()
     {
 
-        if(mouseOverControl)
+        if(m_mouseOverControl)
             return;
 
         m_inputbox->onFocusExit();
-        m_inputbox->mouseOverControl = false;
+        m_inputbox->setMouseOverControl(false);
 
         redraw(true);
     }
@@ -231,7 +231,7 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGSBrush brush;
-        if (mouseOverControl  || hasKeyboardFocus(this) || 
+        if (m_mouseOverControl  || hasKeyboardFocus(this) || 
             hasKeyboardFocus(m_inputbox))
             brush = m_theme.getFrameFocusedBrush();
         else

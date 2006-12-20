@@ -66,7 +66,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGScreen::onMouseEnter()
     {
-        mouseOverControl = true;
+        m_mouseOverControl = true;
     }
 
     //-----------------------------------------------------------------------
@@ -74,6 +74,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGScreen::onMouseExit()
     {
-        mouseOverControl = false;
+        m_mouseOverControl = false;
     }
 }

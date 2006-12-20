@@ -64,7 +64,7 @@ namespace TGUI
         FrameStyle	fs = FS_FLAT;
         getBounds(x1, y1, x2, y2);
 
-        if (mouseOverControl)
+        if (getMouseOverControl())
             fs = m_pushed?FS_LOWERED:FS_RAISED;
         else
             fs = FS_FLAT;
@@ -82,7 +82,7 @@ namespace TGUI
             brush = m_theme.getTextInvertedBrush();
         else
         {
-            if(mouseOverControl)
+            if(getMouseOverControl())
                 brush = m_theme.getTextFocusedBrush();
             else brush = m_theme.getTextBrush();
         }
@@ -120,7 +120,7 @@ namespace TGUI
         if (b == LeftButton && m_pushed)
         {
             setMouseTrackingControl(NULL);
-            if (mouseOverControl)
+            if (getMouseOverControl())
                 fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
             redraw();
         }

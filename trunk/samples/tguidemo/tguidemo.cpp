@@ -256,7 +256,7 @@ public:
 
         mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
 
-        createTest1();
+        //createTest1();
         createTest2();
     }
 };
