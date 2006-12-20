@@ -30,7 +30,7 @@ namespace TGUI
 
     class TGEditbox : public TGControl
     {
-        TGDataManager<TGString>	text;
+        TGDataManager<TGString>	m_text;
         int     		        tScroll;
         size_t     		        m_cursor;
         int     		        m_cursorX;
@@ -41,6 +41,7 @@ namespace TGUI
         TGReal                  m_repeatRate;
         TGReal                  m_repeatDelay;
         TGReal                  m_repeatElapsed;
+        bool                    m_readOnly;
 
     public:
 
@@ -54,6 +55,9 @@ namespace TGUI
         virtual TGString getControlType() {return "TGEditbox";};
 
         virtual void pulse(TGReal timeElapsed);
+
+        void setReadOnly(bool value) {m_readOnly = value;};
+        bool getReadOnly() {return m_readOnly;};
 
         virtual void onKeyDown(int key, unsigned char ascii);
         virtual void onKeyUp(int key, unsigned char ascii);

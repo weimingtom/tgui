@@ -34,9 +34,14 @@ namespace TGUI
         , m_upPressed(false)
         , m_downPressed(false)
         , m_height(0)
+        , m_pulseTime(0.f)
     {
         m_inputbox = new TGEditbox(this,0,0,5,5);
         m_inputbox->isComposite = true;     
+        m_value = 0.f;
+        m_minValue = 0.f;
+        m_maxValue = 100.f;
+        m_increment = 1.f;
     }
 
     //-----------------------------------------------------------------------
@@ -98,6 +103,8 @@ namespace TGUI
         if (y < y1+(m_height / 2))
             m_upPressed = true;
         else m_downPressed = true;
+        updateValue();
+        m_pulseTime = 0.f;
 
         setMouseTrackingControl(this);
         redraw();
@@ -220,6 +227,52 @@ namespace TGUI
     {
         TGControl::setTheme(theme,updateChildren);
     }
+
+    //-----------------------------------------------------------------------
+    //                              p u l s e
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::pulse(TGReal timeElapsed)
+    {
+        if((!m_upPressed) && (!m_downPressed))
+            return;
+
+        m_pulseTime += timeElapsed;
+
+        if(m_pulseTime >= 0.25f)
+        {
+            updateValue();
+            redraw();
+            m_pulseTime = 0.f;
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    //                         u p d a t e V a l u e
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::updateValue()
+    {
+        if((!m_upPressed) && (!m_downPressed))
+            return;
+
+        if(m_upPressed)
+        {
+            m_value += m_increment;
+            if(m_value > m_maxValue)
+                m_value = m_maxValue;
+        }
+
+        if(m_downPressed)
+        {
+            m_value -= m_increment;
+            if(m_value < m_minValue)
+                m_value = m_minValue;
+        }
+
+        char buf[100];
+        sprintf(buf,"%.2f",m_value);
+        m_inputbox->setText(buf);
+    }
+
 
     //-----------------------------------------------------------------------
     //                             r e n d e r

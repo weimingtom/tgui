@@ -31,18 +31,20 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGEditbox::TGEditbox(TGControl *parent, int x1, int y1, int x2, int y2)
         : TGControl(parent)
+        , m_readOnly(false)
+        , m_cursorVisible(false)
+        , m_pulseTime(0.f)
+        , m_lastKey(-1)
+        , m_repeatDelay(0.25)
+        , m_repeatRate(0.1f)
+        , m_repeatElapsed(0.f)
+        , m_cursor(0)
+        , m_cursorX(0)
     {
-        text.setControl(this);
-        text.set("");
+        m_text.setControl(this);
+        m_text.set("");
         setBounds(x1, y1, x2, y2);
         tScroll = 0;
-        m_cursorVisible = false;
-        m_pulseTime = 0.f;
-        m_lastKey = -1;
-        m_repeatDelay = 0.25;
-        m_repeatRate = 0.1f;
-        m_repeatElapsed = 0.f;
-        m_cursor = m_cursorX = 0;
     }
 
     //-----------------------------------------------------------------------
@@ -59,7 +61,7 @@ namespace TGUI
     {
         int     w, h;
         getClientSize(w, h);
-        text.set(newText);
+        m_text.set(newText);
         m_cursor = newText.length();
         m_cursorX = stringWidth(newText);
         tScroll = 0;
@@ -72,7 +74,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGString TGEditbox::getText()
     {
-        return text.get();
+        return m_text.get();
     }
 
     //-----------------------------------------------------------------------
@@ -98,12 +100,12 @@ namespace TGUI
         else brush = m_theme.getTextBrush();
 
         drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
-            stringHeight()/2, text.get(), brush);
+            stringHeight()/2, m_text.get(), brush);
 
         closeClip();
 
         
-        if (m_cursorVisible)
+        if (m_cursorVisible && !m_readOnly)
         {
             TGSBrush brush;
             brush.bind(new TGBrush(TGColour(1,1,1)));
@@ -127,12 +129,15 @@ namespace TGUI
     {
         int     w, h;
 
+        if(m_readOnly)
+            return;
+
         if(m_lastKey < 0)
             m_repeatElapsed = -m_repeatDelay;
         else m_repeatElapsed = 0.f;
         m_lastKey = key;
         m_lastChar = ascii;
-        TGString text = this->text.get();
+        TGString text = m_text.get();
         getClientSize(w, h);
         switch (ascii)
         {
@@ -162,7 +167,7 @@ namespace TGUI
                 tScroll = m_cursorX - w + (w/2);
             break;
         }
-        this->text.set(text);
+        m_text.set(text);
         redraw();
     }
 
@@ -179,7 +184,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGEditbox::pulse(TGReal timeElapsed)
     {
-        if(!focused())
+        if(!focused() || m_readOnly)
             return;
 
         m_pulseTime += timeElapsed;

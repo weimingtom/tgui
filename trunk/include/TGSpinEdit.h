@@ -31,6 +31,14 @@ namespace TGUI
     class TGSpinEdit : public TGControl
     {
     private:
+        TGReal          m_value;
+        TGReal          m_minValue;
+        TGReal          m_maxValue;
+        TGReal          m_increment;
+        TGReal          m_pulseTime;
+
+        int             m_decimals;
+
         int             m_height;
         bool            m_upPressed;
         bool            m_downPressed;
@@ -50,6 +58,8 @@ namespace TGUI
         virtual void onFocusExit();
 
         virtual bool focused();
+        virtual void pulse(TGReal timeElapsed);
+        void updateValue();
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);

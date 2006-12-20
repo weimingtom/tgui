@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    enum FrameStyle
+    enum TGFrameStyle
     {
         FS_NONE,
         FS_FLAT,
@@ -204,7 +204,7 @@ namespace TGUI
         void drawLine(int x1, int y1, int x2, int y2,TGSBrush brush, int thickness=1);
         void drawTri(int x1, int y1, int x2, int y2, TGSBrush brush, int pointDir=0);
         void drawFrame(int x1, int y1, int x2, int y2,
-            FrameStyle s=FS_FLAT,int thickness=1);
+            TGFrameStyle s=FS_FLAT,int thickness=1);
         void drawString(int x, int y, TGString str, TGSBrush brush, int length=-1);
 
         int stringWidth(TGString str, size_t length=-1);

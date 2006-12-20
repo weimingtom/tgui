@@ -788,7 +788,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            d r a w F r a m e
     //-----------------------------------------------------------------------
-    void TGControl::drawFrame(int x1, int y1, int x2, int y2, FrameStyle s,int thickness)
+    void TGControl::drawFrame(int x1, int y1, int x2, int y2, TGFrameStyle s,int thickness)
     {
         if(!m_isVisible)
             return;

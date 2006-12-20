@@ -37,6 +37,7 @@ namespace TGUI
         m_inputbox = new TGEditbox(this,0,0,5,5);
         m_listbox->isComposite = true;
         m_inputbox->isComposite = true;
+        m_style = CBS_NORMAL;
 
         m_listbox->hide();
         m_listbox->redraw();
@@ -49,6 +50,17 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGCombobox::~TGCombobox()
     {
+    }
+
+    //-----------------------------------------------------------------------
+    //                            s e t S t y l e
+    //-----------------------------------------------------------------------
+    void TGCombobox::setStyle(TGComboboxStyle value)
+    {
+        m_style = value;
+        if(m_style == CBS_NORMAL)
+            m_inputbox->setReadOnly(false);
+        else m_inputbox->setReadOnly(true);
     }
 
     //-----------------------------------------------------------------------
