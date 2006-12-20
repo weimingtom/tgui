@@ -247,40 +247,12 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                      i s R e n d e r C a c h e d
-    //-----------------------------------------------------------------------
-    bool TGCombobox::isRenderCached()
-    {
-        if(m_redraw || m_inputbox->needsRedraw() || m_listbox->needsRedraw())
-        {
-            m_quadCache.clear();
-            return false;
-        }
-
-        if(!isVisible())
-            return true;
-
-        TGQuadList::iterator itr;
-
-        for(itr=m_quadCache.begin(); itr!=m_quadCache.end(); itr++)
-        {
-            m_systemCache.push_back(*itr);
-        }
-
-        TGControl::render();
-
-        return true;
-    }
-
-    //-----------------------------------------------------------------------
     //                             r e n d e r
     //-----------------------------------------------------------------------
     void TGCombobox::render()
     {
-        if(isRenderCached())
+        if(TGControl::isRenderCached())
             return;
-
-        TGControl::render();
 
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
@@ -293,6 +265,9 @@ namespace TGUI
 
         drawRect(x2-m_height, y1, x2, y1+m_height,brush);
         drawTri(x2-m_height+2,y1+7, x2-3, y1+m_height-7,brush,0);
+
+        TGControl::render();
+
     }
 
 }

@@ -1131,14 +1131,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     bool TGControl::isRenderCached()
     {
+        if(!m_isVisible)
+            return true;
+
         if(!m_quadCache.size() || m_redraw)
         {
             m_quadCache.clear();
             return false;
         }
 
-        if(!isVisible())
-            return true;
 
         TGQuadList::iterator itr;
 
