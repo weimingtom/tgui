@@ -61,7 +61,7 @@ namespace TGUI
             return;
 
         int			x1, y1, x2, y2;
-        FrameStyle	fs = FS_FLAT;
+        TGFrameStyle	fs = FS_FLAT;
         getBounds(x1, y1, x2, y2);
 
         if (getMouseOverControl())

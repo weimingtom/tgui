@@ -28,12 +28,19 @@
 namespace TGUI
 {
 
+    enum TGComboboxStyle
+    {
+        CBS_NORMAL,             // allow text editing
+        CBS_DROPDOWN_LIST       // pick from drop down only
+    };
+
     class TGCombobox : public TGControl
     {
     private:
         int             m_height;
         TGEditbox*      m_inputbox;
         TGListbox*      m_listbox;
+        TGComboboxStyle m_style;
 
     private:
         bool itemSelected(const TGEventArgs& args);
@@ -42,6 +49,9 @@ namespace TGUI
 
         TGCombobox(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
         virtual ~TGCombobox();
+
+        void setStyle(TGComboboxStyle value);
+        TGComboboxStyle getStyle()  { return m_style; };
 
         virtual void render();
         virtual TGString getControlType() {return "TGCombobox";};
