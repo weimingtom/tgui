@@ -307,6 +307,7 @@ public:
         new TGButton(win, 10, 55, 180, 80, "Another Button");
         new TGButton(win, 10, 85, 180, 110, "Yet another Button");
 
+        
         TGWindow	*win2 = new TGWindow("Another fluffy window");
         win2->center();
         win2->moveRel(win2->x1 + 200, win2->y1 - 70);
@@ -321,8 +322,11 @@ public:
         new TGCheckbox(win2,"Checker 2", 10, 25, 180, 45);
         new TGCheckbox(win2,"Checker 3", 10, 50, 180, 70);
 
+        
         TGListbox *lbox = new TGListbox(win2, 10, 80, 175, 200);
+        /*
         lbox->addItem("A string item");
+        /*
         for (int i=0;i<20;i++)
         {
             char    buff[100];
@@ -330,6 +334,7 @@ public:
             lbox->addItem(buff);
         }
         lbox->setName("listbox");
+        
         (new TGButton(win2, 10, 210, 175, 235, "Add wide item"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addWideItemAction,this));
 
@@ -341,6 +346,7 @@ public:
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
 
+        /*
         TGPopupMenu       *mainMenu = new TGPopupMenu();
         mainMenu->setName("mainMenu");
 
@@ -366,8 +372,9 @@ public:
         //	new TGBitmap(INTERNALBMP_QUIT));
         mi = mainMenu->addItem("Quit");
         mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::terminateAppAction,this));
+        */
 
-
+/*
         TGWindow	*win3 = new TGWindow("A window");
         win3->center();
         win3->moveRel(win3->x1 - 200, win3->y1 - 70);
@@ -415,25 +422,12 @@ public:
 
         screen1 = TGSystem::getSingleton().getActiveScreen();
 
-        /*
-        screen2 = new TGScreen();
-        TGWindow	*nwin = new TGWindow(screen2, "A window in screen 2");
-        nwin->center();
-        */
+        //screen1->setPopupMenu(mainMenu);
 
-
-
-        screen1->setPopupMenu(mainMenu);
 
         /*
-        TGControl* l = new TGLabel(screen1, 5, 10, "A Label on the Screen");
-        l->setPopupMenu(mainMenu);
-        */
-
 
         TGWindow	*win5 = new TGWindow("TGImage control");
-        //TGColourTheme ct(TGColour(0.2,0.5,0.6,0.75));
-        //win5->setColourTheme(ct);
 
         win5->center();
         win5->moveRel(win5->x1, win5->y1 - 160);

@@ -193,10 +193,12 @@ namespace TGUI
     {
         TGControl::redraw(value);
 
+        /*
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
             (*itr)->redraw(true);
         }
+        */
     }
 
     //-----------------------------------------------------------------------
