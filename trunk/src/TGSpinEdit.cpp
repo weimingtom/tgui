@@ -226,11 +226,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSpinEdit::render()
     {
-        if(isRenderCached() && m_inputbox->isRenderCached())
+        if(isRenderCached())
             return;
-
-        m_inputbox->render();
-
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGSBrush brush;
@@ -249,6 +246,9 @@ namespace TGUI
         if(!m_downPressed)
             drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,brush,0);
         else drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,m_theme.getFrameBrush(),0);
+
+        TGControl::render();
+
     }
 
 }

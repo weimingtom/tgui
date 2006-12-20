@@ -102,6 +102,7 @@ namespace TGUI
 
         closeClip();
 
+        
         if (m_cursorVisible)
         {
             TGSBrush brush;
@@ -109,6 +110,7 @@ namespace TGUI
             drawLine(x1 + 5 + m_cursorX - tScroll, y1 + 4,
                 x1 + 5 + m_cursorX - tScroll, y2 - 4, brush);
         }
+        
 
         if (mouseOverControl  || hasKeyboardFocus(this))
             brush = m_theme.getFrameFocusedBrush();
