@@ -52,6 +52,7 @@ namespace TGUI
         virtual void onFocusExit();
 
         virtual bool focused();
+        virtual bool isRenderCached();
 
         virtual void addItem(TGString text);
         virtual void onMouseDown(int x, int y, int b);
