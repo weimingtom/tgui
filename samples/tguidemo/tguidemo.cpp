@@ -228,6 +228,15 @@ public:
         win->setResizeEnabled(true);
 
         
+        TGLabel* l = new TGLabel(win,"This is a test");
+        l->setPos(15,25);
+
+        //TGEditbox* b = new TGEditbox(win);
+       // b->setPos(15,80);
+        //b->resize(160,40);
+        
+        /*
+
         TGCombobox* cb = new TGCombobox(win);
         cb->setPos(5,15);
         cb->resize(175,25);
@@ -242,7 +251,7 @@ public:
         cb->addItem("test item 8");
         cb->addItem("test item 9");
         cb->addItem("test item 10");
-        
+        */
 
 
         /*

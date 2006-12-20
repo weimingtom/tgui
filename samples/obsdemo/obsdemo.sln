@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "obsdemo", "obsdemo.vcproj", "{5C3E41B6-1EB5-467C-BB34-2AEFF67DB77B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_obsdemo", "obsdemo.vcproj", "{5C3E41B6-1EB5-467C-BB34-2AEFF67DB77B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433} = {BDB1C3B5-A02A-435C-947C-CA0E90DA8433}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tgui", "..\..\builds\win32\msvc8\tgui.vcproj", "{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{5C3E41B6-1EB5-467C-BB34-2AEFF67DB77B}.Debug|Win32.Build.0 = Debug|Win32
 		{5C3E41B6-1EB5-467C-BB34-2AEFF67DB77B}.Release|Win32.ActiveCfg = Release|Win32
 		{5C3E41B6-1EB5-467C-BB34-2AEFF67DB77B}.Release|Win32.Build.0 = Release|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Debug|Win32.Build.0 = Debug|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Release|Win32.ActiveCfg = Release|Win32
+		{BDB1C3B5-A02A-435C-947C-CA0E90DA8433}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
