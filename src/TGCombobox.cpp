@@ -140,7 +140,7 @@ namespace TGUI
             {
                 m_listbox->show();
                 m_listbox->focus();
-                mouseOverControl = true;
+                setMouseOverControl(true);
             }
             return;
         }
@@ -157,27 +157,27 @@ namespace TGUI
         {
             if(m_listbox->pointInControl(x,y))
             {
-                m_listbox->mouseOverControl = true;
-                m_inputbox->mouseOverControl = true;
+                m_listbox->setMouseOverControl(true);
+                m_inputbox->setMouseOverControl(true);
                 m_listbox->onMouseMoved(x,y);
                 return;
             }
             if(m_inputbox->pointInControl(x,y))
             {
-                m_listbox->mouseOverControl = true;
-                m_inputbox->mouseOverControl = true;
+                m_listbox->setMouseOverControl(true);
+                m_inputbox->setMouseOverControl(true);
                 m_inputbox->onMouseMoved(x,y);
                 return;
             }
         }
         if(m_inputbox->pointInControl(x,y))
         {
-            m_listbox->mouseOverControl = true;
-            m_inputbox->mouseOverControl = true;
+            m_listbox->setMouseOverControl(true);
+            m_inputbox->setMouseOverControl(true);
             m_inputbox->onMouseMoved(x,y);
             return;
         }
-        m_inputbox->mouseOverControl = true;
+        m_inputbox->setMouseOverControl(true);
 
         TGControl::onMouseMoved(x,y);
     }
@@ -200,9 +200,9 @@ namespace TGUI
         if(pointInControl(x,y))
             return;
         
-        m_inputbox->mouseOverControl = false;
-        m_listbox->mouseOverControl = false;
-        mouseOverControl = false;
+        m_inputbox->setMouseOverControl(false);
+        m_listbox->setMouseOverControl(false);
+        m_mouseOverControl = false;
         m_inputbox->onMouseExit(x, y);
         TGControl::onMouseExit(x, y);
 
@@ -214,11 +214,11 @@ namespace TGUI
     void TGCombobox::onFocusExit()
     {
 
-        if(mouseOverControl || m_listbox->mouseOverControl )
+        if(m_mouseOverControl || m_listbox->getMouseOverControl() )
             return;
 
         m_inputbox->onFocusExit();
-        m_inputbox->mouseOverControl = false;
+        m_inputbox->setMouseOverControl(false);
         if(m_listbox->isVisible())
             m_listbox->hide();
 
@@ -257,7 +257,7 @@ namespace TGUI
         int x1,y1,x2,y2;
         getBounds(x1, y1, x2, y2);
         TGSBrush brush;
-        if (mouseOverControl  || hasKeyboardFocus(this) || 
+        if (m_mouseOverControl  || hasKeyboardFocus(this) || 
             hasKeyboardFocus(m_inputbox) || m_listbox->isVisible())
             brush = m_theme.getFrameFocusedBrush();
         else

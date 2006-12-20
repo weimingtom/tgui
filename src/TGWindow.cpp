@@ -246,7 +246,6 @@ namespace TGUI
             mY = y;
         }
     }
-
     //-----------------------------------------------------------------------
     //                          o n M o u s e U p
     //-----------------------------------------------------------------------
@@ -263,7 +262,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::onMouseEnter()
     {
-        mouseOverControl = true;
+        m_mouseOverControl = true;
     }
 
     //-----------------------------------------------------------------------
@@ -271,7 +270,21 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGWindow::onMouseExit()
     {
-        mouseOverControl = false;
+        m_mouseOverControl = false;
+    }
+
+    //-----------------------------------------------------------------------
+    //                             c h i l d A t
+    //-----------------------------------------------------------------------
+    TGControl* TGWindow::childAt(TGReal x, TGReal y)
+    {
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+
+        if (m_resizeable && x >= x2-10 && y >= y2-10)
+            return this;
+
+        return TGControl::childAt(x,y);
     }
 
 }

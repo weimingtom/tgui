@@ -57,8 +57,8 @@ namespace TGUI
         {
             setTheme(TGSystem::getSingleton().getTheme());
         }
-        performLayout = true;
-        mouseOverControl = false;
+        m_performLayout = true;
+        m_mouseOverControl = false;
         m_isVisible = true;
     }
 
@@ -135,7 +135,7 @@ namespace TGUI
         m_focusedChild = child;
         m_children.push_back(child);
 
-        performLayout = true;
+        m_performLayout = true;
     }
 
     //-----------------------------------------------------------------------
@@ -159,7 +159,7 @@ namespace TGUI
             else m_focusedChild = NULL;
         }
 
-        performLayout = true;
+        m_performLayout = true;
     }
 
     //-----------------------------------------------------------------------
@@ -236,10 +236,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::pulse(TGReal timeElapsed)
     {
-        if (performLayout)
+        if (m_performLayout)
         {
             layout();
-            performLayout = false;
+            m_performLayout = false;
         }
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
@@ -335,7 +335,7 @@ namespace TGUI
         this->y2 = y2;
         if (x2 - x1 != oldW || y2 - y1 != oldH)
         {
-            performLayout = true;
+            m_performLayout = true;
             fireEvent(TGEvent::Resized,TGEventArgs(this));
         }
         if (x1 != oldX1 || y1 != oldY1)
@@ -366,7 +366,7 @@ namespace TGUI
         this->y2 = y2;
         if (x2 - x1 != oldW || y2 - y1 != oldH)
         {
-            performLayout = true;
+            m_performLayout = true;
             fireEvent(TGEvent::Resized,TGEventArgs(this));
         }
         if (x1 != oldX1 || y1 != oldY1)
@@ -633,15 +633,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::onMouseEnter()
     {
-        mouseOverControl = true;
-        redraw();
-    }
-
-    //-----------------------------------------------------------------------
-    //                         o n M o u s e M o v e d
-    //-----------------------------------------------------------------------
-    void TGControl::onMouseMoved(int x, int y)
-    {
+        m_mouseOverControl = true;
     }
 
     //-----------------------------------------------------------------------
@@ -649,8 +641,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::onMouseExit(int x, int y)
     {
-        mouseOverControl = false;
-        redraw();
+        m_mouseOverControl = false;
+    }
+
+    //-----------------------------------------------------------------------
+    //                         o n M o u s e M o v e d
+    //-----------------------------------------------------------------------
+    void TGControl::onMouseMoved(int x, int y)
+    {
     }
 
     //-----------------------------------------------------------------------

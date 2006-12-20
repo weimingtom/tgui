@@ -59,6 +59,8 @@ namespace TGUI
         virtual bool getTitlebarEnabled() {return m_titlebarEnabled;};
         virtual void setTitlebarHeight(int value) {m_titlebarHeight = value;};
         virtual int getTitlebarheight() {return m_titlebarHeight;};
+        TGControl* childAt(TGReal x, TGReal y);
+
 
         virtual void render();
 

@@ -59,15 +59,15 @@ namespace TGUI
         TGTexture*          m_texture;
 
         TGString            m_name;
-        TGReal               padLeft;
-        TGReal               padTop;
-        TGReal               padRight;
-        TGReal               padBottom;
-        TGReal               minWidth;
-        TGReal               minHeight;
-        TGReal               maxWidth;
-        TGReal               maxHeight;
-        bool                performLayout;
+        TGReal              padLeft;
+        TGReal              padTop;
+        TGReal              padRight;
+        TGReal              padBottom;
+        TGReal              minWidth;
+        TGReal              minHeight;
+        TGReal              maxWidth;
+        TGReal              maxHeight;
+        bool                m_performLayout;
 
         TGControl*          m_focusedChild;
         TGPopupMenu*        m_popupMenu;
@@ -75,10 +75,10 @@ namespace TGUI
     public:
         TGControl*          m_parent;
         TGControl*          exclusiveChild;
-        bool                mouseOverControl;
+        bool                m_mouseOverControl;
         bool                isComposite;
-        TGReal               xShift;
-        TGReal               yShift;
+        TGReal              xShift;
+        TGReal              yShift;
         int                 x1;
         int                 y1;
         int                 x2;
@@ -213,6 +213,9 @@ namespace TGUI
         void setKeyboardFocusControl(TGControl *control);
         bool hasKeyboardFocus(TGControl *control);
         void invalidateControl(TGControl *control);
+
+        inline bool getMouseOverControl() {return m_mouseOverControl;};
+        inline void setMouseOverControl(bool value) {m_mouseOverControl=value;};
 
 
         // mouse events

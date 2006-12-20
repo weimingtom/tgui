@@ -96,7 +96,7 @@ namespace TGUI
             return;
         }
 
-        if (mouseOverControl || (subMenu && subMenu->menu->m_parent))
+        if (m_mouseOverControl || (subMenu && subMenu->menu->m_parent))
         {
             brush = m_theme.getCaptionBrush();
             fillRect(x1, y1, x2, y2, brush);
