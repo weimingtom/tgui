@@ -1132,9 +1132,10 @@ namespace TGUI
         if(!m_isVisible)
             return true;
 
-        if(!m_quadCache.size() || m_redraw)
+        if(m_redraw)
         {
             m_quadCache.clear();
+            m_redraw = false;
             return false;
         }
 

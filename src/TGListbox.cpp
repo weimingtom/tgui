@@ -84,6 +84,8 @@ namespace TGUI
         drawString(x1 + 8,
             (y2-y1 + 1)/2 + y1 - stringHeight()/2,
             text, brush);
+
+        m_redraw = false;
     }
 
     //-----------------------------------------------------------------------

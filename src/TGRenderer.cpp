@@ -606,20 +606,6 @@ namespace TGUI
                     {
                         const TGQuadInfo& quad = (*i);
 
-                        /*
-                        for(int qi=0;qi<6;qi++)
-                        {
-                        buffmem->x = quad.lpos[qi].x;
-                        buffmem->y = quad.lpos[qi].y;
-                        buffmem->z = quad.lpos[qi].z;
-                        buffmem->diffuse = quad.lpos[qi].diffuse;
-                        buffmem->tu1 = quad.lpos[qi].tu1;
-                        buffmem->tv1 = quad.lpos[qi].tv1;
-                        ++buffmem;
-                        }
-                        */
-
-
                         memcpy(buffmem,&quad.lpos[0],sizeof(TGQuadVertex)*6);
                         buffmem += 6;
 
@@ -629,6 +615,10 @@ namespace TGUI
 
                 // ensure we leave the buffer in the unlocked state
                 d_buffer->unlock();
+            }
+            else
+            {
+                d_bufferPos = 0;
             }
 
             /// Render the buffer
