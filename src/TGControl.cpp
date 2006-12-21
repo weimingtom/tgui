@@ -34,11 +34,11 @@ namespace TGUI
         , m_theme(TGTheme())
         , m_frameEnabled(true)
     {
-        x1 = y1 = x2 = y2 = padLeft = padTop = padRight = padBottom = xShift =
+        x1 = y1 = x2 = y2 = m_padLeft = m_padTop = m_padRight = m_padBottom = xShift =
             yShift = 0;
         m_renderer = TGSystem::getSingleton().getRenderer();
-        minWidth = minHeight = 0;
-        maxWidth = maxHeight = 0x7FFFFFFF;
+        m_minWidth = m_minHeight = 0;
+        m_maxWidth = m_maxHeight = 0x7FFFFFFF;
         m_name = "";
         m_focusedChild = 0;
         isComposite = false;
@@ -321,14 +321,14 @@ namespace TGUI
         int	oldY1 = this->y1;
         int	oldW = this->x2 - this->x1;
         int	oldH = this->y2 - this->y1;
-        if (x2 - x1 + 1 < minWidth)
-            x2 = x1 + minWidth - 1;
-        if (y2 - y1 + 1 < minHeight)
-            y2 = y1 + minHeight - 1;
-        if (x2 - x1 + 1 > maxWidth)
-            x2 = x1 + maxWidth - 1;
-        if (y2 - y1 + 1 > maxHeight)
-            y2 = y1 + maxHeight - 1;
+        if (x2 - x1 + 1 < m_minWidth)
+            x2 = x1 + m_minWidth - 1;
+        if (y2 - y1 + 1 < m_minHeight)
+            y2 = y1 + m_minHeight - 1;
+        if (x2 - x1 + 1 > m_maxWidth)
+            x2 = x1 + m_maxWidth - 1;
+        if (y2 - y1 + 1 > m_maxHeight)
+            y2 = y1 + m_maxHeight - 1;
         this->x1 = x1;
         this->y1 = y1;
         this->x2 = x2;
@@ -352,14 +352,14 @@ namespace TGUI
         int	oldY1 = this->y1;
         int	oldW = this->x2 - this->x1;
         int	oldH = this->y2 - this->y1;
-        if (x2 - x1 + 1 < minWidth)
-            x2 = x1 + minWidth - 1;
-        if (y2 - y1 + 1 < minHeight)
-            y2 = y1 + minHeight - 1;
-        if (x2 - x1 + 1 > maxWidth)
-            x2 = x1 + maxWidth - 1;
-        if (y2 - y1 + 1 > maxHeight)
-            y2 = y1 + maxHeight - 1;
+        if (x2 - x1 + 1 < m_minWidth)
+            x2 = x1 + m_minWidth - 1;
+        if (y2 - y1 + 1 < m_minHeight)
+            y2 = y1 + m_minHeight - 1;
+        if (x2 - x1 + 1 > m_maxWidth)
+            x2 = x1 + m_maxWidth - 1;
+        if (y2 - y1 + 1 > m_maxHeight)
+            y2 = y1 + m_maxHeight - 1;
         this->x1 = x1;
         this->y1 = y1;
         this->x2 = x2;
@@ -475,8 +475,8 @@ namespace TGUI
     {
         for (TGControl *parent = m_parent;parent;parent=parent->m_parent)
         {
-            x += parent->x1 + parent->padLeft;
-            y += parent->y1 + parent->padTop;
+            x += parent->x1 + parent->m_padLeft;
+            y += parent->y1 + parent->m_padTop;
         }
     }
 
@@ -589,13 +589,13 @@ namespace TGUI
     void TGControl::setPadding(int left, int top, int right, int bottom)
     {
         if (left != -1)
-            padLeft = left;
+            m_padLeft = left;
         if (top != -1)
-            padTop = top;
+            m_padTop = top;
         if (right != -1)
-            padRight = right;
+            m_padRight = right;
         if (bottom != -1)
-            padBottom = bottom;
+            m_padBottom = bottom;
         redraw();
     }
 
@@ -604,8 +604,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::getClientSize(int &w, int &h)
     {
-        w = x2 - x1 - padLeft - padRight + 1;
-        h = y2 - y1 - padTop - padBottom + 1;
+        w = x2 - x1 - m_padLeft - m_padRight + 1;
+        h = y2 - y1 - m_padTop - m_padBottom + 1;
     }
 
     //-----------------------------------------------------------------------
@@ -1152,8 +1152,8 @@ namespace TGUI
 
         getBounds(x1, y1, x2, y2);
 
-        openClipArea(x1 + padLeft, y1 + padTop, x2 - padRight,
-            y2 - padBottom);
+        openClipArea(x1 + m_padLeft, y1 + m_padTop, x2 - m_padRight,
+            y2 - m_padBottom);
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
