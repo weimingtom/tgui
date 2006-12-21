@@ -41,7 +41,7 @@ namespace TGUI
     typedef std::list<TGControl *> TGControlList;
     typedef std::list<TGControl *>::iterator TGControlListItr;
     typedef std::list<TGControl *>::reverse_iterator TGControlListRevItr;
-    typedef std::list<TGEventHandler *> TGEventHandlers;
+    typedef std::vector<TGEventHandler *> TGEventHandlers;
     typedef std::map<TGString, TGEventHandlers> TGEventMap;
 
     class TGControl

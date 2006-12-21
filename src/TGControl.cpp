@@ -308,7 +308,7 @@ namespace TGUI
             m_parent->getHeight(ih);
             sw = iw;
             sh = ih;
-            
+
         }
 
 
@@ -434,7 +434,7 @@ namespace TGUI
             m_parent->getHeight(ih);
             sw = iw;
             sh = ih;
-            
+
         }
 
         int nx1 = sw * x;
@@ -1033,15 +1033,10 @@ namespace TGUI
 
         while(itr != m_handlers.end())
         {
-
-            TGEventHandlers::iterator eitr = itr->second.begin();
-
-            while(eitr != itr->second.end())
+            for(size_t i=0; i<itr->second.size(); i++)
             {
-                TGEventHandler* eh = *eitr;
+                TGEventHandler* eh = itr->second[i];
                 delete eh;
-
-                ++eitr;
             }
             itr->second.clear();
             ++itr;
@@ -1095,17 +1090,14 @@ namespace TGUI
         if(itr == m_handlers.end())
             return false;
 
-        TGEventHandlers::iterator eitr = itr->second.begin();
-
-        while(eitr != itr->second.end())
+        for(size_t i=0;i<itr->second.size();i++)
         {
-            TGEventHandler* eh = *eitr;
+
+            TGEventHandler* eh = itr->second[i];
 
             rc = (*eh)(args);
             if(rc)
                 return true;
-
-            ++eitr;
         }
 
         return rc;
