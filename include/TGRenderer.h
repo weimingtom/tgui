@@ -64,7 +64,7 @@ namespace TGUI
         }
     };
 
-    typedef std::list<TGQuadInfo> TGQuadList;
+    typedef std::vector<TGQuadInfo> TGQuadList;
 
     class TGRQListener : public Ogre::RenderQueueListener
     {

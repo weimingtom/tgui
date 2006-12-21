@@ -324,9 +324,9 @@ public:
 
         
         TGListbox *lbox = new TGListbox(win2, 10, 80, 175, 200);
-        /*
+        
         lbox->addItem("A string item");
-        /*
+        
         for (int i=0;i<20;i++)
         {
             char    buff[100];

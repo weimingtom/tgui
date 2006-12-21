@@ -1139,12 +1139,9 @@ namespace TGUI
             return false;
         }
 
-
-        TGQuadList::iterator itr;
-
-        for(itr=m_quadCache.begin(); itr!=m_quadCache.end(); itr++)
+        for(size_t i=0; i<m_quadCache.size(); i++)
         {
-            m_systemCache.push_back(*itr);
+            m_systemCache.push_back(m_quadCache[i]);
         }
 
         TGControl::render();
