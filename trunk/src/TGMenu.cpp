@@ -138,6 +138,16 @@ namespace TGUI
             getBounds(x1, y1, x2, y2);
             subMenu->run(x2 - 10, y1 + 5);
         }
+        redraw();
+    }
+
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E x i t
+    //-----------------------------------------------------------------------
+    void TGMenuItem::onMouseExit(int x, int y)
+    {
+        TGControl::onMouseExit(x, y);
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -150,7 +160,6 @@ namespace TGUI
         if (b < 4)
             menuControl->popupMenu->cancel();
     }
-
 
     //-----------------------------------------------------------------------
     //                      T G M e n u C o n t r o l
