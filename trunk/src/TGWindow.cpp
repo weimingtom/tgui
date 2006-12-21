@@ -37,13 +37,13 @@ namespace TGUI
         , m_titlebarEnabled(true)
         , m_isTabbedCaption(false)
     {
-        minWidth = 50;
-        minHeight = 50;
+        m_minWidth = 50;
+        m_minHeight = 50;
 
         setBounds(10, 10, 200, 160);
         m_caption = caption;
-        padLeft = padRight = padBottom = 2;
-        padTop = 6 + stringHeight();
+        m_padLeft = m_padRight = m_padBottom = 2;
+        m_padTop = 6 + stringHeight();
         m_titlebarHeight = stringHeight() + 4;
         menu = NULL;
     }
@@ -59,12 +59,12 @@ namespace TGUI
         , m_titlebarEnabled(true)
         , m_isTabbedCaption(false)
     {
-        minWidth = 50;
-        minHeight = 50;
+        m_minWidth = 50;
+        m_minHeight = 50;
         setBounds(10, 10, 200, 160);
         m_caption = caption;
-        padLeft = padRight = padBottom = 2;
-        padTop = 6 + stringHeight();
+        m_padLeft = m_padRight = m_padBottom = 2;
+        m_padTop = 6 + stringHeight();
         m_titlebarHeight = stringHeight() + 2;
         menu = NULL;
     }

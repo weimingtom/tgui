@@ -59,14 +59,14 @@ namespace TGUI
         TGTexture*          m_texture;
 
         TGString            m_name;
-        TGReal              padLeft;
-        TGReal              padTop;
-        TGReal              padRight;
-        TGReal              padBottom;
-        TGReal              minWidth;
-        TGReal              minHeight;
-        TGReal              maxWidth;
-        TGReal              maxHeight;
+        TGReal              m_padLeft;
+        TGReal              m_padTop;
+        TGReal              m_padRight;
+        TGReal              m_padBottom;
+        TGReal              m_minWidth;
+        TGReal              m_minHeight;
+        TGReal              m_maxWidth;
+        TGReal              m_maxHeight;
         bool                m_performLayout;
 
         TGControl*          m_focusedChild;
