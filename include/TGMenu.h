@@ -49,6 +49,8 @@ namespace TGUI
         virtual TGString getControlType() {return "TGMenuItem";};
 
         virtual void onMouseEnter();
+        virtual void onMouseExit(int x, int y);
+
         virtual void onMouseDown(int x, int y, int b){};
         virtual void onMouseUp(int x, int y, int b);
     };

@@ -346,7 +346,7 @@ public:
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
 
-        /*
+        
         TGPopupMenu       *mainMenu = new TGPopupMenu();
         mainMenu->setName("mainMenu");
 
@@ -372,9 +372,9 @@ public:
         //	new TGBitmap(INTERNALBMP_QUIT));
         mi = mainMenu->addItem("Quit");
         mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::terminateAppAction,this));
-        */
+        
 
-/*
+
         TGWindow	*win3 = new TGWindow("A window");
         win3->center();
         win3->moveRel(win3->x1 - 200, win3->y1 - 70);
@@ -422,10 +422,8 @@ public:
 
         screen1 = TGSystem::getSingleton().getActiveScreen();
 
-        //screen1->setPopupMenu(mainMenu);
-
-
-        /*
+        screen1->setPopupMenu(mainMenu);
+        
 
         TGWindow	*win5 = new TGWindow("TGImage control");
 
@@ -459,6 +457,7 @@ public:
 
         mThemeManager = new TGThemeManager();
         mThemeManager->hide();
+
         /*
         win5 = new TGWindow("Float Window");
         win5->setBounds(0.25f, 0.25f, 1.f, 0.75f);

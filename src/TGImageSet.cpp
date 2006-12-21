@@ -72,17 +72,9 @@ namespace TGUI
     TGRect TGImageSet::getUVRect(int index)
     {
         TGRect res;
-        int i = 0;
-        std::list<TGRect>::iterator itr;
 
-        itr = m_uvList.begin();
-        while(i < index)
-        {
-            ++itr;
-            ++i;
-        }
-
-        res = *itr;
+        if((index > 0) && ((size_t)index < m_uvList.size()))
+            res = m_uvList[index];
 
         return res;
     }

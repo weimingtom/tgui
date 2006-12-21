@@ -181,19 +181,16 @@ namespace TGUI
         if(m_clipList.size())
         {
             TGClipArea*   clip;
-            TGClipList::reverse_iterator first(m_clipList.end());
-            TGClipList::reverse_iterator last(m_clipList.begin());
-
-
-            while(first != last)
+            size_t i=0;
+            while(i < m_clipList.size())
             {
-                clip = *first;
+                clip = m_clipList[i];
                 if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
                 }
-                ++first;
+                ++i;
             }
         }
 
@@ -295,19 +292,16 @@ namespace TGUI
         if(m_clipList.size())
         {
             TGClipArea*   clip;
-            TGClipList::reverse_iterator first(m_clipList.end());
-            TGClipList::reverse_iterator last(m_clipList.begin());
-
-
-            while(first != last)
+            size_t i=0;
+            while(i < m_clipList.size())
             {
-                clip = *first;
+                clip = m_clipList[i];
                 if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
                 }
-                ++first;
+                ++i;
             }
         }
 
@@ -438,19 +432,16 @@ namespace TGUI
         if(m_clipList.size())
         {
             TGClipArea*   clip;
-            TGClipList::reverse_iterator first(m_clipList.end());
-            TGClipList::reverse_iterator last(m_clipList.begin());
-
-
-            while(first != last)
+            size_t i=0;
+            while(i < m_clipList.size())
             {
-                clip = *first;
+                clip = m_clipList[i];
                 if(!clipQuad(clip,destRect,texRect,brush->m_colourRect))
                 {
                     quad.isClipped = true;
                     return quad;
                 }
-                ++first;
+                ++i;
             }
         }
 
@@ -1011,7 +1002,7 @@ namespace TGUI
         ca->y1 = y1;
         ca->x2 = x2;
         ca->y2 = y2;
-        m_clipList.push_front(ca);
+        m_clipList.push_back(ca);
     }
 
     //-----------------------------------------------------------------------
@@ -1019,9 +1010,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::closeClipArea()
     {
-        TGClipArea* ca = m_clipList.front();
+        TGClipArea* ca = m_clipList.back();
         delete ca;
-        m_clipList.pop_front();
+        m_clipList.pop_back();
     }
 
     //-----------------------------------------------------------------------

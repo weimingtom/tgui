@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    typedef std::list<TGRect> TGUVList;
+    typedef std::vector<TGRect> TGUVList;
 
     class TGImageSet
     {

@@ -611,13 +611,11 @@ namespace TGUI
             m_mouseCursor->draw();
         }
 
-        TGControlList::iterator it;
-        while(m_dead.size())
+        for(size_t i=0; i < m_dead.size(); i++)
         {
-            it = m_dead.begin();
-            TGControl* control = *it;
+            TGControl* control = m_dead.back();
             delete control;
-            m_dead.pop_front();
+            m_dead.pop_back();
         }
     }
 

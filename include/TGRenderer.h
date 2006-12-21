@@ -98,7 +98,7 @@ namespace TGUI
         int		y2;
     };
 
-    typedef std::list<TGClipArea*> TGClipList;
+    typedef std::vector<TGClipArea*> TGClipList;
 
     class TGRenderer 
     {
