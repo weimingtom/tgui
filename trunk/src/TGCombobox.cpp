@@ -211,7 +211,7 @@ namespace TGUI
     {
         if(pointInControl(x,y))
             return;
-        
+
         m_inputbox->setMouseOverControl(false);
         m_listbox->setMouseOverControl(false);
         m_mouseOverControl = false;

@@ -180,25 +180,25 @@ namespace TGUI
         // Ogre specific bits.
         Ogre::Root*                 m_ogreRoot;		    // pointer to the Ogre root object that we attach to
         Ogre::RenderSystem*         m_renderSys;		// Pointer to the render system for Ogre.
-        Ogre::uint8	                d_queue_id;			// ID of the queue that we are hooked into
-        Ogre::TexturePtr            d_currTexture;		// currently set texture;
-        Ogre::RenderOperation       d_render_op;		// Ogre render operation we use to do our stuff.
+        Ogre::uint8	                m_queue_id;			// ID of the queue that we are hooked into
+        Ogre::TexturePtr            m_currTexture;		// currently set texture;
+        Ogre::RenderOperation       m_render_op;		// Ogre render operation we use to do our stuff.
         Ogre::HardwareVertexBufferSharedPtr	d_buffer;	// vertex buffer to queue sprite rendering
-        size_t                      d_underused_framecount;                  //!< Number of frames elapsed since buffer utilization was above half the capacity
-        Ogre::RenderOperation       d_direct_render_op;	// Renderop for cursor
+        size_t                      m_underused_framecount;                  //!< Number of frames elapsed since buffer utilization was above half the capacity
+        Ogre::RenderOperation       m_direct_render_op;	// Renderop for cursor
         Ogre::HardwareVertexBufferSharedPtr	d_direct_buffer;	//!< Renderop for cursor
-        Ogre::SceneManager*	        d_sceneMngr;		// The scene manager we are hooked into.
-        Ogre::LayerBlendModeEx      d_colourBlendMode;	// Controls colour blending mode used.
-        Ogre::LayerBlendModeEx      d_alphaBlendMode;	// Controls alpha blending mode used.
+        Ogre::SceneManager*	        m_sceneMgr;		    // The scene manager we are hooked into.
+        Ogre::LayerBlendModeEx      m_colourBlendMode;	// Controls colour blending mode used.
+        Ogre::LayerBlendModeEx      m_alphaBlendMode;	// Controls alpha blending mode used.
         Ogre::TextureUnitState::UVWAddressingMode d_uvwAddressMode;
 
-        TGRQListener*			    d_ourlistener;
-        bool                        d_post_queue;		// true if we render after everything else in our queue.
-        size_t                      d_bufferPos;		// index into buffer where next vertex should be put.
-        bool                        d_modified;			// true when data in quad list is modified.
-        TGPoint                     d_texelOffset;		// Offset required for proper texel mapping.
+        TGRQListener*			    m_ourlistener;
+        bool                        m_post_queue;		// true if we render after everything else in our queue.
+        size_t                      m_bufferPos;		// index into buffer where next vertex should be put.
+        bool                        m_modified;			// true when data in quad list is modified.
+        TGPoint                     m_texelOffset;		// Offset required for proper texel mapping.
 
-        std::list<TGTexture*>       d_texturelist;		// List used to track textures.
+        std::list<TGTexture*>       m_texturelist;		// List used to track textures.
 
     };
 }

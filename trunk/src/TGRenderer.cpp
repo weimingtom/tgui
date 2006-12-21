@@ -83,16 +83,16 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                   c r e a t e Q u a d R e n d e r O p
     //-----------------------------------------------------------------------
-    void createQuadRenderOp(Ogre::RenderOperation &d_render_op, 
+    void createQuadRenderOp(Ogre::RenderOperation &m_render_op, 
         Ogre::HardwareVertexBufferSharedPtr &d_buffer, size_t nquads)
     {
         using namespace Ogre;
         // Create and initialise the Ogre specific parts required for use in rendering later.
-        d_render_op.vertexData = new VertexData;
-        d_render_op.vertexData->vertexStart = 0;
+        m_render_op.vertexData = new VertexData;
+        m_render_op.vertexData->vertexStart = 0;
 
         // setup vertex declaration for the vertex format we use
-        VertexDeclaration* vd = d_render_op.vertexData->vertexDeclaration;
+        VertexDeclaration* vd = m_render_op.vertexData->vertexDeclaration;
         size_t vd_offset = 0;
         vd->addElement(0, vd_offset, VET_FLOAT3, VES_POSITION);
         vd_offset += VertexElement::getTypeSize(VET_FLOAT3);
@@ -106,21 +106,21 @@ namespace TGUI
             false); // no Ninnies here!!!
 
         // bind vertex buffer
-        d_render_op.vertexData->vertexBufferBinding->setBinding(0, d_buffer);
+        m_render_op.vertexData->vertexBufferBinding->setBinding(0, d_buffer);
 
         // complete render operation basic initialisation
-        d_render_op.operationType = RenderOperation::OT_TRIANGLE_LIST;
-        d_render_op.useIndexes = false;
+        m_render_op.operationType = RenderOperation::OT_TRIANGLE_LIST;
+        m_render_op.useIndexes = false;
     }
 
     //-----------------------------------------------------------------------
     //                  d e s t r o y Q u a d R e n d e r O p
     //-----------------------------------------------------------------------
-    void destroyQuadRenderOp(Ogre::RenderOperation &d_render_op, 
+    void destroyQuadRenderOp(Ogre::RenderOperation &m_render_op, 
         Ogre::HardwareVertexBufferSharedPtr &d_buffer)
     {
-        delete d_render_op.vertexData;
-        d_render_op.vertexData = 0;
+        delete m_render_op.vertexData;
+        m_render_op.vertexData = 0;
         d_buffer.setNull();
     }
 
@@ -150,14 +150,14 @@ namespace TGUI
     {
         setTargetSceneManager(NULL);
 
-        if (d_ourlistener)
+        if (m_ourlistener)
         {
-            delete d_ourlistener;
+            delete m_ourlistener;
         }
 
         // cleanup vertex data we allocated in constructor
-        destroyQuadRenderOp(d_render_op, d_buffer);
-        destroyQuadRenderOp(d_direct_render_op, d_direct_buffer);
+        destroyQuadRenderOp(m_render_op, d_buffer);
+        destroyQuadRenderOp(m_direct_render_op, d_direct_buffer);
 
         destroyAllTextures();
     }
@@ -195,14 +195,14 @@ namespace TGUI
         }
 
 
-        d_modified = true;
+        m_modified = true;
 
         // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
         quad.position.d_left	= destRect.d_left;
         quad.position.d_right	= destRect.d_right;
         quad.position.d_top		= daHeight - destRect.d_top;
         quad.position.d_bottom	= daHeight - destRect.d_bottom;
-        quad.position.offset(d_texelOffset);
+        quad.position.offset(m_texelOffset);
 
         // convert quad co-ordinates for a -1 to 1 co-ordinate system.
         quad.position.d_left	/= (daWidth * 0.5f);
@@ -306,14 +306,14 @@ namespace TGUI
         }
 
 
-        d_modified = true;
+        m_modified = true;
 
         // set quad position, flipping y co-ordinates, and applying appropriate texel origin offset
         quad.position.d_left	= destRect.d_left;
         quad.position.d_right	= destRect.d_right;
         quad.position.d_top		= daHeight - destRect.d_top;
         quad.position.d_bottom	= daHeight - destRect.d_bottom;
-        quad.position.offset(d_texelOffset);
+        quad.position.offset(m_texelOffset);
 
         // convert quad co-ordinates for a -1 to 1 co-ordinate system.
         quad.position.d_left	/= (daWidth * 0.5f);
@@ -445,7 +445,7 @@ namespace TGUI
             }
         }
 
-        d_modified = true;
+        m_modified = true;
 
         TGVector2 start_point(destRect.d_left,destRect.d_top);
         TGVector2 end_point(destRect.d_right,destRect.d_bottom);
@@ -534,8 +534,8 @@ namespace TGUI
             //
             quad.lpos[i].y = m_displayArea.getHeight() - quad.lpos[i].y;
 
-            quad.lpos[i].x += d_texelOffset.x;
-            quad.lpos[i].y += d_texelOffset.y;
+            quad.lpos[i].x += m_texelOffset.x;
+            quad.lpos[i].y += m_texelOffset.y;
 
             //
             // convert coordinates
@@ -563,9 +563,9 @@ namespace TGUI
         {
             /// Quad list needs to be sorted and thus the vertex buffer rebuilt. If not, we can
             /// reuse the vertex buffer resulting in a nice speed gain.
-            if(d_modified)
+            if(m_modified)
             {
-                d_modified = false;
+                m_modified = false;
                 /// Resize vertex buffer if it is too small
                 size_t size = d_buffer->getNumVertices();
                 size_t requestedSize = quadList.size()*VERTEX_PER_QUAD;
@@ -575,17 +575,17 @@ namespace TGUI
                     while(size < requestedSize)
                         size = size * 2;
                     /// Reallocate the buffer
-                    destroyQuadRenderOp(d_render_op, d_buffer);
-                    createQuadRenderOp(d_render_op, d_buffer, size);
+                    destroyQuadRenderOp(m_render_op, d_buffer);
+                    createQuadRenderOp(m_render_op, d_buffer, size);
                 }
-                else if(requestedSize < size/2 && d_underused_framecount >= UNDERUSED_FRAME_THRESHOLD)
+                else if(requestedSize < size/2 && m_underused_framecount >= UNDERUSED_FRAME_THRESHOLD)
                 {
                     /// Resize vertex buffer if it has been to big for too long
                     size = size / 2;
-                    destroyQuadRenderOp(d_render_op, d_buffer);
-                    createQuadRenderOp(d_render_op, d_buffer, size);
+                    destroyQuadRenderOp(m_render_op, d_buffer);
+                    createQuadRenderOp(m_render_op, d_buffer, size);
                     /// Reset underused framecount so it takes another UNDERUSED_FRAME_THRESHOLD to half again
-                    d_underused_framecount = 0;
+                    m_underused_framecount = 0;
                 }
                 /// Fill the buffer
                 TGQuadVertex*	buffmem;
@@ -607,14 +607,9 @@ namespace TGUI
                 // ensure we leave the buffer in the unlocked state
                 d_buffer->unlock();
             }
-            else
-            {
-                d_bufferPos = 0;
-            }
-
             /// Render the buffer
             initRenderStates();
-            d_bufferPos = 0;
+            m_bufferPos = 0;
 
             // Iterate over each quad in the list and render it
             size_t idx=0;
@@ -624,38 +619,38 @@ namespace TGUI
                 if(!quad.isClipped)
                 {
 
-                    d_currTexture = quad.texture;
-                    d_render_op.vertexData->vertexStart = d_bufferPos;
+                    m_currTexture = quad.texture;
+                    m_render_op.vertexData->vertexStart = m_bufferPos;
 
                     while(idx < quadList.size())
                     {
                         quad = quadList[idx];
                         if(!quad.isClipped)
                         {
-                            if (d_currTexture != quad.texture)
+                            if (m_currTexture != quad.texture)
                             {
                                 /// If it has a different texture, render this quad in next operation
                                 break;
                             }
-                            d_bufferPos += VERTEX_PER_QUAD;
+                            m_bufferPos += VERTEX_PER_QUAD;
                         }
                         ++idx;
                     }
 
-                    d_render_op.vertexData->vertexCount = d_bufferPos - d_render_op.vertexData->vertexStart;
+                    m_render_op.vertexData->vertexCount = m_bufferPos - m_render_op.vertexData->vertexStart;
                     /// Set texture, and do the render
-                    m_renderSys->_setTexture(0, true, d_currTexture->getName());
-                    m_renderSys->_render(d_render_op);
+                    m_renderSys->_setTexture(0, true, m_currTexture->getName());
+                    m_renderSys->_render(m_render_op);
                 }
                 else ++idx;
             }
 
         }
         /// Count frames to check if utilization of vertex buffer was below half the capacity for 500,000 frames
-        if(d_bufferPos < d_buffer->getNumVertices()/2)
-            d_underused_framecount++;
+        if(m_bufferPos < d_buffer->getNumVertices()/2)
+            m_underused_framecount++;
         else
-            d_underused_framecount = 0;
+            m_underused_framecount = 0;
     }
 
     //-----------------------------------------------------------------------
@@ -664,7 +659,7 @@ namespace TGUI
     TGTexture* TGRenderer::createTexture(void)
     {
         TGTexture* tex = new TGTexture(this);
-        d_texturelist.push_back(tex);
+        m_texturelist.push_back(tex);
         return tex;
     }
 
@@ -675,7 +670,7 @@ namespace TGUI
     {
         TGTexture* tex = (TGTexture*)createTexture();
         tex->loadFromFile(filename, resourceGroup);
-
+        m_texturelist.push_back(tex);
         return tex;
     }
 
@@ -699,7 +694,7 @@ namespace TGUI
         {
             TGTexture* tex = (TGTexture*)texture;
 
-            d_texturelist.remove(tex);
+            m_texturelist.remove(tex);
             delete tex;
         }
     }
@@ -709,9 +704,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::destroyAllTextures(void)
     {
-        while (!d_texturelist.empty())
+        while (!m_texturelist.empty())
         {
-            destroyTexture(*(d_texturelist.begin()));
+            destroyTexture(*(m_texturelist.begin()));
         }
     }
 
@@ -746,8 +741,8 @@ namespace TGUI
         m_renderSys->_setTextureAddressingMode(0, d_uvwAddressMode);
         m_renderSys->_setTextureMatrix(0, Matrix4::IDENTITY);
         m_renderSys->_setAlphaRejectSettings(CMPF_ALWAYS_PASS, 0);
-        m_renderSys->_setTextureBlendMode(0, d_colourBlendMode);
-        m_renderSys->_setTextureBlendMode(0, d_alphaBlendMode);
+        m_renderSys->_setTextureBlendMode(0, m_colourBlendMode);
+        m_renderSys->_setTextureBlendMode(0, m_alphaBlendMode);
         m_renderSys->_disableTextureUnitsFrom(1);
 
         // enable alpha blending
@@ -771,7 +766,7 @@ namespace TGUI
             final_rect.d_right	= dest_rect.d_right;
             final_rect.d_top	= m_displayArea.getHeight() - dest_rect.d_top;
             final_rect.d_bottom	= m_displayArea.getHeight() - dest_rect.d_bottom;
-            final_rect.offset(d_texelOffset);
+            final_rect.offset(m_texelOffset);
 
             // convert quad co-ordinates for a -1 to 1 co-ordinate system.
             final_rect.d_left	/= (m_displayArea.getWidth() * 0.5f);
@@ -849,8 +844,8 @@ namespace TGUI
             //
             initRenderStates();
             m_renderSys->_setTexture(0, true, brush->m_texture->getOgreTexture()->getName());
-            d_direct_render_op.vertexData->vertexCount = VERTEX_PER_QUAD;
-            m_renderSys->_render(d_direct_render_op);
+            m_direct_render_op.vertexData->vertexCount = VERTEX_PER_QUAD;
+            m_renderSys->_render(m_direct_render_op);
         }
 
     }
@@ -874,17 +869,17 @@ namespace TGUI
     void TGRenderer::setTargetSceneManager(Ogre::SceneManager* scene_manager)
     {
         // unhook from current scene manager.
-        if (d_sceneMngr != NULL)
+        if (m_sceneMgr != NULL)
         {
-            d_sceneMngr->removeRenderQueueListener(d_ourlistener);
-            d_sceneMngr = NULL;
+            m_sceneMgr->removeRenderQueueListener(m_ourlistener);
+            m_sceneMgr = NULL;
         }
 
         // hook new scene manager if that is not NULL
         if (scene_manager != NULL)
         {
-            d_sceneMngr = scene_manager;
-            d_sceneMngr->addRenderQueueListener(d_ourlistener);
+            m_sceneMgr = scene_manager;
+            m_sceneMgr->addRenderQueueListener(m_ourlistener);
         }
 
     }
@@ -894,13 +889,13 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGRenderer::setTargetRenderQueue(Ogre::uint8 queue_id, bool post_queue)
     {
-        d_queue_id		= queue_id;
-        d_post_queue	= post_queue;
+        m_queue_id		= queue_id;
+        m_post_queue	= post_queue;
 
-        if (d_ourlistener != NULL)
+        if (m_ourlistener != NULL)
         {
-            d_ourlistener->setTargetRenderQueue(queue_id);
-            d_ourlistener->setPostRenderQueue(post_queue);
+            m_ourlistener->setTargetRenderQueue(queue_id);
+            m_ourlistener->setPostRenderQueue(post_queue);
         }
 
     }
@@ -914,12 +909,12 @@ namespace TGUI
 
         // initialise the renderer fields
         m_queueing		= true;
-        d_queue_id		= queue_id;
-        d_currTexture.isNull();
-        d_post_queue    = post_queue;
-        d_sceneMngr     = NULL;
-        d_bufferPos     = 0;
-        d_modified      = false;
+        m_queue_id		= queue_id;
+        m_currTexture.isNull();
+        m_post_queue    = post_queue;
+        m_sceneMgr     = NULL;
+        m_bufferPos     = 0;
+        m_modified      = false;
         m_ogreRoot      = Root::getSingletonPtr();
         m_renderSys	    = m_ogreRoot->getRenderSystem();
         // set ID TGString
@@ -927,11 +922,11 @@ namespace TGUI
 
         // Create and initialise the Ogre specific parts required for use in rendering later.
         // Main GUI
-        createQuadRenderOp(d_render_op, d_buffer, VERTEXBUFFER_INITIAL_CAPACITY);
-        d_underused_framecount = 0;
+        createQuadRenderOp(m_render_op, d_buffer, VERTEXBUFFER_INITIAL_CAPACITY);
+        m_underused_framecount = 0;
 
         // Mouse cursor
-        createQuadRenderOp(d_direct_render_op, d_direct_buffer, VERTEX_PER_QUAD);
+        createQuadRenderOp(m_direct_render_op, d_direct_buffer, VERTEX_PER_QUAD);
 
         // Discover display settings and setup m_displayArea
         m_displayArea.d_left	= 0;
@@ -940,21 +935,21 @@ namespace TGUI
         m_displayArea.d_bottom	= window->getHeight();
 
         // initialise required texel offset
-        d_texelOffset = TGPoint((TGReal)m_renderSys->getHorizontalTexelOffset(), -(TGReal)m_renderSys->getVerticalTexelOffset());
+        m_texelOffset = TGPoint((TGReal)m_renderSys->getHorizontalTexelOffset(), -(TGReal)m_renderSys->getVerticalTexelOffset());
 
         // create listener which will handler the rendering side of things for us.
-        d_ourlistener = new TGRQListener(this, queue_id, post_queue);
+        m_ourlistener = new TGRQListener(this, queue_id, post_queue);
 
         // Initialise blending modes to be used.
-        d_colourBlendMode.blendType	= Ogre::LBT_COLOUR;
-        d_colourBlendMode.source1	= Ogre::LBS_TEXTURE;
-        d_colourBlendMode.source2	= Ogre::LBS_DIFFUSE;
-        d_colourBlendMode.operation	= Ogre::LBX_MODULATE;
+        m_colourBlendMode.blendType	= Ogre::LBT_COLOUR;
+        m_colourBlendMode.source1	= Ogre::LBS_TEXTURE;
+        m_colourBlendMode.source2	= Ogre::LBS_DIFFUSE;
+        m_colourBlendMode.operation	= Ogre::LBX_MODULATE;
 
-        d_alphaBlendMode.blendType	= Ogre::LBT_ALPHA;
-        d_alphaBlendMode.source1	= Ogre::LBS_TEXTURE;
-        d_alphaBlendMode.source2	= Ogre::LBS_DIFFUSE;
-        d_alphaBlendMode.operation	= Ogre::LBX_MODULATE;
+        m_alphaBlendMode.blendType	= Ogre::LBT_ALPHA;
+        m_alphaBlendMode.source1	= Ogre::LBS_TEXTURE;
+        m_alphaBlendMode.source2	= Ogre::LBS_DIFFUSE;
+        m_alphaBlendMode.operation	= Ogre::LBX_MODULATE;
 
         d_uvwAddressMode.u = Ogre::TextureUnitState::TAM_CLAMP;
         d_uvwAddressMode.v = Ogre::TextureUnitState::TAM_CLAMP;
