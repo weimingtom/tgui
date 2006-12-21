@@ -600,11 +600,11 @@ namespace TGUI
                 TGQuadVertex*	buffmem;
                 buffmem = (TGQuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
                 // iterate over each quad in the list
-                for (TGQuadList::iterator i = quadList.begin(); i != quadList.end(); ++i)
+                for (size_t i=0;i<quadList.size();i++)
                 {
-                    if(!i->isClipped)
+                    const TGQuadInfo& quad = quadList[i];
+                    if(!quad.isClipped)
                     {
-                        const TGQuadInfo& quad = (*i);
 
                         memcpy(buffmem,&quad.lpos[0],sizeof(TGQuadVertex)*6);
                         buffmem += 6;
@@ -626,20 +626,21 @@ namespace TGUI
             d_bufferPos = 0;
 
             // Iterate over each quad in the list and render it
-            TGQuadList::iterator i = quadList.begin();
-            while(i != quadList.end())
+            size_t idx=0;
+            while(idx < quadList.size())
             {
-                if(!i->isClipped)
+                TGQuadInfo& quad = quadList[idx];
+                if(!quad.isClipped)
                 {
 
-                    d_currTexture = i->texture;
+                    d_currTexture = quad.texture;
                     d_render_op.vertexData->vertexStart = d_bufferPos;
 
-                    for (; i != quadList.end(); ++i)
+                    while(idx < quadList.size())
                     {
-                        if(!i->isClipped)
+                        quad = quadList[idx];
+                        if(!quad.isClipped)
                         {
-                            const TGQuadInfo& quad = (*i);
                             if (d_currTexture != quad.texture)
                             {
                                 /// If it has a different texture, render this quad in next operation
@@ -647,6 +648,7 @@ namespace TGUI
                             }
                             d_bufferPos += VERTEX_PER_QUAD;
                         }
+                        ++idx;
                     }
 
                     d_render_op.vertexData->vertexCount = d_bufferPos - d_render_op.vertexData->vertexStart;
@@ -654,7 +656,7 @@ namespace TGUI
                     m_renderSys->_setTexture(0, true, d_currTexture->getName());
                     m_renderSys->_render(d_render_op);
                 }
-                else ++i;
+                else ++idx;
             }
 
         }
