@@ -48,6 +48,7 @@ namespace TGUI
         TGCursor*           m_defaultCursor;
         TGScreen*           m_defaultScreen;
         TGQuadList          m_cache;
+        TGPopupMenu*        m_activePopup;
 
     private:
         void createDefaultCursor();
@@ -78,6 +79,8 @@ namespace TGUI
         TGFont* loadFont(TGString fontName,TGString resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};
         void setCurrentFont(TGFont* font) {m_currentFont = font;};
+
+        void setActivePopup(TGPopupMenu* value) {m_activePopup = value;};
 
         void setMouseTrackingControl(TGControl *control) {m_trackControl = control;};
         TGControl* getMouseTrackControl() {return m_trackControl;};

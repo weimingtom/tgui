@@ -192,6 +192,7 @@ namespace TGUI
         m_trackControl = 0;
         m_keyboardFocusControl = 0;
         m_logger = 0;
+        m_activePopup = 0;
 
         m_renderer = new TGUI::TGRenderer(window, 
             Ogre::RENDER_QUEUE_OVERLAY, false, sceneMgr);
@@ -392,6 +393,15 @@ namespace TGUI
         else
         {
             m_childUnderMouse = m_activeScreen->childAt(absX,absY);
+        }
+
+        if(m_activePopup && (m_childUnderMouse != m_activePopup))
+        {
+            if(m_childUnderMouse->getControlType().compare("TGMenuItem"))
+            {
+                m_activePopup->cancelRoot();
+                m_activePopup = NULL;
+            }
         }
 
         m_childUnderMouse->onMouseDown(absX,absY,buttonID);

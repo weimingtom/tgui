@@ -40,6 +40,7 @@ namespace TGUI
         virtual void clear();
         virtual void run(int x=-10000, int y=-10000);
         virtual void cancel();
+        virtual void cancelRoot();
         virtual TGString getControlType() {return "TGPopupMenu";};
     };
 }
