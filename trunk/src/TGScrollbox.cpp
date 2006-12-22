@@ -184,21 +184,7 @@ namespace TGUI
                 vMax = child->y2;
         }
         setScrollingBounds(hMax, vMax+1.0f);
-    }
-
-    //-----------------------------------------------------------------------
-    //                              r e d r a w
-    //-----------------------------------------------------------------------
-    void TGScrollbox::redraw(bool value)
-    {
-        TGControl::redraw(value);
-
-        /*
-        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
-        {
-            (*itr)->redraw(true);
-        }
-        */
+        redraw();
     }
 
     //-----------------------------------------------------------------------

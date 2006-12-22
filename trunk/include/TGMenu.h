@@ -29,14 +29,17 @@ namespace TGUI
 {
 
     class TGMenuControl;
-    class TGPopupMenu;
+    class TGMenu;
 
+    //-----------------------------------------------------------------------
+    //                          T G M e n u I t e m
+    //-----------------------------------------------------------------------
     class TGMenuItem : public TGControl
     {
     public:
         TGString    		    caption;
         TGMenuControl*          menuControl;
-        TGPopupMenu*            subMenu;
+        TGMenu*                 subMenu;
 
         TGMenuItem(TGControl *owner, TGString caption);
         virtual ~TGMenuItem();
@@ -55,10 +58,34 @@ namespace TGUI
         virtual void onMouseUp(int x, int y, int b);
     };
 
+    //-----------------------------------------------------------------------
+    //                             T G M e n u 
+    //-----------------------------------------------------------------------
+    class TGMenu : public TGControl
+    {
+    public:
+        TGMenuControl*          rootMenuControl;
+        TGMenuControl*          menu;
+
+        TGMenu();
+        virtual ~TGMenu();
+
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
+
+        virtual TGMenuItem *addItem(TGString caption);
+        virtual void clear();
+        virtual void run(int x=-10000, int y=-10000)=0;
+        virtual void cancel();
+        virtual TGString getControlType() {return "TGMenu";};
+    };
+
+    //-----------------------------------------------------------------------
+    //                        T G M e n u C o n t r o l
+    //-----------------------------------------------------------------------
     class TGMenuControl : public TGControl
     {
     public:
-        TGPopupMenu*            popupMenu;
+        TGMenu*                 m_menu;
         int			            iconPad;
 
         TGMenuControl(TGControl *owner=NULL);
@@ -71,25 +98,6 @@ namespace TGUI
         virtual TGString getControlType() {return "TGMenuControl";};
 
         virtual void onFocusExit();
-    };
-
-    class TGPopupMenu : public TGControl
-    {
-    public:
-        TGMenuControl*          rootMenuControl;
-        TGMenuControl*          menu;
-
-        TGPopupMenu();
-        virtual ~TGPopupMenu();
-
-        virtual void setTheme(TGTheme theme,bool updateChildren=false);
-
-        virtual TGMenuItem *addItem(TGString caption);
-        virtual void clear();
-        virtual void run(int x=-10000, int y=-10000);
-        virtual void cancel();
-        virtual TGString getControlType() {return "TGPopupMenu";};
-
     };
 }
 #endif

@@ -299,11 +299,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGMenubar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGMenubar.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGMessagebox.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\include\TGMessagebox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\TGPopupMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGPopupMenu.h"
 				>
 			</File>
 			<File
