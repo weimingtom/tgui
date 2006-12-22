@@ -80,6 +80,7 @@ namespace TGUI
         TGSystem::getSingleton().getActiveScreen()->addChild(menu);
         menu->moveRel(x, y);
         menu->focus();
+        TGSystem::getSingleton().setActivePopup(this);
     }
 
     //-----------------------------------------------------------------------
@@ -87,7 +88,6 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGPopupMenu::cancel()
     {
-
         TGControl* child;
 
         for (TGControlListItr itr = menu->getChildren().begin();itr != menu->getChildren().end(); ++itr)
@@ -103,6 +103,13 @@ namespace TGUI
 
         if (menu->m_parent)
             menu->m_parent->removeChild(menu);
+    }
+
+    void TGPopupMenu::cancelRoot()
+    {
+
+        rootMenuControl->m_menu->cancel();
+
     }
 
     //-----------------------------------------------------------------------
