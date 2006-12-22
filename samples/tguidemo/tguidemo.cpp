@@ -227,7 +227,7 @@ public:
         win->resize(190, 200);
         win->setResizeEnabled(true);
 
-        /*
+        
         TGCombobox* cb = new TGCombobox(win);
         cb->setPos(5,15);
         cb->resize(175,25);
@@ -242,15 +242,12 @@ public:
         cb->addItem("test item 8");
         cb->addItem("test item 9");
         cb->addItem("test item 10");
-        */
-
         
         TGEditbox* c = new TGEditbox(win,0,0,0,0);
         c->setPos(5,60);
         c->resize(80,25);
         win->focus();
-        
-
+       
     }
 
     void createScene()
@@ -259,7 +256,7 @@ public:
 
         mCamera->getViewport()->setBackgroundColour(TGColour(0.25,0.25,0.25));
 
-        //createTest1();
+        createTest1();
         createTest2();
     }
 };

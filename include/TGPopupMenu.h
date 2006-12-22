@@ -22,46 +22,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGSCROLLBOX_H__
-#define __TGSCROLLBOX_H__
+#ifndef __TGPOPUPMENU_H__
+#define __TGPOPUPMENU_H__
 
 namespace TGUI
 {
 
-    class TGScrollbox : public TGControl
+    class TGPopupMenu : public TGMenu
     {
-        TGReal   clientWidth;
-        TGReal   clientHeight;
-        TGReal   hScrollMax;
-        TGReal   vScrollMax;
-        TGReal   hScroll;
-        TGReal   vScroll;
-        int	scrolling;      // 0=no, 1=vertical, 2=horizontal
-
     public:
-        TGScrollbox(TGControl *parent, int x1, int y1, int x2, int y2);
-        virtual ~TGScrollbox();
+        TGPopupMenu();
+        virtual ~TGPopupMenu();
 
-        virtual void setScrollingBounds(TGReal hMax, TGReal vMax);
+        virtual void setTheme(TGTheme theme,bool updateChildren=false);
 
-        virtual void render();
-        virtual TGString getControlType() {return "TGScrollbox";};
-
-        virtual void place(int x1, int y1, int x2, int y2);
-        virtual void layout();
-
-        virtual bool pointInControl(TGReal x, TGReal y);
-        virtual TGControl *childAt(TGReal x, TGReal y);
-
-        virtual void onScroll(TGReal hd, TGReal vd);
-
-        virtual void onMouseDown(int x, int y, int b);
-        virtual void onMouseMoved(int x, int y);
-        virtual void onMouseUp(int x, int y, int b);
-        virtual void onMouseEnter();
-        virtual void onMouseExit();
-
+        virtual TGMenuItem *addItem(TGString caption);
+        virtual void clear();
+        virtual void run(int x=-10000, int y=-10000);
+        virtual void cancel();
+        virtual TGString getControlType() {return "TGPopupMenu";};
     };
 }
 #endif
-

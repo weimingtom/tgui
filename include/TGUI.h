@@ -84,6 +84,8 @@ namespace TGUI
 #include <tgfilebrowser.h>
 #include <tgmessagebox.h>
 #include <tgmenu.h>
+#include <tgpopupmenu.h>
+#include <tgmenubar.h>
 #include <tgprogressbar.h>
 #include <tgthememanager.h>
 #include <tgsystem.h>
