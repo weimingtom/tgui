@@ -28,10 +28,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G P o p u p M e n u
     //-----------------------------------------------------------------------
-    TGPopupMenu::TGPopupMenu() : TGMenu()
+    TGPopupMenu::TGPopupMenu(TGControl* parent) : TGMenu(parent)
     {
         rootMenuControl = NULL;
-        menu = new TGMenuControl(NULL);
+        menu = new TGMenuControl(parent);
         menu->m_menu = this;
     }
 
@@ -105,10 +105,16 @@ namespace TGUI
             menu->m_parent->removeChild(menu);
     }
 
+    //-----------------------------------------------------------------------
+    //                         c a n c e l R o o t
+    //-----------------------------------------------------------------------
     void TGPopupMenu::cancelRoot()
     {
 
-        rootMenuControl->m_menu->cancel();
+        if(rootMenuControl)
+            rootMenuControl->m_menu->cancel();
+        else if(menu)
+            menu->m_menu->cancel();
 
     }
 

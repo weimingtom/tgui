@@ -158,7 +158,8 @@ namespace TGUI
         if (b == LeftButton)
             fireEvent(TGEvent::MouseClicked,TGEventArgs(this));
         if (b < 4)
-            menuControl->m_menu->cancel();
+            if(menuControl && menuControl->m_menu)
+                menuControl->m_menu->cancel();
     }
 
     //-----------------------------------------------------------------------
@@ -190,9 +191,9 @@ namespace TGUI
         {
             child = *itr;
 
-            if (w < stringWidth(((TGMenuItem*)child)->caption)+10)
-                w = stringWidth(((TGMenuItem*)child)->caption)
-                + 10;
+            int sw = stringWidth(((TGMenuItem*)child)->caption);
+            if (w < sw+10)
+                w = sw + 10;
             if (((TGMenuItem*)child)->caption[0] == '-' &&
                 !((TGMenuItem*)child)->caption[1])
                 h += 4;
@@ -261,12 +262,101 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                      T G M e n u b a r C o n t r o l
+    //-----------------------------------------------------------------------
+    TGMenubarControl::TGMenubarControl(TGControl *owner)
+        : TGMenuControl(owner)
+    {
+        setBounds(1,1,5,5);
+        TGControl::setPadding(2, 2, 2, 2);
+        iconPad = 0;
+    }
+
+    //-----------------------------------------------------------------------
+    //                     ~ T G M e n u b a r C o n t r o l
+    //-----------------------------------------------------------------------
+    TGMenubarControl::~TGMenubarControl()
+    {
+    }
+
+    //-----------------------------------------------------------------------
+    //                           c a l c S i z e
+    //-----------------------------------------------------------------------
+    void TGMenubarControl::calcSize()
+    {
+        int     	w = 10, h = 3;
+
+        m_parent->getWidth(w);
+        h = stringHeight()+10;
+
+        resize(w,h);
+    }
+
+    //-----------------------------------------------------------------------
+    //                             l a y o u t
+    //-----------------------------------------------------------------------
+    void TGMenubarControl::layout()
+    {
+        int     	w, h, x = 0;
+
+        iconPad = 0;
+        getClientSize(w, h);
+        h--;
+
+        TGControl* child;
+        for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
+        {
+            child = *itr;
+            int     width;
+            width = stringWidth(((TGMenuItem*)child)->caption) + 10;
+
+            child->setBounds(x, 1, x+ width, h);
+            x += (width + 5);
+        }
+
+        TGControl::layout();
+    }
+
+    //-----------------------------------------------------------------------
+    //                            r e n d e r
+    //-----------------------------------------------------------------------
+    void TGMenubarControl::render()
+    {
+        if(isRenderCached())
+            return;
+
+        TGSBrush  brush;
+        brush = m_theme.getBase();
+        fillRect(x1, y1, x2, y2, brush);
+        brush = m_theme.getFrameBrush();
+        drawLine(x1,y2,x2,y2, brush);
+
+        TGControl::render();
+    }
+
+    //-----------------------------------------------------------------------
+    //                        o n F o c u s E x i t
+    //-----------------------------------------------------------------------
+    void TGMenubarControl::onFocusExit()
+    {
+        TGControl::onFocusExit();
+        return;
+
+        if (m_menu->rootMenuControl)
+            m_menu->rootMenuControl->m_menu->cancel();
+        else
+            m_menu->cancel();
+    }
+
+ 
+
+    //-----------------------------------------------------------------------
     //                             T G M e n u
     //-----------------------------------------------------------------------
-    TGMenu::TGMenu() : TGControl(NULL)
+    TGMenu::TGMenu(TGControl* parent) : TGControl(parent)
     {
         rootMenuControl = NULL;
-        menu = new TGMenuControl(NULL);
+        menu = new TGMenuControl(parent);
         menu->m_menu = this;
     }
 

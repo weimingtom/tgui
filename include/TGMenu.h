@@ -67,7 +67,7 @@ namespace TGUI
         TGMenuControl*          rootMenuControl;
         TGMenuControl*          menu;
 
-        TGMenu();
+        TGMenu(TGControl* parent);
         virtual ~TGMenu();
 
         virtual void setTheme(TGTheme theme,bool updateChildren=false);
@@ -99,5 +99,27 @@ namespace TGUI
 
         virtual void onFocusExit();
     };
+
+    //-----------------------------------------------------------------------
+    //                       T G M e n u b a r C o n t r o l
+    //-----------------------------------------------------------------------
+    class TGMenubarControl : public TGMenuControl
+    {
+    public:
+        TGMenu*                 m_menu;
+        int			            iconPad;
+
+        TGMenubarControl(TGControl *owner=NULL);
+        virtual ~TGMenubarControl();
+
+        virtual void calcSize();
+
+        virtual void layout();
+        virtual void render();
+        virtual TGString getControlType() {return "TGMenubarControl";};
+
+        virtual void onFocusExit();
+    };
+
 }
 #endif

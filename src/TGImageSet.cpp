@@ -73,7 +73,7 @@ namespace TGUI
     {
         TGRect res;
 
-        if((index > 0) && ((size_t)index < m_uvList.size()))
+        if((index >= 0) && ((size_t)index < m_uvList.size()))
             res = m_uvList[index];
 
         return res;

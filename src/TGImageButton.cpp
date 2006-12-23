@@ -106,6 +106,7 @@ namespace TGUI
         if(!m_pushed)
             m_uvIndex = 1;
         else m_uvIndex = 2;
+        redraw();
     }
 
     void TGImageButton::onMouseExit(int x, int y)
@@ -114,6 +115,7 @@ namespace TGUI
         if(!m_pushed)
             m_uvIndex = 0;
         else m_uvIndex = 1;
+        redraw();
     }
 
 }
