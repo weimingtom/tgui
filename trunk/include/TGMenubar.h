@@ -31,10 +31,10 @@ namespace TGUI
     class TGMenubar : public TGMenu
     {
     public:
-        TGMenuControl*          rootMenuControl;
-        TGMenuControl*          menu;
+        TGMenubarControl*       rootMenuControl;
+        TGMenubarControl*       menu;
 
-        TGMenubar();
+        TGMenubar(TGControl* parent=NULL);
         virtual ~TGMenubar();
 
         virtual void setTheme(TGTheme theme,bool updateChildren=false);

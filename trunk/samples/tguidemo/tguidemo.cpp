@@ -243,7 +243,7 @@ public:
         cb->addItem("test item 9");
         cb->addItem("test item 10");
         
-        TGEditbox* c = new TGEditbox(win,0,0,0,0);
+        TGSpinEdit* c = new TGSpinEdit(win,0,0,0,0);
         c->setPos(5,60);
         c->resize(80,25);
         win->focus();
@@ -258,6 +258,15 @@ public:
 
         createTest1();
         createTest2();
+
+        TGMenubar* mb = new TGMenubar(TGSystem::getSingleton().getActiveScreen());
+        mb->addItem("File");
+        mb->addItem("Edit");
+        mb->addItem("View");
+        mb->addItem("Community");
+        mb->addItem("Help");
+
+
     }
 };
 

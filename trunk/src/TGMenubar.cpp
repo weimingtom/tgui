@@ -28,11 +28,13 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G M e n u b a r
     //-----------------------------------------------------------------------
-    TGMenubar::TGMenubar() : TGMenu()
+    TGMenubar::TGMenubar(TGControl* parent) : TGMenu(parent)
     {
         rootMenuControl = NULL;
-        menu = new TGMenuControl(NULL);
+        menu = new TGMenubarControl(m_parent);
         menu->m_menu = this;
+        menu->calcSize();
+        menu->layout();
     }
 
     //-----------------------------------------------------------------------
