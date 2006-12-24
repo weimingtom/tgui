@@ -114,12 +114,12 @@ public:
 
 };
 
-class MinimalApp : public ExampleApplication
+class TGUIApp : public ExampleApplication
 {
     TGUI::TGSystem* mGUISystem;
     OIS::MouseState ms;
 public:
-    ~MinimalApp()
+    ~TGUIApp()
     {
         delete mGUISystem;
     }
@@ -194,7 +194,14 @@ public:
         b->setWidth(128);
         b->setHeight(64);
         b->center();
+        b->setPos(b->x1,b->y1-20);
 
+        b = new TGImageButton(win,"quitbutton.png");
+        b->setWidth(128);
+        b->setHeight(64);
+        b->center();
+        b->setPos(b->x1,b->y1+40);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGUIApp::terminateAppAction,this));
         
         TGWindow *win2 = new TGWindow("");
         win2->setPos(10,80);
@@ -249,6 +256,7 @@ public:
         c->resize(80,25);
         win->focus();
        
+        TGMenuItem* mi;
         TGMenubar* mb = new TGMenubar(TGSystem::getSingleton().getActiveScreen());
         TGMenuItem	*fileMenu = mb->addItem("File");
         fileMenu->addItem("New");
@@ -256,7 +264,9 @@ public:
         fileMenu->addItem("Save");
         fileMenu->addItem("Save As");
         fileMenu->addItem("-");
-        fileMenu->addItem("Quit");
+        mi = fileMenu->addItem("Quit");
+        mi->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGUIApp::terminateAppAction,this));
+
 
         TGMenuItem *editMenu = mb->addItem("Edit");
         editMenu->addItem("Cut");
@@ -287,7 +297,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
 {
 
     int i =1;
-    MinimalApp app;
+    TGUIApp app;
 
     app.go();
 
