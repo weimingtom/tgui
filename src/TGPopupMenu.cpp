@@ -111,7 +111,7 @@ namespace TGUI
     void TGPopupMenu::cancelRoot()
     {
 
-        if(rootMenuControl)
+        if(rootMenuControl && rootMenuControl->m_menu)
             rootMenuControl->m_menu->cancel();
         else if(menu)
             menu->m_menu->cancel();
