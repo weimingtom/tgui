@@ -172,6 +172,7 @@ public:
         TGWindow	*win = new TGWindow("");
         win->resize(256, 256);
         win->center();
+        win->setPos(win->x1+150,win->y1+100);
         win->setResizeEnabled(true);
         win->setTitlebarEnabled(true);
         win->setFrameEnabled(false);
@@ -196,7 +197,7 @@ public:
 
         
         TGWindow *win2 = new TGWindow("");
-        win2->setPos(10,10);
+        win2->setPos(10,80);
         win2->resize(384,256);
         win2->setResizeEnabled(true);
         win2->setFrameEnabled(false);
@@ -223,7 +224,7 @@ public:
 
         TGWindow	*win = new TGWindow("Test Window");
         win->center();
-        win->moveRel(win->x1, win->y1-100);
+        win->moveRel(win->x1+250, win->y1-175);
         win->resize(190, 200);
         win->setResizeEnabled(true);
 
@@ -248,6 +249,19 @@ public:
         c->resize(80,25);
         win->focus();
        
+        TGMenubar* mb = new TGMenubar(TGSystem::getSingleton().getActiveScreen());
+        TGMenuItem	*fileMenu = mb->addItem("File");
+        fileMenu->addItem("New");
+        fileMenu->addItem("Open");
+        fileMenu->addItem("Save");
+        fileMenu->addItem("Save As");
+
+        mb->addItem("Edit");
+        mb->addItem("View");
+        mb->addItem("Community");
+        mb->addItem("Help");
+
+
     }
 
     void createScene()
@@ -258,14 +272,6 @@ public:
 
         createTest1();
         createTest2();
-
-        TGMenubar* mb = new TGMenubar(TGSystem::getSingleton().getActiveScreen());
-        mb->addItem("File");
-        mb->addItem("Edit");
-        mb->addItem("View");
-        mb->addItem("Community");
-        mb->addItem("Help");
-
 
     }
 };
