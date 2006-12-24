@@ -255,8 +255,14 @@ public:
         fileMenu->addItem("Open");
         fileMenu->addItem("Save");
         fileMenu->addItem("Save As");
+        fileMenu->addItem("-");
+        fileMenu->addItem("Quit");
 
-        mb->addItem("Edit");
+        TGMenuItem *editMenu = mb->addItem("Edit");
+        editMenu->addItem("Cut");
+        editMenu->addItem("Copy");
+        editMenu->addItem("Paste");
+
         mb->addItem("View");
         mb->addItem("Community");
         mb->addItem("Help");

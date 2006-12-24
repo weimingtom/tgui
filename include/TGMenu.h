@@ -65,7 +65,7 @@ namespace TGUI
     {
     public:
         TGMenuControl*          rootMenuControl;
-        TGMenuControl*          menu;
+        TGMenuControl*          m_menuControl;
 
         TGMenu(TGControl* parent);
         virtual ~TGMenu();
@@ -97,6 +97,8 @@ namespace TGUI
         virtual void render();
         virtual TGString getControlType() {return "TGMenuControl";};
 
+        virtual void getSubOffsets(TGMenuItem* item, int& dx, int& dy);
+
         virtual void onFocusExit();
     };
 
@@ -117,6 +119,7 @@ namespace TGUI
         virtual void layout();
         virtual void render();
         virtual TGString getControlType() {return "TGMenubarControl";};
+        virtual void getSubOffsets(TGMenuItem* item, int& dx, int& dy);
 
         virtual void onFocusExit();
     };
