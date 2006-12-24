@@ -31,8 +31,6 @@ namespace TGUI
     class TGMenubar : public TGMenu
     {
     public:
-        TGMenubarControl*       rootMenuControl;
-        TGMenubarControl*       menu;
 
         TGMenubar(TGControl* parent=NULL);
         virtual ~TGMenubar();

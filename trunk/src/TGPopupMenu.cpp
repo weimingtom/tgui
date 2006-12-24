@@ -31,8 +31,8 @@ namespace TGUI
     TGPopupMenu::TGPopupMenu(TGControl* parent) : TGMenu(parent)
     {
         rootMenuControl = NULL;
-        menu = new TGMenuControl(parent);
-        menu->m_menu = this;
+        m_menuControl = new TGMenuControl(parent);
+        m_menuControl->m_menu = this;
     }
 
     //-----------------------------------------------------------------------
@@ -40,8 +40,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGPopupMenu::~TGPopupMenu()
     {
-        if (!menu->m_parent)
-            delete menu;
+        if (!m_menuControl->m_parent)
+            delete m_menuControl;
     }
 
     //-----------------------------------------------------------------------
@@ -49,10 +49,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGMenuItem *TGPopupMenu::addItem(TGString caption)
     {
-        TGMenuItem        *item = new TGMenuItem(menu, caption);
-        item->menuControl = rootMenuControl?rootMenuControl:menu;
-        menu->calcSize();
-        menu->layout();
+        TGMenuItem        *item = new TGMenuItem(m_menuControl, caption);
+        item->menuControl = rootMenuControl?rootMenuControl:m_menuControl;
+        m_menuControl->calcSize();
+        m_menuControl->layout();
         return item;
     }
 
@@ -61,7 +61,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGPopupMenu::clear()
     {
-        menu->removeAllChildren();
+        m_menuControl->removeAllChildren();
     }
 
     //-----------------------------------------------------------------------
@@ -69,17 +69,17 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGPopupMenu::run(int x, int y)
     {
-        if (menu->m_parent)
+        if (m_menuControl->m_parent)
             cancel();
         if (x == -10000)
             x = TGSystem::getSingleton().getActiveScreen()->getMouseX();
         if (y == -10000)
             y = TGSystem::getSingleton().getActiveScreen()->getMouseY();
-        menu->calcSize();
-        menu->layout();
-        TGSystem::getSingleton().getActiveScreen()->addChild(menu);
-        menu->moveRel(x, y);
-        menu->focus();
+        m_menuControl->calcSize();
+        m_menuControl->layout();
+        TGSystem::getSingleton().getActiveScreen()->addChild(m_menuControl);
+        m_menuControl->moveRel(x, y);
+        m_menuControl->focus();
         TGSystem::getSingleton().setActivePopup(this);
     }
 
@@ -90,19 +90,19 @@ namespace TGUI
     {
         TGControl* child;
 
-        for (TGControlListItr itr = menu->getChildren().begin();itr != menu->getChildren().end(); ++itr)
+        for (TGControlListItr itr = m_menuControl->getChildren().begin();itr != m_menuControl->getChildren().end(); ++itr)
         {
             child = *itr;
             if (((TGMenuItem*)child)->subMenu &&
-                ((TGMenuItem*)child)->subMenu->menu->m_parent)
+                ((TGMenuItem*)child)->subMenu->m_menuControl->m_parent)
             {
                 ((TGMenuItem*)child)->subMenu->cancel();
                 break;
             }
         }
 
-        if (menu->m_parent)
-            menu->m_parent->removeChild(menu);
+        if (m_menuControl->m_parent)
+            m_menuControl->m_parent->removeChild(m_menuControl);
     }
 
     //-----------------------------------------------------------------------
@@ -113,8 +113,8 @@ namespace TGUI
 
         if(rootMenuControl && rootMenuControl->m_menu)
             rootMenuControl->m_menu->cancel();
-        else if(menu)
-            menu->m_menu->cancel();
+        else if(m_menuControl)
+            m_menuControl->m_menu->cancel();
 
     }
 
@@ -124,7 +124,7 @@ namespace TGUI
     void TGPopupMenu::setTheme(TGTheme theme,bool updateChildren)
     {
         TGControl::setTheme(theme,updateChildren);
-        menu->setTheme(theme,updateChildren);
+        m_menuControl->setTheme(theme,updateChildren);
     }
 
 }

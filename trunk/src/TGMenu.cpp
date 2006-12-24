@@ -96,7 +96,7 @@ namespace TGUI
             return;
         }
 
-        if (m_mouseOverControl || (subMenu && subMenu->menu->m_parent))
+        if (m_mouseOverControl) // || (subMenu && subMenu->m_menuControl->m_parent))
         {
             brush = m_theme.getCaptionBrush();
             fillRect(x1, y1, x2, y2, brush);
@@ -123,7 +123,7 @@ namespace TGUI
             child = *itr;
 
             if (((TGMenuItem*)child)->subMenu &&
-                ((TGMenuItem*)child)->subMenu->menu->m_parent)
+                ((TGMenuItem*)child)->subMenu->m_menuControl->m_parent)
             {
                 ((TGMenuItem*)child)->subMenu->cancel();
                 break;
@@ -136,7 +136,10 @@ namespace TGUI
 
             int     x1, y1, x2, y2;
             getBounds(x1, y1, x2, y2);
-            subMenu->run(x2 - 10, y1 + 5);
+
+            int dx=0,dy=0;
+            subMenu->rootMenuControl->getSubOffsets(this,dx,dy);
+            subMenu->run(x2+dx, y1+dy);
         }
         redraw();
     }
@@ -230,6 +233,15 @@ namespace TGUI
         }
 
         TGControl::layout();
+    }
+
+    //-----------------------------------------------------------------------
+    //                        g e t S u b O f f s e t s
+    //-----------------------------------------------------------------------
+    void TGMenuControl::getSubOffsets(TGMenuItem* item, int& dx, int& dy)
+    {
+        dx = -10;
+        dy = 5;
     }
 
     //-----------------------------------------------------------------------
@@ -348,7 +360,15 @@ namespace TGUI
             m_menu->cancel();
     }
 
- 
+    //-----------------------------------------------------------------------
+    //                       g e t S u b O f f s e t s
+    //-----------------------------------------------------------------------
+    void TGMenubarControl::getSubOffsets(TGMenuItem* item, int& dx, int& dy)
+    {
+        
+        dx = item->x1 - item->x2;
+        dy = 25;
+    }
 
     //-----------------------------------------------------------------------
     //                             T G M e n u
@@ -356,8 +376,8 @@ namespace TGUI
     TGMenu::TGMenu(TGControl* parent) : TGControl(parent)
     {
         rootMenuControl = NULL;
-        menu = new TGMenuControl(parent);
-        menu->m_menu = this;
+        m_menuControl = new TGMenuControl(parent);
+        m_menuControl->m_menu = this;
     }
 
     //-----------------------------------------------------------------------
@@ -365,8 +385,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGMenu::~TGMenu()
     {
-        if (!menu->m_parent)
-            delete menu;
+        if (!m_menuControl->m_parent)
+            delete m_menuControl;
     }
 
     //-----------------------------------------------------------------------
@@ -374,10 +394,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGMenuItem *TGMenu::addItem(TGString caption)
     {
-        TGMenuItem        *item = new TGMenuItem(menu, caption);
-        item->menuControl = rootMenuControl?rootMenuControl:menu;
-        menu->calcSize();
-        menu->layout();
+        TGMenuItem        *item = new TGMenuItem(m_menuControl, caption);
+        item->menuControl = rootMenuControl?rootMenuControl:m_menuControl;
+        m_menuControl->calcSize();
+        m_menuControl->layout();
         return item;
     }
 
@@ -386,7 +406,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGMenu::clear()
     {
-        menu->removeAllChildren();
+        m_menuControl->removeAllChildren();
     }
 
     //-----------------------------------------------------------------------
@@ -397,19 +417,19 @@ namespace TGUI
 
         TGControl* child;
 
-        for (TGControlListItr itr = menu->getChildren().begin();itr != menu->getChildren().end(); ++itr)
+        for (TGControlListItr itr = m_menuControl->getChildren().begin();itr != m_menuControl->getChildren().end(); ++itr)
         {
             child = *itr;
             if (((TGMenuItem*)child)->subMenu &&
-                ((TGMenuItem*)child)->subMenu->menu->m_parent)
+                ((TGMenuItem*)child)->subMenu->m_menuControl->m_parent)
             {
                 ((TGMenuItem*)child)->subMenu->cancel();
                 break;
             }
         }
 
-        if (menu->m_parent)
-            menu->m_parent->removeChild(menu);
+        if (m_menuControl->m_parent)
+            m_menuControl->m_parent->removeChild(m_menuControl);
     }
 
     //-----------------------------------------------------------------------
@@ -418,6 +438,6 @@ namespace TGUI
     void TGMenu::setTheme(TGTheme theme,bool updateChildren)
     {
         TGControl::setTheme(theme,updateChildren);
-        menu->setTheme(theme,updateChildren);
+        m_menuControl->setTheme(theme,updateChildren);
     }
 }
