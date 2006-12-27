@@ -38,6 +38,8 @@ namespace TGUI
         static const TGString Modified;
         static const TGString Selected;
 
+        static const TGString AcceptText;
+
         static const TGString MouseEnter;
         static const TGString MouseLeave;
         static const TGString MouseDown;
@@ -46,6 +48,8 @@ namespace TGUI
         static const TGString MouseClicked;
 
         static const TGString MenuPopup;
+
+        static const TGString ConsoleCommand;
     };
 
     class TGEventArgs
@@ -55,6 +59,13 @@ namespace TGUI
         virtual ~TGEventArgs(void) {}
         TGControl*      m_control;
         TGString          m_eventID;
+    };
+
+    class TGConsoleEventArgs : public TGEventArgs
+    {
+    public:
+        TGConsoleEventArgs(TGControl* control) : TGEventArgs(control) {};
+        TGString        m_command;
     };
 
     class TGMouseEventArgs : public TGEventArgs

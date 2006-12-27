@@ -39,5 +39,7 @@ namespace TGUI
     const TGString TGEvent::MouseMove("mouseMove");
     const TGString TGEvent::MouseClicked("clicked");
     const TGString TGEvent::MenuPopup("menuPopup");
+    const TGString TGEvent::AcceptText("acceptText");
+    const TGString TGEvent::ConsoleCommand("consoleCommand");
 
 }
