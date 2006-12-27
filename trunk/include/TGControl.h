@@ -77,6 +77,7 @@ namespace TGUI
         TGControl*          exclusiveChild;
         bool                m_mouseOverControl;
         bool                isComposite;
+        bool                m_backgroundEnabled;
         TGReal              xShift;
         TGReal              yShift;
         int                 x1;
@@ -134,8 +135,9 @@ namespace TGUI
 
         virtual void show() {m_isVisible = true; redraw();};
         virtual void hide() {m_isVisible = false; redraw();};
+        virtual void setVisible(bool value) {value ? show() : hide();};
         virtual bool isVisible() {return m_isVisible;};
-
+        virtual void setBackgroundEnabled(bool value) {m_backgroundEnabled = value;};
         virtual TGScreen* getActiveScreen();
 
         virtual void pulse(TGReal timeElapsed);
@@ -178,6 +180,9 @@ namespace TGUI
         virtual void moveRel(TGReal x, TGReal y);
 
         virtual void resize(int width, int height);
+        virtual void setSize(int width, int height) { setWidth(width); setHeight(height); };
+        virtual void setSize(TGReal width, TGReal height) {setWidth(width); setHeight(height); };
+
         virtual void center(bool horizontal=true, bool vertical=true);
         virtual void translate(int &x, int &y);
         virtual void setPadding(int left, int top=-1, int right=-1,

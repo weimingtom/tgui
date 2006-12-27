@@ -33,6 +33,7 @@ namespace TGUI
     TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
         , m_theme(TGTheme())
         , m_frameEnabled(true)
+        , m_backgroundEnabled(true)
     {
         x1 = y1 = x2 = y2 = m_padLeft = m_padTop = m_padRight = m_padBottom = xShift =
             yShift = 0;
