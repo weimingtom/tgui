@@ -152,6 +152,7 @@ public:
         ms = ((MinListener*)mFrameListener)->getMouseState();
     }
 
+
     bool aboutBoxAction(const TGEventArgs& args)
     {
         (new TGMessagebox("Tiny GUI 0.1 Demo", "About"))->show();
@@ -164,8 +165,10 @@ public:
         return true;
     }
 
+
     void createScene(void)
     {
+        
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
         TGWindow	*win = new TGWindow("A tgui Window");
@@ -173,7 +176,7 @@ public:
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
         win->setResizeEnabled(true);
-
+        
     }
 
 };
