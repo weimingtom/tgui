@@ -376,8 +376,6 @@ namespace TGUI
     TGMenu::TGMenu(TGControl* parent) : TGControl(parent)
     {
         rootMenuControl = NULL;
-        m_menuControl = new TGMenuControl(parent);
-        m_menuControl->m_menu = this;
     }
 
     //-----------------------------------------------------------------------
@@ -385,7 +383,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGMenu::~TGMenu()
     {
-        if (!m_menuControl->m_parent)
+        if (m_menuControl)
             delete m_menuControl;
     }
 
