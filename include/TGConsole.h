@@ -41,6 +41,8 @@ namespace TGUI
         virtual ~TGConsole();
         virtual void setBounds(int x1, int y1, int x2, int y2);
         virtual void addItem(TGString item);
+        virtual void addText(TGString text) {addItem(text);};
+        virtual void toggle();
     };
 }
 
