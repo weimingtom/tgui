@@ -22,48 +22,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 // THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#ifndef __TGEDITBOX_H__
-#define __TGEDITBOX_H__
+#ifndef __TGCONSOLE_H__
+#define __TGCONSOLE_H__
 
 namespace TGUI
 {
 
-    class TGEditbox : public TGControl
+    struct TGConsole : public TGWindow
     {
-        TGDataManager<TGString>	m_text;
-        int     		        tScroll;
-        size_t     		        m_cursor;
-        int     		        m_cursorX;
-        TGReal                  m_pulseTime;
-        bool                    m_cursorVisible;
-        int                     m_lastKey;
-        char                    m_lastChar;
-        TGReal                  m_repeatRate;
-        TGReal                  m_repeatDelay;
-        TGReal                  m_repeatElapsed;
-        bool                    m_readOnly;
+        TGListbox*         m_list;
+        TGEditbox*         m_input;
+
+    protected:
+        bool acceptText(const TGEventArgs& args);
 
     public:
-
-        TGEditbox(TGControl *parent, int x1=0, int y1=0, int x2=0, int y2=0);
-        virtual ~TGEditbox();
-
-        virtual void setText(TGString newText);
-        virtual TGString getText();
-
-        virtual void render();
-        virtual TGString getControlType() {return "TGEditbox";};
-
-        virtual void pulse(TGReal timeElapsed);
-
-        void setReadOnly(bool value) {m_readOnly = value;};
-        bool getReadOnly() {return m_readOnly;};
-
-        virtual void onKeyDown(int key, unsigned char ascii);
-        virtual void onKeyUp(int key, unsigned char ascii);
-        virtual void onFocusEnter(TGControl* oldFocus);
-        virtual void onFocusExit();
-
+        TGConsole(TGString caption="Console");
+        virtual ~TGConsole();
+        virtual void setBounds(int x1, int y1, int x2, int y2);
+        virtual void addItem(TGString item);
     };
 }
+
 #endif

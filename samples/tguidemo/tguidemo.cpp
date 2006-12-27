@@ -118,6 +118,7 @@ class TGUIApp : public ExampleApplication
 {
     TGUI::TGSystem* mGUISystem;
     OIS::MouseState ms;
+    TGConsole* m_console; 
 public:
     ~TGUIApp()
     {
@@ -161,6 +162,24 @@ public:
     bool terminateAppAction(const TGEventArgs& args)
     {
         mShutdownRequested = true;
+        return true;
+    }
+
+    bool procCommand(const TGEventArgs& args)
+    {
+        TGConsoleEventArgs& cargs = (TGConsoleEventArgs& ) args;
+
+        TGString command = cargs.m_command;
+        
+
+        if(!command.compare("quit"))
+            mShutdownRequested = true;
+        else
+        {
+            m_console->addItem("** Invalid Command **");
+    
+        }
+
         return true;
     }
 
@@ -276,6 +295,12 @@ public:
         mb->addItem("View");
         mb->addItem("Community");
         mb->addItem("Help");
+
+        m_console = new TGConsole();
+        m_console->addEventHandler(TGEvent::ConsoleCommand,TGEVENT_HANDLER(TGUIApp::procCommand));
+
+
+
 
 
     }

@@ -67,6 +67,7 @@ namespace TGUI
         tScroll = 0;
         if (m_cursorX - tScroll > w - 10)
             tScroll = m_cursorX - w + (w/2);
+        redraw();
     }
 
     //-----------------------------------------------------------------------
@@ -154,6 +155,12 @@ namespace TGUI
                 }
             }
             break;
+
+        case 13:    // Enter/Return
+            fireEvent(TGEvent::AcceptText,TGEventArgs(this));
+            return;
+            break;
+
         default:
             if (ascii < 32 || ascii > 127)
             { 

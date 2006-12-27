@@ -191,6 +191,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGConsole.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGConsole.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGControl.cpp"
 				>
 			</File>
