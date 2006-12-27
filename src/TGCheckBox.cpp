@@ -28,7 +28,7 @@ namespace TGUI
 {
 
     //-----------------------------------------------------------------------
-    //                          T G C h e c k b o x
+    //                          T G C h e c k B o x
     //-----------------------------------------------------------------------
     TGCheckBox::TGCheckBox(TGControl *parent, TGString caption, int x1, int y1, int x2, int y2)
         : TGControl(parent)
@@ -41,7 +41,7 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                         ~ T G C h e c k b o x
+    //                         ~ T G C h e c k B o x
     //-----------------------------------------------------------------------
     TGCheckBox::~TGCheckBox()
     {
