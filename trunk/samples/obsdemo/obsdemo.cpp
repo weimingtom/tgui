@@ -318,9 +318,9 @@ public:
         pbar2->setMax(61);
 
 
-        (new TGCheckbox(win2,"Checker", 10, 0, 180, 20))->setState(true);
-        new TGCheckbox(win2,"Checker 2", 10, 25, 180, 45);
-        new TGCheckbox(win2,"Checker 3", 10, 50, 180, 70);
+        (new TGCheckBox(win2,"Checker", 10, 0, 180, 20))->setState(true);
+        new TGCheckBox(win2,"Checker 2", 10, 25, 180, 45);
+        new TGCheckBox(win2,"Checker 3", 10, 50, 180, 70);
 
         
         TGListbox *lbox = new TGListbox(win2, 10, 80, 175, 200);
@@ -415,7 +415,7 @@ public:
         TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
-        new TGCheckbox(sbox,"Clipped checkbox", 10, 80, 200, 100);
+        new TGCheckBox(sbox,"Clipped checkbox", 10, 80, 200, 100);
         new TGLabel(sbox,"Clipped label", 10, 120);
         
 
@@ -429,7 +429,7 @@ public:
 
         win5->center();
         win5->moveRel(win5->x1, win5->y1 - 160);
-        TGImage	*cenda = new TGImage(win5, 0, 0, "cenda.png");
+        TGImage	*cenda = new TGImage(win5,"cenda.png");
         cenda->center();
         cenda->setName("cenda");
         cenda->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::cendaClicked,this));

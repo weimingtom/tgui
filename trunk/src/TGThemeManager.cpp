@@ -62,7 +62,7 @@ namespace TGUI
         m_alpha->setValue(204);
         m_alpha->addEventHandler(TGEvent::Modified, new TGEventHandler(&TGThemeManager::colourModified,this));
 
-        m_activeOnly = new TGCheckbox(this,"Modify Active Only");
+        m_activeOnly = new TGCheckBox(this,"Modify Active Only");
         m_activeOnly->setBounds(0.3f,0.5f,0.85f,0.59f);
     }
 

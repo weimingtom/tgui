@@ -35,7 +35,7 @@ namespace TGUI
         TGSlider*           m_green;
         TGSlider*           m_blue;
         TGSlider*           m_alpha;
-        TGCheckbox*         m_activeOnly;
+        TGCheckBox*         m_activeOnly;
         TGControl*          m_lastControl;
     protected:
         bool colourModified(const TGEventArgs& args);

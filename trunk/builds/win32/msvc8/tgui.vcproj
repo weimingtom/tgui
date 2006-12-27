@@ -167,11 +167,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGCheckbox.cpp"
+				RelativePath="..\..\..\src\TGCheckBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGCheckbox.h"
+				RelativePath="..\..\..\include\TGCheckBox.h"
 				>
 			</File>
 			<File

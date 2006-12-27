@@ -57,6 +57,11 @@ namespace TGUI
         virtual void setTheme(TGTheme theme,bool updateChildren=false);
         virtual void onFocusExit();
 
+        virtual void setMaximumValue(TGReal value) {m_maxValue = value;};
+        virtual void setMinimumValue(TGReal value) {m_minValue = value;};
+        virtual void setCurrentValue(TGReal value) {m_value = value;};
+
+
         virtual bool focused();
         virtual void pulse(TGReal timeElapsed);
         void updateValue();
