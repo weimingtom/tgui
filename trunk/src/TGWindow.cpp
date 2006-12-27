@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // This source file is part of TGUI (Tiny GUI)
 //
-// Copyright (c) 2006 Tubras Software, Ltd
+// Copyright (c) 2006-2007 Tubras Software, Ltd
 // Also see acknowledgements in Readme.html
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy 
