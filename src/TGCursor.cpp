@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C u r s o r
     //-----------------------------------------------------------------------
-    TGCursor::TGCursor(TGString fname,TGString resourceGroup) : TGImage(NULL,0,0,fname,resourceGroup)
+    TGCursor::TGCursor(TGString fname,TGString resourceGroup) : TGImage(NULL,fname,resourceGroup)
     {
         m_hotSpot = TGPoint(0,0);
         m_brush.bind(new TGBrush(TGColour(1,1,1,1)));
@@ -40,7 +40,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C u r s o r
     //-----------------------------------------------------------------------
-    TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,0,0,texture)
+    TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,texture)
     {
         m_hotSpot = TGPoint(0,0);
         m_brush.bind(new TGBrush(TGColour(1,1,1,1),texture));
