@@ -70,6 +70,8 @@ namespace TGUI
         virtual void removeItem(TGListboxItem *item);
         virtual void selectItem(unsigned int index);
         virtual void selectItem(TGListboxItem *item);
+        virtual size_t getItemCount();
+
         virtual TGString getControlType() {return "TGListbox";};
 
         virtual TGListboxItem* getSelectedItem() {return m_selectedItem;};

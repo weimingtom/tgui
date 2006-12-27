@@ -53,6 +53,10 @@ namespace TGUI
         virtual bool pointInControl(TGReal x, TGReal y);
         virtual TGControl *childAt(TGReal x, TGReal y);
 
+        virtual TGReal getVScrollMax() {return vScrollMax;};
+        virtual void setVScrollPos(TGReal value);
+
+
         virtual void onScroll(TGReal hd, TGReal vd);
 
         virtual void onMouseDown(int x, int y, int b);

@@ -34,7 +34,7 @@ namespace TGUI
     {
         m_list = new TGListbox(this);
         m_list->setPos(5,5);
-        m_list->resize(485,210);
+        m_list->resize(485,205);
 
         m_input = new TGEditbox(this);
         m_input->setPos(5,220);
@@ -72,6 +72,9 @@ namespace TGUI
         fireEvent(TGEvent::ConsoleCommand,ea);
 
         m_input->setText("");
+
+        m_list->setVScrollPos(m_list->getVScrollMax());
+
         return true;
     }
 
@@ -98,5 +101,18 @@ namespace TGUI
         m_list->addItem(item);
     }
 
-
+    //-----------------------------------------------------------------------
+    //                            t o g g l e
+    //-----------------------------------------------------------------------
+    void TGConsole::toggle()
+    {
+        if(isVisible())
+        {
+            hide();
+        }
+        else
+        {
+            show();
+        }
+    }
 }
