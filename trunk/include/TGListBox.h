@@ -60,7 +60,7 @@ namespace TGUI
         TGListBoxItem*          m_selectedItem;
 
     public:
-        TGListBox(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        TGListBox(TGControl *parent, TGString name="");
         virtual ~TGListBox();
 
         virtual void addItem(TGString text);

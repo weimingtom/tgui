@@ -28,7 +28,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G M e n u B a r
     //-----------------------------------------------------------------------
-    TGMenuBar::TGMenuBar(TGControl* parent) : TGMenu(parent)
+    TGMenuBar::TGMenuBar(TGControl* parent, TGString name) : TGMenu(parent, name)
     {
         rootMenuControl = NULL;
         m_menuControl = new TGMenubarControl(m_parent);

@@ -47,7 +47,7 @@ namespace TGUI
 
     public:
 
-        TGComboBox(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        TGComboBox(TGControl *parent, TGString name="");
         virtual ~TGComboBox();
 
         void setStyle(TGComboBoxStyle value);

@@ -29,8 +29,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S c r e e n
     //-----------------------------------------------------------------------
-    TGScreen::TGScreen()
-        : TGControl(NULL)
+    TGScreen::TGScreen(TGString name)
+        : TGControl(NULL,name)
     {
         width = getRenderer()->getWidth();
         height = getRenderer()->getHeight();

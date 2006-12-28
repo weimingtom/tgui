@@ -39,7 +39,7 @@ namespace TGUI
         int	scrolling;      // 0=no, 1=vertical, 2=horizontal
 
     public:
-        TGScrollBox(TGControl *parent, int x1, int y1, int x2, int y2);
+        TGScrollBox(TGControl *parent, TGString name="");
         virtual ~TGScrollBox();
 
         virtual void setScrollingBounds(TGReal hMax, TGReal vMax);
@@ -47,7 +47,7 @@ namespace TGUI
         virtual void render();
         virtual TGString getControlType() {return "TGScrollBox";};
 
-        virtual void place(int x1, int y1, int x2, int y2);
+        virtual void setBounds(int x1, int y1, int x2, int y2);
         virtual void layout();
 
         virtual bool pointInControl(TGReal x, TGReal y);

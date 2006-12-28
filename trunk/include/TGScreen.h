@@ -36,7 +36,7 @@ namespace TGUI
         int     	mouseY;
 
     public:
-        TGScreen();
+        TGScreen(TGString name="");
         virtual ~TGScreen();
         virtual TGScreen *activate();
 

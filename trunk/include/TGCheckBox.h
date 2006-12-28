@@ -36,7 +36,7 @@ namespace TGUI
         TGDataManager<bool>	m_checked;
 
     public:
-        TGCheckBox(TGControl *parent,TGString caption="", int x1=0, int y1=0, int x2=5, int y2=5);
+        TGCheckBox(TGControl *parent, TGString name="", TGString caption="");
         virtual ~TGCheckBox();
 
         virtual void setCaption(TGString newCaption);

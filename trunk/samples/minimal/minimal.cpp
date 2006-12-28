@@ -171,7 +171,7 @@ public:
         
         mGUISystem = new TGUI::TGSystem(mWindow,mSceneMgr,"Garamond");
 
-        TGWindow	*win = new TGWindow("A tgui Window");
+        TGWindow	*win = new TGWindow(NULL,"","A tgui Window");
         win->center();
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);

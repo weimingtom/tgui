@@ -31,7 +31,7 @@ namespace TGUI
     class TGEditBox : public TGControl
     {
         TGDataManager<TGString>	m_text;
-        int     		        tScroll;
+        int     		        m_tScroll;
         size_t     		        m_cursor;
         int     		        m_cursorX;
         TGReal                  m_pulseTime;
@@ -45,7 +45,7 @@ namespace TGUI
 
     public:
 
-        TGEditBox(TGControl *parent, int x1=0, int y1=0, int x2=0, int y2=0);
+        TGEditBox(TGControl *parent, TGString name="");
         virtual ~TGEditBox();
 
         virtual void setText(TGString newText);

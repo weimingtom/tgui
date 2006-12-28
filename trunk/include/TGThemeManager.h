@@ -44,9 +44,7 @@ namespace TGUI
         TGThemeManager();
         virtual ~TGThemeManager();
         virtual void onFocusEnter(TGControl* oldFocus);
-        virtual TGString getControlType() {return "TGWindow";};
-
-
+        virtual TGString getControlType() {return "TGThemeManager";};
     };
 }
 #endif

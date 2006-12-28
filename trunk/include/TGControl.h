@@ -46,6 +46,8 @@ namespace TGUI
 
     class TGControl
     {
+    private:
+        static int          m_controlNumber;
     protected:
         bool                m_isVisible;
         bool                m_redraw;
@@ -74,9 +76,9 @@ namespace TGUI
 
     public:
         TGControl*          m_parent;
-        TGControl*          exclusiveChild;
+        TGControl*          m_exclusiveChild;
         bool                m_mouseOverControl;
-        bool                isComposite;
+        bool                m_isComposite;
         bool                m_backgroundEnabled;
         TGReal              xShift;
         TGReal              yShift;
@@ -86,7 +88,7 @@ namespace TGUI
         int                 y2;
 
     public:
-        TGControl(TGControl *parent);
+        TGControl(TGControl *parent, TGString name="");
         virtual ~TGControl();
 
         TGRenderer* getRenderer();

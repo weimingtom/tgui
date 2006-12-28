@@ -29,14 +29,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C o m b o B o x
     //-----------------------------------------------------------------------
-    TGComboBox::TGComboBox(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGComboBox::TGComboBox(TGControl *parent, TGString name)
+        : TGControl(parent, name)
     {
         m_height=0;
-        m_listbox = new TGListBox(this,0,0,5,5);
-        m_inputbox = new TGEditBox(this,0,0,5,5);
-        m_listbox->isComposite = true;
-        m_inputbox->isComposite = true;
+        m_listbox = new TGListBox(this);
+        m_inputbox = new TGEditBox(this);
+        m_listbox->m_isComposite = true;
+        m_inputbox->m_isComposite = true;
         m_style = CBS_NORMAL;
 
         m_listbox->hide();

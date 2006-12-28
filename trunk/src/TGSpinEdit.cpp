@@ -29,15 +29,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C o m b o b o x
     //-----------------------------------------------------------------------
-    TGSpinEdit::TGSpinEdit(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGSpinEdit::TGSpinEdit(TGControl *parent, TGString name)
+        : TGControl(parent, name)
         , m_upPressed(false)
         , m_downPressed(false)
         , m_height(0)
         , m_pulseTime(0.f)
     {
-        m_inputbox = new TGEditBox(this,0,0,5,5);
-        m_inputbox->isComposite = true;     
+        m_inputbox = new TGEditBox(this);
+        m_inputbox->m_isComposite = true;     
         m_value = 0.f;
         m_minValue = 0.f;
         m_maxValue = 100.f;

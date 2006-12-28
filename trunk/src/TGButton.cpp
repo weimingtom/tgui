@@ -29,12 +29,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G B u t t o n
     //-----------------------------------------------------------------------
-    TGButton::TGButton(TGControl *parent, int x1, int y1, int x2, int y2, 
-        TGString caption) : TGControl(parent)
+    TGButton::TGButton(TGControl *parent, TGString name, TGString caption) : TGControl(parent,name)
+        , m_caption(caption)
+        , m_pushed(false)
+        , m_highlighted(false)
     {
-        setBounds(x1, y1, x2, y2);
-        m_caption = caption;
-        m_pushed = m_highlighted = false;
     }
 
     //-----------------------------------------------------------------------

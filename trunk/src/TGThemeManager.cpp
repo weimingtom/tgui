@@ -33,10 +33,15 @@ namespace TGUI
     {
         m_isTabbedCaption = true;
         setBounds(0.1f,0.1f,0.55f,0.5f);
-        (new TGLabel(this,"Red"))->setPos(0.1f,0.1f);
-        (new TGLabel(this,"Green"))->setPos(0.1f,0.2f);
-        (new TGLabel(this,"Blue"))->setPos(0.1f,0.3f);
-        (new TGLabel(this,"Alpha"))->setPos(0.1f,0.4f);
+        TGLabel* l;
+        l = new TGLabel(this,"","Red");
+        l->setPos(0.1f,0.1f);
+        l = new TGLabel(this,"","Green");
+        l->setPos(0.1f,0.2f);
+        l = new TGLabel(this,"","Blue");
+        l->setPos(0.1f,0.3f);
+        l = new TGLabel(this,"","Alpha");
+        l->setPos(0.1f,0.4f);
 
         m_red = new TGSlider(this);
         m_red->setBounds(0.3f,0.1f,0.85f,0.18f);

@@ -106,8 +106,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G L i s t B o x 
     //-----------------------------------------------------------------------
-    TGListBox::TGListBox(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGScrollBox(parent, x1, y1, x2, y2)
+    TGListBox::TGListBox(TGControl *parent, TGString name)
+        : TGScrollBox(parent, name)
     {
         m_selectedItem = NULL;
     }

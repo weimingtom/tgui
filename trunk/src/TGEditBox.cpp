@@ -29,8 +29,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G E d i t b o x
     //-----------------------------------------------------------------------
-    TGEditBox::TGEditBox(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGEditBox::TGEditBox(TGControl *parent, TGString name)
+        : TGControl(parent, name)
         , m_readOnly(false)
         , m_cursorVisible(false)
         , m_pulseTime(0.f)
@@ -40,11 +40,11 @@ namespace TGUI
         , m_repeatElapsed(0.f)
         , m_cursor(0)
         , m_cursorX(0)
+        , m_tScroll(0)
     {
         m_text.setControl(this);
         m_text.set("");
         setBounds(x1, y1, x2, y2);
-        tScroll = 0;
     }
 
     //-----------------------------------------------------------------------
@@ -64,9 +64,9 @@ namespace TGUI
         m_text.set(newText);
         m_cursor = newText.length();
         m_cursorX = stringWidth(newText);
-        tScroll = 0;
-        if (m_cursorX - tScroll > w - 10)
-            tScroll = m_cursorX - w + (w/2);
+        m_tScroll = 0;
+        if (m_cursorX - m_tScroll > w - 10)
+            m_tScroll = m_cursorX - w + (w/2);
         redraw();
     }
 
@@ -96,11 +96,11 @@ namespace TGUI
         openClip();
 
         if(hasKeyboardFocus(this) || m_mouseOverControl  ||
-            (isComposite && m_parent->getMouseOverControl()))
+            (m_isComposite && m_parent->getMouseOverControl()))
             brush = m_theme.getTextFocusedBrush();
         else brush = m_theme.getTextBrush();
 
-        drawString(x1 + 5 - tScroll, y1 + (y2 - y1)/2 -
+        drawString(x1 + 5 - m_tScroll, y1 + (y2 - y1)/2 -
             stringHeight()/2, m_text.get(), brush);
 
         closeClip();
@@ -110,8 +110,8 @@ namespace TGUI
         {
             TGSBrush brush;
             brush.bind(new TGBrush(TGColour(1,1,1)));
-            drawLine(x1 + 5 + m_cursorX - tScroll, y1 + 4,
-                x1 + 5 + m_cursorX - tScroll, y2 - 4, brush);
+            drawLine(x1 + 5 + m_cursorX - m_tScroll, y1 + 4,
+                x1 + 5 + m_cursorX - m_tScroll, y2 - 4, brush);
         }
         
 
@@ -147,11 +147,11 @@ namespace TGUI
             {
                 text = text.substr(0,text.length()-1);
                 m_cursorX = stringWidth(text,--m_cursor);
-                if (m_cursorX - tScroll < 0)
+                if (m_cursorX - m_tScroll < 0)
                 {
-                    tScroll = m_cursorX - (w/2);
-                    if (tScroll < 0)
-                        tScroll = 0;
+                    m_tScroll = m_cursorX - (w/2);
+                    if (m_tScroll < 0)
+                        m_tScroll = 0;
                 }
             }
             break;
@@ -170,8 +170,8 @@ namespace TGUI
 
             text += ascii;
             m_cursorX = stringWidth(text, ++m_cursor);
-            if (m_cursorX - tScroll > w - 10)
-                tScroll = m_cursorX - w + (w/2);
+            if (m_cursorX - m_tScroll > w - 10)
+                m_tScroll = m_cursorX - w + (w/2);
             break;
         }
         m_text.set(text);
