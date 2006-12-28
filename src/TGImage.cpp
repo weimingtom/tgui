@@ -54,8 +54,8 @@ namespace TGUI
             m_width = texture->getWidth();
             m_height = texture->getHeight();
 
-            x2 = x1 + m_width - 1;
-            y2 = y1 + m_height - 1;
+            x2 = x1 + (int)m_width - 1;
+            y2 = y1 + (int)m_height - 1;
         }
         else
         {
@@ -76,8 +76,8 @@ namespace TGUI
         m_width = texture->getWidth();
         m_height = texture->getHeight();
 
-        x2 = x1 + m_width - 1;
-        y2 = y1 + m_height - 1;
+        x2 = x1 + (int)m_width - 1;
+        y2 = y1 + (int)m_height - 1;
 
         setBounds(x1,y1,x2,y2);
         m_brush.bind(new TGBrush(texture));
@@ -101,7 +101,7 @@ namespace TGUI
         m_width = texture->getWidth();
         m_height = texture->getHeight();
         if (resize)
-            this->resize(m_width, m_height);
+            this->resize((int)m_width, (int)m_height);
     }
 
     //-----------------------------------------------------------------------
@@ -117,7 +117,7 @@ namespace TGUI
         m_width = texture->getWidth();
         m_height = texture->getHeight();
         if(resize)
-            this->resize(m_width,m_height);
+            this->resize((int)m_width,(int)m_height);
     }
 
     //-----------------------------------------------------------------------

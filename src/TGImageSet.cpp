@@ -37,8 +37,8 @@ namespace TGUI
             resourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME.c_str();
         }
         m_texture = TGSystem::getSingleton().getRenderer()->createTexture(fname,resourceGroup);
-        m_width = m_texture->getWidth();
-        m_height = m_texture->getHeight();
+        m_width = (int)m_texture->getWidth();
+        m_height = (int)m_texture->getHeight();
 
         TGReal w=m_width,h=m_height;
         int ih = m_height / m_imageCount;

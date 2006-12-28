@@ -30,8 +30,8 @@ namespace TGUI
 
     class TGImage : public TGControl
     {
-        int         m_width;
-        int         m_height;
+        size_t      m_width;
+        size_t      m_height;
         TGSBrush    m_brush;
 
     public:
@@ -46,8 +46,8 @@ namespace TGUI
         virtual void setTexture(TGTexture *newTexture, bool resize=true);
         virtual void setTexture(TGString fname, TGString resourceGroop="", bool resize=true);
 
-        int getWidth() {return m_width;};
-        int getHeight() {return m_height;};
+        size_t getWidth() {return m_width;};
+        size_t getHeight() {return m_height;};
 
 
         virtual void render();
