@@ -43,14 +43,14 @@ namespace TGUI
             PF_RGBA
         };
 
-        virtual	ushort	getWidth(void)          const {return m_width;}
-        virtual	ushort	getHeight(void)         const {return m_height;}
-        virtual ushort  getOriginalWidth(void)  const { return getWidth(); }
-        virtual TGReal   getXScale(void)         const { return 1.0f / static_cast<TGReal>(getOriginalWidth()); } 
-        virtual ushort  getOriginalHeight(void) const { return getHeight(); }
-        virtual TGReal   getYScale(void) const { return 1.0f / static_cast<TGReal>(getOriginalHeight()); }
+        virtual	size_t	getWidth(void)          const {return m_width;}
+        virtual	size_t	getHeight(void)         const {return m_height;}
+        virtual size_t  getOriginalWidth(void)  const { return getWidth(); }
+        virtual TGReal  getXScale(void)         const { return 1.0f / static_cast<TGReal>(getOriginalWidth()); } 
+        virtual size_t  getOriginalHeight(void) const { return getHeight(); }
+        virtual TGReal  getYScale(void) const { return 1.0f / static_cast<TGReal>(getOriginalHeight()); }
         virtual void	loadFromFile(const TGString& filename, const TGString& resourceGroup);
-        TGRenderer*	    getRenderer(void)       const {return m_owner;}
+        TGRenderer*     getRenderer(void)       const {return m_owner;}
 
         Ogre::TexturePtr	getOgreTexture(void) const		{return m_ogre_texture;}
         void	setOgreTextureSize(uint size);
@@ -71,8 +71,8 @@ namespace TGUI
 
         Ogre::TexturePtr    m_ogre_texture;		// The 'real' texture.
 
-        ushort				m_width;			// cached width of the texture
-        ushort				m_height;			// cached height of the texture
+        size_t				m_width;			// cached width of the texture
+        size_t				m_height;			// cached height of the texture
 
         bool	            m_isLinked;         // True if we are linked to a texture we did not actually create.
 
