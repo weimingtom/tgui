@@ -155,7 +155,7 @@ public:
 
     bool aboutBoxAction(const TGEventArgs& args)
     {
-        (new TGMessagebox("Tiny GUI 0.1 Demo", "About"))->show();
+        (new TGMessageBox("Tiny GUI 0.1 Demo", "About"))->show();
         return true;
     }
 

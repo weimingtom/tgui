@@ -36,7 +36,7 @@ namespace TGUI
         , m_height(0)
         , m_pulseTime(0.f)
     {
-        m_inputbox = new TGEditbox(this,0,0,5,5);
+        m_inputbox = new TGEditBox(this,0,0,5,5);
         m_inputbox->isComposite = true;     
         m_value = 0.f;
         m_minValue = 0.f;

@@ -30,8 +30,8 @@ namespace TGUI
 
     struct TGFileBrowser : public TGWindow
     {
-        TGListbox*         files;
-        TGEditbox*         filename;
+        TGListBox*         files;
+        TGEditBox*         filename;
         TGString           path;
 
         TGFileBrowser(TGString caption, TGString = "");

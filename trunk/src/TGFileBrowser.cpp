@@ -89,10 +89,10 @@ namespace TGUI
         getClientSize(w, h);
 
         l = new TGLabel(this,"Files and directories:",5,5);
-        files = new TGListbox(this, 5, l->y2 + 5, w-10, h-40);
+        files = new TGListBox(this, 5, l->y2 + 5, w-10, h-40);
         files->addEventHandler(TGEvent::Modified,new TGEventHandler(&TGFileBrowser::selectFileBrowserAction,this));
         l = new TGLabel(this,"Filename:", 5, files->y2+9);
-        filename = new TGEditbox(this, l->x2 + 5, files->y2 + 5, w-130,
+        filename = new TGEditBox(this, l->x2 + 5, files->y2 + 5, w-130,
             files->y2 + 30);
         b = new TGButton(this, w-125, files->y2 + 5, w-70, files->y2 + 30, "Ok");
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGFileBrowser::closeFileBrowserAction,this));

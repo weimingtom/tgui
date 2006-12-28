@@ -183,11 +183,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGCombobox.cpp"
+				RelativePath="..\..\..\src\TGComboBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGCombobox.h"
+				RelativePath="..\..\..\include\TGComboBox.h"
 				>
 			</File>
 			<File
@@ -219,11 +219,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGEditbox.cpp"
+				RelativePath="..\..\..\src\TGEditBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGEditbox.h"
+				RelativePath="..\..\..\include\TGEditBox.h"
 				>
 			</File>
 			<File
@@ -283,11 +283,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGListbox.cpp"
+				RelativePath="..\..\..\src\TGListBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGListbox.h"
+				RelativePath="..\..\..\include\TGListBox.h"
 				>
 			</File>
 			<File
@@ -307,19 +307,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGMenubar.cpp"
+				RelativePath="..\..\..\src\TGMenuBar.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGMenubar.h"
+				RelativePath="..\..\..\include\TGMenuBar.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGMessagebox.cpp"
+				RelativePath="..\..\..\src\TGMessageBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGMessagebox.h"
+				RelativePath="..\..\..\include\TGMessageBox.h"
 				>
 			</File>
 			<File
@@ -331,11 +331,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGProgressbar.cpp"
+				RelativePath="..\..\..\src\TGProgressBar.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGProgressbar.h"
+				RelativePath="..\..\..\include\TGProgressBar.h"
 				>
 			</File>
 			<File
@@ -363,11 +363,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\TGScrollbox.cpp"
+				RelativePath="..\..\..\src\TGScrollBox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\TGScrollbox.h"
+				RelativePath="..\..\..\include\TGScrollBox.h"
 				>
 			</File>
 			<File

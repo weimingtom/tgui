@@ -189,7 +189,7 @@ public:
 
     bool cendaClicked(const TGEventArgs& args)
     {
-        (new TGMessagebox("Hello, I am Cenda :)"))->show();
+        (new TGMessageBox("Hello, I am Cenda :)"))->show();
         return true;
     }
 
@@ -203,7 +203,7 @@ public:
 
     bool aboutBoxAction(const TGEventArgs& args)
     {
-        (new TGMessagebox("tgui version 0.1 Demo", "About"))->show();
+        (new TGMessageBox("tgui version 0.1 Demo", "About"))->show();
         return true;
     }
 
@@ -217,15 +217,15 @@ public:
     bool createDynamicSubmenuAction(const TGEventArgs& args)
     {
         TGMenuItem        *sub = (TGMenuItem*)args.m_control;
-        TGListbox         *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        TGListBox         *lbox = (TGListBox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
         sub->clear();
 
 
-        TGListboxItem* lbi;
+        TGListBoxItem* lbi;
 
         for (TGControlListItr itr = lbox->getChildren().begin(); itr != lbox->getChildren().end(); ++itr)
         {
-            lbi = (TGListboxItem*)(*itr);
+            lbi = (TGListBoxItem*)(*itr);
             sub->addItem(lbi->getText());
         }
         return true;
@@ -238,14 +238,14 @@ public:
 
     bool addWideItemAction(const TGEventArgs& args)
     {
-        TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        TGListBox *lbox = (TGListBox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
         lbox->addItem("A very wide item to test horizontal scrolling");
         return true;
     }
 
     bool removeItemAction(const TGEventArgs& args)
     {
-        TGListbox *lbox = (TGListbox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
+        TGListBox *lbox = (TGListBox*)TGSystem::getSingleton().getActiveScreen()->findChild("listbox");
         lbox->removeItem(lbox->getSelectedItem());
         return true;
     }
@@ -254,9 +254,9 @@ public:
     {
         TGScreen* screen = TGSystem::getSingleton().getActiveScreen();
 
-        TGListbox *lbox = (TGListbox*)screen->findChild("listbox");
-        lbox->addItem(((TGEditbox*)screen->findChild("inputbox"))->getText());
-        ((TGEditbox*)screen->findChild("inputbox"))->setText("");
+        TGListBox *lbox = (TGListBox*)screen->findChild("listbox");
+        lbox->addItem(((TGEditBox*)screen->findChild("inputbox"))->getText());
+        ((TGEditBox*)screen->findChild("inputbox"))->setText("");
         screen->findChild("inputbox")->focus();
         return true;
     }
@@ -284,7 +284,7 @@ public:
         TGWindow* win = new TGWindow("A fluffy window");
         win->center();
 
-        TGListbox *lbox = new TGListbox(win, 10, 10, 175, 120);
+        TGListBox *lbox = new TGListBox(win, 10, 10, 175, 120);
 
         lbox->addItem("A string item");
         for (int i=0;i<20;i++)
@@ -323,7 +323,7 @@ public:
         new TGCheckBox(win2,"Checker 3", 10, 50, 180, 70);
 
         
-        TGListbox *lbox = new TGListbox(win2, 10, 80, 175, 200);
+        TGListBox *lbox = new TGListBox(win2, 10, 80, 175, 200);
         
         lbox->addItem("A string item");
         
@@ -341,7 +341,7 @@ public:
         (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::removeItemAction,this));
 
-        (new TGEditbox(win2, 10, 270, 175, 295))->setName("inputbox");
+        (new TGEditBox(win2, 10, 270, 175, 295))->setName("inputbox");
 
         (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
             TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
@@ -397,7 +397,7 @@ public:
         backSlider->value.setDataSource(&backgnd);
 
         new TGLabel(win3,"Test Combobox", 5, 185);
-        TGCombobox* cb = new TGCombobox(win3);
+        TGComboBox* cb = new TGComboBox(win3);
         cb->moveRel(5,205);
         cb->resize(175,25);
         cb->addItem("test item 1");
@@ -412,7 +412,7 @@ public:
         cb->addItem("test item 10");
 
         
-        TGScrollbox	*sbox = new TGScrollbox(win3, 10, 240, 175, 350);
+        TGScrollBox	*sbox = new TGScrollBox(win3, 10, 240, 175, 350);
         new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
         new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
         new TGCheckBox(sbox,"Clipped checkbox", 10, 80, 200, 100);
@@ -468,7 +468,7 @@ public:
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
 
-        TGCombobox* cb = new TGCombobox(win);
+        TGComboBox* cb = new TGComboBox(win);
         cb->moveRel(5,5);
         cb->resize(175,25);
         cb->addItem("test item 1");
