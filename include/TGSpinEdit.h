@@ -42,7 +42,7 @@ namespace TGUI
         int             m_height;
         bool            m_upPressed;
         bool            m_downPressed;
-        TGEditbox*      m_inputbox;
+        TGEditBox*      m_inputbox;
 
     public:
 

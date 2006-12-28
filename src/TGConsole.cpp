@@ -32,11 +32,11 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGConsole::TGConsole(TGString caption) : TGWindow(caption)
     {
-        m_list = new TGListbox(this);
+        m_list = new TGListBox(this);
         m_list->setPos(5,5);
         m_list->resize(485,205);
 
-        m_input = new TGEditbox(this);
+        m_input = new TGEditBox(this);
         m_input->setPos(5,220);
         m_input->resize(485,25);
 

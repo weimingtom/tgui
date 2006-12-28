@@ -155,7 +155,7 @@ public:
 
     bool aboutBoxAction(const TGEventArgs& args)
     {
-        (new TGMessagebox("Tiny GUI 0.1 Demo", "About"))->show();
+        (new TGMessageBox("Tiny GUI 0.1 Demo", "About"))->show();
         return true;
     }
 
@@ -255,7 +255,7 @@ public:
         win->setResizeEnabled(true);
 
         
-        TGCombobox* cb = new TGCombobox(win);
+        TGComboBox* cb = new TGComboBox(win);
         cb->setPos(5,15);
         cb->resize(175,25);
         cb->addItem("test item 1");
@@ -276,7 +276,7 @@ public:
         win->focus();
        
         TGMenuItem* mi;
-        TGMenubar* mb = new TGMenubar(TGSystem::getSingleton().getActiveScreen());
+        TGMenuBar* mb = new TGMenuBar(TGSystem::getSingleton().getActiveScreen());
         TGMenuItem	*fileMenu = mb->addItem("File");
         fileMenu->addItem("New");
         fileMenu->addItem("Open");

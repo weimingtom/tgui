@@ -30,8 +30,8 @@ namespace TGUI
 
     struct TGConsole : public TGWindow
     {
-        TGListbox*         m_list;
-        TGEditbox*         m_input;
+        TGListBox*         m_list;
+        TGEditBox*         m_input;
 
     protected:
         bool acceptText(const TGEventArgs& args);
