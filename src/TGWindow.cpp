@@ -203,8 +203,11 @@ namespace TGUI
             if ( m_movable && (x > x1) && (x < x2) && (y > y1) && (y < titleY2) )
             {
                 m_moving = true;
-                mX = x-x1;
-                mY = y-y1;
+                //mX = x-x1;
+                //mY = y-y1;
+                mX = x;
+                mY = y;
+
                 setMouseTrackingControl(this);
             }
         }
@@ -216,7 +219,11 @@ namespace TGUI
     void TGWindow::onMouseMoved(int x, int y)
     {
         if (m_moving)
-            moveRel(x-mX, y-mY);
+        {
+            setPos(x1+x-mX,y1+y-mY);
+            mX = x;
+            mY = y;
+        }
 
         if (m_resizing)
         {

@@ -300,8 +300,25 @@ public:
         m_console->addEventHandler(TGEvent::ConsoleCommand,TGEVENT_HANDLER(TGUIApp::procCommand));
 
 
+        win = new TGWindow(0,"","Test MDI Window");
+        win->setSize(500,500);
+        win->center();
+        win->setResizeEnabled(true);
+        mb = new TGMenuBar(win);
+        fileMenu = mb->addItem("File");
+        fileMenu->addItem("New");
+        fileMenu->addItem("Open");
+        fileMenu->addItem("Save");
+        fileMenu->addItem("Save As");
+        fileMenu->addItem("-");
+        mi = fileMenu->addItem("Quit");
+        mi->addEventHandler(TGEvent::MouseClicked,TGEVENT_HANDLER(TGUIApp::terminateAppAction));
 
 
+        win = new TGWindow(win,"","Child Window");
+        win->setSize(300,200);
+        win->center();
+        win->setResizeEnabled(true);
 
     }
 
