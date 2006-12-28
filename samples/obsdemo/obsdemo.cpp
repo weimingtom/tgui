@@ -281,10 +281,11 @@ public:
 
     void createTest1()
     {
-        TGWindow* win = new TGWindow("A fluffy window");
+        TGWindow* win = new TGWindow(NULL,"","A fluffy window");
         win->center();
 
-        TGListBox *lbox = new TGListBox(win, 10, 10, 175, 120);
+        TGListBox *lbox = new TGListBox(win);
+        lbox->setBounds(10, 10, 175, 120);
 
         lbox->addItem("A string item");
         for (int i=0;i<20;i++)
@@ -299,31 +300,44 @@ public:
     void createTest2()
     {
 
-        win = new TGWindow("A fluffy window");
+        win = new TGWindow(NULL,"","A fluffy window");
         win->center();
 
-        new TGLabel(win,"A Label", 5, 0);
+        (new TGLabel(win,"", "A Label"))->setPos(5, 0);
 
-        new TGButton(win, 10, 55, 180, 80, "Another Button");
-        new TGButton(win, 10, 85, 180, 110, "Yet another Button");
+        TGButton* b;
+        b = new TGButton(win, "" , "Another Button");
+        b->setBounds(10, 55, 180, 80);
+
+        b = new TGButton(win, "", "Yet another Button");
+        b->setBounds(10, 85, 180, 110);
 
         
-        TGWindow	*win2 = new TGWindow("Another fluffy window");
+        TGWindow	*win2 = new TGWindow(NULL,"","Another fluffy window");
         win2->center();
         win2->moveRel(win2->x1 + 200, win2->y1 - 70);
         win2->resize(win2->x2-win2->x1+1, win2->y2-win2->y1+270);
 
-        TGProgressBar	*pbar2 = new TGProgressBar(win2, 10, 360, 175, 387);
+        TGProgressBar	*pbar2 = new TGProgressBar(win2);
+        pbar2->setBounds(10, 360, 175, 387);
         pbar2->setName("pbar2");
         pbar2->setMax(61);
 
 
-        (new TGCheckBox(win2,"Checker", 10, 0, 180, 20))->setState(true);
-        new TGCheckBox(win2,"Checker 2", 10, 25, 180, 45);
-        new TGCheckBox(win2,"Checker 3", 10, 50, 180, 70);
+        TGCheckBox* cb;
+        cb = new TGCheckBox(win2,"", "Checker");
+        cb->setBounds(10, 0, 180, 20);
+        cb->setState(true);
+
+        cb = new TGCheckBox(win2,"", "Checker 2");
+        cb->setBounds(10, 25, 180, 45);
+
+        cb = new TGCheckBox(win2,"", "Checker 3");
+        cb->setBounds(10, 50, 180, 70);
 
         
-        TGListBox *lbox = new TGListBox(win2, 10, 80, 175, 200);
+        TGListBox *lbox = new TGListBox(win2);
+        lbox->setBounds(10, 80, 175, 200);
         
         lbox->addItem("A string item");
         
@@ -335,17 +349,21 @@ public:
         }
         lbox->setName("listbox");
         
-        (new TGButton(win2, 10, 210, 175, 235, "Add wide item"))->addEventHandler(
-            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addWideItemAction,this));
+        b = new TGButton(win2, "", "Add wide item");
+        b->setBounds( 10, 210, 175, 235 );
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addWideItemAction,this));
 
-        (new TGButton(win2, 10, 240, 175, 265, "Remove active item"))->addEventHandler(
-            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::removeItemAction,this));
+        b = new TGButton(win2, "", "Remove active item");
+        b->setBounds(10, 240, 175, 265);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::removeItemAction,this));
 
-        (new TGEditBox(win2, 10, 270, 175, 295))->setName("inputbox");
+        TGEditBox* eb;
+        eb = new TGEditBox(win2,"inputbox");
+        eb->setBounds(10, 270, 175, 295);
 
-        (new TGButton(win2, 10, 300, 175, 325, "Add the above text"))->addEventHandler(
-            TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
-
+        b = new TGButton(win2, "", "Add the above text");
+        b->setBounds(10, 300, 175, 325);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::addTheAboveTextAction,this));
         
         TGPopupMenu       *mainMenu = new TGPopupMenu();
         mainMenu->setName("mainMenu");
@@ -375,57 +393,66 @@ public:
         
 
 
-        TGWindow	*win3 = new TGWindow("A window");
+        TGWindow	*win3 = new TGWindow(NULL,"","A window");
         win3->center();
         win3->moveRel(win3->x1 - 200, win3->y1 - 70);
         win3->resize(190, 400);
 
-        new TGLabel(win3,"Object resolution", 5, 25);
-        stepCount = new TGSlider(win3, 10, 50, 180, 65);
+        (new TGLabel(win3,"","Object resolution"))->setPos(5, 25);
+        stepCount = new TGSlider(win3);
+        stepCount->setBounds(10, 50, 180, 65);
         stepCount->setMax(61);
         stepCount->setValue(3);
         stepCount->addEventHandler(TGEvent::Modified, new TGEventHandler(&DemoApp::stepsModifiedAction,this));
 
-        new TGLabel(win3,"Object size:", 5, 80);
-        sizeSlider = new TGSlider(win3, 10, 105, 180, 120);
+        (new TGLabel(win3,"","Object size:"))->setPos(5, 80);
+        sizeSlider = new TGSlider(win3);
+        sizeSlider->setBounds(10, 105, 180, 120);
         sizeSlider->setMax(5);
         sizeSlider->value.setDataSource(&size);
 
-        new TGLabel(win3,"Background intensity", 5, 135);
-        backSlider = new TGSlider(win3, 10, 155, 180, 170);
+        (new TGLabel(win3,"","Background intensity"))->setPos(5, 135);
+        backSlider = new TGSlider(win3);
+        backSlider->setBounds(10, 155, 180, 170);
         backSlider->setMax(1.0f);
         backSlider->value.setDataSource(&backgnd);
 
-        new TGLabel(win3,"Test Combobox", 5, 185);
-        TGComboBox* cb = new TGComboBox(win3);
-        cb->moveRel(5,205);
-        cb->resize(175,25);
-        cb->addItem("test item 1");
-        cb->addItem("test item 2");
-        cb->addItem("test item 3");
-        cb->addItem("test item 4");
-        cb->addItem("test item 5");
-        cb->addItem("test item 6");
-        cb->addItem("test item 7");
-        cb->addItem("test item 8");
-        cb->addItem("test item 9");
-        cb->addItem("test item 10");
+        (new TGLabel(win3,"","Test Combobox"))->setPos(5, 185);
+        TGComboBox* cb2 = new TGComboBox(win3);
+        cb2->moveRel(5,205);
+        cb2->resize(175,25);
+        cb2->addItem("test item 1");
+        cb2->addItem("test item 2");
+        cb2->addItem("test item 3");
+        cb2->addItem("test item 4");
+        cb2->addItem("test item 5");
+        cb2->addItem("test item 6");
+        cb2->addItem("test item 7");
+        cb2->addItem("test item 8");
+        cb2->addItem("test item 9");
+        cb2->addItem("test item 10");
 
         
-        TGScrollBox	*sbox = new TGScrollBox(win3, 10, 240, 175, 350);
-        new TGButton(sbox, 10, 10, 200, 35, "Clipped TGButton");
-        new TGButton(sbox, 10, 40, 200, 65, "Another clipped TGButton");
-        new TGCheckBox(sbox,"Clipped checkbox", 10, 80, 200, 100);
-        new TGLabel(sbox,"Clipped label", 10, 120);
+        TGScrollBox	*sbox = new TGScrollBox(win3);
+        sbox->setBounds(10, 240, 175, 350);
+
+        b = new TGButton(sbox,"", "Clipped TGButton");
+        b->setBounds(10, 10, 200, 35);
+
+        b = new TGButton(sbox, "", "Another clipped TGButton");
+        b->setBounds(10, 40, 200, 65);
+
+        cb = new TGCheckBox(sbox,"", "Clipped checkbox");
+        cb->setBounds(10, 80, 200, 100);
+
+        (new TGLabel(sbox,"","Clipped label"))->setPos(10, 120);
         
-
-
         screen1 = TGSystem::getSingleton().getActiveScreen();
 
         screen1->setPopupMenu(mainMenu);
         
 
-        TGWindow	*win5 = new TGWindow("TGImage control");
+        TGWindow	*win5 = new TGWindow(NULL,"","TGImage control");
 
         win5->center();
         win5->moveRel(win5->x1, win5->y1 - 160);
@@ -448,11 +475,13 @@ public:
 
         win5->addEventHandler("controlResized",new TGEventHandler(&DemoApp::windowResized,this));
 
-        (new TGButton(screen1, 750, 5, 795, 30, "Quit"))->addEventHandler(TGEvent::MouseClicked,
-            new TGEventHandler(&DemoApp::terminateAppAction,this));
+        b = new TGButton(screen1, "" , "Quit");
+        b->setBounds(750, 5, 795, 30);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::terminateAppAction,this));
 
-        (new TGButton(screen1, 5, 5, 150, 30, "Theme Manager"))->addEventHandler(TGEvent::MouseClicked,
-            new TGEventHandler(&DemoApp::themeAction,this));
+        b = new TGButton(screen1, "", "Theme Manager");
+        b->setBounds(5, 5, 150, 30);
+        b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::themeAction,this));
 
 
         mThemeManager = new TGThemeManager();
@@ -463,7 +492,7 @@ public:
     void createTest3()
     {
         
-        TGWindow	*win = new TGWindow("A window");
+        TGWindow	*win = new TGWindow(NULL,"","A window");
         win->center();
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
@@ -482,7 +511,7 @@ public:
         cb->addItem("test item 9");
         cb->addItem("test item 10");
 
-        new TGLabel(win,"A Test Label 123456789",5,35);
+        (new TGLabel(win,"","A Test Label 123456789"))->setPos(5,35);
 
     }
 

@@ -46,7 +46,7 @@ namespace TGUI
 
     public:
 
-        TGSpinEdit(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        TGSpinEdit(TGControl *parent, TGString name="");
         virtual ~TGSpinEdit();
 
         virtual void render();

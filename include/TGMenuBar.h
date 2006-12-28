@@ -32,7 +32,7 @@ namespace TGUI
     {
     public:
 
-        TGMenuBar(TGControl* parent=NULL);
+        TGMenuBar(TGControl* parent=NULL, TGString name="");
         virtual ~TGMenuBar();
 
         virtual void setTheme(TGTheme theme,bool updateChildren=false);

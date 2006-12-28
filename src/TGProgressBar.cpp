@@ -30,14 +30,13 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        T G P r o g r e s s B a r 
     //-----------------------------------------------------------------------
-    TGProgressBar::TGProgressBar(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGProgressBar::TGProgressBar(TGControl *parent, TGString name)
+        : TGControl(parent, name)
     {
         max.setControl(this);
         value.setControl(this);
         max.set(100);
         value.set(0);
-        setBounds(x1, y1, x2, y2);
     }
 
     //-----------------------------------------------------------------------

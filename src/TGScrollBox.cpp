@@ -30,10 +30,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G S c r o l l B o x 
     //-----------------------------------------------------------------------
-    TGScrollBox::TGScrollBox(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGScrollBox::TGScrollBox(TGControl *parent, TGString name)
+        : TGControl(parent, name)
     {
-        place(x1, y1, x2, y2);
         setPadding(2, 2, 14, 16);
         hScroll = 0.0f;
         vScroll = 0.0f;
@@ -142,9 +141,9 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
-    //                              p l a c e
+    //                             s e t B o u n d s
     //-----------------------------------------------------------------------
-    void TGScrollBox::place(int x1, int y1, int x2, int y2)
+    void TGScrollBox::setBounds(int x1, int y1, int x2, int y2)
     {
         TGControl::setBounds(x1, y1, x2, y2);
         clientWidth = hScrollMax - (x2 - x1 - 16);

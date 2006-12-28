@@ -30,11 +30,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S l i d e r
     //-----------------------------------------------------------------------
-    TGSlider::TGSlider(TGControl *parent, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGSlider::TGSlider(TGControl *parent, TGString name)
+        : TGControl(parent, name)
     {
         sliding = false;
-        setBounds(x1, y1, x2, y2);
         max = 5;
         value.setControl(this);
         value.set(0);

@@ -31,7 +31,7 @@ namespace TGUI
     class TGPopupMenu : public TGMenu
     {
     public:
-        TGPopupMenu(TGControl* parent=NULL);
+        TGPopupMenu(TGControl* parent=NULL, TGString name="");
         virtual ~TGPopupMenu();
 
         virtual void setTheme(TGTheme theme,bool updateChildren=false);

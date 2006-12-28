@@ -35,7 +35,7 @@ namespace TGUI
 
     public:
 
-        TGProgressBar(TGControl *parent, int x1, int y1, int x2, int y2);
+        TGProgressBar(TGControl *parent, TGString name="");
         virtual ~TGProgressBar();
 
         virtual void setMax(TGReal newMax);

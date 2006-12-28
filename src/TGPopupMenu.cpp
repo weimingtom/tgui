@@ -28,7 +28,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G P o p u p M e n u
     //-----------------------------------------------------------------------
-    TGPopupMenu::TGPopupMenu(TGControl* parent) : TGMenu(parent)
+    TGPopupMenu::TGPopupMenu(TGControl* parent, TGString name) : TGMenu(parent, name)
     {
         rootMenuControl = NULL;
         m_menuControl = new TGMenuControl(parent);

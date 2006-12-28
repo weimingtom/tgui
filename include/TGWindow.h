@@ -44,8 +44,7 @@ namespace TGUI
         int			    mX, mY;
         TGPopupMenu*    menu;
 
-        TGWindow(TGString caption="");
-        TGWindow(TGScreen *screen,TGString caption="");
+        TGWindow(TGControl* parent=NULL, TGString name="", TGString caption="");
         virtual ~TGWindow();
 
         virtual void setCaption(TGString newCaption);

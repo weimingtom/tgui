@@ -26,29 +26,40 @@
 
 namespace TGUI
 {
+    int TGControl::m_controlNumber=1;
 
     //-----------------------------------------------------------------------
     //                           T G C o n t r o l
     //-----------------------------------------------------------------------
-    TGControl::TGControl(TGControl *parent) : m_systemCache(TGSystem::getSingleton().getCache())
+    TGControl::TGControl(TGControl *parent, TGString name) : m_systemCache(TGSystem::getSingleton().getCache())
         , m_theme(TGTheme())
         , m_frameEnabled(true)
         , m_backgroundEnabled(true)
+        , m_renderer(TGSystem::getSingleton().getRenderer())
+        , m_minWidth(0), m_minHeight(0)
+        , m_maxWidth(0x7FFFFFFF), m_maxHeight(0x7FFFFFFF)
+        , m_focusedChild(0)
+        , m_isComposite(false)
+        , m_parent(parent)
+        , m_redraw(true)
+        , m_popupMenu(NULL)
+        , x1(0), y1(0), x2(0), y2(0)
+        , m_padLeft(0), m_padTop(0), m_padRight(0), m_padBottom(0)
+        , xShift(0), yShift(0)
+        , m_performLayout(true)
+        , m_mouseOverControl(false)
+        , m_isVisible(true)
+        , m_exclusiveChild(NULL)
+        , m_texture(TGSystem::getSingleton().getDefaultTexture())
     {
-        x1 = y1 = x2 = y2 = m_padLeft = m_padTop = m_padRight = m_padBottom = xShift =
-            yShift = 0;
-        m_renderer = TGSystem::getSingleton().getRenderer();
-        m_minWidth = m_minHeight = 0;
-        m_maxWidth = m_maxHeight = 0x7FFFFFFF;
-        m_name = "";
-        m_focusedChild = 0;
-        isComposite = false;
-        m_parent = parent;
-        m_redraw = false;
-        m_popupMenu = NULL;
+        if(name.empty())
+        {
+            Ogre::StringUtil::StrStreamType genName;
+            genName << "_noname_" << m_controlNumber++;
+            m_name = genName.str();
+        }
+        else m_name = name;
 
-        m_texture = TGSystem::getSingleton().getDefaultTexture();
-        exclusiveChild = NULL;
         if (m_parent)
         {
             m_parent->addChild(this);
@@ -58,9 +69,6 @@ namespace TGUI
         {
             setTheme(TGSystem::getSingleton().getTheme());
         }
-        m_performLayout = true;
-        m_mouseOverControl = false;
-        m_isVisible = true;
     }
 
     //-----------------------------------------------------------------------
@@ -76,8 +84,8 @@ namespace TGUI
 
         if (m_parent)
         {
-            if (m_parent->exclusiveChild == this)
-                m_parent->exclusiveChild = NULL;
+            if (m_parent->m_exclusiveChild == this)
+                m_parent->m_exclusiveChild = NULL;
             m_parent->removeChild(this);
         }
 
@@ -229,7 +237,7 @@ namespace TGUI
     void TGControl::makeExclusive()
     {
         if (m_parent)
-            m_parent->exclusiveChild = this;
+            m_parent->m_exclusiveChild = this;
     }
 
     //-----------------------------------------------------------------------
@@ -1158,20 +1166,20 @@ namespace TGUI
 
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
-            if (*itr == exclusiveChild)
+            if (*itr == m_exclusiveChild)
                 continue;
             (*itr)->render();
             (*itr)->redraw(false);
         }
 
-        if (exclusiveChild)
+        if (m_exclusiveChild)
         {
             TGSBrush brush;
             brush.bind(new TGBrush(TGColour(0, 0, 0, 96)));
             TGControl::fillRect(x1, y1, x2, y2, brush);
 
-            exclusiveChild->render();
-            exclusiveChild->redraw(false);
+            m_exclusiveChild->render();
+            m_exclusiveChild->redraw(false);
         }
 
         closeClipArea();

@@ -33,7 +33,7 @@ namespace TGUI
         TGString              m_text;
 
     public:
-        TGLabel(TGControl *parent, TGString text, int x=5, int y=5);
+        TGLabel(TGControl *parent, TGString name, TGString text);
         virtual ~TGLabel();
 
         virtual void setText(TGString newText);

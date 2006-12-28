@@ -29,43 +29,22 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G W i n d o w
     //-----------------------------------------------------------------------
-    TGWindow::TGWindow(TGString caption) : TGControl(getActiveScreen())
+    TGWindow::TGWindow(TGControl* parent, TGString name, TGString caption) 
+        : TGControl(parent ? parent : getActiveScreen(), name)
         , m_moving(false)
         , m_resizing(false)
         , m_resizeable(false)
         , m_movable(true)
         , m_titlebarEnabled(true)
         , m_isTabbedCaption(false)
+        , m_caption(caption)
     {
         m_minWidth = 50;
         m_minHeight = 50;
-
-        setBounds(10, 10, 200, 160);
-        m_caption = caption;
+        setBounds(0, 0, 200, 160);
         m_padLeft = m_padRight = m_padBottom = 2;
         m_padTop = 6 + stringHeight();
         m_titlebarHeight = stringHeight() + 4;
-        menu = NULL;
-    }
-
-    //-----------------------------------------------------------------------
-    //                            T G W i n d o w
-    //-----------------------------------------------------------------------
-    TGWindow::TGWindow(TGScreen *screen, TGString caption) : TGControl(screen)
-        , m_moving(false)
-        , m_resizing(false)
-        , m_resizeable(false)
-        , m_movable(true)
-        , m_titlebarEnabled(true)
-        , m_isTabbedCaption(false)
-    {
-        m_minWidth = 50;
-        m_minHeight = 50;
-        setBounds(10, 10, 200, 160);
-        m_caption = caption;
-        m_padLeft = m_padRight = m_padBottom = 2;
-        m_padTop = 6 + stringHeight();
-        m_titlebarHeight = stringHeight() + 2;
         menu = NULL;
     }
 

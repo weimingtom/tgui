@@ -30,12 +30,12 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C h e c k B o x
     //-----------------------------------------------------------------------
-    TGCheckBox::TGCheckBox(TGControl *parent, TGString caption, int x1, int y1, int x2, int y2)
-        : TGControl(parent)
+    TGCheckBox::TGCheckBox(TGControl *parent, TGString name, TGString caption)
+        : TGControl(parent, name)
+        , m_caption(caption)
+        , m_hover(false)
+        , m_pushed(false)       
     {
-        setBounds(x1, y1, x2, y2);
-        m_caption = caption;
-        m_hover = m_pushed = false;
         m_checked.setControl(this);
         m_checked.set(false);
     }

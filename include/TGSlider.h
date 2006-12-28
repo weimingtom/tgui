@@ -36,7 +36,7 @@ namespace TGUI
         bool			sliding;
 
     public:
-        TGSlider(TGControl *parent, int x1=0, int y1=0, int x2=5, int y2=5);
+        TGSlider(TGControl *parent, TGString name="");
         virtual ~TGSlider();
 
         virtual void render();

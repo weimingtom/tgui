@@ -188,7 +188,7 @@ public:
 
         TGSBrush    brush;
 
-        TGWindow	*win = new TGWindow("");
+        TGWindow	*win = new TGWindow();
         win->resize(256, 256);
         win->center();
         win->setPos(win->x1+150,win->y1+100);
@@ -222,7 +222,7 @@ public:
         b->setPos(b->x1,b->y1+40);
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGUIApp::terminateAppAction,this));
         
-        TGWindow *win2 = new TGWindow("");
+        TGWindow *win2 = new TGWindow();
         win2->setPos(10,80);
         win2->resize(384,256);
         win2->setResizeEnabled(true);
@@ -248,7 +248,7 @@ public:
     void createTest2()
     {
 
-        TGWindow	*win = new TGWindow("Test Window");
+        TGWindow	*win = new TGWindow(NULL, "", "Test Window");
         win->center();
         win->moveRel(win->x1+250, win->y1-175);
         win->resize(190, 200);
@@ -270,7 +270,7 @@ public:
         cb->addItem("test item 9");
         cb->addItem("test item 10");
         
-        TGSpinEdit* c = new TGSpinEdit(win,0,0,0,0);
+        TGSpinEdit* c = new TGSpinEdit(win);
         c->setPos(5,60);
         c->resize(80,25);
         win->focus();

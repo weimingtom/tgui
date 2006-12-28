@@ -337,8 +337,8 @@ namespace TGUI
         {
             m_trackControl->onMouseMoved(absX,absY);
         }
-        if (m_activeScreen->exclusiveChild)
-            m_childUnderMouse = m_activeScreen->exclusiveChild->childAt(absX,absY);
+        if (m_activeScreen->m_exclusiveChild)
+            m_childUnderMouse = m_activeScreen->m_exclusiveChild->childAt(absX,absY);
         else
             m_childUnderMouse = m_activeScreen->childAt(absX,absY);
 
@@ -379,16 +379,16 @@ namespace TGUI
             m_trackControl->onMouseDown(absX,absY,buttonID);
             return;
         }
-        if (m_activeScreen->exclusiveChild)
+        if (m_activeScreen->m_exclusiveChild)
         {
             int	x1, y1, x2, y2;
-            m_activeScreen->exclusiveChild->getBounds(x1, y1, x2,
+            m_activeScreen->m_exclusiveChild->getBounds(x1, y1, x2,
                 y2);
             if (!(absX >= x1 && absX <= x2
                 && absY >= y1 &&
                 absY <= y2))
                 return;
-            m_childUnderMouse = m_activeScreen->exclusiveChild->childAt(absX,absY);
+            m_childUnderMouse = m_activeScreen->m_exclusiveChild->childAt(absX,absY);
         }
         else
         {
@@ -433,8 +433,8 @@ namespace TGUI
             m_trackControl->onMouseUp(absX,absY,buttonID);
             return;
         }
-        if (m_activeScreen->exclusiveChild)
-            m_childUnderMouse = m_activeScreen->exclusiveChild->childAt(absX,absY);
+        if (m_activeScreen->m_exclusiveChild)
+            m_childUnderMouse = m_activeScreen->m_exclusiveChild->childAt(absX,absY);
         else
             m_childUnderMouse = m_activeScreen->childAt(absX,absY);
 

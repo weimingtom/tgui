@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G C o n s o l e
     //-----------------------------------------------------------------------
-    TGConsole::TGConsole(TGString caption) : TGWindow(caption)
+    TGConsole::TGConsole(TGString caption) : TGWindow(NULL,"",caption)
     {
         m_list = new TGListBox(this);
         m_list->setPos(5,5);

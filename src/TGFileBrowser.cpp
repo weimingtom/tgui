@@ -75,7 +75,7 @@ namespace TGUI
     //                      T G F i l e B r o w s e r
     //-----------------------------------------------------------------------
     TGFileBrowser::TGFileBrowser(TGString caption, TGString path)
-        : TGWindow(caption)
+        : TGWindow(NULL,"",caption)
     {
         int	w, h;
         TGLabel	*l;
@@ -88,15 +88,23 @@ namespace TGUI
 
         getClientSize(w, h);
 
-        l = new TGLabel(this,"Files and directories:",5,5);
-        files = new TGListBox(this, 5, l->y2 + 5, w-10, h-40);
+        l = new TGLabel(this,"", "Files and directories:");
+        l->setPos(5,5);
+
+        files = new TGListBox(this);
+        files->setBounds(5, l->y2 + 5, w-10, h-40);
+
         files->addEventHandler(TGEvent::Modified,new TGEventHandler(&TGFileBrowser::selectFileBrowserAction,this));
-        l = new TGLabel(this,"Filename:", 5, files->y2+9);
-        filename = new TGEditBox(this, l->x2 + 5, files->y2 + 5, w-130,
-            files->y2 + 30);
-        b = new TGButton(this, w-125, files->y2 + 5, w-70, files->y2 + 30, "Ok");
+        l = new TGLabel(this,"", "Filename:");
+        l->setPos(5, files->y2+9);
+
+        filename = new TGEditBox(this);
+        filename->setBounds(l->x2 + 5, files->y2 + 5, w-130,files->y2 + 30);
+        b = new TGButton(this, "OkButton" , "Ok");
+        b->setBounds(w-125, files->y2 + 5, w-70, files->y2 + 30);
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGFileBrowser::closeFileBrowserAction,this));
-        b = new TGButton(this, w-65, files->y2 + 5, w-10, files->y2+30, "Cancel");
+        b = new TGButton(this,"CancelButton" , "Cancel");
+        b->setBounds(w-65, files->y2 + 5, w-10, files->y2+30);
         b->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&TGFileBrowser::cancelFileBrowserAction,this));
 
         reloadFiles();

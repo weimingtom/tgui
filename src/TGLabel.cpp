@@ -29,10 +29,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G L a b e l
     //-----------------------------------------------------------------------
-    TGLabel::TGLabel(TGControl *parent,TGString text, int x, int y)
-        : TGControl(parent)
+    TGLabel::TGLabel(TGControl *parent, TGString name, TGString text)
+        : TGControl(parent, name)
     {
-        setPos(x, y);
         resize(stringWidth(text), stringHeight());
         m_text = text;
     }

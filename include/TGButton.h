@@ -34,7 +34,7 @@ namespace TGUI
         bool	        m_highlighted;
 
     public:
-        TGButton(TGControl *parent, int x1, int y1, int x2, int y2, TGString caption);
+        TGButton(TGControl *parent, TGString name="", TGString caption="");
         virtual ~TGButton();
 
         virtual void setCaption(TGString newCaption);

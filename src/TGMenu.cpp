@@ -168,8 +168,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      T G M e n u C o n t r o l
     //-----------------------------------------------------------------------
-    TGMenuControl::TGMenuControl(TGControl *owner)
-        : TGControl(owner)
+    TGMenuControl::TGMenuControl(TGControl *owner, TGString name)
+        : TGControl(owner, name)
     {
         TGControl::setPadding(2, 2, 2, 2);
         iconPad = 0;
@@ -276,8 +276,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                      T G M e n u b a r C o n t r o l
     //-----------------------------------------------------------------------
-    TGMenubarControl::TGMenubarControl(TGControl *owner)
-        : TGMenuControl(owner)
+    TGMenubarControl::TGMenubarControl(TGControl *owner, TGString name)
+        : TGMenuControl(owner, name)
     {
         setBounds(1,1,5,5);
         TGControl::setPadding(2, 2, 2, 2);
@@ -373,7 +373,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G M e n u
     //-----------------------------------------------------------------------
-    TGMenu::TGMenu(TGControl* parent) : TGControl(parent)
+    TGMenu::TGMenu(TGControl* parent, TGString name) : TGControl(parent, name)
     {
         rootMenuControl = NULL;
     }

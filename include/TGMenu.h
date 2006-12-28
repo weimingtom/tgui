@@ -67,7 +67,7 @@ namespace TGUI
         TGMenuControl*          rootMenuControl;
         TGMenuControl*          m_menuControl;
 
-        TGMenu(TGControl* parent);
+        TGMenu(TGControl* parent, TGString name="");
         virtual ~TGMenu();
 
         virtual void setTheme(TGTheme theme,bool updateChildren=false);
@@ -88,7 +88,7 @@ namespace TGUI
         TGMenu*                 m_menu;
         int			            iconPad;
 
-        TGMenuControl(TGControl *owner=NULL);
+        TGMenuControl(TGControl *owner=NULL, TGString name="");
         virtual ~TGMenuControl();
 
         virtual void calcSize();
@@ -111,7 +111,7 @@ namespace TGUI
         TGMenu*                 m_menu;
         int			            iconPad;
 
-        TGMenubarControl(TGControl *owner=NULL);
+        TGMenubarControl(TGControl *owner=NULL, TGString name="");
         virtual ~TGMenubarControl();
 
         virtual void calcSize();
