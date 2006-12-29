@@ -62,16 +62,18 @@ namespace TGUI
     {
         if(isRenderCached())
             return;
-        int			x1, y1, x2, y2;
+        int			x1, y1, x2, y2, bsize;
         TGFrameStyle	fs = FS_FLAT;
         getBounds(x1, y1, x2, y2);
+
+        bsize = y2 - y1;
 
         if (m_hover)
             fs = m_pushed?FS_LOWERED:FS_RAISED;
         else
             fs = FS_FLAT;
 
-        drawFrame(x1, y1 + 4, x1 + 12, y2 - 4, fs);
+        drawFrame(x1, y1, x1 + bsize, y2, fs);
 
         TGSBrush brush;
 
@@ -83,8 +85,8 @@ namespace TGUI
             else
                 brush = m_theme.getBaseBright();
 
-            drawLine(x1, y1 + 4, x1 + 12, y2 - 4, brush);
-            drawLine(x1 + 12, y1 + 4, x1, y2 - 4, brush);
+            drawLine(x1, y1, x1 + bsize, y2, brush);
+            drawLine(x1 + bsize, y1, x1, y2, brush);
         }
 
         if (m_hover)
@@ -92,7 +94,7 @@ namespace TGUI
         else
             brush = m_theme.getTextBrush();
 
-        drawString(x1 + 16,
+        drawString(x1 + bsize + 4,
             (y2-y1 + 1)/2 + y1 - (int)stringHeight()/2,
             m_caption,brush);
     }

@@ -36,6 +36,7 @@ namespace TGUI
         , m_frameEnabled(true)
         , m_backgroundEnabled(true)
         , m_renderer(TGSystem::getSingleton().getRenderer())
+        , m_system(TGSystem::getSingletonPtr())
         , m_minWidth(0), m_minHeight(0)
         , m_maxWidth(0x7FFFFFFF), m_maxHeight(0x7FFFFFFF)
         , m_focusedChild(0)
@@ -532,9 +533,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::setWidth(TGReal width)
     {
-        TGReal fx1,fx2,fy1,fy2;
-        getBounds(fx1,fy1,fx2,fy2);
-        setBounds(fx1,fy1,fx1+width,fy2);
+        int w,nw;
+        m_parent->getWidth(w);
+        nw = (TGReal)w * width;
+        setWidth(nw);
     }
 
     //-----------------------------------------------------------------------
@@ -568,9 +570,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::setHeight(TGReal height)
     {
-        TGReal fx1,fx2,fy1,fy2;
-        getBounds(fx1,fy1,fx2,fy2);
-        setBounds(fx1,fy1,fx2,fy1+height);
+        int h,nh;
+        m_parent->getHeight(h);
+        nh = (TGReal)h * height;
+        setHeight(nh);
     }
 
     //-----------------------------------------------------------------------
@@ -1079,7 +1082,18 @@ namespace TGUI
             (*itr)->setTheme(theme,true);
         }
         redraw();
+    }
 
+    //-----------------------------------------------------------------------
+    //                           r e P a r e n t
+    //-----------------------------------------------------------------------
+    void TGControl::reParent(TGControl* newParent)
+    {
+        if(m_parent)
+            m_parent->removeChild(this);
+        m_parent = newParent;
+        if(m_parent)
+            m_parent->addChild(this);
     }
 
     //-----------------------------------------------------------------------
@@ -1090,6 +1104,9 @@ namespace TGUI
         bool rc=false;
 
         args.m_eventID = eventID;
+
+        if(m_system->eventHook(args))
+            return true;
 
         TGEventMap::iterator itr;
         itr = m_handlers.find(eventID);

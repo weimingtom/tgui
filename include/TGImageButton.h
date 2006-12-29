@@ -35,7 +35,7 @@ namespace TGUI
         int             m_uvIndex;
 
     public:
-        TGImageButton(TGControl *parent,TGString imageName, TGString resourceGroup="");
+        TGImageButton(TGControl *parent, TGString name, TGString imageName, TGString resourceGroup="");
         virtual ~TGImageButton();
 
         virtual void render();
