@@ -112,7 +112,13 @@ namespace TGUI
         }
         else
         {
-            show();
+            TGScreen* activeScreen = TGSystem::getSingleton().getActiveScreen();
+            if(activeScreen)
+            {
+                if(activeScreen != m_parent)
+                    reParent(activeScreen);
+                show();
+            }
         }
     }
 }

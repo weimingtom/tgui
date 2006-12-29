@@ -36,6 +36,7 @@ namespace TGUI
     };
 
     class TGScreen;
+    class TGSystem;
     class TGPopupMenu;
 
     typedef std::list<TGControl *> TGControlList;
@@ -58,6 +59,7 @@ namespace TGUI
         TGQuadList          m_quadCache;
         TGQuadList&         m_systemCache;
         TGRenderer*         m_renderer;
+        TGSystem*           m_system;
         TGTexture*          m_texture;
 
         TGString            m_name;
@@ -121,6 +123,8 @@ namespace TGUI
         virtual void removeChild(TGControl *child);
         virtual void removeAllChildren();
         virtual void layout(){};
+
+        virtual void reParent(TGControl* newParent);
 
         bool fireEvent(TGString eventID,TGEventArgs& args);
         void addEventHandler(TGString eventID, TGEventHandler* handler);

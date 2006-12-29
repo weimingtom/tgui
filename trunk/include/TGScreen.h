@@ -39,6 +39,7 @@ namespace TGUI
         TGScreen(TGString name="");
         virtual ~TGScreen();
         virtual TGScreen *activate();
+        virtual void deactivate();
 
         int getWidth() {return width;};
         int getHeight() {return height;};

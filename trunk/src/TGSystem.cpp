@@ -193,6 +193,7 @@ namespace TGUI
         m_keyboardFocusControl = 0;
         m_logger = 0;
         m_activePopup = 0;
+        m_eventHook = 0;
 
         m_renderer = new TGUI::TGRenderer(window, 
             Ogre::RENDER_QUEUE_OVERLAY, false, sceneMgr);
@@ -318,6 +319,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectMouseMove(int relX, int relY)
     {
+        if(!m_activeScreen)
+            return;
+
         int absX=relX,absY=relY;
         if(m_mouseCursor)
         {
@@ -359,6 +363,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectMouseButtonDown(int relX, int relY, int buttonID)
     {
+        if(!m_activeScreen)
+            return;
+
         int absX=relX,absY=relY;
         if(m_mouseCursor)
         {
@@ -412,6 +419,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectMouseButtonUp(int relX, int relY, int buttonID)
     {
+        if(!m_activeScreen)
+            return;
 
         int absX=relX,absY=relY;
         if(m_mouseCursor)
@@ -457,6 +466,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectKeyDown(int key,unsigned char ascii)
     {
+        if(!m_activeScreen)
+            return;
+
         if (!(m_keyboardFocusControl &&
             m_keyboardFocusControl->focused()))
             return;
@@ -469,6 +481,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::injectKeyUp(int key,unsigned char ascii)
     {
+        if(!m_activeScreen)
+            return;
+
         if (!(m_keyboardFocusControl &&
             m_keyboardFocusControl->focused()))
             return;
@@ -598,6 +613,26 @@ namespace TGUI
     void TGSystem::destroyControl(TGControl *control)
     {
         m_dead.push_back(control);
+    }
+
+    //-----------------------------------------------------------------------
+    //                       s e t E v e n t H o o k
+    //-----------------------------------------------------------------------
+    TGEventHandler* TGSystem::setEventHook(TGEventHandler* hook)
+    {
+        TGEventHandler* oldHook = m_eventHook;
+        m_eventHook = hook;
+        return oldHook;
+    }
+
+    //-----------------------------------------------------------------------
+    //                          e v e n t H o o k
+    //-----------------------------------------------------------------------
+    bool TGSystem::eventHook(TGEventArgs& args)
+    {
+        if(m_eventHook)
+            return (*m_eventHook)(args);
+        return false;
     }
 
     //-----------------------------------------------------------------------

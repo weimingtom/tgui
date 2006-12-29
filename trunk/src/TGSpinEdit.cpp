@@ -298,8 +298,8 @@ namespace TGUI
         else drawTri(x2-m_height+2,y1+1, x2-3, y1+(m_height/2)-1,m_theme.getFrameBrush(),1);
 
         if(!m_downPressed)
-            drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,brush,0);
-        else drawTri(x2-m_height+2,y1+12, x2-3, y1+m_height-2,m_theme.getFrameBrush(),0);
+            drawTri(x2-m_height+2,y1+(m_height/2)+1, x2-3, y1+m_height-2,brush,0);
+        else drawTri(x2-m_height+2,y1+(m_height/2)+1, x2-3, y1+m_height-2,m_theme.getFrameBrush(),0);
 
         TGControl::render();
 

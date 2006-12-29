@@ -49,6 +49,7 @@ namespace TGUI
         TGScreen*           m_defaultScreen;
         TGQuadList          m_cache;
         TGPopupMenu*        m_activePopup;
+        TGEventHandler*     m_eventHook;
 
     private:
         void createDefaultCursor();
@@ -90,6 +91,9 @@ namespace TGUI
         void invalidateControl(TGControl *control);
         void destroyControl(TGControl *control);
 
+        TGEventHandler* setEventHook(TGEventHandler* hook);
+
+        bool eventHook(TGEventArgs& args);
 
         void injectMouseMove(int relX, int relY);
         void injectMouseButtonDown(int relX, int relY, int buttonID);

@@ -29,13 +29,14 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G I m a g e B u t t o n
     //-----------------------------------------------------------------------
-    TGImageButton::TGImageButton(TGControl *parent, TGString imageName, TGString resourceGroup) : TGControl(parent)
+    TGImageButton::TGImageButton(TGControl *parent, TGString name, TGString imageName, 
+        TGString resourceGroup) : TGControl(parent, name)
     {
         m_uvIndex = 0;
-        setBounds(x1, y1, x2, y2);
         m_pushed = m_highlighted = false;
 
         m_images = new TGImageSet(imageName,4,resourceGroup);
+        setBounds(0, 0, m_images->getWidth(),m_images->getHeight() / 4);
     }
 
     //-----------------------------------------------------------------------
