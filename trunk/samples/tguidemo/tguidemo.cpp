@@ -275,9 +275,13 @@ public:
         c->resize(80,25);
         win->focus();
        
+        
         TGMenuItem* mi;
-        TGMenuBar* mb = new TGMenuBar(TGSystem::getSingleton().getActiveScreen());
-        TGMenuItem	*fileMenu = mb->addItem("File");
+        TGMenuBar* mb;
+        TGMenuItem	*fileMenu;
+        
+        mb = new TGMenuBar(TGSystem::getSingleton().getActiveScreen());
+        fileMenu = mb->addItem("File");
         fileMenu->addItem("New");
         fileMenu->addItem("Open");
         fileMenu->addItem("Save");
@@ -294,11 +298,10 @@ public:
 
         mb->addItem("View");
         mb->addItem("Community");
-        mb->addItem("Help");
+        mb->addItem("Help");        
 
         m_console = new TGConsole();
         m_console->addEventHandler(TGEvent::ConsoleCommand,TGEVENT_HANDLER(TGUIApp::procCommand));
-
 
         win = new TGWindow(0,"","Test MDI Window");
         win->setSize(500,500);
@@ -313,7 +316,6 @@ public:
         fileMenu->addItem("-");
         mi = fileMenu->addItem("Quit");
         mi->addEventHandler(TGEvent::MouseClicked,TGEVENT_HANDLER(TGUIApp::terminateAppAction));
-
 
         win = new TGWindow(win,"","Child Window");
         win->setSize(300,200);

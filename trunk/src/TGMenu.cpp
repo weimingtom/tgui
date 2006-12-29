@@ -252,6 +252,9 @@ namespace TGUI
         if(isRenderCached())
             return;
 
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
+
         TGSBrush  brush;
         brush = m_theme.getBase();
         fillRect(x1, y1, x2, y2, brush);
@@ -336,6 +339,9 @@ namespace TGUI
     {
         if(isRenderCached())
             return;
+
+        int	x1, y1, x2, y2;
+        getBounds(x1, y1, x2, y2);
 
         TGSBrush  brush;
         brush = m_theme.getBase();
