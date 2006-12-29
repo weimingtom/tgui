@@ -29,7 +29,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         T G T h e m e M a n a g e r
     //-----------------------------------------------------------------------
-    TGThemeManager::TGThemeManager() : TGWindow(getActiveScreen(),"Theme Manager")
+    TGThemeManager::TGThemeManager() : TGWindow(getActiveScreen(),"Theme Manager", "Theme Manager")
     {
         m_isTabbedCaption = true;
         setBounds(0.1f,0.1f,0.55f,0.5f);

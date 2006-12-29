@@ -303,7 +303,10 @@ public:
         win = new TGWindow(NULL,"","A fluffy window");
         win->center();
 
-        (new TGLabel(win,"", "A Label"))->setPos(5, 0);
+        TGLabel* l = new TGLabel(win,"", "A Label");
+        l->setPos(0, 0);
+        l->setWidth(200);
+        l->setAlignment(alRight);
 
         TGButton* b;
         b = new TGButton(win, "" , "Another Button");
@@ -456,7 +459,7 @@ public:
 
         win5->center();
         win5->moveRel(win5->x1, win5->y1 - 160);
-        TGImage	*cenda = new TGImage(win5,"cenda.png");
+        TGImage	*cenda = new TGImage(win5,"","cenda.png");
         cenda->center();
         cenda->setName("cenda");
         cenda->addEventHandler(TGEvent::MouseClicked,new TGEventHandler(&DemoApp::cendaClicked,this));

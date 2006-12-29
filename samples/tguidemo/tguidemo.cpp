@@ -209,13 +209,13 @@ public:
         //win->getColourTheme().m_base->setColour(TGColour(.5f,0,0));
 
 
-        TGImageButton* b = new TGImageButton(win,"playbutton.png");
+        TGImageButton* b = new TGImageButton(win,"","playbutton.png");
         b->setWidth(128);
         b->setHeight(64);
         b->center();
         b->setPos(b->x1,b->y1-20);
 
-        b = new TGImageButton(win,"quitbutton.png");
+        b = new TGImageButton(win,"","quitbutton.png");
         b->setWidth(128);
         b->setHeight(64);
         b->center();
@@ -229,7 +229,7 @@ public:
         win2->setFrameEnabled(false);
         win2->setTitlebarEnabled(false);
 
-        b = new TGImageButton(win2,"playbutton.png");
+        b = new TGImageButton(win2,"","playbutton.png");
         b->setPos(60,94);
         b->setWidth(256);
         b->setHeight(128);

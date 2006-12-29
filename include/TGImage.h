@@ -39,8 +39,8 @@ namespace TGUI
 
 
     public:
-        TGImage(TGControl *parent, TGString fname,TGString resourceGroup="");
-        TGImage(TGControl *parent, TGTexture* texture);
+        TGImage(TGControl *parent, TGString name, TGString fname,TGString resourceGroup="");
+        TGImage(TGControl *parent, TGString name, TGTexture* texture);
         virtual ~TGImage();
 
         virtual void setTexture(TGTexture *newTexture, bool resize=true);
