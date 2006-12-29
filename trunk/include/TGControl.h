@@ -35,6 +35,13 @@ namespace TGUI
         FS_LOWERED
     };
 
+    enum TGAlignment
+    {
+        alLeft,
+        alCenter,
+        alRight
+    };
+
     class TGScreen;
     class TGSystem;
     class TGPopupMenu;

@@ -32,8 +32,10 @@ namespace TGUI
     TGLabel::TGLabel(TGControl *parent, TGString name, TGString text)
         : TGControl(parent, name)
     {
-        resize(stringWidth(text), stringHeight());
+        m_alignment = alLeft;
         m_text = text;
+        m_textWidth = stringWidth(m_text);
+        resize(m_textWidth, stringHeight());
     }
 
     //-----------------------------------------------------------------------
@@ -49,7 +51,8 @@ namespace TGUI
     void TGLabel::setText(TGString newText)
     {
         m_text = newText;
-        resize(stringWidth(m_text), stringHeight());
+        m_textWidth = stringWidth(m_text);
+        resize(m_textWidth, stringHeight());
     }
 
     //-----------------------------------------------------------------------
@@ -60,11 +63,25 @@ namespace TGUI
         if(isRenderCached())
             return;
 
-        int	x1, y1, x2, y2;
+        int	x1, y1, x2, y2, ax;
         getBounds(x1, y1, x2, y2);
 
+        int width = x2-x1;
+        switch(m_alignment)
+        {
+        case alLeft:
+            ax = 0;
+            break;
+        case alCenter:
+            ax = (width / 2) - (m_textWidth / 2);
+            break;
+        case alRight:
+            ax = width - m_textWidth - 1;
+            break;
+        };
+
         TGSBrush brush = m_theme.getTextBrush();
-        drawString(x1, y1, m_text, brush);
+        drawString(x1+ax, y1, m_text, brush);
     }
 
 }

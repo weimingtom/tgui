@@ -40,7 +40,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                           T G C u r s o r
     //-----------------------------------------------------------------------
-    TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,texture)
+    TGCursor::TGCursor(TGTexture* texture) : TGImage(NULL,"mouseCursor",texture)
     {
         m_hotSpot = TGPoint(0,0);
         m_brush.bind(new TGBrush(TGColour(1,1,1,1),texture));

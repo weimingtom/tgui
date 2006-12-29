@@ -38,8 +38,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G I m a g e
     //-----------------------------------------------------------------------
-    TGImage::TGImage(TGControl *parent, TGString fname, TGString resourceGroup)
-        : TGControl(parent)
+    TGImage::TGImage(TGControl *parent, TGString name, TGString fname, TGString resourceGroup)
+        : TGControl(parent, name)
     {
         int	x1 = 0, y1 = 0, x2, y2;
         m_width = 0;
@@ -70,7 +70,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                            T G I m a g e
     //-----------------------------------------------------------------------
-    TGImage::TGImage(TGControl *parent, TGTexture* texture) : TGControl(parent)
+    TGImage::TGImage(TGControl *parent, TGString name, TGTexture* texture) : TGControl(parent, name)
     {
         this->texture = texture;
         m_width = texture->getWidth();
