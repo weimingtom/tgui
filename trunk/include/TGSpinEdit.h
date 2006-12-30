@@ -59,7 +59,7 @@ namespace TGUI
 
         virtual void setMaximumValue(TGReal value) {m_maxValue = value;};
         virtual void setMinimumValue(TGReal value) {m_minValue = value;};
-        virtual void setCurrentValue(TGReal value) {m_value = value;};
+        virtual void setCurrentValue(TGReal value);
 
 
         virtual bool focused();
