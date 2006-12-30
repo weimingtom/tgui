@@ -29,8 +29,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G S c r e e n
     //-----------------------------------------------------------------------
-    TGScreen::TGScreen(TGString name)
-        : TGControl(NULL,name)
+    TGScreen::TGScreen(TGControl* parent, TGString name)
+        : TGControl(parent,name)
     {
         width = getRenderer()->getWidth();
         height = getRenderer()->getHeight();
@@ -58,6 +58,7 @@ namespace TGUI
         width = getRenderer()->getWidth();
         height = getRenderer()->getHeight();
         TGSystem::getSingleton().setActiveScreen(this);
+        redraw();
         return prevScreen;
     }
 

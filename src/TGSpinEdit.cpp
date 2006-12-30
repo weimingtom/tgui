@@ -273,6 +273,18 @@ namespace TGUI
         m_inputbox->setText(buf);
     }
 
+    //-----------------------------------------------------------------------
+    //                       s e t C u r r e n t V a l u e
+    //-----------------------------------------------------------------------
+    void TGSpinEdit::setCurrentValue(TGReal value)
+    {
+        if( (value < m_minValue) || (value > m_maxValue) )
+            return;
+        m_value = value;
+        char buf[100];
+        sprintf(buf,"%.2f",m_value);
+        m_inputbox->setText(buf);
+    }
 
     //-----------------------------------------------------------------------
     //                             r e n d e r
