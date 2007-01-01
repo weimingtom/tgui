@@ -161,6 +161,11 @@ namespace TGUI
             return;
             break;
 
+        case 27:    // Escape
+            fireEvent(TGEvent::EscapeText,TGEventArgs(this));
+            return;
+            break;
+
         default:
             if (ascii < 32 || ascii > 127)
             { 

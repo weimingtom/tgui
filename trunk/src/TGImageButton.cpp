@@ -77,6 +77,7 @@ namespace TGUI
             m_pushed = true;
             m_uvIndex = 2;
             redraw();
+            fireEvent(TGEvent::MouseDown,TGEventArgs(this));
         }
     }
 
@@ -101,6 +102,9 @@ namespace TGUI
         m_pushed = false;
     }
 
+    //-----------------------------------------------------------------------
+    //                        o n M o u s e E n t e r
+    //-----------------------------------------------------------------------
     void TGImageButton::onMouseEnter()
     {
         TGControl::onMouseEnter();
@@ -108,8 +112,13 @@ namespace TGUI
             m_uvIndex = 1;
         else m_uvIndex = 2;
         redraw();
+        fireEvent(TGEvent::MouseEnter,TGEventArgs(this));
+
     }
 
+    //-----------------------------------------------------------------------
+    //                          o n M o u s e E x i t
+    //-----------------------------------------------------------------------
     void TGImageButton::onMouseExit(int x, int y)
     {
         TGControl::onMouseExit(x,y);
@@ -117,6 +126,7 @@ namespace TGUI
             m_uvIndex = 0;
         else m_uvIndex = 1;
         redraw();
-    }
+        fireEvent(TGEvent::MouseExit,TGEventArgs(this));
+   }
 
 }

@@ -33,13 +33,15 @@ namespace TGUI
     const TGString TGEvent::Modified("modified");
     const TGString TGEvent::Selected("selected");
     const TGString TGEvent::MouseEnter("mouseEnter");
-    const TGString TGEvent::MouseLeave("mouseLeave");
+    const TGString TGEvent::MouseExit("mouseExit");
     const TGString TGEvent::MouseDown("mouseDown");
     const TGString TGEvent::MouseUp("mouseUp");
     const TGString TGEvent::MouseMove("mouseMove");
-    const TGString TGEvent::MouseClicked("clicked");
+    const TGString TGEvent::MouseClicked("mouseClicked");
     const TGString TGEvent::MenuPopup("menuPopup");
     const TGString TGEvent::AcceptText("acceptText");
+    const TGString TGEvent::EscapeText("escapeText");
     const TGString TGEvent::ConsoleCommand("consoleCommand");
+    const TGString TGEvent::ConsoleToggled("consoleToggled");
 
 }

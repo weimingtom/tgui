@@ -32,18 +32,20 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGConsole::TGConsole(TGString caption) : TGWindow(NULL,"",caption)
     {
-        m_list = new TGListBox(this);
+        m_list = new TGListBox(this,"commandHistory");
         m_list->setPos(5,5);
         m_list->resize(485,205);
 
-        m_input = new TGEditBox(this);
+        m_input = new TGEditBox(this,"commandLine");
         m_input->setPos(5,220);
         m_input->resize(485,25);
 
         m_input->addEventHandler(TGEvent::AcceptText,new TGEventHandler(&TGConsole::acceptText,this));
+        m_input->addEventHandler(TGEvent::EscapeText,new TGEventHandler(&TGConsole::escapeText,this));
 
         resize(500, 275);
         center();
+        m_input->focus();
     }
 
     //-----------------------------------------------------------------------
@@ -51,6 +53,15 @@ namespace TGUI
     //-----------------------------------------------------------------------
     TGConsole::~TGConsole()
     {
+    }
+
+    //-----------------------------------------------------------------------
+    //                         e s c a p e T e x t
+    //-----------------------------------------------------------------------
+    bool TGConsole::escapeText(const TGEventArgs& args)
+    {
+        toggle();
+        return true;
     }
 
     //-----------------------------------------------------------------------
@@ -108,7 +119,9 @@ namespace TGUI
     {
         if(isVisible())
         {
+            makeExclusive(false);
             hide();
+            setKeyboardFocusControl(NULL);
         }
         else
         {
@@ -117,8 +130,15 @@ namespace TGUI
             {
                 if(activeScreen != m_parent)
                     reParent(activeScreen);
+                activeScreen->setFocusedChild(this);
+                makeExclusive();
+                setKeyboardFocusControl(m_input);
+
+                m_input->focus();
                 show();
             }
         }
+        fireEvent(TGEvent::ConsoleToggled,TGEventArgs(this));
+
     }
 }

@@ -39,9 +39,10 @@ namespace TGUI
         static const TGString Selected;
 
         static const TGString AcceptText;
+        static const TGString EscapeText;
 
         static const TGString MouseEnter;
-        static const TGString MouseLeave;
+        static const TGString MouseExit;
         static const TGString MouseDown;
         static const TGString MouseUp;
         static const TGString MouseMove;
@@ -50,6 +51,7 @@ namespace TGUI
         static const TGString MenuPopup;
 
         static const TGString ConsoleCommand;
+        static const TGString ConsoleToggled;
     };
 
     class TGEventArgs
