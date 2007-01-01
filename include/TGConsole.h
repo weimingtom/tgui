@@ -35,6 +35,7 @@ namespace TGUI
 
     protected:
         bool acceptText(const TGEventArgs& args);
+        bool escapeText(const TGEventArgs& args);
 
     public:
         TGConsole(TGString caption="Console");

@@ -235,10 +235,20 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                         m a k e E x c l u s i v e
     //-----------------------------------------------------------------------
-    void TGControl::makeExclusive()
+    void TGControl::makeExclusive(bool value)
     {
         if (m_parent)
-            m_parent->m_exclusiveChild = this;
+        {
+            if(value)
+            {
+                m_parent->m_exclusiveChild = this;
+            }
+            else
+            {
+                if(m_parent->m_exclusiveChild == this)
+                    m_parent->m_exclusiveChild = NULL;
+            }
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -246,6 +256,9 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::pulse(TGReal timeElapsed)
     {
+        if(!isVisible())
+            return;
+
         if (m_performLayout)
         {
             layout();

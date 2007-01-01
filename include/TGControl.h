@@ -144,7 +144,7 @@ namespace TGUI
 
         TGScreen *getScreen();
 
-        virtual void makeExclusive();
+        virtual void makeExclusive(bool value=true);
 
         virtual void show() {m_isVisible = true; redraw();};
         virtual void hide() {m_isVisible = false; redraw();};
