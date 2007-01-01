@@ -268,6 +268,9 @@ namespace TGUI
 
         if(m_logger)
             delete m_logger;
+
+        if(m_eventHook)
+            delete m_eventHook;
     }
 
     //-----------------------------------------------------------------------
