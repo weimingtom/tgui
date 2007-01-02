@@ -28,7 +28,7 @@
 namespace TGUI
 {
     #define TGColour Ogre::ColourValue
-    class TGColourRect
+    class _TGUIExport TGColourRect
     {
     public:
 

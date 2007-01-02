@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGLabel : public TGControl
+    class _TGUIExport TGLabel : public TGControl
     {
         TGAlignment         m_alignment;
         TGString            m_text;

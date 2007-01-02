@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGBrush
+    class _TGUIExport TGBrush
     {
     public:
         TGColourRect        m_colourRect;

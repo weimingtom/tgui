@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGTexture
+    class _TGUIExport TGTexture
     {
         friend	TGTexture* TGRenderer::createTexture(void);
         friend	TGTexture* TGRenderer::createTexture(const TGString& filename, const TGString& resourceGroup);

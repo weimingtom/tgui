@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGButton : public TGControl
+    class _TGUIExport TGButton : public TGControl
     {
         TGString        m_caption;
         bool	        m_pushed;

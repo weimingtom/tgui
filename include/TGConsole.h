@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    struct TGConsole : public TGWindow
+    class _TGUIExport TGConsole : public TGWindow
     {
         TGListBox*         m_list;
         TGEditBox*         m_input;

@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGModifier
+    class _TGUIExport TGModifier
     {
     public:
         enum {

@@ -29,7 +29,7 @@ namespace TGUI
 {
     class TGControl;
 
-    class TGEvent
+    class _TGUIExport TGEvent
     {
     public:
         static const TGString Resized;

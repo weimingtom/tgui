@@ -28,7 +28,7 @@ namespace TGUI
 {
 
 
-    template <class TGData> class TGDataManager
+    template <class TGData> class _TGUIExport TGDataManager
     {
         TGData	    m_data;
         TGData*	    m_dataSource;

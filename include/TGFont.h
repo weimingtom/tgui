@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGFont 
+    class _TGUIExport TGFont 
     {
     public:
         Ogre::FontPtr       m_font;

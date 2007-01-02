@@ -30,7 +30,7 @@ namespace TGUI
 
     typedef std::vector<TGRect> TGUVList;
 
-    class TGImageSet
+    class _TGUIExport TGImageSet
     {
     protected:
         int             m_width;

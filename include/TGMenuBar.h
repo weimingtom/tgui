@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGMenuBar : public TGMenu
+    class _TGUIExport TGMenuBar : public TGMenu
     {
     public:
 

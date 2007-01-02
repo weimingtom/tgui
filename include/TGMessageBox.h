@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGMessageBox : public TGWindow
+    class _TGUIExport TGMessageBox : public TGWindow
     {
     protected:
         TGString          m_caption;

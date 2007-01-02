@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGCursor : public TGImage
+    class _TGUIExport TGCursor : public TGImage
     {
         TGPoint         m_hotSpot;
         TGSBrush        m_brush;

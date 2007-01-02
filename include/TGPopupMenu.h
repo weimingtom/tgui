@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGPopupMenu : public TGMenu
+    class _TGUIExport TGPopupMenu : public TGMenu
     {
     public:
         TGPopupMenu(TGControl* parent=NULL, TGString name="");

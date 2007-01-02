@@ -46,6 +46,41 @@
 #include <ogrefont.h>
 #include <ogrefontmanager.h>
 
+//----------------------------------------------------------------------------
+// Windows Settings
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+
+// If we're not including this from a client build, specify that the stuff
+// should get exported. Otherwise, import it.
+#	if defined( __MINGW32__ )
+		// Linux compilers don't have symbol import/export directives.
+#   	define _TGUIExport
+#   	define _TGUIPrivate
+#   else
+#   	if defined( TGUI_NONCLIENT_BUILD )
+#           if defined( TGUI_DLL_BUILD )
+#               define _TGUIExport __declspec( dllexport )
+#           else 
+#       	    define _TGUIExport 
+#           endif
+#   	else
+#           if defined( TGUI_DLL_BUILD )
+#               define _TGUIExport __declspec( dllimport )
+#           else 
+#       	    define _TGUIExport 
+#           endif
+#   	endif
+#   	define _TGUIPrivate
+#	endif
+// Win32 compilers use _DEBUG for specifying debug builds.
+#   ifdef _DEBUG
+#       define TGUI_DEBUG_MODE 1
+#   else
+#       define TGUI_DEBUG_MODE 0
+#   endif
+# endif
+
+
 namespace TGUI
 {
 #define TGSingleton Ogre::Singleton
