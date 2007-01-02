@@ -27,7 +27,6 @@
 
 namespace TGUI
 {
-
     class TGSystem : public TGSingleton<TGUI::TGSystem>
     {
     protected:
@@ -44,6 +43,7 @@ namespace TGUI
         TGTheme             m_theme;
         TGControlList       m_dead;
         TGString            m_version;
+        TGModList           m_modifiers;
 
         TGFont*             m_defaultFont;
         TGCursor*           m_defaultCursor;
@@ -104,6 +104,9 @@ namespace TGUI
         void injectKeyDown(int key,unsigned char ascii);
         void injectKeyUp(int key,unsigned char ascii);
         void injectTimePulse(TGReal timeElapsed);
+
+        void addModifier(TGModifier* mod);
+        void removeModifier(TGModifier* mod);
 
         void renderGUI();
     };

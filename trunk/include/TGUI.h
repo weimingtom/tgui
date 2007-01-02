@@ -94,6 +94,9 @@ namespace TGUI
 #include <tgmenubar.h>
 #include <tgprogressbar.h>
 #include <tgthememanager.h>
+#include <tgmodifier.h>
+#include <tgmodlerp.h>
+#include <tgmodcolour.h>
 #include <tgsystem.h>
 
 #endif

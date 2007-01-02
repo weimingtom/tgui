@@ -323,6 +323,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\TGModifier.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\include\TGModifier.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\TGPopupMenu.cpp"
 				>
 			</File>
@@ -454,6 +462,26 @@
 				RelativePath="..\..\..\include\TGWindow.h"
 				>
 			</File>
+			<Filter
+				Name="Modifiers"
+				>
+				<File
+					RelativePath="..\..\..\src\TGModColour.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\include\TGModColour.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\TGModLerp.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\include\TGModLerp.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
