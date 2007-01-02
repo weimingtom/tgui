@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGSpinEdit : public TGControl
+    class _TGUIExport TGSpinEdit : public TGControl
     {
     private:
         TGReal          m_value;
@@ -60,6 +60,9 @@ namespace TGUI
         virtual void setMaximumValue(TGReal value) {m_maxValue = value;};
         virtual void setMinimumValue(TGReal value) {m_minValue = value;};
         virtual void setCurrentValue(TGReal value);
+        virtual void setIncrementValue(TGReal value) {m_increment = value;}
+
+        virtual TGReal getCurrentValue() {return m_value;}
 
 
         virtual bool focused();

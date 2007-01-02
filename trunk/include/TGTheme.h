@@ -31,7 +31,7 @@ namespace TGUI
     class TGFont;
     typedef Ogre::SharedPtr<TGBrush> TGSBrush;
 
-    class TGTheme
+    class _TGUIExport  TGTheme
     {
     public:
         TGSBrush        m_base;

@@ -28,7 +28,7 @@ namespace TGUI
 {
 
 
-    class TGThemeManager : public TGWindow
+    class _TGUIExport TGThemeManager : public TGWindow
     {
     protected:
         TGSlider*           m_red;

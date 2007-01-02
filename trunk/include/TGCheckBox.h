@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGCheckBox : public TGControl
+    class _TGUIExport TGCheckBox : public TGControl
     {
         TGString        m_caption;
         bool			m_hover;

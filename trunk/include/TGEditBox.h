@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGEditBox : public TGControl
+    class _TGUIExport TGEditBox : public TGControl
     {
         TGDataManager<TGString>	m_text;
         int     		        m_tScroll;

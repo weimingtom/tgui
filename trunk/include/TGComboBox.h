@@ -34,7 +34,7 @@ namespace TGUI
         CBS_DROPDOWN_LIST       // pick from drop down only
     };
 
-    class TGComboBox : public TGControl
+    class _TGUIExport TGComboBox : public TGControl
     {
     private:
         int             m_height;

@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGScreen : public TGControl
+    class _TGUIExport TGScreen : public TGControl
     {
         int			width;
         int			height;

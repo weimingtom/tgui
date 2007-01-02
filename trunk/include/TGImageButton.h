@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGImageButton : public TGControl
+    class _TGUIExport TGImageButton : public TGControl
     {
         TGImageSet*     m_images;
         bool	        m_pushed;

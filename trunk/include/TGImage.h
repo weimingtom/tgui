@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGImage : public TGControl
+    class _TGUIExport TGImage : public TGControl
     {
         size_t      m_width;
         size_t      m_height;

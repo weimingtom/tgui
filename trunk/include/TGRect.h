@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGRect
+    class _TGUIExport TGRect
     {
     public:
         TGRect(void) {}

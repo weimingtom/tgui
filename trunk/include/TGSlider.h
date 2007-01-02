@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGSlider : public TGControl
+    class _TGUIExport TGSlider : public TGControl
     {
     public:
         TGReal			max;

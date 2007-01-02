@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    struct TGFileBrowser : public TGWindow
+    struct _TGUIExport TGFileBrowser : public TGWindow
     {
         TGListBox*         files;
         TGEditBox*         filename;

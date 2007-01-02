@@ -34,7 +34,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M e n u I t e m
     //-----------------------------------------------------------------------
-    class TGMenuItem : public TGControl
+    class _TGUIExport TGMenuItem : public TGControl
     {
     public:
         TGString    		    caption;
@@ -61,7 +61,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                             T G M e n u 
     //-----------------------------------------------------------------------
-    class TGMenu : public TGControl
+    class _TGUIExport TGMenu : public TGControl
     {
     public:
         TGMenuControl*          rootMenuControl;
@@ -82,7 +82,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                        T G M e n u C o n t r o l
     //-----------------------------------------------------------------------
-    class TGMenuControl : public TGControl
+    class _TGUIExport TGMenuControl : public TGControl
     {
     public:
         TGMenu*                 m_menu;
@@ -105,7 +105,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                       T G M e n u b a r C o n t r o l
     //-----------------------------------------------------------------------
-    class TGMenubarControl : public TGMenuControl
+    class _TGUIExport TGMenubarControl : public TGMenuControl
     {
     public:
         TGMenu*                 m_menu;

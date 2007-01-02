@@ -28,7 +28,7 @@ namespace TGUI
 {
 
 
-    class TGWindow : public TGControl
+    class _TGUIExport TGWindow : public TGControl
     {
     protected:
         TGString	    m_caption;

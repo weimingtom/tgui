@@ -30,7 +30,7 @@ namespace TGUI
 
     class TGListBox;
 
-    class TGListBoxItem : public TGControl
+    class _TGUIExport TGListBoxItem : public TGControl
     {
         TGListBox*              box;
         TGString                text;
@@ -53,7 +53,7 @@ namespace TGUI
         virtual void focus();
     };
 
-    class TGListBox : public TGScrollBox
+    class _TGUIExport TGListBox : public TGScrollBox
     {
         friend class TGListBoxItem;
     protected:

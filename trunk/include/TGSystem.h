@@ -27,7 +27,7 @@
 
 namespace TGUI
 {
-    class TGSystem : public TGSingleton<TGUI::TGSystem>
+    class _TGUIExport TGSystem : public TGSingleton<TGUI::TGSystem>
     {
     protected:
         TGRenderer*         m_renderer;

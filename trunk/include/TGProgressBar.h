@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGProgressBar : public TGControl
+    class _TGUIExport TGProgressBar : public TGControl
     {
         TGDataManager<TGReal>	max;
         TGDataManager<TGReal>	value;

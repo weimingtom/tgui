@@ -66,7 +66,7 @@ namespace TGUI
 
     typedef std::vector<TGQuadInfo> TGQuadList;
 
-    class TGRQListener : public Ogre::RenderQueueListener
+    class _TGUIExport TGRQListener : public Ogre::RenderQueueListener
     {
     public:
         TGRQListener(TGRenderer* renderer, Ogre::uint8 queueID, bool postQueue)
@@ -100,7 +100,7 @@ namespace TGUI
 
     typedef std::vector<TGClipArea*> TGClipList;
 
-    class TGRenderer 
+    class _TGUIExport TGRenderer 
     {
         unsigned int    texture;
         void*           rendererListEntry;

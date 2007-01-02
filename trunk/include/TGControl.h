@@ -52,7 +52,7 @@ namespace TGUI
     typedef std::vector<TGEventHandler *> TGEventHandlers;
     typedef std::map<TGString, TGEventHandlers> TGEventMap;
 
-    class TGControl
+    class _TGUIExport TGControl
     {
     private:
         static int          m_controlNumber;

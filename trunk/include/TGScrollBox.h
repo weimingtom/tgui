@@ -28,7 +28,7 @@
 namespace TGUI
 {
 
-    class TGScrollBox : public TGControl
+    class _TGUIExport TGScrollBox : public TGControl
     {
         TGReal   clientWidth;
         TGReal   clientHeight;
