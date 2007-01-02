@@ -34,9 +34,9 @@ namespace TGUI
     typedef Ogre::SharedPtr<TGBrush> TGSBrush;
 
     struct TGQuadVertex {
-        TGReal x, y, z;                          // The position for the vertex.
+        TGReal x, y, z;                         // The position for the vertex.
         Ogre::RGBA diffuse;                     // colour of the vertex
-        TGReal tu1, tv1;                         // texture coordinates
+        TGReal tu1, tv1;                        // texture coordinates
     };
 
     struct TGQuadInfo
@@ -85,7 +85,7 @@ namespace TGUI
         void	setPostRenderQueue(bool postQueue)		{m_postQueue = postQueue;}
 
     private:
-        TGRenderer*             m_renderer;     // TGUI renderer object for Ogre.
+        TGRenderer*             m_renderer;    // TGUI renderer object for Ogre.
         Ogre::uint8	            m_queueID;     // ID of the queue that we are hooked into
         bool                    m_postQueue;   // true if we render after everything else in our queue.
     };
@@ -140,7 +140,7 @@ namespace TGUI
         virtual TGReal	getHeight(void) const		{return m_displayArea.getHeight();}
         virtual TGSize	getSize(void) const			{return m_displayArea.getSize();}
         virtual TGRect	getRect(void) const			{return m_displayArea;}
-        virtual	uint	getMaxTextureSize(void) const		{return 2048;}		// TODO: Change to proper value
+        virtual	uint	getMaxTextureSize(void) const		{return 2048;}
         virtual	uint	getHorzScreenDPI(void) const	{return 96;}
         virtual	uint	getVertScreenDPI(void) const	{return 96;}
         void	setTargetSceneManager(Ogre::SceneManager* scene_manager);
@@ -183,14 +183,14 @@ namespace TGUI
         Ogre::uint8	                m_queue_id;			// ID of the queue that we are hooked into
         Ogre::TexturePtr            m_currTexture;		// currently set texture;
         Ogre::RenderOperation       m_render_op;		// Ogre render operation we use to do our stuff.
-        Ogre::HardwareVertexBufferSharedPtr	d_buffer;	// vertex buffer to queue sprite rendering
+        Ogre::HardwareVertexBufferSharedPtr	m_buffer;	// vertex buffer to queue sprite rendering
         size_t                      m_underused_framecount;                  //!< Number of frames elapsed since buffer utilization was above half the capacity
         Ogre::RenderOperation       m_direct_render_op;	// Renderop for cursor
-        Ogre::HardwareVertexBufferSharedPtr	d_direct_buffer;	//!< Renderop for cursor
+        Ogre::HardwareVertexBufferSharedPtr	m_direct_buffer;	//!< Renderop for cursor
         Ogre::SceneManager*	        m_sceneMgr;		    // The scene manager we are hooked into.
         Ogre::LayerBlendModeEx      m_colourBlendMode;	// Controls colour blending mode used.
         Ogre::LayerBlendModeEx      m_alphaBlendMode;	// Controls alpha blending mode used.
-        Ogre::TextureUnitState::UVWAddressingMode d_uvwAddressMode;
+        Ogre::TextureUnitState::UVWAddressingMode m_uvwAddressMode;
 
         TGRQListener*			    m_ourlistener;
         bool                        m_post_queue;		// true if we render after everything else in our queue.

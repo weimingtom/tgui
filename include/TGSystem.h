@@ -43,6 +43,7 @@ namespace TGUI
         TGLogger*           m_logger;
         TGTheme             m_theme;
         TGControlList       m_dead;
+        TGString            m_version;
 
         TGFont*             m_defaultFont;
         TGCursor*           m_defaultCursor;
@@ -64,6 +65,8 @@ namespace TGUI
         TGRenderer* getRenderer() {return m_renderer;};
         TGScreen* getActiveScreen() {return m_activeScreen;};
         TGTexture* getDefaultTexture() {return m_texture;};
+
+        TGString getVersion() {return m_version;}
 
         void setMouseCursor(TGCursor* cursor);
         TGCursor* getMouseCursor() {return m_mouseCursor;};

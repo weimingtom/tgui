@@ -26,13 +26,12 @@
 
 namespace TGUI
 {
-    const TGReal     TGRenderer::GuiZInitialValue              = 1.0f;
+    const TGReal TGRenderer::GuiZInitialValue        = 1.0f;
 
-    const size_t	TGRenderer::VERTEX_PER_QUAD			= 6;
-    const size_t	TGRenderer::VERTEX_PER_TRIANGLE		= 3;
-    const size_t	TGRenderer::VERTEXBUFFER_INITIAL_CAPACITY	= 256;
-    const size_t    TGRenderer::UNDERUSED_FRAME_THRESHOLD = 50000; // half buffer every 8 minutes on 100fps
-
+    const size_t TGRenderer::VERTEX_PER_QUAD			= 6;
+    const size_t TGRenderer::VERTEX_PER_TRIANGLE		= 3;
+    const size_t TGRenderer::VERTEXBUFFER_INITIAL_CAPACITY	= 256;
+    const size_t TGRenderer::UNDERUSED_FRAME_THRESHOLD = 50000; // half buffer every 8 minutes on 100fps
 
     TGQuadInfo::TGQuadInfo()
     {
@@ -84,7 +83,7 @@ namespace TGUI
     //                   c r e a t e Q u a d R e n d e r O p
     //-----------------------------------------------------------------------
     void createQuadRenderOp(Ogre::RenderOperation &m_render_op, 
-        Ogre::HardwareVertexBufferSharedPtr &d_buffer, size_t nquads)
+        Ogre::HardwareVertexBufferSharedPtr &m_buffer, size_t nquads)
     {
         using namespace Ogre;
         // Create and initialise the Ogre specific parts required for use in rendering later.
@@ -101,12 +100,12 @@ namespace TGUI
         vd->addElement(0, vd_offset, VET_FLOAT2, VES_TEXTURE_COORDINATES);
 
         // create hardware vertex buffer
-        d_buffer = HardwareBufferManager::getSingleton().createVertexBuffer(vd->getVertexSize(0), nquads,  
+        m_buffer = HardwareBufferManager::getSingleton().createVertexBuffer(vd->getVertexSize(0), nquads,  
             HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
             false); // no Ninnies here!!!
 
         // bind vertex buffer
-        m_render_op.vertexData->vertexBufferBinding->setBinding(0, d_buffer);
+        m_render_op.vertexData->vertexBufferBinding->setBinding(0, m_buffer);
 
         // complete render operation basic initialisation
         m_render_op.operationType = RenderOperation::OT_TRIANGLE_LIST;
@@ -117,11 +116,11 @@ namespace TGUI
     //                  d e s t r o y Q u a d R e n d e r O p
     //-----------------------------------------------------------------------
     void destroyQuadRenderOp(Ogre::RenderOperation &m_render_op, 
-        Ogre::HardwareVertexBufferSharedPtr &d_buffer)
+        Ogre::HardwareVertexBufferSharedPtr &m_buffer)
     {
         delete m_render_op.vertexData;
         m_render_op.vertexData = 0;
-        d_buffer.setNull();
+        m_buffer.setNull();
     }
 
     //-----------------------------------------------------------------------
@@ -156,8 +155,8 @@ namespace TGUI
         }
 
         // cleanup vertex data we allocated in constructor
-        destroyQuadRenderOp(m_render_op, d_buffer);
-        destroyQuadRenderOp(m_direct_render_op, d_direct_buffer);
+        destroyQuadRenderOp(m_render_op, m_buffer);
+        destroyQuadRenderOp(m_direct_render_op, m_direct_buffer);
 
         destroyAllTextures();
     }
@@ -567,7 +566,7 @@ namespace TGUI
             {
                 m_modified = false;
                 /// Resize vertex buffer if it is too small
-                size_t size = d_buffer->getNumVertices();
+                size_t size = m_buffer->getNumVertices();
                 size_t requestedSize = quadList.size()*VERTEX_PER_QUAD;
                 if(size < requestedSize)
                 {
@@ -575,21 +574,21 @@ namespace TGUI
                     while(size < requestedSize)
                         size = size * 2;
                     /// Reallocate the buffer
-                    destroyQuadRenderOp(m_render_op, d_buffer);
-                    createQuadRenderOp(m_render_op, d_buffer, size);
+                    destroyQuadRenderOp(m_render_op, m_buffer);
+                    createQuadRenderOp(m_render_op, m_buffer, size);
                 }
                 else if(requestedSize < size/2 && m_underused_framecount >= UNDERUSED_FRAME_THRESHOLD)
                 {
                     /// Resize vertex buffer if it has been to big for too long
                     size = size / 2;
-                    destroyQuadRenderOp(m_render_op, d_buffer);
-                    createQuadRenderOp(m_render_op, d_buffer, size);
+                    destroyQuadRenderOp(m_render_op, m_buffer);
+                    createQuadRenderOp(m_render_op, m_buffer, size);
                     /// Reset underused framecount so it takes another UNDERUSED_FRAME_THRESHOLD to half again
                     m_underused_framecount = 0;
                 }
                 /// Fill the buffer
                 TGQuadVertex*	buffmem;
-                buffmem = (TGQuadVertex*)d_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
+                buffmem = (TGQuadVertex*)m_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
                 // iterate over each quad in the list
                 for (size_t i=0;i<quadList.size();i++)
                 {
@@ -605,7 +604,7 @@ namespace TGUI
                 }
 
                 // ensure we leave the buffer in the unlocked state
-                d_buffer->unlock();
+                m_buffer->unlock();
             }
             /// Render the buffer
             initRenderStates();
@@ -647,7 +646,7 @@ namespace TGUI
 
         }
         /// Count frames to check if utilization of vertex buffer was below half the capacity for 500,000 frames
-        if(m_bufferPos < d_buffer->getNumVertices()/2)
+        if(m_bufferPos < m_buffer->getNumVertices()/2)
             m_underused_framecount++;
         else
             m_underused_framecount = 0;
@@ -738,7 +737,7 @@ namespace TGUI
         m_renderSys->_setTextureCoordCalculation(0, TEXCALC_NONE);
         m_renderSys->_setTextureCoordSet(0, 0);
         m_renderSys->_setTextureUnitFiltering(0, FO_LINEAR, FO_LINEAR, FO_POINT);
-        m_renderSys->_setTextureAddressingMode(0, d_uvwAddressMode);
+        m_renderSys->_setTextureAddressingMode(0, m_uvwAddressMode);
         m_renderSys->_setTextureMatrix(0, Matrix4::IDENTITY);
         m_renderSys->_setAlphaRejectSettings(CMPF_ALWAYS_PASS, 0);
         m_renderSys->_setTextureBlendMode(0, m_colourBlendMode);
@@ -781,7 +780,7 @@ namespace TGUI
             uint32 bottomLeftCol	= colourToOgre(brush->m_colourRect.m_topLeft);
             uint32 bottomRightCol= colourToOgre(brush->m_colourRect.m_topRight);
 
-            TGQuadVertex*	buffmem = (TGQuadVertex*)d_direct_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
+            TGQuadVertex*	buffmem = (TGQuadVertex*)m_direct_buffer->lock(Ogre::HardwareVertexBuffer::HBL_DISCARD);
 
             // setup Vertex 1...
             buffmem->x	= final_rect.d_left;
@@ -837,7 +836,7 @@ namespace TGUI
             buffmem->tu1	= brush->m_uv.d_left;
             buffmem->tv1	= brush->m_uv.d_top;
 
-            d_direct_buffer->unlock();
+            m_direct_buffer->unlock();
 
             //
             // perform rendering...
@@ -922,11 +921,11 @@ namespace TGUI
 
         // Create and initialise the Ogre specific parts required for use in rendering later.
         // Main GUI
-        createQuadRenderOp(m_render_op, d_buffer, VERTEXBUFFER_INITIAL_CAPACITY);
+        createQuadRenderOp(m_render_op, m_buffer, VERTEXBUFFER_INITIAL_CAPACITY);
         m_underused_framecount = 0;
 
         // Mouse cursor
-        createQuadRenderOp(m_direct_render_op, d_direct_buffer, VERTEX_PER_QUAD);
+        createQuadRenderOp(m_direct_render_op, m_direct_buffer, VERTEX_PER_QUAD);
 
         // Discover display settings and setup m_displayArea
         m_displayArea.d_left	= 0;
@@ -951,9 +950,9 @@ namespace TGUI
         m_alphaBlendMode.source2	= Ogre::LBS_DIFFUSE;
         m_alphaBlendMode.operation	= Ogre::LBX_MODULATE;
 
-        d_uvwAddressMode.u = Ogre::TextureUnitState::TAM_CLAMP;
-        d_uvwAddressMode.v = Ogre::TextureUnitState::TAM_CLAMP;
-        d_uvwAddressMode.w = Ogre::TextureUnitState::TAM_CLAMP;
+        m_uvwAddressMode.u = Ogre::TextureUnitState::TAM_CLAMP;
+        m_uvwAddressMode.v = Ogre::TextureUnitState::TAM_CLAMP;
+        m_uvwAddressMode.w = Ogre::TextureUnitState::TAM_CLAMP;
     }
 
     //-----------------------------------------------------------------------

@@ -195,6 +195,10 @@ namespace TGUI
         m_activePopup = 0;
         m_eventHook = 0;
 
+        m_version = Ogre::StringConverter::toString(TGUI_VERSION_MAJOR) + "." +
+            Ogre::StringConverter::toString(TGUI_VERSION_MINOR) + "." +
+            " (" + TGUI_VERSION_NAME + ")";
+
         m_renderer = new TGUI::TGRenderer(window, 
             Ogre::RENDER_QUEUE_OVERLAY, false, sceneMgr);
 
