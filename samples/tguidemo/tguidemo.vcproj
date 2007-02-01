@@ -39,6 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm256"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(OGRE_HOME)\samples\common\include;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
@@ -119,6 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm256"
 				AdditionalIncludeDirectories="$(OGRE_HOME)\samples\common\include;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"

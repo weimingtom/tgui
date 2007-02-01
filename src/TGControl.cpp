@@ -880,8 +880,13 @@ namespace TGUI
 
             TGRect r(cx,y,x2,y2);
 
-            font->m_font->getGlyphTexCoords(ch,brush->m_uv.d_left,
-                brush->m_uv.d_top,brush->m_uv.d_right,brush->m_uv.d_bottom);
+            Ogre::Font::CodePoint cp = ch;
+            const Ogre::Font::UVRect uvr = font->m_font->getGlyphTexCoords(cp);
+            brush->m_uv.d_left = uvr.left;
+            brush->m_uv.d_top = uvr.top;
+            brush->m_uv.d_right = uvr.right;
+            brush->m_uv.d_bottom = uvr.bottom;
+            
 
             TGQuadInfo qi = m_renderer->addQuad(r,0,brush);
             m_systemCache.push_back(qi);
