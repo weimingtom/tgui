@@ -65,6 +65,7 @@ namespace TGUI
 
         virtual void addItem(TGString text);
         virtual void setText(TGString text) {m_inputbox->setText(text);};
+        virtual TGString getText() {return m_inputbox->getText();};
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseMoved(int x, int y);
         virtual void onMouseEnter();

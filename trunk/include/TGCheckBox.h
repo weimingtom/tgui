@@ -45,6 +45,7 @@ namespace TGUI
         virtual TGString getControlType() {return "TGCheckBox";};
 
         virtual void setState(bool checked);
+        virtual bool getState();
 
         virtual void onMouseDown(int x, int y, int b);
         virtual void onMouseUp(int x, int y, int b);
