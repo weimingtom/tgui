@@ -259,6 +259,20 @@ namespace TGUI
     }
 
     //-----------------------------------------------------------------------
+    //                           s e t T e x t
+    //-----------------------------------------------------------------------
+    void TGComboBox::setText(TGString text) 
+    {
+        m_inputbox->setText(text);
+        TGListBoxItem* lbi = m_listbox->findItem(text);
+        if(lbi)
+        {
+            m_listbox->selectItem(lbi);
+
+        }
+    }
+
+    //-----------------------------------------------------------------------
     //                             r e n d e r
     //-----------------------------------------------------------------------
     void TGComboBox::render()
