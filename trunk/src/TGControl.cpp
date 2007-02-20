@@ -874,7 +874,7 @@ namespace TGUI
             }
 
             int x2,y2;
-            int cWidth = font->m_font->getGlyphAspectRatio(ch) * cHeight * 2;
+            int cWidth = font->m_font->getGlyphAspectRatio(ch) * cHeight;
             x2 = cx + cWidth;
             y2 = y+cHeight;
 
@@ -918,7 +918,7 @@ namespace TGUI
                 cx += 5;
                 continue;
             }
-            int cWidth = font->m_font->getGlyphAspectRatio(str[i]) * font->getHeight() * 2;
+            int cWidth = font->m_font->getGlyphAspectRatio(str[i]) * font->getHeight();
             cx += cWidth + 1;
         }
         return (int)cx;
