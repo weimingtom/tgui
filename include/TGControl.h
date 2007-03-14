@@ -68,6 +68,7 @@ namespace TGUI
         TGRenderer*         m_renderer;
         TGSystem*           m_system;
         TGTexture*          m_texture;
+        TGFont*             m_font;
 
         TGString            m_name;
         TGReal              m_padLeft;
@@ -115,6 +116,9 @@ namespace TGUI
 
         TGControl* getFirstChild();
         TGControl* getLastChild();
+
+        TGFont* getFont() {return m_font;}
+        void setFont(TGFont* font) {m_font = font;}
 
         virtual TGString getControlType() {return "TGControl";};
 

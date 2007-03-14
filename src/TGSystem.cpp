@@ -240,13 +240,14 @@ namespace TGUI
         m_texture->setOgreTexture(texture);
         m_logger = new TGLogger();
 
-        m_theme = TGTheme();
+        m_currentTheme = TGTheme();
+        pushTheme(&m_currentTheme);
 
         m_defaultFont = new TGFont(defaultFont);
         m_defaultFont->setHeight(18);
         setCurrentFont(m_defaultFont);
 
-        m_theme.setFont(m_defaultFont);
+        m_currentTheme.setFont(m_defaultFont);
 
         m_defaultScreen = new TGScreen();
         m_defaultScreen->activate();
@@ -583,7 +584,31 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::setTheme(TGTheme theme,bool updateChildren) 
     {
-        m_theme = theme;
+        m_currentTheme = theme;
+    }
+
+    //-----------------------------------------------------------------------
+    //                          p u s h T h e m e
+    //-----------------------------------------------------------------------
+    void TGSystem::pushTheme(TGTheme* theme)
+    {
+
+        setTheme(*theme);
+        m_themeStack.push_front(theme);
+    }
+
+    //-----------------------------------------------------------------------
+    //                          p o p T h e m e
+    //-----------------------------------------------------------------------
+    TGTheme* TGSystem::popTheme()
+    {
+        TGTheme* ctheme = *m_themeStack.begin();
+
+        m_themeStack.pop_front();
+
+        setTheme(**(m_themeStack.begin()));        
+        
+        return ctheme;
     }
 
     //-----------------------------------------------------------------------
@@ -603,6 +628,19 @@ namespace TGUI
     TGLogger* TGSystem::getLogger()
     {
         return m_logger;
+    }
+
+    //-----------------------------------------------------------------------
+    //                       g e t C u r s o r P o s
+    //-----------------------------------------------------------------------
+    void TGSystem::getCursorPos(int& x, int& y)
+    {
+        x = y = 0;
+        if(m_mouseCursor)
+        {
+            x = m_mouseCursor->x1 + m_mouseCursor->getHotSpot().x;
+            y = m_mouseCursor->y1 + m_mouseCursor->getHotSpot().y;
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -650,6 +688,19 @@ namespace TGUI
 
         m_modifiers.push_back(mod);
 
+    }
+
+    //-----------------------------------------------------------------------
+    //                 g e t M o u s e C o o r d i n a t e s
+    //-----------------------------------------------------------------------
+    void TGSystem::getMouseCoordinates(int& x, int& y)
+    {
+        x = y = 0;
+        if(m_mouseCursor)
+        {
+            x = m_mouseCursor->x1 + m_mouseCursor->getHotSpot().x;
+            y = m_mouseCursor->y1 + m_mouseCursor->getHotSpot().y;
+        }
     }
 
     //-----------------------------------------------------------------------

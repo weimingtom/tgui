@@ -27,6 +27,8 @@
 
 namespace TGUI
 {
+    typedef std::list<TGTheme*> TGThemeStack;
+
     class _TGUIExport TGSystem : public TGSingleton<TGUI::TGSystem>
     {
     protected:
@@ -40,7 +42,8 @@ namespace TGUI
         TGControl*	        m_keyboardFocusControl;
         TGCursor*           m_mouseCursor;
         TGLogger*           m_logger;
-        TGTheme             m_theme;
+        TGTheme             m_currentTheme;
+        TGThemeStack        m_themeStack;
         TGControlList       m_dead;
         TGString            m_version;
         TGModList           m_modifiers;
@@ -71,14 +74,18 @@ namespace TGUI
         void setMouseCursor(TGCursor* cursor);
         TGCursor* getMouseCursor() {return m_mouseCursor;};
 
+        void getMouseCoordinates(int& x, int& y);
+
         TGQuadList& getCache() {return m_cache;};
 
         void setLogger(TGLogger* logger);
         TGLogger* getLogger();
         void logMessage(TGString message);
 
-        TGTheme getTheme() {return m_theme;};
+        TGTheme getTheme() {return m_currentTheme;};
         void setTheme(TGTheme theme,bool updateChildren=false);
+        void pushTheme(TGTheme* theme);
+        TGTheme* popTheme();
 
         TGFont* loadFont(TGString fontName,TGString resourceGroup="");
         TGFont* getCurrentFont() {return m_currentFont;};
@@ -104,6 +111,8 @@ namespace TGUI
         void injectKeyDown(int key,unsigned char ascii);
         void injectKeyUp(int key,unsigned char ascii);
         void injectTimePulse(TGReal timeElapsed);
+
+        void getCursorPos(int& x, int& y);
 
         void addModifier(TGModifier* mod);
         void removeModifier(TGModifier* mod);
