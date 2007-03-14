@@ -51,6 +51,7 @@ namespace TGUI
         , m_mouseOverControl(false)
         , m_isVisible(true)
         , m_exclusiveChild(NULL)
+        , m_font(TGSystem::getSingleton().getCurrentFont())
         , m_texture(TGSystem::getSingleton().getDefaultTexture())
     {
         if(name.empty())
@@ -853,7 +854,7 @@ namespace TGUI
     {
         if(!m_isVisible)
             return;
-        TGFont* font = TGSystem::getSingleton().getCurrentFont();
+        TGFont* font = m_font;
         if(!font)
             return;
 
@@ -904,7 +905,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     int TGControl::stringWidth(TGString str, size_t length)
     {
-        TGFont* font = TGSystem::getSingleton().getCurrentFont();
+        TGFont* font = m_font;
         if(!font)
             return 0;
         TGReal	cx = 0;
