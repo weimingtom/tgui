@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib OIS_d.lib $(tgui)\libs\tgui_d.lib"
+				AdditionalDependencies="$(ogre_home)\lib\OgreMain_d.lib OIS_d.lib $(tgui)\libs\tgui_d.lib"
 				OutputFile="$(TGUI)\bin\$(ProjectName).exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
