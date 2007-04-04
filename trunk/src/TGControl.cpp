@@ -548,7 +548,11 @@ namespace TGUI
     void TGControl::setWidth(TGReal width)
     {
         int w,nw;
-        m_parent->getWidth(w);
+        if(!m_parent)
+        {
+            w = m_renderer->getWidth();
+        }
+        else m_parent->getWidth(w);
         nw = (TGReal)w * width;
         setWidth(nw);
     }
@@ -585,7 +589,11 @@ namespace TGUI
     void TGControl::setHeight(TGReal height)
     {
         int h,nh;
-        m_parent->getHeight(h);
+        if(!m_parent)
+        {
+            h = m_renderer->getHeight();
+        }
+        else m_parent->getHeight(h);
         nh = (TGReal)h * height;
         setHeight(nh);
     }
