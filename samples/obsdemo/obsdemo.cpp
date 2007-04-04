@@ -318,7 +318,7 @@ public:
         
         TGWindow	*win2 = new TGWindow(NULL,"","Another fluffy window");
         win2->center();
-        win2->moveRel(win2->x1 + 200, win2->y1 - 70);
+        win2->moveRel(win2->x1 + 210, win2->y1 - 70);
         win2->resize(win2->x2-win2->x1+1, win2->y2-win2->y1+270);
 
         TGProgressBar	*pbar2 = new TGProgressBar(win2);
@@ -458,7 +458,7 @@ public:
         TGWindow	*win5 = new TGWindow(NULL,"","TGImage control");
 
         win5->center();
-        win5->moveRel(win5->x1, win5->y1 - 160);
+        win5->moveRel(win5->x1, win5->y1 - 165);
         TGImage	*cenda = new TGImage(win5,"","cenda.png");
         cenda->center();
         cenda->setName("cenda");
