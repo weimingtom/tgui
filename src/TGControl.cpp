@@ -773,7 +773,7 @@ namespace TGUI
         if(!m_isVisible)
             return;
 
-        drawLine(x1,y1,x2,y1,brush,thickness);
+        drawLine(x1-1,y1,x2,y1,brush,thickness);
         drawLine(x2,y1,x2,y2,brush,thickness);
         drawLine(x1,y2,x2,y2,brush,thickness);
         drawLine(x1,y1,x1,y2,brush,thickness);
