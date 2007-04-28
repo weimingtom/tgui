@@ -47,6 +47,7 @@ namespace TGUI
         virtual ~TGBrush();
 
         void    setColour(const TGColour& col);
+        void    setAlpha(float value);
         void    setColour(const TGColourRect& colRect);
         void    setTexture(TGTexture* texture);
         void    setTexture(TGString tname, TGString resourceGroup = "");
