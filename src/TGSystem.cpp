@@ -516,8 +516,8 @@ namespace TGUI
     void TGSystem::setMouseCursor(TGCursor* cursor)
     {
         m_mouseCursor = cursor;
-        int x = (m_renderer->getWidth()/2) - (cursor->getWidth()/2);
-        int y = (m_renderer->getHeight()/2) - (cursor->getHeight()/2);
+        int x = (m_renderer->getWidth()/2) - (cursor->getImageWidth()/2);
+        int y = (m_renderer->getHeight()/2) - (cursor->getImageHeight()/2);
         m_mouseCursor->move(x,y);
         if(m_activeScreen)
         {
