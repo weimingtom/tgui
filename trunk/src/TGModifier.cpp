@@ -30,7 +30,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M o d i f i e r
     //-----------------------------------------------------------------------
-    TGModifier::TGModifier()
+    TGModifier::TGModifier() : m_enabled(true)
     {
         TGSystem::getSingleton().addModifier(this);
 
