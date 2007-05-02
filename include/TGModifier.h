@@ -29,6 +29,8 @@ namespace TGUI
 {
     class _TGUIExport TGModifier
     {
+    protected:
+        bool            m_enabled;
     public:
         enum {
             MOD_CONTINUE   = 0, 
@@ -43,7 +45,8 @@ namespace TGUI
 
         virtual TGModifier* clone() = 0;
 
-    private:
+        virtual bool getEnabled() {return m_enabled;}
+        virtual void setEnabled(bool value) {m_enabled = value;}
 
     };
 
