@@ -30,7 +30,10 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M o d C o l o u r
     //-----------------------------------------------------------------------
-    TGModColour::TGModColour() : TGModLerp()
+    TGModColour::TGModColour(TGControl* target,float duration, TGColour from, 
+        TGColour to) : TGModLerp(target,duration),
+        m_from(from),
+        m_to(to)
     {
 
     }

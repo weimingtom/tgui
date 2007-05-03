@@ -265,6 +265,10 @@ namespace TGUI
             layout();
             m_performLayout = false;
         }
+
+        //
+        // pulse the child controls
+        //
         for (TGControlListItr itr = m_children.begin();itr != m_children.end(); ++itr)
         {
             (*itr)->pulse(timeElapsed);
@@ -1122,6 +1126,14 @@ namespace TGUI
         m_parent = newParent;
         if(m_parent)
             m_parent->addChild(this);
+    }
+
+    //-----------------------------------------------------------------------
+    //                         a d d M o d i f i e r
+    //-----------------------------------------------------------------------
+    void TGControl::addModifier(TGModifier* mod)
+    {
+        m_modifiers.push_back(mod);
     }
 
     //-----------------------------------------------------------------------

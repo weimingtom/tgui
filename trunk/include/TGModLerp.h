@@ -29,13 +29,18 @@ namespace TGUI
 {
     class TGModLerp : public TGModifier
     {
+    protected:
+        float               m_duration;
+        float               m_startTime;
+        float               m_dt;
+
     public:
 
-        TGModLerp();
+        virtual float computeDelta();
+
+        TGModLerp(TGControl* target,float duration);
         virtual ~TGModLerp(){};
         virtual int pulse(TGReal elapsed);
-
-        virtual TGModifier* clone();
 
     private:
 

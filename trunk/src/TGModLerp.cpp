@@ -30,7 +30,8 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M o d L e r p
     //-----------------------------------------------------------------------
-    TGModLerp::TGModLerp() : TGModifier()
+    TGModLerp::TGModLerp(TGControl* target,float duration) : TGModifier(target),
+        m_duration(duration)
     {
 
     }

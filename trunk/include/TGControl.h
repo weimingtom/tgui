@@ -157,6 +157,8 @@ namespace TGUI
         virtual void setBackgroundEnabled(bool value) {m_backgroundEnabled = value;};
         virtual TGScreen* getActiveScreen();
 
+        virtual void addModifier(TGModifier* mod);
+
         virtual void pulse(TGReal timeElapsed);
         virtual void focus();
         virtual bool focused();

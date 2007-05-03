@@ -717,6 +717,7 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGSystem::renderGUI()
     {
+
         m_cache.clear();
 
         m_renderer->resetZValue();
