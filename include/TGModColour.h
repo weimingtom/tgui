@@ -29,13 +29,14 @@ namespace TGUI
 {
     class TGModColour : public TGModLerp
     {
+    protected:
+        TGColour            m_from;
+        TGColour            m_to;
     public:
 
-        TGModColour();
+        TGModColour(TGControl* target,float duration, TGColour from, TGColour to);
         virtual ~TGModColour(){};
         virtual int pulse(TGReal elapsed);
-
-        virtual TGModifier* clone();
 
     private:
 

@@ -38,7 +38,10 @@ namespace TGUI
         
         m_font = (Ogre::FontPtr) Ogre::FontManager::getSingleton().getByName(fontName);
         if (m_font.isNull())
+        {
             Ogre::Exception(Ogre::Exception::ERR_ITEM_NOT_FOUND, "Could not find font " + fontName, "TGFont::TGFont");
+            return;
+        }
         m_font->load();
         m_material = m_font->getMaterial();
         Ogre::TexturePtr tp = m_material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_getTexturePtr();

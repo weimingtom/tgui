@@ -27,10 +27,15 @@
 
 namespace TGUI
 {
+    class TGControl;
+
     class _TGUIExport TGModifier
     {
     protected:
-        bool            m_enabled;
+        bool            m_running;
+        TGControl*      m_control;
+        float           m_duration;
+
     public:
         enum {
             MOD_CONTINUE   = 0, 
@@ -39,18 +44,22 @@ namespace TGUI
         };
 
 
-        TGModifier();
+        TGModifier(TGControl* target);
         virtual ~TGModifier(){};
-        virtual int pulse(TGReal elapsed) {return MOD_DELETE;};
 
-        virtual TGModifier* clone() = 0;
+        void step(TGReal delta)=0;
 
-        virtual bool getEnabled() {return m_enabled;}
-        virtual void setEnabled(bool value) {m_enabled = value;}
+        void start();
+        void pause();
+        void resume();
+        void stop();
+        bool isRunning() {return m_running;}
+        float getDuration() {return m_duration;}
 
     };
 
     typedef std::vector<TGModifier *> TGModList;
+    typedef std::vector<TGModifier *>::iterator TGModListItr;
 
     typedef Ogre::SharedPtr<TGModifier> TGSModifier;
 

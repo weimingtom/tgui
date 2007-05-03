@@ -30,10 +30,28 @@ namespace TGUI
     //-----------------------------------------------------------------------
     //                          T G M o d i f i e r
     //-----------------------------------------------------------------------
-    TGModifier::TGModifier() : m_enabled(true)
+    TGModifier::TGModifier(TGControl* target) : m_running(false),
+        m_control(target)
     {
-        TGSystem::getSingleton().addModifier(this);
 
     }
+
+    void TGModifier::start()
+    {
+
+    }
+
+    void TGModifier::pause()
+    {
+    }
+
+    void TGModifier::resume()
+    {
+    }
+
+    void TGModifier::stop()
+    {
+    }
+
 
 }
