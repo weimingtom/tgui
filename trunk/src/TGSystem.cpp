@@ -249,7 +249,7 @@ namespace TGUI
 
         m_currentTheme.setFont(m_defaultFont);
 
-        m_defaultScreen = new TGScreen();
+        m_defaultScreen = new TGScreen(0,"TGUI::DefaultScreen");
         m_defaultScreen->activate();
 
     }
