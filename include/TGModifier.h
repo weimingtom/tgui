@@ -47,7 +47,7 @@ namespace TGUI
         TGModifier(TGControl* target);
         virtual ~TGModifier(){};
 
-        void step(TGReal delta)=0;
+        virtual void step(TGReal delta)=0;
 
         void start();
         void pause();
