@@ -46,10 +46,10 @@ namespace TGUI
         TGSBrush        m_textInverted;
         TGSBrush        m_textFocused;
         TGSBrush        m_textHilited;
+        TGSBrush        m_exclusiveOverlay;
 
     public:
         static const TGColour DefaultText;
-
 
         TGTheme();
         TGTheme(TGColour baseColour, TGColour baseTextColour=DefaultText);
@@ -58,19 +58,19 @@ namespace TGUI
         virtual ~TGTheme();
         TGColour clamp(TGColour c);
 
-        inline const TGSBrush getBase() {return m_base;};
-        inline const TGSBrush getBaseBright() {return m_baseBright;};
-        inline const TGSBrush getBaseOpaque() {return m_baseOpaque;};
-        inline const TGSBrush getTextBrush() {return m_text;};
-        inline const TGSBrush getTextFocusedBrush() {return m_textFocused;};
-        inline const TGSBrush getTextInvertedBrush() {return m_textInverted;};
-        inline const TGSBrush getCaptionBrush() {return m_caption;};
-        inline const TGSBrush getFrameBrush() {return m_frame;};
-        inline const TGSBrush getFrameFocusedBrush() {return m_frameFocused;};
-        inline const TGSBrush getFrameSelectedBrush() {return m_frameSelected;};
+        inline const TGSBrush getBase() {return m_base;}
+        inline const TGSBrush getBaseBright() {return m_baseBright;}
+        inline const TGSBrush getBaseOpaque() {return m_baseOpaque;}
+        inline const TGSBrush getTextBrush() {return m_text;}
+        inline const TGSBrush getTextFocusedBrush() {return m_textFocused;}
+        inline const TGSBrush getTextInvertedBrush() {return m_textInverted;}
+        inline const TGSBrush getCaptionBrush() {return m_caption;}
+        inline const TGSBrush getFrameBrush() {return m_frame;}
+        inline const TGSBrush getFrameFocusedBrush() {return m_frameFocused;}
+        inline const TGSBrush getFrameSelectedBrush() {return m_frameSelected;}
+        inline const TGSBrush getExclusiveOverlay() {return m_exclusiveOverlay;}
         void setBase(TGColour baseColour, TGColour baseTextColour);
         void setFont(TGFont* font);
-
     };
 }
 
