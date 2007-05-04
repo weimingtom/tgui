@@ -90,7 +90,6 @@ namespace TGUI
                 m_parent->m_exclusiveChild = NULL;
             m_parent->removeChild(this);
         }
-
     }
 
     //-----------------------------------------------------------------------
@@ -100,7 +99,6 @@ namespace TGUI
     {
         return m_renderer;
     }
-
 
     //-----------------------------------------------------------------------
     //                             s e t N a m e
@@ -238,16 +236,19 @@ namespace TGUI
     //-----------------------------------------------------------------------
     void TGControl::makeExclusive(bool value)
     {
-        if (m_parent)
+        TGScreen* ascreen = TGSystem::getSingleton().getActiveScreen();
+
+        TGControl* parent = m_parent;
+        if (parent)
         {
             if(value)
             {
-                m_parent->m_exclusiveChild = this;
+                ascreen->m_exclusiveChild = this;
             }
             else
             {
-                if(m_parent->m_exclusiveChild == this)
-                    m_parent->m_exclusiveChild = NULL;
+                if(ascreen->m_exclusiveChild == this)
+                    ascreen->m_exclusiveChild = NULL;
             }
         }
     }
@@ -1126,14 +1127,6 @@ namespace TGUI
         m_parent = newParent;
         if(m_parent)
             m_parent->addChild(this);
-    }
-
-    //-----------------------------------------------------------------------
-    //                         a d d M o d i f i e r
-    //-----------------------------------------------------------------------
-    void TGControl::addModifier(TGModifier* mod)
-    {
-        m_modifiers.push_back(mod);
     }
 
     //-----------------------------------------------------------------------
