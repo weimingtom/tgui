@@ -1225,9 +1225,7 @@ namespace TGUI
 
         if (m_exclusiveChild)
         {
-            TGSBrush brush;
-            brush.bind(new TGBrush(TGColour(0, 0, 0, 96)));
-            TGControl::fillRect(x1, y1, x2, y2, brush);
+            TGControl::fillRect(x1, y1, x2, y2, m_theme.getExclusiveOverlay());
 
             m_exclusiveChild->render();
             m_exclusiveChild->redraw(false);

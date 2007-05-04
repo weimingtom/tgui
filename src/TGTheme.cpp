@@ -108,6 +108,8 @@ namespace TGUI
 
         TGFont* font = TGSystem::getSingleton().getCurrentFont();
 
+        m_exclusiveOverlay.bind(new TGBrush(TGColour(0, 0, 0, 0.4f)));
+
         if(font)
         {
             m_text.bind(new TGBrush(baseTextColour,font->m_texture ));
