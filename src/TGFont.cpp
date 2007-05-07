@@ -44,7 +44,11 @@ namespace TGUI
         }
         m_font->load();
         m_material = m_font->getMaterial();
+        //m_material->setTextureFiltering(Ogre::TextureFilterOptions::TFO_BILINEAR);
+        m_material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureFiltering(Ogre::TFO_TRILINEAR);
+
         Ogre::TexturePtr tp = m_material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_getTexturePtr();
+
         m_texture = TGSystem::getSingleton().getRenderer()->createTexture();
         m_texture->setOgreTexture(tp);
         m_height = 14;

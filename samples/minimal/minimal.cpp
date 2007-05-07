@@ -176,6 +176,12 @@ public:
         win->moveRel(win->x1, win->y1-100);
         win->resize(190, 200);
         win->setResizeEnabled(true);
+
+        TGLabel* text = new TGLabel(win,"","Background Music:");
+        text->setPos(0.4f,0.3f);
+        text->setSize(0.4f,0.05f);
+        text->setAlignment(TGUI::alRight);
+
         
     }
 
