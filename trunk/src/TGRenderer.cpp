@@ -736,7 +736,7 @@ namespace TGUI
         // initialise texture settings
         m_renderSys->_setTextureCoordCalculation(0, TEXCALC_NONE);
         m_renderSys->_setTextureCoordSet(0, 0);
-        m_renderSys->_setTextureUnitFiltering(0, FO_LINEAR, FO_LINEAR, FO_POINT);
+        m_renderSys->_setTextureUnitFiltering(0, FO_LINEAR, FO_LINEAR, FO_LINEAR);
         m_renderSys->_setTextureAddressingMode(0, m_uvwAddressMode);
         m_renderSys->_setTextureMatrix(0, Matrix4::IDENTITY);
         m_renderSys->_setAlphaRejectSettings(CMPF_ALWAYS_PASS, 0);
