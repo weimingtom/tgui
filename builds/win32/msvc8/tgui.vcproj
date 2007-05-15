@@ -41,6 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm256"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\ogremain\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;TGUI_NONCLIENT_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
