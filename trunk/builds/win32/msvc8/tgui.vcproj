@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm256"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\ogremain\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\ogremain\include&quot;;&quot;$(TUBRAS)\deps\tgui\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;TGUI_NONCLIENT_BUILD;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -107,6 +107,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm256"
+				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\ogremain\include&quot;;&quot;$(TUBRAS)\deps\tgui\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;TGUI_NONCLIENT_BUILD;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
